@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.evervolv.toolbox"
+    android:versionCode="1"
+    android:versionName="1.0" 
+    coreApp="true"
+    android:sharedUserId="android.uid.system"
+    >
+    
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.HARDWARE_TEST" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+    <uses-sdk android:minSdkVersion="14" />
+
+    <application
+        android:icon="@drawable/ic_launcher_evtoolbox"
+        android:label="@string/app_name" >
+        <activity
+            android:label="@string/app_name"
+            android:name="com.evervolv.toolbox.Settings"
+            android:taskAffinity="com.evervolv.toolbox"
+            android:launchMode="singleTask">
+            <intent-filter >
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.cyanogenmod.SETTINGS" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name="com.evervolv.toolbox.SubSettings"
+                android:taskAffinity="com.evervolv.toolbox">
+        </activity>
+
+
+        <!--- Lockscreen -->
+        <activity android:name="Settings$LockscreenActivity"
+                android:label="@string/lockscreen_title"
+                android:configChanges="orientation|keyboardHidden|screenSize"
+                android:clearTaskOnLaunch="true">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <meta-data android:name="com.evervolv.toolbox.FRAGMENT_CLASS"
+                android:value="com.evervolv.toolbox.activities.Lockscreen" />
+            <meta-data android:name="com.evervolv.toolbox.TOP_LEVEL_HEADER_ID"
+                android:resource="@id/lockscreen_settings" />
+        </activity>
+    </application>
+</manifest>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Lockscreen type -->
+    <PreferenceCategory android:title="@string/lockscreen_title">
+        <ListPreference android:key="pref_lockscreen_settings_style"
+            android:title="@string/pref_lockscreen_settings_style_title"
+            android:summary="@string/pref_lockscreen_settings_style_summary"
+            android:dialogTitle="@string/pref_lockscreen_settings_style_title"
+            android:entries="@array/lockscreen_style_entries"
+            android:entryValues="@array/lockscreen_style_values"/>        
+
+    </PreferenceCategory>
+</PreferenceScreen>
