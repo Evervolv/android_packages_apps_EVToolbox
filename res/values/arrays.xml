@@ -28,9 +28,9 @@
     </string-array>
 
     <string-array name="lockscreen_style_entries">
-        <item>Tabs style</item>
-        <item>Rotary style</item>
-        <item>Ring style</item>
+        <item>Gingerbread style</item>
+        <item>Eclair style</item>
+        <item>Ice Cream Sandwich style</item>
     </string-array>
 
     <string-array name="lockscreen_style_values" translatable="false">
