@@ -8,5 +8,12 @@
     <string name="pref_lockscreen_settings_title_head">Lockscreen</string>
     <string name="pref_lockscreen_settings_style_title">Lockscreen style</string>
     <string name="pref_lockscreen_settings_style_summary">Choose your style of lockscreen</string>
-
+    <string name="pref_lockscreen_settings_style_ics_style">Below options are for Ics style only</string>
+    <string name="pref_lockscreen_multiwaveview_3way_title">Tri-State</string>
+    <string name="pref_lockscreen_multiwaveview_3way_summary">Adds a third option to the lockscreen</string>
+    <string name="pref_lockscreen_multiwaveview_silentmode_title">Silentmode toggle</string>
+    <string name="pref_lockscreen_multiwaveview_silentmode_summary">Toggle silentmode instead of opening the camera app</string>
+    <string name="pref_lockscreen_custom_app_title">Select a custom app to launch</string>
+    <string name="select_custom_app_title">Select custom application</string>
+    <string name="group_applications">Applications</string>
 </resources>
