@@ -48,5 +48,18 @@
             <meta-data android:name="com.evervolv.toolbox.TOP_LEVEL_HEADER_ID"
                 android:resource="@id/lockscreen_settings" />
         </activity>
+        <!-- Statusbar -->
+        <activity android:name="Settings$StatusbarActivity"
+                android:label="@string/statusbar_title"
+                android:configChanges="orientation|keyboardHidden|screenSize"
+                android:clearTaskOnLaunch="true">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <meta-data android:name="com.evervolv.toolbox.FRAGMENT_CLASS"
+                android:value="com.evervolv.toolbox.activities.Statusbar" />
+            <meta-data android:name="com.evervolv.toolbox.TOP_LEVEL_HEADER_ID"
+                android:resource="@id/statusbar_settings" />
+        </activity>
     </application>
 </manifest>
