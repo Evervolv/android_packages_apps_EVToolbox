@@ -44,6 +44,10 @@ public class Lockscreen extends SettingsFragment implements
     private int mCurrLockscreen = Settings.System.getInt(mCr,
             Settings.System.LOCKSCREEN_STYLE , 3);
 
+    private static final String LOCKSCREEN_MUSIC_CTRL_VOLBTN = "pref_lockscreen_music_controls_volbtn";
+
+    private CheckBoxPreference mLockscreenMusicCtrlVolBtnPref;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,6 +85,11 @@ public class Lockscreen extends SettingsFragment implements
         
         mPicker = new ShortcutPickHelper(this, this);
         setCustomAppSummary();
+
+        /* Volume button music controls */
+        mLockscreenMusicCtrlVolBtnPref = (CheckBoxPreference) mPrefSet.findPreference(LOCKSCREEN_MUSIC_CTRL_VOLBTN);
+        mLockscreenMusicCtrlVolBtnPref.setChecked(Settings.System.getInt(getContentResolver(),
+                Settings.System.LOCKSCREEN_MUSIC_CONTROLS_VOLBTN, 1) == 1);
     }
 
     public Context getContext() {
@@ -118,6 +127,11 @@ public class Lockscreen extends SettingsFragment implements
             return true;
         } else if (preference == mCustomAppPref) {
             mPicker.pickShortcut();
+            return true;
+        } else if (preference == mLockscreenMusicCtrlVolBtnPref) {
+            value = mLockscreenMusicCtrlVolBtnPref.isChecked();
+            Settings.System.putInt(mCr,
+                    Settings.System.LOCKSCREEN_MUSIC_CONTROLS_VOLBTN, value ? 1 : 0);
             return true;
         }
         return false;

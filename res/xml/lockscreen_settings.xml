@@ -28,4 +28,14 @@
             android:title="@string/pref_lockscreen_custom_app_title"/>
 
     </PreferenceCategory>
+
+    <!-- Lockscreen music controls -->
+    <PreferenceCategory android:title="@string/pref_lockscreen_cat_music_controls_title">
+
+        <CheckBoxPreference
+            android:key="pref_lockscreen_music_controls_volbtn"
+            android:title="@string/pref_lockscreen_music_controls_volbtn_title"
+            android:summary="@string/pref_lockscreen_music_controls_volbtn_summary"/>
+    </PreferenceCategory>
+
 </PreferenceScreen>
