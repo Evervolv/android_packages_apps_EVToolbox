@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -12,26 +11,19 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
 import android.preference.Preference;
+import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.Switch;
 import android.widget.TextView;
-
-import com.evervolv.toolbox.R;
-
-import com.evervolv.toolbox.R.id;
-import com.evervolv.toolbox.R.layout;
-import com.evervolv.toolbox.R.xml;
 
 public class Settings extends PreferenceActivity {
 	
@@ -426,4 +418,6 @@ public class Settings extends PreferenceActivity {
 
     public static class LockscreenActivity extends Settings { /* */ }
     public static class StatusbarActivity extends Settings { /* */ }
+    public static class NotificationToolboxActivity extends Settings { /* */ }
+    public static class LockscreenStyleActivity extends Settings { /* */ }
 }

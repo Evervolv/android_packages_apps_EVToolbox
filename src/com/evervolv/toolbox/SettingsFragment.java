@@ -22,5 +22,12 @@ public class SettingsFragment extends PreferenceFragment {
     public Context getContext() {
         return getActivity().getApplicationContext();
     }
+    
+    public void startPreferencePanel(String fragmentClass, Bundle args, int titleRes,
+            CharSequence titleText, Fragment resultTo, int resultRequestCode) {
+        PreferenceActivity pa = (PreferenceActivity) this.getActivity();
+        pa.startPreferencePanel(fragmentClass, args, titleRes, titleText,
+                resultTo, resultRequestCode);
+    }
 }
 

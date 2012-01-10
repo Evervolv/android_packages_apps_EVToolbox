@@ -48,6 +48,16 @@
             <meta-data android:name="com.evervolv.toolbox.TOP_LEVEL_HEADER_ID"
                 android:resource="@id/lockscreen_settings" />
         </activity>
+
+        <activity android:name="Settings$LockscreenStyleActivity"
+                android:label="@string/pref_lockscreen_style_title"
+                android:configChanges="orientation|keyboardHidden|screenSize"
+                android:clearTaskOnLaunch="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+
         <!-- Statusbar -->
         <activity android:name="Settings$StatusbarActivity"
                 android:label="@string/statusbar_title"
@@ -61,5 +71,15 @@
             <meta-data android:name="com.evervolv.toolbox.TOP_LEVEL_HEADER_ID"
                 android:resource="@id/statusbar_settings" />
         </activity>
+
+        <activity android:name="Settings$NotificationToolboxActivity"
+                android:label="@string/pref_notification_toolbox_title"
+                android:configChanges="orientation|keyboardHidden|screenSize"
+                android:clearTaskOnLaunch="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+
     </application>
 </manifest>

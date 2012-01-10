@@ -136,4 +136,15 @@ public class ToolboxUtil {
         public int getTitleResId() { return mTitleResId; }
         public int getIconResId() { return mIconResId; }
     }
+    public static String arrayToString(String[] a, String separator) {
+        String result = "";
+        if (a.length > 0) {
+            result = a[0];    // start with the first element
+            for (int i=1; i<a.length; i++) {
+                result = result + separator + a[i];
+            }
+        }
+        return result;
+    }
+    
 }

@@ -6,9 +6,9 @@
     <!--  Primary Screen Settings -->
     <string name="lockscreen_title">Lockscreen</string>
     <string name="pref_lockscreen_settings_title_head">Lockscreen</string>
-    <string name="pref_lockscreen_settings_style_title">Lockscreen style</string>
-    <string name="pref_lockscreen_settings_style_summary">Choose your style of lockscreen</string>
-    <string name="pref_lockscreen_settings_style_ics_style">ICS lockscreen options</string>
+    <string name="pref_lockscreen_style_title">Lockscreen style</string>
+    <string name="pref_lockscreen_style_summary">Choose your style of lockscreen</string>
+    <string name="pref_lockscreen_style_ics_style">ICS lockscreen options</string>
     <string name="pref_lockscreen_multiwaveview_3way_title">Tri-State</string>
     <string name="pref_lockscreen_multiwaveview_3way_summary">Adds a third option to the lockscreen</string>
     <string name="pref_lockscreen_multiwaveview_silentmode_title">Silentmode toggle</string>
@@ -20,6 +20,9 @@
 
     <string name="statusbar_title">Statusbar</string>
     <string name="pref_statusbar_settings_title_head">Statusbar</string>
+
+    <string name="pref_notification_toolbox_title">Notification toolbox</string>
+    <string name="pref_notification_toolbox_summary">Settings for the notification toolbox</string>
     <string name="title_notification_toolbox_widgets">Add widget</string>
     <string name="dialog_notification_toolbox_widgets">What would you like to do?</string>
     <string name="dialog_title_notification_toolbox_widgets">Add a toolbox widget</string>

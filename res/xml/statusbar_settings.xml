@@ -1,19 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-
-    	<PreferenceCategory
-            	android:title="@string/category_statusbar_add_widgets"
-		android:key="pref_category_statusbar_add_widgets">
-	
-		<Preference android:key="pref_notification_toolbox_widgets" 
-		        android:title="@string/title_notification_toolbox_widgets"
-		/>
-
-	</PreferenceCategory>
-
-    	<PreferenceCategory
-            	android:title="@string/category_statusbar_widgets"
-		android:key="pref_category_statusbar_widgets">
-	</PreferenceCategory>
+    <PreferenceScreen
+            android:key="pref_notification_toolbox"
+            android:title="@string/pref_notification_toolbox_title"
+            android:summary="@string/pref_notification_toolbox_summary"
+            android:fragment="com.evervolv.toolbox.activities.Statusbar$NotifToolbox">
+    </PreferenceScreen>
 </PreferenceScreen>
 

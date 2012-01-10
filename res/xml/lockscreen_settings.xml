@@ -1,37 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- Lockscreen type -->
-    <PreferenceCategory android:title="@string/lockscreen_title">
-
-        <ListPreference android:key="pref_lockscreen_settings_style"
-            android:title="@string/pref_lockscreen_settings_style_title"
-            android:summary="@string/pref_lockscreen_settings_style_summary"
-            android:dialogTitle="@string/pref_lockscreen_settings_style_title"
-            android:entries="@array/lockscreen_style_entries"
-            android:entryValues="@array/lockscreen_style_values"/>
-
-    </PreferenceCategory>
-
-    <PreferenceCategory android:key="pref_category_ics_style"
-        android:title="@string/pref_lockscreen_settings_style_ics_style">
-
-        <CheckBoxPreference android:key="pref_lockscreen_style_multiwaveview_3way_toggle"
-            android:title="@string/pref_lockscreen_multiwaveview_3way_title"
-            android:summary="@string/pref_lockscreen_multiwaveview_3way_summary" />
-
-        <CheckBoxPreference android:key="pref_lockscreen_style_multiwaveview_silentmode_toggle"
-            android:title="@string/pref_lockscreen_multiwaveview_silentmode_title"
-            android:summary="@string/pref_lockscreen_multiwaveview_silentmode_summary" />
-
-        <Preference android:key="pref_lockscreen_custom_app"
-            android:title="@string/pref_lockscreen_custom_app_title"/>
-
-    </PreferenceCategory>
+    <!-- Lockscreen Styles -->
+    <PreferenceScreen
+            android:key="pref_lockscreen_style"
+            android:title="@string/pref_lockscreen_style_title"
+            android:summary="@string/pref_lockscreen_style_summary"
+            android:fragment="com.evervolv.toolbox.activities.Lockscreen$LockStyle">
+    </PreferenceScreen>
 
     <!-- Lockscreen music controls -->
     <PreferenceCategory android:title="@string/pref_lockscreen_cat_music_controls_title">
-
         <CheckBoxPreference
             android:key="pref_lockscreen_music_controls_volbtn"
             android:title="@string/pref_lockscreen_music_controls_volbtn_title"
