@@ -38,7 +38,7 @@ public class NotificationToolbox extends SettingsFragment {
     private String clickedPrefKey;
 
     private HashMap<Preference, String> mWidgetPrefs = new HashMap<Preference, String>();
-    
+
     private ContentResolver mCr;
     private PreferenceScreen mPrefSet;
 
@@ -91,25 +91,25 @@ public class NotificationToolbox extends SettingsFragment {
                 clickedPrefKey = entry.getKey().getKey();
                 clickedPref = entry.getKey().getKey().substring(
                         SELECT_BUTTON_KEY_PREFIX.length());
-                
+
                 mAlertDialog = new AlertDialog.Builder(preferenceScreen.getContext());
                 mAlertDialog.setTitle(clickedPref);
                 mAlertDialog.setMessage(R.string
                         .dialog_notification_toolbox_widgets);
-                
-                mAlertDialog.setPositiveButton(R.string.dialog_remove, 
+
+                mAlertDialog.setPositiveButton(R.string.dialog_remove,
                         new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface arg0, int arg1) {
                         removeWidget(clickedPref, clickedPrefKey);
                     }
-                    
+
                 });
                 mAlertDialog.setNegativeButton(R.string.dialog_cancel
                         , new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface arg0, int arg1) {
                         //do nada!
                     }
-                    
+
                 });
                 mAlertDialog.create().show();
             }
@@ -126,19 +126,19 @@ public class NotificationToolbox extends SettingsFragment {
     }
 
     public void removeWidget(String widget, String prefKey) {
-        
+
         ArrayList<String> widgetList = new ArrayList<String>();
-        
+
         mWidgetPrefs.remove(prefWidgets.findPreference(prefKey));
         prefWidgets.removePreference(prefWidgets.findPreference(prefKey));
-        
+
         for(Entry<Preference, String> entry : mWidgetPrefs.entrySet()) {
             widgetList.add(entry.getKey().getKey().substring(
                     SELECT_BUTTON_KEY_PREFIX.length()));
         }
 
         Log.d(TAG, "widgetListString: " + ToolboxUtil.getWidgetStringFromList(widgetList));
-        
+
         ToolboxUtil.saveCurrentWidgets(mContext, ToolboxUtil.
                 getWidgetStringFromList(widgetList));
         loadWidgetPrefs();

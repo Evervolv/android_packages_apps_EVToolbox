@@ -51,11 +51,19 @@
 
         <activity android:name="Settings$LockscreenStyleActivity"
                 android:label="@string/pref_lockscreen_style_title"
-                android:configChanges="orientation|keyboardHidden|screenSize"
                 android:clearTaskOnLaunch="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.android.settings.SHORTCUT" />
             </intent-filter>
+            <meta-data android:name="com.evervolv.toolbox.FRAGMENT_CLASS"
+                android:value="com.evervolv.toolbox.activities.Lockscreen$LockStyle" />
+            <meta-data android:name="com.evervolv.toolbox.TOP_LEVEL_HEADER_ID"
+                android:resource="@id/lockscreen_settings" />
+            <meta-data android:name="com.evervolv.toolbox.PARENT_FRAGMENT_TITLE"
+                android:resource="@string/pref_lockscreen_title_head" />
+            <meta-data android:name="com.evervolv.toolbox.PARENT_FRAGMENT_CLASS"
+                android:value="com.evervolv.toolbox.activities.Lockscreen" />
         </activity>
 
         <!-- Statusbar -->

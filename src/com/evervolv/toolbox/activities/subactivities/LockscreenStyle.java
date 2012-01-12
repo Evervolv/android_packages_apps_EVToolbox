@@ -25,13 +25,13 @@ public class LockscreenStyle extends SettingsFragment implements
     private static final String LOCKSCREEN_STYLE_MULITWAVEVIEW_3WAY_TOGGLE = "pref_lockscreen_style_multiwaveview_3way_toggle";
     private static final String LOCKSCREEN_STYLE_MULTIWAVEVIEW_SILENTMODE_TOGGLE = "pref_lockscreen_style_multiwaveview_silentmode_toggle";
     private static final String LOCKSCREEN_CUSTOM_APP = "pref_lockscreen_custom_app";
-    
+
     private static final String CATEGORY_ICS = "pref_category_ics_style";
 
     private static final int LOCK_STYLE_GB   = 1;
     private static final int LOCK_STYLE_ECLAIR = 2;
     private static final int LOCK_STYLE_ICS = 3;
-    
+
     private ListPreference mLockscreenStyle;
     private CheckBoxPreference mLockscreenStyleIcs3way;
     private CheckBoxPreference mLockscreenStyleIcsSilentToggle;
@@ -40,7 +40,7 @@ public class LockscreenStyle extends SettingsFragment implements
     private ShortcutPickHelper mPicker;
     private ContentResolver mCr;
     private PreferenceScreen mPrefSet;
-    
+
     private int mCurrLockscreen = Settings.System.getInt(mCr,
             Settings.System.LOCKSCREEN_STYLE , 3);
     
@@ -51,7 +51,7 @@ public class LockscreenStyle extends SettingsFragment implements
         addPreferencesFromResource(R.xml.lockscreen_style);
         mPrefSet = getPreferenceScreen();
         mCr = getContentResolver();
-        
+
         mCatIcs= (PreferenceCategory) mPrefSet.findPreference(CATEGORY_ICS);
 
 
@@ -74,14 +74,14 @@ public class LockscreenStyle extends SettingsFragment implements
         if (mCurrLockscreen != 3) {
             mPrefSet.removePreference(mCatIcs);
         }
-        
+
         //removing this until we use it!
         mCatIcs.removePreference(mLockscreenStyleIcsSilentToggle);
-        
+
         mPicker = new ShortcutPickHelper(this, this);
         setCustomAppSummary();
     }
-    
+
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (preference == mLockscreenStyle) {
@@ -98,7 +98,7 @@ public class LockscreenStyle extends SettingsFragment implements
         }
         return false;
     }
-    
+
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         boolean value;
@@ -118,7 +118,7 @@ public class LockscreenStyle extends SettingsFragment implements
         }
         return false;
     }
-    
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -141,6 +141,5 @@ public class LockscreenStyle extends SettingsFragment implements
             mCustomAppPref.setSummary(mPicker.getFriendlyNameForUri(uri));
         }
     }
-    
-    
+
 }

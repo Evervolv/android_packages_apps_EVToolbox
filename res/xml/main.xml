@@ -6,7 +6,7 @@
     <header
         android:id="@+id/lockscreen_settings"
         android:fragment="com.evervolv.toolbox.activities.Lockscreen"
-        android:title="@string/pref_lockscreen_settings_title_head"
+        android:title="@string/pref_lockscreen_title_head"
         />
     <!-- Statusbar Settings -->
     <header

@@ -5,7 +5,7 @@
 
     <!--  Primary Screen Settings -->
     <string name="lockscreen_title">Lockscreen</string>
-    <string name="pref_lockscreen_settings_title_head">Lockscreen</string>
+    <string name="pref_lockscreen_title_head">Lockscreen</string>
     <string name="pref_lockscreen_style_title">Lockscreen style</string>
     <string name="pref_lockscreen_style_summary">Choose your style of lockscreen</string>
     <string name="pref_lockscreen_style_ics_style">ICS lockscreen options</string>
