@@ -87,6 +87,31 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
+            <meta-data android:name="com.evervolv.toolbox.FRAGMENT_CLASS"
+                android:value="com.evervolv.toolbox.activities.Statusbar$NotifToolbox" />
+            <meta-data android:name="com.evervolv.toolbox.TOP_LEVEL_HEADER_ID"
+                android:resource="@id/statusbar_settings" />
+            <meta-data android:name="com.evervolv.toolbox.PARENT_FRAGMENT_TITLE"
+                android:resource="@string/pref_statusbar_title_head" />
+            <meta-data android:name="com.evervolv.toolbox.PARENT_FRAGMENT_CLASS"
+                android:value="com.evervolv.toolbox.activities.Statusbar" />
+        </activity>
+
+        <activity android:name="Settings$StatusbarIconsActivity"
+                android:label="@string/pref_statusbar_icons_title"
+                android:configChanges="orientation|keyboardHidden|screenSize"
+                android:clearTaskOnLaunch="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+            <meta-data android:name="com.evervolv.toolbox.FRAGMENT_CLASS"
+                android:value="com.evervolv.toolbox.activities.Statusbar$StatusIcons" />
+            <meta-data android:name="com.evervolv.toolbox.TOP_LEVEL_HEADER_ID"
+                android:resource="@id/statusbar_settings" />
+            <meta-data android:name="com.evervolv.toolbox.PARENT_FRAGMENT_TITLE"
+                android:resource="@string/pref_statusbar_title_head" />
+            <meta-data android:name="com.evervolv.toolbox.PARENT_FRAGMENT_CLASS"
+                android:value="com.evervolv.toolbox.activities.Statusbar" />
         </activity>
 
     </application>

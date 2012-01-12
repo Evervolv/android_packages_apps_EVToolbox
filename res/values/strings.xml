@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <!-- Generic -->
+        <!-- Generic -->
     <string name="app_name">Evervolv toolbox</string>
 
-    <!--  Primary Screen Settings -->
+        <!-- Lockscreen Settings -->
     <string name="lockscreen_title">Lockscreen</string>
     <string name="pref_lockscreen_title_head">Lockscreen</string>
     <string name="pref_lockscreen_style_title">Lockscreen style</string>
@@ -17,9 +17,9 @@
     <string name="select_custom_app_title">Select custom application</string>
     <string name="group_applications">Applications</string>
 
-
+        <!-- Statusbar Settings -->
     <string name="statusbar_title">Statusbar</string>
-    <string name="pref_statusbar_settings_title_head">Statusbar</string>
+    <string name="pref_statusbar_title_head">Statusbar</string>
 
     <string name="pref_notification_toolbox_title">Notification toolbox</string>
     <string name="pref_notification_toolbox_summary">Settings for the notification toolbox</string>
@@ -39,6 +39,12 @@
     <string name="title_toggle_usbtether">Usb Tether</string>
     <string name="title_toggle_autorotate">Auto Rotate</string>
     <string name="title_toggle_airplane">Airplane Mode</string>
+
+        <!-- Statusbar Settings >> Signal icons-->
+    <string name="pref_statusbar_icons_title">Statusbar Icons</string>
+    <string name="pref_statusbar_icons_summary">Settings to control statusbar icons</string>
+    <string name="pref_statusbar_sixbar_signal_title">Use sixbar signal icons</string>
+    <string name="pref_statusbar_sixbar_signal_summary">Choose whether or or not to use sixbar icons (modded) for cell signal strength</string>
 
         <!-- Music Control Options -->
     <string name="pref_lockscreen_cat_music_controls_title">Music Controls</string>

@@ -420,4 +420,5 @@ public class Settings extends PreferenceActivity {
     public static class StatusbarActivity extends Settings { /* */ }
     public static class NotificationToolboxActivity extends Settings { /* */ }
     public static class LockscreenStyleActivity extends Settings { /* */ }
+    public static class StatusbarIconsActivity extends Settings { /* */ }
 }
