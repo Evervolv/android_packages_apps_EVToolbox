@@ -17,6 +17,13 @@
     <string name="select_custom_app_title">Select custom application</string>
     <string name="group_applications">Applications</string>
 
+    <string name="pref_lockscreen_style_custom_app_sound">Sound toggle</string>
+    <string name="pref_lockscreen_style_custom_app_unlock">Unlock switch</string>
+    <string name="pref_lockscreen_style_custom_app_pick">Click here to pick a shortcut!</string>
+    <string name ="pref_lockscreen_category_custom_app_one_title">Custom mapping (Right)</string>
+    <string name ="pref_lockscreen_category_custom_app_two_title">Custom mapping (Top)</string>
+    <string name ="pref_lockscreen_category_custom_app_three_title">Custom mapping (Left)</string>
+
         <!-- Statusbar Settings -->
     <string name="statusbar_title">Statusbar</string>
     <string name="pref_statusbar_title_head">Statusbar</string>

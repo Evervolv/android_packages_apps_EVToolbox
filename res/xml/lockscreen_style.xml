@@ -20,12 +20,33 @@
             android:title="@string/pref_lockscreen_multiwaveview_3way_title"
             android:summary="@string/pref_lockscreen_multiwaveview_3way_summary" />
 
-        <CheckBoxPreference android:key="pref_lockscreen_style_multiwaveview_silentmode_toggle"
-            android:title="@string/pref_lockscreen_multiwaveview_silentmode_title"
-            android:summary="@string/pref_lockscreen_multiwaveview_silentmode_summary" />
+    </PreferenceCategory>
 
-        <Preference android:key="pref_lockscreen_custom_app"
-            android:title="@string/pref_lockscreen_custom_app_title"/>
+    <PreferenceCategory android:key="pref_lockscreen_category_custom_app_one"
+        android:title="@string/pref_lockscreen_category_custom_app_one_title">
+
+        <ListPreference android:key="pref_lockscreen_custom_app_one"
+            android:entries="@array/lockscreen_custom_app_entries" 
+            android:entryValues="@array/lockscreen_custom_app_values" />
 
     </PreferenceCategory>
+
+    <PreferenceCategory android:key="pref_lockscreen_category_custom_app_two"
+        android:title="@string/pref_lockscreen_category_custom_app_two_title">
+
+        <ListPreference android:key="pref_lockscreen_custom_app_two"
+            android:entries="@array/lockscreen_custom_app_entries" 
+            android:entryValues="@array/lockscreen_custom_app_values" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:key="pref_lockscreen_category_custom_app_three"
+        android:title="@string/pref_lockscreen_category_custom_app_three_title">
+
+        <ListPreference android:key="pref_lockscreen_custom_app_three"
+            android:entries="@array/lockscreen_custom_app_entries" 
+            android:entryValues="@array/lockscreen_custom_app_values" />
+
+    </PreferenceCategory>
+
 </PreferenceScreen>
