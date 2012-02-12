@@ -9,9 +9,11 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
+import android.provider.Settings;
 import android.util.Log;
 
 import com.evervolv.toolbox.R;
@@ -21,12 +23,15 @@ import com.evervolv.toolbox.utils.ToolboxUtil;
 public class NotificationToolbox extends SettingsFragment {
     private static final String TAG = "EVToolbox";
 
+    private static final String NOTIFICATION_TOOLBOX_DROPDOWN = "pref_notification_toolbox_dropdown";
     private static final String NOTIFICATION_TOOLBOX_WIDGETS = "pref_notification_toolbox_widgets";
     private static final String WIDGETS_CATEGORY = "pref_category_statusbar_widgets";
     private static final String SELECT_BUTTON_KEY_PREFIX = "pref_button_";
 
     private static final int DIALOG_ADD_WIDGET = 0;
     private static final int DIALOG_WIDGET_OPTIONS = 1;
+
+    private CheckBoxPreference mToolboxDropdown;
 
     private Preference mAddWidgets;
     private Context mContext;
@@ -53,6 +58,10 @@ public class NotificationToolbox extends SettingsFragment {
 
         mContext = getContext();
 
+        mToolboxDropdown = (CheckBoxPreference) mPrefSet.findPreference(NOTIFICATION_TOOLBOX_DROPDOWN);
+        mToolboxDropdown.setChecked(Settings.System.getInt(getContentResolver(),
+                Settings.System.NOTIFICATION_DROPDOWN_VIEW, 0) == 1);
+
         prefWidgets = (PreferenceCategory) mPrefSet
                 .findPreference(WIDGETS_CATEGORY);
 
@@ -64,8 +73,14 @@ public class NotificationToolbox extends SettingsFragment {
     }
 
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+        boolean value;
 
-        if (preference == mAddWidgets) {
+        if (preference == mToolboxDropdown) {
+            value = mToolboxDropdown.isChecked();
+            Settings.System.putInt(mCr, Settings.System.NOTIFICATION_DROPDOWN_VIEW,
+                    value ? 1 : 0);
+            return true;
+        } else if (preference == mAddWidgets) {
 
             final String[] widgets = new String[ToolboxUtil.WIDGETS.size()];
             final String[] widgetsTitle = new String[ToolboxUtil.WIDGETS.size()];
