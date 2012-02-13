@@ -56,8 +56,7 @@ public class ToolboxUtil {
     private static final String WIDGET_DELIMITER = "|";
     private static final String WIDGETS_DEFAULT = WIDGET_WIFI
                              + WIDGET_DELIMITER + WIDGET_BLUETOOTH
-                             + WIDGET_DELIMITER + WIDGET_GPS
-                             + WIDGET_DELIMITER + WIDGET_SYNC;
+                             + WIDGET_DELIMITER + WIDGET_AUTOROTATE;
 
     public static String getCurrentWidgets(Context context) {
         String widgets = Settings.System.getString(context.getContentResolver(), Settings.System.SELECTED_TOOLBOX_WIDGETS);
