@@ -10,9 +10,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
+import android.preference.Preference.OnPreferenceChangeListener;
 import android.provider.Settings;
 import android.util.Log;
 
@@ -20,24 +22,26 @@ import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.SettingsFragment;
 import com.evervolv.toolbox.utils.ToolboxUtil;
 
-public class NotificationToolbox extends SettingsFragment {
+public class NotificationToolbox extends SettingsFragment implements OnPreferenceChangeListener {
+
     private static final String TAG = "EVToolbox";
 
     private static final String NOTIFICATION_TOOLBOX_DROPDOWN = "pref_notification_toolbox_dropdown";
     private static final String NOTIFICATION_TOOLBOX_WIDGETS = "pref_notification_toolbox_widgets";
+    private static final String TOOLBOX_MAX_WIDGETS_PER_LINE = "pref_toolbox_max_widgets_per_line";
     private static final String WIDGETS_CATEGORY = "pref_category_statusbar_widgets";
     private static final String SELECT_BUTTON_KEY_PREFIX = "pref_button_";
 
     private static final int DIALOG_ADD_WIDGET = 0;
     private static final int DIALOG_WIDGET_OPTIONS = 1;
 
-    private CheckBoxPreference mToolboxDropdown;
-
     private Preference mAddWidgets;
     private Context mContext;
     private AlertDialog.Builder mAlertDialog;
 
     private PreferenceCategory prefWidgets;
+    private CheckBoxPreference mToolboxDropdown;
+    private ListPreference mMaxWidgets;
 
     private String clickedPref;
     private String clickedPrefKey;
@@ -61,6 +65,10 @@ public class NotificationToolbox extends SettingsFragment {
         mToolboxDropdown = (CheckBoxPreference) mPrefSet.findPreference(NOTIFICATION_TOOLBOX_DROPDOWN);
         mToolboxDropdown.setChecked(Settings.System.getInt(getContentResolver(),
                 Settings.System.NOTIFICATION_DROPDOWN_VIEW, 0) == 1);
+
+        mMaxWidgets = (ListPreference) mPrefSet
+                .findPreference(TOOLBOX_MAX_WIDGETS_PER_LINE);
+        mMaxWidgets.setOnPreferenceChangeListener(this);
 
         prefWidgets = (PreferenceCategory) mPrefSet
                 .findPreference(WIDGETS_CATEGORY);
@@ -180,5 +188,15 @@ public class NotificationToolbox extends SettingsFragment {
             }
         }
         Log.d(TAG, "loadWidgetPrefs: " + ToolboxUtil.getCurrentWidgets(mContext));
+    }
+
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+        if (preference == mMaxWidgets) {
+            Settings.System.putInt(mCr, Settings.System.MAX_WIDGETS_PER_LINE,
+                    Integer.valueOf((String) newValue));
+            return true;
+        }
+        return false;
     }
 }

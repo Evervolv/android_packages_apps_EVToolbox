@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
         <CheckBoxPreference android:key="pref_notification_toolbox_dropdown"
             android:title="@string/pref_notification_toolbox_dropdown_title"
             android:summary="@string/pref_notification_toolbox_dropdown_summary">
         </CheckBoxPreference>
+
+        <ListPreference android:key="pref_toolbox_max_widgets_per_line"
+            android:title="@string/pref_toolbox_max_widgets_per_line_title"
+            android:entries="@array/toolbox_max_widgets_per_line_entries"
+            android:entryValues="@array/toolbox_max_widgets_per_line_values">
+        </ListPreference>
+
 	<PreferenceCategory
         android:title="@string/category_statusbar_add_widgets"
 	    android:key="pref_category_statusbar_add_widgets">

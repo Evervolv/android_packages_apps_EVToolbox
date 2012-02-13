@@ -13,15 +13,14 @@ public class ToolboxUtil {
 
     public static final String WIDGET_WIFI = "toggleWifi";
     public static final String WIDGET_GPS = "toggleGps";
-    public static final String WIDGET_BLUETOOTH = "toggleBt";
+    public static final String WIDGET_BLUETOOTH = "toggleBluetooth";
     public static final String WIDGET_SYNC = "toggleSync";
-    
     public static final String WIDGET_WIFIAP = "toggleWifiAp";
     public static final String WIDGET_MOBDATA = "toggleMobileData";
     public static final String WIDGET_USBTETHER = "toggleUsbTether";
     public static final String WIDGET_AUTOROTATE = "toggleAutoRotate";
     public static final String WIDGET_AIRPLANE = "toggleAirplaneMode";
-    
+
     public static final HashMap<String, WidgetInfo> WIDGETS = new HashMap<String, WidgetInfo>();
     static {
 	    WIDGETS.put(WIDGET_WIFI, new WidgetInfo(
@@ -53,31 +52,31 @@ public class ToolboxUtil {
                     R.drawable.widget_airplane));
 
     }
-    
+
     private static final String WIDGET_DELIMITER = "|";
     private static final String WIDGETS_DEFAULT = WIDGET_WIFI
                              + WIDGET_DELIMITER + WIDGET_BLUETOOTH
                              + WIDGET_DELIMITER + WIDGET_GPS
                              + WIDGET_DELIMITER + WIDGET_SYNC;
-    
+
     public static String getCurrentWidgets(Context context) {
         String widgets = Settings.System.getString(context.getContentResolver(), Settings.System.SELECTED_TOOLBOX_WIDGETS);
         if (widgets == null) {
             widgets = WIDGETS_DEFAULT;
-            
+
             // Add the WiMAX widget if it's supported
             //if (WimaxHelper.isWimaxSupported(context)) {
             //    widgets += WIDGET_DELIMITER + WIDGET_WIMAX;
-            //}	
+            //}
         }
         return widgets;
     }
-    
+
     public static void saveCurrentWidgets(Context context, String widgets) {
         Settings.System.putString(context.getContentResolver(),
                 Settings.System.SELECTED_TOOLBOX_WIDGETS, widgets);
     }
-    
+
     public static String mergeInNewWidgetString(String oldString, String newString) {
         ArrayList<String> oldList = getWidgetListFromString(oldString);
         ArrayList<String> newList = getWidgetListFromString(newString);
@@ -100,11 +99,11 @@ public class ToolboxUtil {
         // return merged list
         return getWidgetStringFromList(mergedList);
     }
-    
+
     public static ArrayList<String> getWidgetListFromString(String widgets) {
         return new ArrayList<String>(Arrays.asList(widgets.split("\\|")));
     }
-    
+
     public static String getWidgetStringFromList(ArrayList<String> widgets) {
         if(widgets == null || widgets.size() <= 0) {
             return "";
@@ -116,11 +115,11 @@ public class ToolboxUtil {
             return s;
         }
     }
-    
+
     public static String appendWidgetString(String newWidget, String oldWidgetString) {
     	return oldWidgetString + WIDGET_DELIMITER + newWidget ;
     }
-    
+
     public static class WidgetInfo {
         private String mId;
         private int mTitleResId;
