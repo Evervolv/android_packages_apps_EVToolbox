@@ -7,7 +7,6 @@ import android.util.Log;
 
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.SettingsFragment;
-import com.evervolv.toolbox.activities.subactivities.NotificationToolbox;
 import com.evervolv.toolbox.activities.subactivities.StatusbarIcons;
 
 public class Statusbar extends SettingsFragment {
@@ -28,20 +27,13 @@ public class Statusbar extends SettingsFragment {
 
         mPrefSet = getPreferenceScreen();
 
-        mNotifToolbox = (PreferenceScreen) mPrefSet.findPreference(
-                NOTIFICATION_TOOLBOX_PREF);
         mStatusIcons = (PreferenceScreen) mPrefSet.findPreference(
                 STATUSBAR_ICONS_PREF);
-
     }
 
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-        if (preference == mNotifToolbox) {
-            startPreferencePanel(mNotifToolbox.getFragment(),
-                    null, mNotifToolbox.getTitleRes(), null, null, -1);
-            return true;
-        } else if (preference == mStatusIcons) {
+        if (preference == mStatusIcons) {
             startPreferencePanel(mStatusIcons.getFragment(),
                     null, mStatusIcons.getTitleRes(), null, null, -1);
             return true;
@@ -49,7 +41,6 @@ public class Statusbar extends SettingsFragment {
         return false;
     }
 
-    public static class NotifToolbox extends NotificationToolbox { }
     public static class StatusIcons extends StatusbarIcons { }
 
 }

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.evervolv.toolbox.utils.ToolboxEnabler;
+
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -26,7 +28,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 public class Settings extends PreferenceActivity {
-	
+
     private static final String LOG_TAG = "Settings";
     private static final String META_DATA_KEY_HEADER_ID =
         "com.evervolv.toolbox.TOP_LEVEL_HEADER_ID";
@@ -52,7 +54,7 @@ public class Settings extends PreferenceActivity {
 
     protected HashMap<Integer, Integer> mHeaderIndexMap = new HashMap<Integer, Integer>();
     private List<Header> mHeaders;
-	
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
             if (getIntent().getBooleanExtra(EXTRA_CLEAR_UI_OPTIONS, false)) {
@@ -101,7 +103,7 @@ public class Settings extends PreferenceActivity {
 
         ListAdapter listAdapter = getListAdapter();
         if (listAdapter instanceof HeaderAdapter) {
-            //((HeaderAdapter) listAdapter).resume();
+            ((HeaderAdapter) listAdapter).resume();
         }
     }
 
@@ -111,10 +113,10 @@ public class Settings extends PreferenceActivity {
 
         ListAdapter listAdapter = getListAdapter();
         if (listAdapter instanceof HeaderAdapter) {
-            //((HeaderAdapter) listAdapter).pause();
+            ((HeaderAdapter) listAdapter).pause();
         }
     }
-    
+
     @Override
     public Header onGetInitialHeader() {
         String fragmentClass = getStartingFragmentClass(super.getIntent());
@@ -139,20 +141,20 @@ public class Settings extends PreferenceActivity {
         intent.setClass(this, SubSettings.class);
         return intent;
     }
-    
+
     @Override
     public void onBuildHeaders(List<Header> target) {
         loadHeadersFromResource(R.xml.main, target);
         updateHeaderList(target);
         mHeaders = target;
     }
-    
+
     private void updateHeaderList(List<Header> target) {
         int i = 0;
         while (i < target.size()) {
             Header header = target.get(i);
             int id = (int) header.id;
-            
+
             if (target.get(i) == header) {
                 if (mFirstHeader == null &&
                         HeaderAdapter.getHeaderType(header) != HeaderAdapter.HEADER_TYPE_CATEGORY) {
@@ -171,7 +173,7 @@ public class Settings extends PreferenceActivity {
             if (ai == null || ai.metaData == null) return;
             mTopLevelHeaderId = ai.metaData.getInt(META_DATA_KEY_HEADER_ID);
             mFragmentClass = ai.metaData.getString(META_DATA_KEY_FRAGMENT_CLASS);
-            
+
             final int parentHeaderTitleRes = ai.metaData.getInt(META_DATA_KEY_PARENT_TITLE);
             String parentFragmentClass = ai.metaData.getString(META_DATA_KEY_PARENT_FRAGMENT_CLASS);
             if (parentFragmentClass != null) {
@@ -284,6 +286,8 @@ public class Settings extends PreferenceActivity {
         static final int HEADER_TYPE_SWITCH = 2;
         private static final int HEADER_TYPE_COUNT = HEADER_TYPE_SWITCH + 1;
 
+        private final ToolboxEnabler mToolboxEnabler;
+
         private static class HeaderViewHolder {
             ImageView icon;
             TextView title;
@@ -296,6 +300,8 @@ public class Settings extends PreferenceActivity {
         static int getHeaderType(Header header) {
             if (header.fragment == null && header.intent == null) {
                 return HEADER_TYPE_CATEGORY;
+            } else if (header.id == R.id.notification_toolbox_settings) {
+                return HEADER_TYPE_SWITCH;
             } else {
                 return HEADER_TYPE_NORMAL;
             }
@@ -330,6 +336,7 @@ public class Settings extends PreferenceActivity {
         public HeaderAdapter(Context context, List<Header> objects) {
             super(context, 0, objects);
             mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            mToolboxEnabler = new ToolboxEnabler(context, new Switch(context));
         }
 
         @Override
@@ -380,7 +387,9 @@ public class Settings extends PreferenceActivity {
                     break;
 
                 case HEADER_TYPE_SWITCH:
-                    //$FALL-THROUGH$
+                    if (header.id == R.id.notification_toolbox_settings) {
+                        mToolboxEnabler.setSwitch(holder.switch_);
+                    }
                 case HEADER_TYPE_NORMAL:
                     holder.icon.setImageResource(header.iconRes);
                     holder.title.setText(header.getTitle(getContext().getResources()));
@@ -396,8 +405,17 @@ public class Settings extends PreferenceActivity {
 
             return view;
         }
+
+        public void resume() {
+            mToolboxEnabler.resume();
+        }
+
+        public void pause() {
+            mToolboxEnabler.pause();
+        }
+
     }
-    
+
     @Override
     public void setListAdapter(ListAdapter adapter) {
         if (mHeaders == null) {

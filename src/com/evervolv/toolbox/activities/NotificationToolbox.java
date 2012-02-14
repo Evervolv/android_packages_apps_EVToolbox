@@ -1,9 +1,11 @@
-package com.evervolv.toolbox.activities.subactivities;
+package com.evervolv.toolbox.activities;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import android.app.ActionBar;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -12,14 +14,18 @@ import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
+import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.Gravity;
+import android.widget.Switch;
 
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.SettingsFragment;
+import com.evervolv.toolbox.utils.ToolboxEnabler;
 import com.evervolv.toolbox.utils.ToolboxUtil;
 
 public class NotificationToolbox extends SettingsFragment implements OnPreferenceChangeListener {
@@ -43,6 +49,7 @@ public class NotificationToolbox extends SettingsFragment implements OnPreferenc
     private CheckBoxPreference mToolboxDropdown;
     private ListPreference mMaxWidgets;
 
+    private ToolboxEnabler mToolboxEnabler;
     private String clickedPref;
     private String clickedPrefKey;
 
@@ -57,10 +64,30 @@ public class NotificationToolbox extends SettingsFragment implements OnPreferenc
 
         addPreferencesFromResource(R.xml.notification_toolbox);
 
+        final Activity activity = getActivity();
+
+        Switch actionBarSwitch = new Switch(activity);
+
+        if (activity instanceof PreferenceActivity) {
+            PreferenceActivity preferenceActivity = (PreferenceActivity) activity;
+            if (!preferenceActivity.onIsMultiPane()) {
+                actionBarSwitch.setPadding(0, 0, 16, 0);
+                activity.getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM,
+                        ActionBar.DISPLAY_SHOW_CUSTOM);
+                activity.getActionBar().setCustomView(actionBarSwitch, new ActionBar.LayoutParams(
+                        ActionBar.LayoutParams.WRAP_CONTENT,
+                        ActionBar.LayoutParams.WRAP_CONTENT,
+                        Gravity.CENTER_VERTICAL | Gravity.RIGHT));
+            }
+        }
+
+        mToolboxEnabler = new ToolboxEnabler(activity, actionBarSwitch);
+
         mPrefSet = getPreferenceScreen();
         mCr = getContentResolver();
 
         mContext = getContext();
+
 
         mToolboxDropdown = (CheckBoxPreference) mPrefSet.findPreference(NOTIFICATION_TOOLBOX_DROPDOWN);
         mToolboxDropdown.setChecked(Settings.System.getInt(getContentResolver(),
