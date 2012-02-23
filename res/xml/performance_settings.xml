@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceScreen android:key="pref_memory_management"
+        android:title="@string/pref_memory_management_title"
+        android:summary="@string/pref_memory_management_summary"
+        android:fragment="com.evervolv.toolbox.activities.Performance$MemMgr">
+    </PreferenceScreen>
+    <PreferenceScreen android:key="pref_processor"
+        android:title="@string/pref_processor_title"
+        android:summary="@string/pref_processor_summary"
+        android:fragment="com.evervolv.toolbox.activities.Performance$Cpu">
+    </PreferenceScreen>
+</PreferenceScreen>
