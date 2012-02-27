@@ -200,21 +200,22 @@ public class NotificationToolbox extends SettingsFragment implements OnPreferenc
                 .getWidgetListFromString(ToolboxUtil.getCurrentWidgets(mContext));
 
         prefWidgets.removeAll();
-        prefWidgets.setOrderingAsAdded(false);
+        prefWidgets.setOrderingAsAdded(true);
 
         mWidgetPrefs.clear();
-
-        for(ToolboxUtil.WidgetInfo widget : ToolboxUtil.WIDGETS.values()) {
-            if (widgetList.contains(widget.getId())) {
+        ToolboxUtil.WidgetInfo info = null;
+        for (String widget : widgetList) {
+            if (ToolboxUtil.WIDGETS.containsKey(widget)) {
+                info = ToolboxUtil.WIDGETS.get(widget);
                 Preference pref = new Preference(mContext);
-                pref.setIcon(widget.getIconResId());
-                pref.setKey(SELECT_BUTTON_KEY_PREFIX + widget.getId());
-                pref.setTitle(widget.getTitleResId());
-                mWidgetPrefs.put(pref, widget.getId());
+                pref.setIcon(info.getIconResId());
+                pref.setKey(SELECT_BUTTON_KEY_PREFIX + widget);
+                pref.setTitle(info.getTitleResId());
+                mWidgetPrefs.put(pref, widget);
                 prefWidgets.addPreference(pref);
+                Log.d(TAG, "Widget Added: " + widget);
             }
         }
-        Log.d(TAG, "loadWidgetPrefs: " + ToolboxUtil.getCurrentWidgets(mContext));
     }
 
     @Override
