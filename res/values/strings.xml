@@ -53,6 +53,8 @@
     <string name="title_toggle_airplane">Airplane Mode</string>
     <string name="title_toggle_brightness">Brightness</string>
 
+    <string name="notificiation_toolbox_default_widgets">toggleWifi|toggleBluetooth|toggleAutoRotate</string>
+
         <!-- Statusbar Settings >> Signal icons-->
     <string name="pref_statusbar_icons_title">Statusbar Icons</string>
     <string name="pref_statusbar_icons_summary">Settings to control statusbar icons</string>

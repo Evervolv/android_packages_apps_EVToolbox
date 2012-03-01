@@ -58,14 +58,12 @@ public class ToolboxUtil {
     }
 
     private static final String WIDGET_DELIMITER = "|";
-    private static final String WIDGETS_DEFAULT = WIDGET_WIFI
-                             + WIDGET_DELIMITER + WIDGET_BLUETOOTH
-                             + WIDGET_DELIMITER + WIDGET_AUTOROTATE;
 
     public static String getCurrentWidgets(Context context) {
         String widgets = Settings.System.getString(context.getContentResolver(), Settings.System.SELECTED_TOOLBOX_WIDGETS);
         if (widgets == null) {
-            widgets = WIDGETS_DEFAULT;
+            widgets = context.getResources().getString(R.string
+                    .notificiation_toolbox_default_widgets);
 
             // Add the WiMAX widget if it's supported
             //if (WimaxHelper.isWimaxSupported(context)) {
