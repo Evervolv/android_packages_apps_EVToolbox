@@ -66,11 +66,35 @@
         <!-- Interface Settings -->
     <string name="interface_title">Interface</string>
     <string name="pref_interface_title_head">Interface</string>
+        <!-- Interface >> Buttons -->
     <string name="pref_interface_buttons_title">Buttons</string>
     <string name="pref_interface_buttons_summary">Control actions of hardware buttons</string>
-    <string name="pref_category_button_title">Button controls</string>
     <string name="pref_trackball_wake_toggle_title">Trackball wake</string>
     <string name="pref_trackball_wake_toggle_summary">Allow trackball to wake the device</string>
     <string name="pref_volume_wake_toggle_title">Volume btn wake</string>
     <string name="pref_volume_wake_toggle_summary">Press volume up or down to wake the device (cannot be used with music control)</string>
+
+        <!-- Performance Settings -->
+    <string name="performance_title">Performance</string>
+    <string name="pref_performance_title_head">Performance</string>
+        <!-- Performance >> MemoryManagement -->
+    <string name="pref_memory_management_title">Memory management</string>
+    <string name="pref_memory_management_summary">Customize memory usage to alter system performance</string>
+    <string name="pref_zram_title">zRam</string>
+    <string name="pref_zram_summary">Compress memory for increased virtual capacity (requires reboot)</string>
+    <string name="pref_ksm_title">Kernel samepage merging</string>
+    <string name="pref_ksm_summary">Ksm reduces physical memory requirements and improves performance</string>
+        <!-- Performance >> Processor -->
+    <string name="processor_title">Processor</string>
+    <string name="pref_processor_title">Processor</string>
+    <string name="pref_processor_summary">Change CPU governor and clock speed</string>
+    <string name="pref_cpu_cur_freq_title">Current CPU frequency</string>
+    <string name="pref_cpu_governors_title">CPU governor</string>
+    <string name="pref_cpu_governors_summary">%S</string>
+    <string name="pref_cpu_min_freq_title">Minimum CPU frequency</string>
+    <string name="pref_cpu_min_freq_summary">%s</string>
+    <string name="pref_cpu_max_freq_title">Maximum CPU frequency</string>
+    <string name="pref_cpu_max_freq_summary">%s</string>
+    <string name="pref_cpu_set_on_boot">Set on boot</string>
+    <string name="pref_cpu_set_on_boot_summary">Restore the processor settings on boot</string>
 </resources>

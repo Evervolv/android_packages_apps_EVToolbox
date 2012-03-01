@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory	android:key="pref_category_button_settings"
-        android:title="@string/pref_category_button_title">
 
         <CheckBoxPreference android:key="pref_trackball_wake_toggle"
             android:title="@string/pref_trackball_wake_toggle_title"
@@ -13,12 +11,10 @@
             android:summary="@string/pref_volume_wake_toggle_summary">
         </CheckBoxPreference>
 
-        <!-- Lockscreen music controls -->
         <CheckBoxPreference
             android:key="pref_lockscreen_music_controls_volbtn"
             android:title="@string/pref_lockscreen_music_controls_volbtn_title"
             android:summary="@string/pref_lockscreen_music_controls_volbtn_summary">
         </CheckBoxPreference>
 
-    </PreferenceCategory>
 </PreferenceScreen>
