@@ -20,6 +20,7 @@ public class ToolboxUtil {
     public static final String WIDGET_USBTETHER = "toggleUsbTether";
     public static final String WIDGET_AUTOROTATE = "toggleAutoRotate";
     public static final String WIDGET_AIRPLANE = "toggleAirplaneMode";
+    public static final String WIDGET_BRIGHTNESS = "toggleBrightness";
 
     public static final HashMap<String, WidgetInfo> WIDGETS = new HashMap<String, WidgetInfo>();
     static {
@@ -50,6 +51,9 @@ public class ToolboxUtil {
 	    WIDGETS.put(WIDGET_AIRPLANE, new WidgetInfo(
                 WIDGET_AIRPLANE, R.string.title_toggle_airplane,
                     R.drawable.widget_airplane));
+	    WIDGETS.put(WIDGET_BRIGHTNESS, new WidgetInfo(
+                WIDGET_BRIGHTNESS, R.string.title_toggle_brightness,
+                    R.drawable.widget_brightness));
 
     }
 

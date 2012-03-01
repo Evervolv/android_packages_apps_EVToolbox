@@ -51,6 +51,7 @@
     <string name="title_toggle_usbtether">Usb Tether</string>
     <string name="title_toggle_autorotate">Auto Rotate</string>
     <string name="title_toggle_airplane">Airplane Mode</string>
+    <string name="title_toggle_brightness">Brightness</string>
 
         <!-- Statusbar Settings >> Signal icons-->
     <string name="pref_statusbar_icons_title">Statusbar Icons</string>
