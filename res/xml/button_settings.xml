@@ -112,4 +112,16 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory
+        android:key="volume_keys"
+        android:title="@string/volume_keys_title" >
+
+        <evervolv.preference.EVSystemSettingSwitchPreference
+            android:key="volbtn_music_controls"
+            android:title="@string/volbtn_music_controls_title"
+            android:summary="@string/volbtn_music_controls_summary"
+            android:defaultValue="true" />
+
+    </PreferenceCategory>
+
 </PreferenceScreen>

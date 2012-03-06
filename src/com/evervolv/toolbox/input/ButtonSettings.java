@@ -59,6 +59,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
     private static final String CATEGORY_MENU = "menu_key";
     private static final String CATEGORY_ASSIST = "assist_key";
     private static final String CATEGORY_APPSWITCH = "app_switch_key";
+    private static final String CATEGORY_VOLUME = "volume_keys";
 
     // Available custom actions to perform on a key press.
     // Must match values for KEY_HOME_LONG_PRESS_ACTION in:
@@ -126,6 +127,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
         final boolean hasMenuKey = (deviceKeys & KEY_MASK_MENU) != 0;
         final boolean hasAssistKey = (deviceKeys & KEY_MASK_ASSIST) != 0;
         final boolean hasAppSwitchKey = (deviceKeys & KEY_MASK_APP_SWITCH) != 0;
+        final boolean hasVolumeKeys = (deviceKeys & KEY_MASK_VOLUME) != 0;
 
         final PreferenceGroup homeCategory =
                 (PreferenceCategory) prefScreen.findPreference(CATEGORY_HOME);
@@ -135,6 +137,8 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
                 (PreferenceCategory) prefScreen.findPreference(CATEGORY_ASSIST);
         final PreferenceGroup appSwitchCategory =
                 (PreferenceCategory) prefScreen.findPreference(CATEGORY_APPSWITCH);
+        final PreferenceGroup volumeCategory =
+                (PreferenceCategory) prefScreen.findPreference(CATEGORY_VOLUME);
 
         mHandler = new Handler();
 
@@ -211,6 +215,10 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
             mAppSwitchLongPressAction = initList(KEY_APP_SWITCH_LONG_PRESS, longPressAction);
         } else {
             prefScreen.removePreference(appSwitchCategory);
+        }
+
+        if (!hasVolumeKeys) {
+            prefScreen.removePreference(volumeCategory);
         }
     }
 

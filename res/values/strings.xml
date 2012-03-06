@@ -57,6 +57,7 @@
     <string name="menu_key_title">Menu button</string>
     <string name="assist_key_title">Search button</string>
     <string name="appswitch_key_title">Recents button</string>
+    <string name="volume_keys_title">Volume buttons</string>
 
     <!-- Hardware key rebinding -->
     <string name="short_press_title">Short press action</string>
@@ -74,4 +75,8 @@
     <string name="action_sleep">Turn screen off</string>
     <string name="action_last_app">Last app</string>
     <string name="action_split_screen">Split screen</string>
+
+    <!-- Volume key music controls -->
+    <string name="volbtn_music_controls_title">Control playback</string>
+    <string name="volbtn_music_controls_summary">Seek music tracks by long pressing the volume keys while the display is off</string>
 </resources>
