@@ -17,16 +17,6 @@
 
 <resources>
 
-    <string-array name="entries_batterystyles">
-        <item>Stock</item>
-        <item>Percentage</item>
-    </string-array>
-
-    <string-array name="entryvalues_batterystyles" translatable="false">
-        <item>1</item>
-        <item>2</item>
-    </string-array>
-
     <string-array name="lockscreen_style_entries">
         <item>Gingerbread style</item>
         <item>Eclair style</item>
@@ -67,6 +57,18 @@
         <item>3</item>
         <item>4</item>
         <item>5</item>
+    </string-array>
+
+    <string-array name="statusbar_batt_style_entries">
+        <item>Stock</item>
+        <item>Stock w/ Percentage</item>
+        <item>Hidden</item>
+    </string-array>
+
+    <string-array name="statusbar_batt_style_entryvalues" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
     </string-array>
 
     <string-array name="toolbox_max_widgets_per_line_entries">
