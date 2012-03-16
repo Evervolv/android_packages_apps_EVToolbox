@@ -61,6 +61,7 @@
     <string name="title_toggle_autorotate">Auto Rotate</string>
     <string name="title_toggle_airplane">Airplane Mode</string>
     <string name="title_toggle_brightness">Brightness</string>
+    <string name="title_toggle_wimax">Wimax</string>
 
     <string name="notificiation_toolbox_default_widgets">toggleWifi|toggleBluetooth|toggleAutoRotate</string>
 

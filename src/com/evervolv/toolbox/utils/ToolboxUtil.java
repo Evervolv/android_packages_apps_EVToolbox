@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 import android.content.Context;
+import android.net.wimax.WimaxHelper;
 import android.provider.Settings;
 
 import com.evervolv.toolbox.R;
@@ -21,6 +22,7 @@ public class ToolboxUtil {
     public static final String WIDGET_AUTOROTATE = "toggleAutoRotate";
     public static final String WIDGET_AIRPLANE = "toggleAirplaneMode";
     public static final String WIDGET_BRIGHTNESS = "toggleBrightness";
+    public static final String WIDGET_WIMAX = "toggleWimax";
 
     public static final HashMap<String, WidgetInfo> WIDGETS = new HashMap<String, WidgetInfo>();
     static {
@@ -54,6 +56,9 @@ public class ToolboxUtil {
 	    WIDGETS.put(WIDGET_BRIGHTNESS, new WidgetInfo(
                 WIDGET_BRIGHTNESS, R.string.title_toggle_brightness,
                     R.drawable.widget_brightness));
+	       WIDGETS.put(WIDGET_WIMAX, new WidgetInfo(
+	                WIDGET_WIMAX, R.string.title_toggle_wimax,
+	                    R.drawable.widget_wimax));
 
     }
 
@@ -66,9 +71,9 @@ public class ToolboxUtil {
                     .notificiation_toolbox_default_widgets);
 
             // Add the WiMAX widget if it's supported
-            //if (WimaxHelper.isWimaxSupported(context)) {
-            //    widgets += WIDGET_DELIMITER + WIDGET_WIMAX;
-            //}
+            if (WimaxHelper.isWimaxSupported(context)) {
+                widgets += WIDGET_DELIMITER + WIDGET_WIMAX;
+            }
         }
         return widgets;
     }
