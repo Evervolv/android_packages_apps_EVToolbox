@@ -27,6 +27,7 @@ import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.SettingsFragment;
 import com.evervolv.toolbox.utils.ToolboxEnabler;
 import com.evervolv.toolbox.utils.ToolboxUtil;
+import com.evervolv.toolbox.utils.ToolboxUtil.WidgetInfo;
 
 public class NotificationToolbox extends SettingsFragment implements OnPreferenceChangeListener {
 
@@ -54,6 +55,8 @@ public class NotificationToolbox extends SettingsFragment implements OnPreferenc
     private String clickedPrefKey;
 
     private HashMap<Preference, String> mWidgetPrefs = new HashMap<Preference, String>();
+
+    private HashMap<String, WidgetInfo> SUPPORTED_WIDGETS = new HashMap<String, WidgetInfo>();
 
     private ContentResolver mCr;
     private PreferenceScreen mPrefSet;
@@ -104,7 +107,27 @@ public class NotificationToolbox extends SettingsFragment implements OnPreferenc
                 .findPreference(NOTIFICATION_TOOLBOX_WIDGETS);
 
         loadWidgetPrefs();
+        loadSupportedWidgets();
+    }
 
+    private void loadSupportedWidgets() {
+
+        //Load all widgets to initl SUPPORTED_WIDGETS
+        SUPPORTED_WIDGETS = ToolboxUtil.WIDGETS;
+
+        //Remove unsuppored widgets per-device config overlay.
+        if (!getResources().getBoolean(R.bool.config_has_wimax)) {
+            SUPPORTED_WIDGETS.remove(ToolboxUtil.WIDGET_WIMAX);
+        }
+        if (!getResources().getBoolean(R.bool.config_has_gps)) {
+            SUPPORTED_WIDGETS.remove(ToolboxUtil.WIDGET_GPS);
+        }
+        if (!getResources().getBoolean(R.bool.config_has_mobile_data)) {
+            SUPPORTED_WIDGETS.remove(ToolboxUtil.WIDGET_MOBDATA);
+        }
+        if (!getResources().getBoolean(R.bool.config_has_bluetooth)) {
+            SUPPORTED_WIDGETS.remove(ToolboxUtil.WIDGET_BLUETOOTH);
+        }
     }
 
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
@@ -117,10 +140,10 @@ public class NotificationToolbox extends SettingsFragment implements OnPreferenc
             return true;
         } else if (preference == mAddWidgets) {
 
-            final String[] widgets = new String[ToolboxUtil.WIDGETS.size()];
-            final String[] widgetsTitle = new String[ToolboxUtil.WIDGETS.size()];
+            final String[] widgets = new String[SUPPORTED_WIDGETS.size()];
+            final String[] widgetsTitle = new String[SUPPORTED_WIDGETS.size()];
             int i = 0;
-            for(ToolboxUtil.WidgetInfo widget : ToolboxUtil.WIDGETS.values()) {
+            for(ToolboxUtil.WidgetInfo widget : SUPPORTED_WIDGETS.values()) {
                 widgets[i] = widget.getId();
                 widgetsTitle[i] = getResources().getString(widget.getTitleResId());
                 i++;

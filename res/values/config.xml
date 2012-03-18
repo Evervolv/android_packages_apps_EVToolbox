@@ -2,4 +2,10 @@
 <resources>
     <!-- Whether or not to display the trackball settings -->
     <bool name="has_trackball">false</bool>
+
+    <!-- Notification toolbox widges -->
+    <bool name="config_has_gps" translatable="false">true</bool>
+    <bool name="config_has_wimax" translatable="false">false</bool>
+    <bool name="config_has_bluetooth" translatable="false">true</bool>
+    <bool name="config_has_mobile_data" translatable="false">true</bool>
 </resources>

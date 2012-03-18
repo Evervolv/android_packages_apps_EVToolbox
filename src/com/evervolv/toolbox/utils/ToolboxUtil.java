@@ -24,6 +24,7 @@ public class ToolboxUtil {
     public static final String WIDGET_BRIGHTNESS = "toggleBrightness";
     public static final String WIDGET_WIMAX = "toggleWimax";
 
+    //Master list of all possible widgets.
     public static final HashMap<String, WidgetInfo> WIDGETS = new HashMap<String, WidgetInfo>();
     static {
 	    WIDGETS.put(WIDGET_WIFI, new WidgetInfo(
@@ -53,13 +54,12 @@ public class ToolboxUtil {
 	    WIDGETS.put(WIDGET_AIRPLANE, new WidgetInfo(
                 WIDGET_AIRPLANE, R.string.title_toggle_airplane,
                     R.drawable.widget_airplane));
-	    WIDGETS.put(WIDGET_BRIGHTNESS, new WidgetInfo(
+        WIDGETS.put(WIDGET_BRIGHTNESS, new WidgetInfo(
                 WIDGET_BRIGHTNESS, R.string.title_toggle_brightness,
                     R.drawable.widget_brightness));
-	       WIDGETS.put(WIDGET_WIMAX, new WidgetInfo(
-	                WIDGET_WIMAX, R.string.title_toggle_wimax,
-	                    R.drawable.widget_wimax));
-
+        WIDGETS.put(WIDGET_WIMAX, new WidgetInfo(
+                WIDGET_WIMAX, R.string.title_toggle_wimax,
+                    R.drawable.widget_wimax));
     }
 
     private static final String WIDGET_DELIMITER = "|";
@@ -75,6 +75,7 @@ public class ToolboxUtil {
                 widgets += WIDGET_DELIMITER + WIDGET_WIMAX;
             }
         }
+
         return widgets;
     }
 
@@ -141,6 +142,7 @@ public class ToolboxUtil {
         public int getTitleResId() { return mTitleResId; }
         public int getIconResId() { return mIconResId; }
     }
+
     public static String arrayToString(String[] a, String separator) {
         String result = "";
         if (a.length > 0) {
