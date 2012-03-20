@@ -42,16 +42,16 @@ public class ToolboxUtil {
                     R.drawable.widget_sync));
 	    WIDGETS.put(WIDGET_WIFIAP, new WidgetInfo(
                 WIDGET_WIFIAP, R.string.title_toggle_wifiap,
-                    R.drawable.widget_hotspot));
+                    R.drawable.widget_wifiap));
 	    WIDGETS.put(WIDGET_MOBDATA, new WidgetInfo(
                 WIDGET_MOBDATA, R.string.title_toggle_mobiledata,
                     R.drawable.widget_mobdata));
 	    WIDGETS.put(WIDGET_USBTETHER, new WidgetInfo(
                 WIDGET_USBTETHER, R.string.title_toggle_usbtether,
-                    R.drawable.widget_wired));
+                    R.drawable.widget_usb_tether));
 	    WIDGETS.put(WIDGET_AUTOROTATE, new WidgetInfo(
                 WIDGET_AUTOROTATE, R.string.title_toggle_autorotate,
-                    R.drawable.widget_autorotate));
+                    R.drawable.widget_auto_rotate));
 	    WIDGETS.put(WIDGET_AIRPLANE, new WidgetInfo(
                 WIDGET_AIRPLANE, R.string.title_toggle_airplane,
                     R.drawable.widget_airplane));
