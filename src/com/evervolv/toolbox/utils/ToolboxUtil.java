@@ -23,6 +23,7 @@ public class ToolboxUtil {
     public static final String WIDGET_AIRPLANE = "toggleAirplaneMode";
     public static final String WIDGET_BRIGHTNESS = "toggleBrightness";
     public static final String WIDGET_WIMAX = "toggleWimax";
+    public static final String WIDGET_NOTIFICATIONS = "toggleNotifications";
 
     //Master list of all possible widgets.
     public static final HashMap<String, WidgetInfo> WIDGETS = new HashMap<String, WidgetInfo>();
@@ -60,6 +61,9 @@ public class ToolboxUtil {
         WIDGETS.put(WIDGET_WIMAX, new WidgetInfo(
                 WIDGET_WIMAX, R.string.title_toggle_wimax,
                     R.drawable.widget_wimax));
+        WIDGETS.put(WIDGET_NOTIFICATIONS, new WidgetInfo(
+                WIDGET_NOTIFICATIONS, R.string.title_toggle_notifications,
+                    R.drawable.widget_notifications));
     }
 
     private static final String WIDGET_DELIMITER = "|";
