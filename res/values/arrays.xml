@@ -18,9 +18,9 @@
 <resources>
 
     <string-array name="lockscreen_style_entries">
-        <item>Gingerbread style</item>
-        <item>Eclair style</item>
-        <item>Ice Cream Sandwich style</item>
+        <item>Ice Cream Sandwich</item>
+        <item>Gingerbread</item>
+        <item>Eclair</item>
     </string-array>
 
     <string-array name="lockscreen_style_values" translatable="false">

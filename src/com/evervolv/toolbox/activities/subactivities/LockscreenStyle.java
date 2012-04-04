@@ -40,9 +40,10 @@ public class LockscreenStyle extends SettingsFragment implements
     private static final String CATEGORY_CUSTOM_APP_TWO = "pref_lockscreen_category_custom_app_two";
     private static final String CATEGORY_CUSTOM_APP_THREE = "pref_lockscreen_category_custom_app_three";
 
-    private static final int LOCK_STYLE_GB   = 1;
-    private static final int LOCK_STYLE_ECLAIR = 2;
-    private static final int LOCK_STYLE_ICS = 3;
+    private static final int LOCK_STYLE_ICS = 1;
+    private static final int LOCK_STYLE_GB   = 2;
+    private static final int LOCK_STYLE_ECLAIR = 3;
+    private static final int LOCK_STYLE_DEFAULT = LOCK_STYLE_ICS;
 
     private ListPreference mLockscreenStyle;
     private CheckBoxPreference mLockscreenStyleIcs3way;
@@ -60,7 +61,7 @@ public class LockscreenStyle extends SettingsFragment implements
     private int mMaxCustomApps = Settings.System.LOCKSCREEN_CUSTOM_APP_ACTIVITIES.length;
     
     private int mCurrLockscreen = Settings.System.getInt(mCr,
-            Settings.System.LOCKSCREEN_STYLE , 3);
+            Settings.System.LOCKSCREEN_STYLE , LOCK_STYLE_DEFAULT);
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,6 +76,7 @@ public class LockscreenStyle extends SettingsFragment implements
 
         /* Lockscreen style */
         mLockscreenStyle = (ListPreference) mPrefSet.findPreference(LOCKSCREEN_STYLE_PREF);
+        mLockscreenStyle.setValue(Integer.toString(LOCK_STYLE_DEFAULT));
         mLockscreenStyle.setOnPreferenceChangeListener(this);
 
         mLockscreenStyleIcs3way = (CheckBoxPreference) mPrefSet
@@ -105,7 +107,7 @@ public class LockscreenStyle extends SettingsFragment implements
         mCustApp[2].setOnPreferenceChangeListener(this);
         mCustApp[2].setLayoutResource(R.layout.app_preference);
         
-        if (mCurrLockscreen != 3) {
+        if (mCurrLockscreen != LOCK_STYLE_ICS) {
             mPrefSet.removePreference(mCatIcs);
             mPrefSet.removePreference(mCatAppOne);
             mPrefSet.removePreference(mCatAppTwo);
@@ -128,7 +130,7 @@ public class LockscreenStyle extends SettingsFragment implements
             Settings.System.putInt(mCr, Settings.System.LOCKSCREEN_STYLE,
                     Integer.valueOf((String) newValue));
             mCurrLockscreen = Integer.valueOf((String) newValue);
-            if (mCurrLockscreen != 3) {
+            if (mCurrLockscreen != LOCK_STYLE_ICS) {
                 mPrefSet.removePreference(mCatIcs);
                 mPrefSet.removePreference(mCatAppOne);
                 mPrefSet.removePreference(mCatAppTwo);

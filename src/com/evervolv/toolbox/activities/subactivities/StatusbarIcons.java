@@ -16,6 +16,7 @@ public class StatusbarIcons extends SettingsFragment implements OnPreferenceChan
 
     private static final String STATUSBAR_SIXBAR_SIGNAL = "pref_statusbar_sixbar_signal";
     private static final String STATUSBAR_BATTERY_STYLE = "pref_statusbar_batt_style";
+    private static final String BATT_STYLE_DEFAULT = "1";
 
     private ContentResolver mCr;
     private PreferenceScreen mPrefSet;
@@ -40,6 +41,7 @@ public class StatusbarIcons extends SettingsFragment implements OnPreferenceChan
 
         /* Battery Icon Style */
         mBattStyle = (ListPreference) mPrefSet.findPreference(STATUSBAR_BATTERY_STYLE);
+        mBattStyle.setValue(BATT_STYLE_DEFAULT);
         mBattStyle.setOnPreferenceChangeListener(this);
 
     }
