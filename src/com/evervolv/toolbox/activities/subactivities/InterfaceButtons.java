@@ -68,19 +68,11 @@ public class InterfaceButtons extends SettingsFragment {
             value = mVolumeWake.isChecked();
             Settings.System.putInt(mCr, Settings.System.VOLUME_WAKE_SCREEN,
                     value ? 1 : 0);
-            if (mVolumeWake.isChecked()) {
-                mMusicCtrlVolBtn.setChecked(false);
-                Settings.System.putInt(mCr, Settings.System.LOCKSCREEN_MUSIC_CONTROLS_VOLBTN, 0);
-            }
             return true;
         } else if (preference == mMusicCtrlVolBtn) {
             value = mMusicCtrlVolBtn.isChecked();
             Settings.System.putInt(mCr, Settings.System.LOCKSCREEN_MUSIC_CONTROLS_VOLBTN,
                     value ? 1 : 0);
-            if (mMusicCtrlVolBtn.isChecked()) {
-                mVolumeWake.setChecked(false);
-                Settings.System.putInt(mCr, Settings.System.VOLUME_WAKE_SCREEN, 0);
-            }
             return true;
         }
         return false;
