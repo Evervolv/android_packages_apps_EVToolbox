@@ -80,7 +80,7 @@
     <string name="pref_trackball_wake_toggle_title">Trackball wake</string>
     <string name="pref_trackball_wake_toggle_summary">Allow trackball to wake the device</string>
     <string name="pref_volume_wake_toggle_title">Volume btn wake</string>
-    <string name="pref_volume_wake_toggle_summary">Press volume up or down to wake the device (cannot be used with music control)</string>
+    <string name="pref_volume_wake_toggle_summary">Press volume up or down to wake the device</string>
 
         <!-- Performance Settings -->
     <string name="performance_title">Performance</string>
