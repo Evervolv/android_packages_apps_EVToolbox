@@ -76,7 +76,8 @@ public class LockscreenStyle extends SettingsFragment implements
 
         /* Lockscreen style */
         mLockscreenStyle = (ListPreference) mPrefSet.findPreference(LOCKSCREEN_STYLE_PREF);
-        mLockscreenStyle.setValue(Integer.toString(LOCK_STYLE_DEFAULT));
+        mLockscreenStyle.setValue(Integer.toString(Settings.System.getInt(mCr,
+                Settings.System.LOCKSCREEN_STYLE, LOCK_STYLE_DEFAULT)));
         mLockscreenStyle.setOnPreferenceChangeListener(this);
 
         mLockscreenStyleIcs3way = (CheckBoxPreference) mPrefSet

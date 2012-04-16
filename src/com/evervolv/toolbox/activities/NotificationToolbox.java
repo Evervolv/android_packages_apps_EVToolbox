@@ -39,7 +39,7 @@ public class NotificationToolbox extends SettingsFragment implements OnPreferenc
     private static final String WIDGETS_CATEGORY = "pref_category_statusbar_widgets";
     private static final String SELECT_BUTTON_KEY_PREFIX = "pref_button_";
 
-    private static final String MAX_WIDGETS_DEFAULT = "3";
+    private static final int MAX_WIDGETS_DEFAULT = 3;
 
     private static final int DIALOG_ADD_WIDGET = 0;
     private static final int DIALOG_WIDGET_OPTIONS = 1;
@@ -100,7 +100,8 @@ public class NotificationToolbox extends SettingsFragment implements OnPreferenc
 
         mMaxWidgets = (ListPreference) mPrefSet
                 .findPreference(TOOLBOX_MAX_WIDGETS_PER_LINE);
-        mMaxWidgets.setValue(MAX_WIDGETS_DEFAULT);
+        mMaxWidgets.setValue(Integer.toString(Settings.System.getInt(mCr,
+                Settings.System.MAX_WIDGETS_PER_LINE, MAX_WIDGETS_DEFAULT)));
         mMaxWidgets.setOnPreferenceChangeListener(this);
 
         prefWidgets = (PreferenceCategory) mPrefSet
