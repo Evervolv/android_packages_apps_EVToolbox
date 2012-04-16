@@ -8,4 +8,5 @@
     <bool name="config_has_wimax" translatable="false">false</bool>
     <bool name="config_has_bluetooth" translatable="false">true</bool>
     <bool name="config_has_mobile_data" translatable="false">true</bool>
+    <bool name="config_has_mobile_radio" translatable="false">true</bool>
 </resources>

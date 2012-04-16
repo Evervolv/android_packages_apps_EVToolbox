@@ -39,6 +39,11 @@ public class StatusbarIcons extends SettingsFragment implements OnPreferenceChan
         mUseSixbaricons.setChecked(Settings.System.getInt(getContentResolver(),
                 Settings.System.STATUSBAR_6BAR_SIGNAL, 1) == 1);
 
+        /* Remove mUseSixbaricons on devices without mobile radios*/
+        if (!getResources().getBoolean(R.bool.config_has_mobile_radio)) {
+            mPrefSet.removePreference(mUseSixbaricons);
+        }
+        
         /* Battery Icon Style */
         mBattStyle = (ListPreference) mPrefSet.findPreference(STATUSBAR_BATTERY_STYLE);
         mBattStyle.setValue(BATT_STYLE_DEFAULT);
