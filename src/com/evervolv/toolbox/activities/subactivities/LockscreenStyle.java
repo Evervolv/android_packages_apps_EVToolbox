@@ -17,6 +17,8 @@ import android.preference.PreferenceScreen;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.Gravity;
+import android.widget.Toast;
 
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.SettingsFragment;
@@ -144,35 +146,47 @@ public class LockscreenStyle extends SettingsFragment implements
             }
             return true;
         } else if (preference == mCustApp[0]) {
-            mWhichApp = 0;
-            if (newValue.equals("1")) {
-                mPicker.pickShortcut();
-            } else if (newValue.equals("2")) {
-                shortcutPicked("**unlock**", null, false);
-            } else if (newValue.equals("3")) {
-                shortcutPicked("**sound**", null, false);
-            }
-            return true;
+            return processPick(0, newValue);
         } else if (preference == mCustApp[1]) {
-            mWhichApp = 1;
-            if (newValue.equals("1")) {
-                mPicker.pickShortcut();
-            } else if (newValue.equals("2")) {
-                shortcutPicked("**unlock**", null, false);
-            } else if (newValue.equals("3")) {
-                shortcutPicked("**sound**", null, false);
-            }
-            return true;
+            return processPick(1, newValue);
         } else if (preference == mCustApp[2]) {
-            mWhichApp = 2;
-            if (newValue.equals("1")) {
+            return processPick(2, newValue);
+        }
+        return false;
+    }
+
+    private boolean processPick(int index, Object value) {
+        mWhichApp = index;
+        Toast toast = Toast.makeText(getContext(), R.string.pref_lockscreen_category_custom_app_unlock_toast,Toast.LENGTH_LONG);
+        if (value.equals("1")) {
+            if (checkForUnlock(index)) {
                 mPicker.pickShortcut();
-            } else if (newValue.equals("2")) {
-                shortcutPicked("**unlock**", null, false);
-            } else if (newValue.equals("3")) {
-                shortcutPicked("**sound**", null, false);
+            } else {
+                toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+                toast.show();
+                return false;
             }
-            return true;
+        } else if (value.equals("2")) {
+            shortcutPicked("**unlock**", null, false);
+        } else if (value.equals("3")) {
+            if (checkForUnlock(index)) {
+                shortcutPicked("**sound**", null, false);
+            } else {
+                toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+                toast.show();
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean checkForUnlock(int currIndex) {
+        for (int i = 0; i < mMaxCustomApps; i++) {
+            String uri = Settings.System.getString(getContentResolver(),
+                    Settings.System.LOCKSCREEN_CUSTOM_APP_ACTIVITIES[i]);
+            if (uri == null) uri = getDefaultUri(currIndex);
+            if (i == currIndex) continue;
+            if (uri.equals("**unlock**")) return true;
         }
         return false;
     }
@@ -242,4 +256,16 @@ public class LockscreenStyle extends SettingsFragment implements
         }
     }
 
+    private String getDefaultUri(int index) {
+        switch (index) {
+            case 0:
+                return "**unlock**";
+            case 1:
+                return "**sound**";
+            case 2:
+                return getString(com.android.internal.R.string
+                        .lockscreen_custom_app_default);
+        }
+        return null;
+    }
 }
