@@ -5,4 +5,9 @@
         android:summary="@string/pref_interface_buttons_summary"
         android:fragment="com.evervolv.toolbox.activities.Interface$Buttons">
     </PreferenceScreen>
+    <PreferenceScreen android:key="pref_interface_rotation"
+        android:title="@string/pref_interface_rotation_title"
+        android:summary="@string/pref_interface_rotation_summary"
+        android:fragment="com.evervolv.toolbox.activities.Interface$Rotation">
+    </PreferenceScreen>
 </PreferenceScreen>

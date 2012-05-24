@@ -130,6 +130,24 @@
 
         </activity>
 
+        <activity android:name="Settings$InterfaceRotationActivity"
+                android:label="@string/pref_interface_rotation_title"
+                android:configChanges="orientation|keyboardHidden|screenSize"
+                android:clearTaskOnLaunch="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+            <meta-data android:name="com.evervolv.toolbox.FRAGMENT_CLASS"
+                android:value="com.evervolv.toolbox.activities.Interface$Rotation" />
+            <meta-data android:name="com.evervolv.toolbox.TOP_LEVEL_HEADER_ID"
+                android:resource="@id/interface_settings" />
+            <meta-data android:name="com.evervolv.toolbox.PARENT_FRAGMENT_TITLE"
+                android:resource="@string/pref_interface_title_head" />
+            <meta-data android:name="com.evervolv.toolbox.PARENT_FRAGMENT_CLASS"
+                android:value="com.evervolv.toolbox.activities.Interface" />
+
+        </activity>
+
         <!-- Notification toolbox -->
         <activity android:name="Settings$NotificationToolboxActivity"
                 android:label="@string/pref_notification_toolbox_title"
