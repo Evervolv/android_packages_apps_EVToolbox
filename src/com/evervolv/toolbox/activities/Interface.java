@@ -29,7 +29,7 @@ public class Interface extends SettingsFragment {
         mPrefSet = getPreferenceScreen();
 
         mButtons = (PreferenceScreen) mPrefSet.findPreference(BUTTONS_PREF);
-        mButtons = (PreferenceScreen) mPrefSet.findPreference(ROTATION_PREF);
+        mRotation = (PreferenceScreen) mPrefSet.findPreference(ROTATION_PREF);
 
     }
 
