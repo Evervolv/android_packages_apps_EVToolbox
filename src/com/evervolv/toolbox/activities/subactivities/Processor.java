@@ -1,7 +1,6 @@
 /*
  * Copyright (C) 2012 The CyanogenMod Project
  *
- * Modified for the Evervolv Project by Andrew Sutherland <dr3wsuth3rland@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,8 +25,6 @@ import java.io.IOException;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.SystemProperties;
-import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
@@ -43,7 +40,6 @@ import com.evervolv.toolbox.SettingsFragment;
 public class Processor extends SettingsFragment implements
         Preference.OnPreferenceChangeListener {
 
-    public static final String CPU_RESTORE_PROP = "sys.cpufreq.restored";
     public static final String FREQ_CUR_PREF = "pref_cpu_freq_cur";
     public static final String SCALE_CUR_FILE = "/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq";
     public static final String FREQINFO_CUR_FILE = "/sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_cur_freq";
@@ -65,7 +61,6 @@ public class Processor extends SettingsFragment implements
     private String mMaxFrequencyFormat;
 
     private Preference mCurFrequencyPref;
-    private CheckBoxPreference mSobPref;
     private ListPreference mGovernorPref;
     private ListPreference mMinFrequencyPref;
     private ListPreference mMaxFrequencyPref;
@@ -182,11 +177,6 @@ public class Processor extends SettingsFragment implements
             mMaxFrequencyPref.setEnabled(false);
         }
 
-        // Set on boot
-        mSobPref = (CheckBoxPreference) prefScreen.findPreference(SOB_PREF);
-        mSobPref.setChecked(SystemProperties.getBoolean(CPU_RESTORE_PROP, false));
-
-
         mCurCPUThread.start();
     }
 
@@ -216,17 +206,6 @@ public class Processor extends SettingsFragment implements
             mCurCPUThread.join();
         } catch (InterruptedException e) {
         }
-    }
-
-    @Override
-    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-
-        if (preference == mSobPref) {
-            SystemProperties.set(CPU_RESTORE_PROP, mSobPref.isChecked() ? "true" : "false");
-            return true;
-        }
-
-        return false;
     }
 
     public boolean onPreferenceChange(Preference preference, Object newValue) {

@@ -39,7 +39,7 @@ public class MemoryManagement extends SettingsFragment implements
     public static final String KSM_PREF_ENABLED = "1";
 
     private static final String ZRAM_PREF = "pref_zram_size";
-    private static final String ZRAM_PERSIST_PROP = "persist.sys.zram.enable";
+    private static final String ZRAM_PERSIST_PROP = "persist.service.zram";
     private static final String ZRAM_DEFAULT = "0";
 
     private ListPreference mzRAM;
