@@ -46,6 +46,7 @@ public class LockscreenStyle extends SettingsFragment implements
     //Unused for now.
     //private static final int LOCK_STYLE_GB   = 2;
     //private static final int LOCK_STYLE_ECLAIR = 3;
+    //private static final int LOCK_STYLE_HC = 4;
     private static final int LOCK_STYLE_DEFAULT = LOCK_STYLE_ICS;
 
     private GalleryPickerPreference mLockscreenStyle;
