@@ -17,17 +17,19 @@
 
 <resources>
 
-    <string-array name="lockscreen_style_entries">
+    <array name="lockscreen_style_captions" >
         <item>Ice Cream Sandwich</item>
+        <item>Ice Cream Sandwich (3Way)</item>
         <item>Gingerbread</item>
         <item>Eclair</item>
-    </string-array>
+    </array>
 
-    <string-array name="lockscreen_style_values" translatable="false">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-    </string-array>
+    <array name="lockscreen_style_drawables" translatable="false">
+        <item>@drawable/lock_ics_2way</item>
+        <item>@drawable/lock_ics_3way</item>
+        <item>@drawable/lock_gingerbread</item>
+        <item>@drawable/lock_eclair</item>
+    </array>
 
     <string-array name="lockscreen_custom_app_entries">
         <item>App shortcut</item>

@@ -3,22 +3,15 @@
     android:title="pref_lockscreen_style_title">
     <!-- Lockscreen style -->
     <PreferenceCategory android:title="@string/lockscreen_title">
-
-        <ListPreference android:key="pref_lockscreen_style"
-            android:title="@string/pref_lockscreen_style_title"
-            android:summary="@string/pref_lockscreen_style_summary"
-            android:dialogTitle="@string/pref_lockscreen_style_title"
-            android:entries="@array/lockscreen_style_entries"
-            android:entryValues="@array/lockscreen_style_values"/>
+        <com.evervolv.toolbox.utils.GalleryPickerPreference android:key="pref_lockscreen_picker"
+            xmlns:ev="http://schemas.android.com/apk/res/com.evervolv.toolbox"
+            ev:entryDrawables="@array/lockscreen_style_drawables" 
+            ev:entryCaptions="@array/lockscreen_style_captions"/>
     </PreferenceCategory>
 
     <!-- Ics style options -->
     <PreferenceCategory android:key="pref_category_ics_style"
         android:title="@string/pref_lockscreen_style_ics_style">
-
-        <CheckBoxPreference android:key="pref_lockscreen_style_multiwaveview_3way_toggle"
-            android:title="@string/pref_lockscreen_multiwaveview_3way_title"
-            android:summary="@string/pref_lockscreen_multiwaveview_3way_summary" />
 
     </PreferenceCategory>
 

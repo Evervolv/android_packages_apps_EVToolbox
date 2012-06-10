@@ -3,6 +3,10 @@
         <!-- Generic -->
     <string name="app_name">Evervolv toolbox</string>
 
+
+    <string name="apply">Apply</string>
+    <string name="item_count">%1$d/%2$d</string>
+
         <!-- Lockscreen Settings -->
     <string name="lockscreen_title">Lockscreen</string>
     <string name="pref_lockscreen_title_head">Lockscreen</string>
