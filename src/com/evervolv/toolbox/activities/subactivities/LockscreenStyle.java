@@ -61,10 +61,9 @@ public class LockscreenStyle extends SettingsFragment implements
     private ListPreference[] mCustApp;
     private int mWhichApp = -1;
     
-    private int mMaxCustomApps = Settings.System.LOCKSCREEN_CUSTOM_APP_ACTIVITIES.length;
+    private int mMaxCustomApps;
     
-    private int mCurrLockscreen = Settings.System.getInt(mCr,
-            Settings.System.LOCKSCREEN_STYLE , LOCK_STYLE_DEFAULT);
+    private int mCurrLockscreen;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,6 +75,9 @@ public class LockscreenStyle extends SettingsFragment implements
 
         mCatIcs = (PreferenceCategory) mPrefSet.findPreference(CATEGORY_ICS);
 
+        mCurrLockscreen = Settings.System.getInt(mCr,
+                Settings.System.LOCKSCREEN_STYLE , LOCK_STYLE_DEFAULT);
+        mMaxCustomApps = Settings.System.LOCKSCREEN_CUSTOM_APP_ACTIVITIES.length;
 
         /* Lockscreen style */
         String position = Settings.System.getString(mCr,
