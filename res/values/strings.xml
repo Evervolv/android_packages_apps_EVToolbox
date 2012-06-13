@@ -94,6 +94,13 @@
     <string name="pref_rotation_90_title">90 degrees</string>
     <string name="pref_rotation_180_title">180 degrees</string>
     <string name="pref_rotation_270_title">270 degrees</string>
+        <!-- Interface >> Power Menu -->
+    <string name="pref_interface_power_menu_title">Power menu settings</string>
+    <string name="pref_interface_power_menu_summary">Customize your power menu</string>
+    <string name="pref_power_menu_show_screenshot_title">Show screenshot option</string>
+    <string name="pref_power_menu_show_sound_title">Show sound options</string>
+    <string name="pref_power_menu_show_airplane_mode_title">Show airplane mode</string>
+    <string name="pref_power_menu_show_reboot_menu_title">Show reboot menu</string>
 
         <!-- Performance Settings -->
     <string name="performance_title">Performance</string>

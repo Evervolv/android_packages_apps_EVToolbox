@@ -8,6 +8,7 @@ import android.util.Log;
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.SettingsFragment;
 import com.evervolv.toolbox.activities.subactivities.InterfaceButtons;
+import com.evervolv.toolbox.activities.subactivities.InterfacePowerMenu;
 import com.evervolv.toolbox.activities.subactivities.InterfaceRotation;
 
 public class Interface extends SettingsFragment {
@@ -16,10 +17,12 @@ public class Interface extends SettingsFragment {
 
     private static final String BUTTONS_PREF = "pref_interface_buttons";
     private static final String ROTATION_PREF = "pref_interface_rotation";
+    private static final String POWER_MENU_PREF = "pref_interface_power_menu";
 
     private PreferenceScreen mPrefSet;
     private PreferenceScreen mButtons;
     private PreferenceScreen mRotation;
+    private PreferenceScreen mPowerMenu;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -30,7 +33,7 @@ public class Interface extends SettingsFragment {
 
         mButtons = (PreferenceScreen) mPrefSet.findPreference(BUTTONS_PREF);
         mRotation = (PreferenceScreen) mPrefSet.findPreference(ROTATION_PREF);
-
+        mPowerMenu = (PreferenceScreen) mPrefSet.findPreference(POWER_MENU_PREF);
     }
 
     @Override
@@ -43,10 +46,15 @@ public class Interface extends SettingsFragment {
             startPreferencePanel(mRotation.getFragment(),
                     null, mRotation.getTitleRes(), null, null, -1);
             return true;
+        } else if (preference == mPowerMenu) {
+            startPreferencePanel(mPowerMenu.getFragment(),
+                    null, mPowerMenu.getTitleRes(), null, null, -1);
+            return true;
         }
         return false;
     }
 
     public static class Buttons extends InterfaceButtons { }
     public static class Rotation extends InterfaceRotation { }
+    public static class PowerMenu extends InterfacePowerMenu { }
 }

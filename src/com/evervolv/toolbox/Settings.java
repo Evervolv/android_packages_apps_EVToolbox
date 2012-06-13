@@ -442,4 +442,5 @@ public class Settings extends PreferenceActivity {
     public static class InterfaceActivity extends Settings { /* */ }
     public static class InterfaceButtonsActivity extends Settings { /* */ }
     public static class InterfaceRotationActivity extends Settings { /* */ }
+    public static class InterfacePowerMenuActivity extends Settings { /* */ }
 }
