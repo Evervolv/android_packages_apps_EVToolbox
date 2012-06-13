@@ -101,6 +101,7 @@
     <string name="pref_power_menu_show_sound_title">Show sound options</string>
     <string name="pref_power_menu_show_airplane_mode_title">Show airplane mode</string>
     <string name="pref_power_menu_show_reboot_menu_title">Show reboot menu</string>
+    <string name="pref_power_menu_screenshot_delay_title">Set screenshot delay</string>
 
         <!-- Performance Settings -->
     <string name="performance_title">Performance</string>

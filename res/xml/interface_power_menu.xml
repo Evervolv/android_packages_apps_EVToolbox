@@ -17,4 +17,8 @@
             android:title="@string/pref_power_menu_show_reboot_menu_title">
         </CheckBoxPreference>
 
+        <com.evervolv.toolbox.utils.NumberPickerPreference android:key="pref_power_menu_screenshot_delay"
+            android:title="@string/pref_power_menu_screenshot_delay_title">
+        </com.evervolv.toolbox.utils.NumberPickerPreference>
+
 </PreferenceScreen>
