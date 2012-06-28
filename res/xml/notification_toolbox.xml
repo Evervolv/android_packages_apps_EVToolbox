@@ -10,17 +10,12 @@
         android:entries="@array/toolbox_max_widgets_per_line_entries"
         android:entryValues="@array/toolbox_max_widgets_per_line_values" />
 
-    <PreferenceCategory android:key="pref_category_statusbar_add_widgets"
-        android:title="@string/category_statusbar_add_widgets">
+    <PreferenceCategory android:key="pref_category_statusbar_manage_widgets"
+        android:title="@string/category_statusbar_manage_widgets">
 
-        <Preference android:key="pref_notification_toolbox_widgets"
-	    android:title="@string/title_notification_toolbox_widgets" />
+        <Preference android:key="pref_notification_toolbox_manage_widgets"
+	    android:title="@string/title_notification_toolbox_manage_widgets" />
 
     </PreferenceCategory>
-
-    <PreferenceCategory android:key="pref_category_statusbar_widgets"
-        android:title="@string/category_statusbar_widgets">
-    </PreferenceCategory>
-
 </PreferenceScreen>
 
