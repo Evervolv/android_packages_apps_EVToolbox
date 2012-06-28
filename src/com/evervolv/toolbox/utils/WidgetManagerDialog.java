@@ -28,7 +28,7 @@ import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import com.evervolv.toolbox.R;
-import com.evervolv.toolbox.utils.ToolboxUtil.WidgetInfo;
+import com.evervolv.toolbox.utils.QwikWidgetsUtil.WidgetInfo;
 
 public class WidgetManagerDialog extends Dialog implements OnClickListener {
 
@@ -47,7 +47,7 @@ public class WidgetManagerDialog extends Dialog implements OnClickListener {
     private Button mAddButton;
     private Button mDoneButton;
 
-    private ArrayList<ToolboxUtil.WidgetInfo> mWidgetsSupported;
+    private ArrayList<QwikWidgetsUtil.WidgetInfo> mWidgetsSupported;
 
     public WidgetManagerDialog(Context context) {
         super(context);
@@ -75,7 +75,7 @@ public class WidgetManagerDialog extends Dialog implements OnClickListener {
 
         mAddWidgetAdapter = new ArrayAdapter<String>(mContext, R.layout
                 .add_widgets_list_item);
-        mWidgetsSupported = new ArrayList<ToolboxUtil.WidgetInfo>();
+        mWidgetsSupported = new ArrayList<QwikWidgetsUtil.WidgetInfo>();
         loadAddWidgetsList();
 
         mAddWidgetList = (ListView) findViewById(R.id.widget_add_list);
@@ -96,8 +96,8 @@ public class WidgetManagerDialog extends Dialog implements OnClickListener {
     private void loadAddWidgetsList() {
         mWidgetsSupported.clear();
         mAddWidgetAdapter.clear();
-        for(ToolboxUtil.WidgetInfo widget : SUPPORTED_WIDGETS.values()) {
-            if (!ToolboxUtil.doesWidgetExist(mContext, widget.getId())) {
+        for(QwikWidgetsUtil.WidgetInfo widget : SUPPORTED_WIDGETS.values()) {
+            if (!QwikWidgetsUtil.doesWidgetExist(mContext, widget.getId())) {
                 mWidgetsSupported.add(widget);
                 mAddWidgetAdapter.add(mContext.getResources().getString(widget
                         .getTitleResId()));
@@ -118,13 +118,13 @@ public class WidgetManagerDialog extends Dialog implements OnClickListener {
           AdapterView.AdapterContextMenuInfo info =
             (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
           
-          ArrayList<String> widgets = ToolboxUtil.getWidgetListFromString(
-                  ToolboxUtil.getCurrentWidgets(mContext));
+          ArrayList<String> widgets = QwikWidgetsUtil.getWidgetListFromString(
+                  QwikWidgetsUtil.getCurrentWidgets(mContext));
           
           widgets.remove(info.position);
           
-          ToolboxUtil.saveCurrentWidgets(mContext,
-                  ToolboxUtil.getWidgetStringFromList(widgets));
+          QwikWidgetsUtil.saveCurrentWidgets(mContext,
+                  QwikWidgetsUtil.getWidgetStringFromList(widgets));
 
           mWidgetAdapter.reloadWidgets();
           mWidgetList.invalidateViews();
@@ -135,37 +135,37 @@ public class WidgetManagerDialog extends Dialog implements OnClickListener {
     }
     
     private void loadSupportedWidgets() {
-        SUPPORTED_WIDGETS = ToolboxUtil.WIDGETS;
+        SUPPORTED_WIDGETS = QwikWidgetsUtil.WIDGETS;
 
         //Remove unsuppored widgets per-device config overlay.
         if (!mContext.getResources().getBoolean(R.bool.config_has_wimax)) {
-            SUPPORTED_WIDGETS.remove(ToolboxUtil.WIDGET_WIMAX);
+            SUPPORTED_WIDGETS.remove(QwikWidgetsUtil.WIDGET_WIMAX);
         }
         if (!mContext.getResources().getBoolean(R.bool.config_has_gps)) {
-            SUPPORTED_WIDGETS.remove(ToolboxUtil.WIDGET_GPS);
+            SUPPORTED_WIDGETS.remove(QwikWidgetsUtil.WIDGET_GPS);
         }
         if (!mContext.getResources().getBoolean(R.bool.config_has_mobile_data)) {
-            SUPPORTED_WIDGETS.remove(ToolboxUtil.WIDGET_MOBDATA);
+            SUPPORTED_WIDGETS.remove(QwikWidgetsUtil.WIDGET_MOBDATA);
         }
         if (!mContext.getResources().getBoolean(R.bool.config_has_bluetooth)) {
-            SUPPORTED_WIDGETS.remove(ToolboxUtil.WIDGET_BLUETOOTH);
+            SUPPORTED_WIDGETS.remove(QwikWidgetsUtil.WIDGET_BLUETOOTH);
         }
     }
     
     public void addWidget(String widget) {
-        if (ToolboxUtil.getCurrentWidgets(mContext).equals("")) {
-            ToolboxUtil.saveCurrentWidgets(mContext, widget);
+        if (QwikWidgetsUtil.getCurrentWidgets(mContext).equals("")) {
+            QwikWidgetsUtil.saveCurrentWidgets(mContext, widget);
         } else {
-            ToolboxUtil.saveCurrentWidgets(mContext, ToolboxUtil.
-                    appendWidgetString(widget, ToolboxUtil.getCurrentWidgets(mContext)));
+            QwikWidgetsUtil.saveCurrentWidgets(mContext, QwikWidgetsUtil.
+                    appendWidgetString(widget, QwikWidgetsUtil.getCurrentWidgets(mContext)));
         }
     }
 
     private TouchInterceptor.DropListener mDropListener = new TouchInterceptor.DropListener() {
         public void drop(int from, int to) {
             // get the current button list
-            ArrayList<String> widgets = ToolboxUtil.getWidgetListFromString(
-                    ToolboxUtil.getCurrentWidgets(mContext));
+            ArrayList<String> widgets = QwikWidgetsUtil.getWidgetListFromString(
+                    QwikWidgetsUtil.getCurrentWidgets(mContext));
             
             // move the button
             if (from < widgets.size()) {
@@ -173,8 +173,8 @@ public class WidgetManagerDialog extends Dialog implements OnClickListener {
 
                 if (to <= widgets.size()) {
                     widgets.add(to, widget);
-                    ToolboxUtil.saveCurrentWidgets(mContext,
-                            ToolboxUtil.getWidgetStringFromList(widgets));
+                    QwikWidgetsUtil.saveCurrentWidgets(mContext,
+                            QwikWidgetsUtil.getWidgetStringFromList(widgets));
                     mWidgetAdapter.reloadWidgets();
                     mWidgetList.invalidateViews();
                 }
@@ -186,7 +186,7 @@ public class WidgetManagerDialog extends Dialog implements OnClickListener {
         private Context mContext;
         private Resources mSystemUIResources = null;
         private LayoutInflater mInflater;
-        private ArrayList<ToolboxUtil.WidgetInfo> mWidgets;
+        private ArrayList<QwikWidgetsUtil.WidgetInfo> mWidgets;
         
         public WidgetAdapter(Context c) {
             mContext = c;
@@ -205,12 +205,12 @@ public class WidgetManagerDialog extends Dialog implements OnClickListener {
         }
 
         public void reloadWidgets() {
-            ArrayList<String> widgets = ToolboxUtil.getWidgetListFromString(
-                    ToolboxUtil.getCurrentWidgets(mContext));
-            mWidgets = new ArrayList<ToolboxUtil.WidgetInfo>();
+            ArrayList<String> widgets = QwikWidgetsUtil.getWidgetListFromString(
+                    QwikWidgetsUtil.getCurrentWidgets(mContext));
+            mWidgets = new ArrayList<QwikWidgetsUtil.WidgetInfo>();
             for (String widget : widgets) {
-                if (ToolboxUtil.WIDGETS.containsKey(widget)) {
-                    mWidgets.add(ToolboxUtil.WIDGETS.get(widget));
+                if (QwikWidgetsUtil.WIDGETS.containsKey(widget)) {
+                    mWidgets.add(QwikWidgetsUtil.WIDGETS.get(widget));
                 }
             }
         }
@@ -235,7 +235,7 @@ public class WidgetManagerDialog extends Dialog implements OnClickListener {
                 v = convertView;
             }
 
-            ToolboxUtil.WidgetInfo widget = mWidgets.get(position);
+            QwikWidgetsUtil.WidgetInfo widget = mWidgets.get(position);
 
             final TextView name = (TextView) v.findViewById(R.id.name);
             final ImageView icon = (ImageView) v.findViewById(R.id.icon);

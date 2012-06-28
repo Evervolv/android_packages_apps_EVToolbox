@@ -16,23 +16,24 @@ import android.widget.Switch;
 
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.SettingsFragment;
-import com.evervolv.toolbox.utils.ToolboxEnabler;
+import com.evervolv.toolbox.utils.QwikWidgetsEnabler;
+import com.evervolv.toolbox.utils.QwikWidgetsUtil;
 import com.evervolv.toolbox.utils.WidgetManagerDialog;
 
-public class NotificationToolbox extends SettingsFragment implements OnPreferenceChangeListener {
+public class QwikWidgets extends SettingsFragment implements OnPreferenceChangeListener {
 
     private static final String TAG = "EVToolbox";
 
-    private static final String NOTIFICATION_TOOLBOX_DROPDOWN = "pref_notification_toolbox_dropdown";
-    private static final String NOTIFICATION_TOOLBOX_WIDGETS = "pref_notification_toolbox_manage_widgets";
-    private static final String TOOLBOX_MAX_WIDGETS_PER_LINE = "pref_toolbox_max_widgets_per_line";
+    private static final String NOTIFICATION_DROPDOWN = "pref_notification_dropdown";
+    private static final String QWIK_WIDGETS_MANAGE_WIDGETS = "pref_qwik_widgets_manage_widgets";
+    private static final String QWIK_WIDGETS_MAX_PER_LINE = "pref_qwik_widgets_max_per_line";
     private static final int MAX_WIDGETS_DEFAULT = 3;
 
     private Preference mManageWidgets;
     private WidgetManagerDialog mWidgetDialog;
-    private CheckBoxPreference mToolboxDropdown;
+    private CheckBoxPreference mNotifDropdown;
     private ListPreference mMaxWidgets;
-    private ToolboxEnabler mToolboxEnabler;
+    private QwikWidgetsEnabler mQwikWidgetsEnabler;
 
     private ContentResolver mCr;
     private PreferenceScreen mPrefSet;
@@ -41,7 +42,7 @@ public class NotificationToolbox extends SettingsFragment implements OnPreferenc
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        addPreferencesFromResource(R.xml.notification_toolbox);
+        addPreferencesFromResource(R.xml.qwik_widgets);
 
         final Activity activity = getActivity();
 
@@ -60,38 +61,38 @@ public class NotificationToolbox extends SettingsFragment implements OnPreferenc
             }
         }
 
-        mToolboxEnabler = new ToolboxEnabler(activity, actionBarSwitch);
+        mQwikWidgetsEnabler = new QwikWidgetsEnabler(activity, actionBarSwitch);
 
         mPrefSet = getPreferenceScreen();
         mCr = getContentResolver();
 
-        mToolboxDropdown = (CheckBoxPreference) mPrefSet.findPreference(NOTIFICATION_TOOLBOX_DROPDOWN);
-        mToolboxDropdown.setChecked(Settings.System.getInt(getContentResolver(),
+        mNotifDropdown = (CheckBoxPreference) mPrefSet.findPreference(NOTIFICATION_DROPDOWN);
+        mNotifDropdown.setChecked(Settings.System.getInt(getContentResolver(),
                 Settings.System.NOTIFICATION_DROPDOWN_VIEW, 0) == 1);
 
         mMaxWidgets = (ListPreference) mPrefSet
-                .findPreference(TOOLBOX_MAX_WIDGETS_PER_LINE);
+                .findPreference(QWIK_WIDGETS_MAX_PER_LINE);
         mMaxWidgets.setValue(Integer.toString(Settings.System.getInt(mCr,
                 Settings.System.MAX_WIDGETS_PER_LINE, MAX_WIDGETS_DEFAULT)));
         mMaxWidgets.setOnPreferenceChangeListener(this);
 
         mManageWidgets = (Preference) mPrefSet
-                .findPreference(NOTIFICATION_TOOLBOX_WIDGETS);
+                .findPreference(QWIK_WIDGETS_MANAGE_WIDGETS);
     }
 
 
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         boolean value;
 
-        if (preference == mToolboxDropdown) {
-            value = mToolboxDropdown.isChecked();
+        if (preference == mNotifDropdown) {
+            value = mNotifDropdown.isChecked();
             Settings.System.putInt(mCr, Settings.System.NOTIFICATION_DROPDOWN_VIEW,
                     value ? 1 : 0);
             return true;
         } else if (preference == mManageWidgets) {
 
             mWidgetDialog = new WidgetManagerDialog(preferenceScreen.getContext());
-            mWidgetDialog.setTitle(R.string.dialog_title_notification_toolbox_manage_widgets);
+            mWidgetDialog.setTitle(R.string.title_qwik_widgets_manage_widgets);
             mWidgetDialog.show();
         }
 

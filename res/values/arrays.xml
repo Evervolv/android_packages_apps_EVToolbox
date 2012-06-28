@@ -75,7 +75,7 @@
         <item>2</item>
     </string-array>
 
-    <string-array name="toolbox_max_widgets_per_line_entries">
+    <string-array name="qwik_widgets_max_per_line_entries">
         <item>1 per line</item>
         <item>2 per line</item>
         <item>3 per line</item>
@@ -84,7 +84,7 @@
         <item>6 per line</item>
     </string-array>
 
-    <string-array name="toolbox_max_widgets_per_line_values" translatable="false">
+    <string-array name="qwik_widgets_max_per_line_values" translatable="false">
         <item>1</item>
         <item>2</item>
         <item>3</item>

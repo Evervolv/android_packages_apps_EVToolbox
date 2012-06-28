@@ -10,7 +10,7 @@ import android.provider.Settings;
 
 import com.evervolv.toolbox.R;
 
-public class ToolboxUtil {
+public class QwikWidgetsUtil {
 
     public static final String WIDGET_WIFI = "toggleWifi";
     public static final String WIDGET_GPS = "toggleGps";
@@ -69,10 +69,10 @@ public class ToolboxUtil {
     private static final String WIDGET_DELIMITER = "|";
 
     public static String getCurrentWidgets(Context context) {
-        String widgets = Settings.System.getString(context.getContentResolver(), Settings.System.SELECTED_TOOLBOX_WIDGETS);
+        String widgets = Settings.System.getString(context.getContentResolver(), Settings.System.SELECTED_QWIK_WIDGETS);
         if (widgets == null) {
             widgets = context.getResources().getString(R.string
-                    .notificiation_toolbox_default_widgets);
+                    .default_qwik_widgets);
 
             // Add the WiMAX widget if it's supported
             if (WimaxHelper.isWimaxSupported(context)) {
@@ -85,7 +85,7 @@ public class ToolboxUtil {
 
     public static void saveCurrentWidgets(Context context, String widgets) {
         Settings.System.putString(context.getContentResolver(),
-                Settings.System.SELECTED_TOOLBOX_WIDGETS, widgets);
+                Settings.System.SELECTED_QWIK_WIDGETS, widgets);
     }
 
     public static String mergeInNewWidgetString(String oldString, String newString) {

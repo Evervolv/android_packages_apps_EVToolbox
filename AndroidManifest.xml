@@ -164,18 +164,18 @@
 
         </activity>
 
-        <!-- Notification toolbox -->
-        <activity android:name="Settings$NotificationToolboxActivity"
-                android:label="@string/pref_notification_toolbox_title"
+        <!-- Qwik Widgets -->
+        <activity android:name="Settings$QwikWidgetsActivity"
+                android:label="@string/pref_qwik_widgets_title"
                 android:configChanges="orientation|keyboardHidden|screenSize"
                 android:clearTaskOnLaunch="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
             <meta-data android:name="com.evervolv.toolbox.FRAGMENT_CLASS"
-                android:value="com.evervolv.toolbox.activities.NotificationToolbox" />
+                android:value="com.evervolv.toolbox.activities.QwikWidgets" />
             <meta-data android:name="com.evervolv.toolbox.TOP_LEVEL_HEADER_ID"
-                android:resource="@id/notification_toolbox_settings" />
+                android:resource="@id/qwik_widgets_settings" />
         </activity>
 
         <!-- Performance -->

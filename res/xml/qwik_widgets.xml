@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <CheckBoxPreference android:key="pref_notification_dropdown"
+        android:title="@string/pref_notification_dropdown_title"
+        android:summary="@string/pref_notification_dropdown_summary" />
+
+    <ListPreference android:key="pref_qwik_widgets_max_per_line"
+        android:title="@string/pref_qwik_widgets_max_per_line_title"
+        android:entries="@array/qwik_widgets_max_per_line_entries"
+        android:entryValues="@array/qwik_widgets_max_per_line_values" />
+
+    <Preference android:key="pref_qwik_widgets_manage_widgets"
+        android:title="@string/title_qwik_widgets_manage_widgets" />
+</PreferenceScreen>
+

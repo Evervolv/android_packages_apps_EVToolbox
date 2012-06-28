@@ -22,9 +22,9 @@
         />
     <!-- Notification Toolbox Settings -->
     <header
-        android:id="@+id/notification_toolbox_settings"
-        android:fragment="com.evervolv.toolbox.activities.NotificationToolbox"
-        android:title="@string/pref_notification_toolbox_title_head"
+        android:id="@+id/qwik_widgets_settings"
+        android:fragment="com.evervolv.toolbox.activities.QwikWidgets"
+        android:title="@string/pref_qwik_widgets_title_head"
         />
     <!-- Performance Settings -->
     <header

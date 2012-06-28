@@ -10,9 +10,9 @@ import android.util.Log;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
-public class ToolboxEnabler implements CompoundButton.OnCheckedChangeListener {
+public class QwikWidgetsEnabler implements CompoundButton.OnCheckedChangeListener {
 
-    private static final String TAG = "ToolboxEnabler";
+    private static final String TAG = "QwikWidgetsEnabler";
 
     private final Context mContext;
     private Switch mSwitch;
@@ -20,7 +20,7 @@ public class ToolboxEnabler implements CompoundButton.OnCheckedChangeListener {
     private SettingsObserver mObserver;
     private Handler mHandler = new Handler();
 
-    public ToolboxEnabler(Context context, Switch switch_) {
+    public QwikWidgetsEnabler(Context context, Switch switch_) {
         mContext = context;
         mSwitch = switch_;
         setupSettingsObserver(mHandler);
@@ -28,7 +28,7 @@ public class ToolboxEnabler implements CompoundButton.OnCheckedChangeListener {
 
         ContentResolver resolver = mContext.getContentResolver();
         boolean enabled = (Settings.System.getInt(resolver, Settings
-                .System.USE_NOTIFICATION_TOOLBOX, 1) == 1);
+                .System.USE_QWIK_WIDGETS, 1) == 1);
         mSwitch.setChecked(enabled);
     }
 
@@ -59,7 +59,7 @@ public class ToolboxEnabler implements CompoundButton.OnCheckedChangeListener {
             ContentResolver resolver = mContext.getContentResolver();
 
             resolver.registerContentObserver(Settings.System.getUriFor(Settings
-                    .System.USE_NOTIFICATION_TOOLBOX), false, this);
+                    .System.USE_QWIK_WIDGETS), false, this);
         }
 
         public void unobserve() {
@@ -72,7 +72,7 @@ public class ToolboxEnabler implements CompoundButton.OnCheckedChangeListener {
             ContentResolver resolver = mContext.getContentResolver();
             Log.d(TAG, "onChangeUri");
             boolean enabled = (Settings.System.getInt(resolver, Settings
-                    .System.USE_NOTIFICATION_TOOLBOX, 1) == 1);
+                    .System.USE_QWIK_WIDGETS, 1) == 1);
             mSwitch.setChecked(enabled);
         }
     }
@@ -85,7 +85,7 @@ public class ToolboxEnabler implements CompoundButton.OnCheckedChangeListener {
 
         ContentResolver resolver = mContext.getContentResolver();
         boolean enabled = (Settings.System.getInt(resolver, Settings
-                .System.USE_NOTIFICATION_TOOLBOX, 1) == 1);
+                .System.USE_QWIK_WIDGETS, 1) == 1);
         mSwitch.setChecked(enabled);
     }
 
@@ -96,7 +96,7 @@ public class ToolboxEnabler implements CompoundButton.OnCheckedChangeListener {
         boolean value;
         value = isChecked;
         Settings.System.putInt(resolver, Settings.System
-                .USE_NOTIFICATION_TOOLBOX, value ? 1 : 0);
+                .USE_QWIK_WIDGETS, value ? 1 : 0);
     }
 
 }
