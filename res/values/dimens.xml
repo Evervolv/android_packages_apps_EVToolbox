@@ -16,4 +16,12 @@
 
 <resources>
     <dimen name="action_bar_switch_padding">16dip</dimen>
+    <dimen name="normal_height">64dip</dimen>
+    <dimen name="expanded_height">128dip</dimen>
+
+    <!-- Dialog title height -->
+    <dimen name="alert_dialog_title_height">64dip</dimen>
+    <!-- Dialog button bar height -->
+    <dimen name="alert_dialog_button_bar_height">48dip</dimen>
+
 </resources>

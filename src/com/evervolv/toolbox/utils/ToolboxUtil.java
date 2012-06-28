@@ -30,40 +30,40 @@ public class ToolboxUtil {
     static {
 	    WIDGETS.put(WIDGET_WIFI, new WidgetInfo(
 	            WIDGET_WIFI, R.string.title_toggle_wifi,
-                    R.drawable.widget_wifi));
+	            "com.android.systemui:drawable/widget_wifi_icon"));
 	    WIDGETS.put(WIDGET_GPS, new WidgetInfo(
 	            WIDGET_GPS, R.string.title_toggle_gps,
-                    R.drawable.widget_gps));
+	            "com.android.systemui:drawable/widget_gps_icon"));
 	    WIDGETS.put(WIDGET_BLUETOOTH, new WidgetInfo(
 	            WIDGET_BLUETOOTH, R.string.title_toggle_bluetooth,
-                    R.drawable.widget_bluetooth));
+	            "com.android.systemui:drawable/widget_bluetooth_icon"));
 	    WIDGETS.put(WIDGET_SYNC, new WidgetInfo(
 	            WIDGET_SYNC, R.string.title_toggle_sync,
-                    R.drawable.widget_sync));
+	            "com.android.systemui:drawable/widget_sync_icon"));
 	    WIDGETS.put(WIDGET_WIFIAP, new WidgetInfo(
                 WIDGET_WIFIAP, R.string.title_toggle_wifiap,
-                    R.drawable.widget_wifiap));
+                "com.android.systemui:drawable/widget_wifiap_icon"));
 	    WIDGETS.put(WIDGET_MOBDATA, new WidgetInfo(
                 WIDGET_MOBDATA, R.string.title_toggle_mobiledata,
-                    R.drawable.widget_mobdata));
+                "com.android.systemui:drawable/widget_mobile_data_icon"));
 	    WIDGETS.put(WIDGET_USBTETHER, new WidgetInfo(
                 WIDGET_USBTETHER, R.string.title_toggle_usbtether,
-                    R.drawable.widget_usb_tether));
+                "com.android.systemui:drawable/widget_usb_tether_icon"));
 	    WIDGETS.put(WIDGET_AUTOROTATE, new WidgetInfo(
                 WIDGET_AUTOROTATE, R.string.title_toggle_autorotate,
-                    R.drawable.widget_auto_rotate));
+                "com.android.systemui:drawable/widget_auto_rotate_icon"));
 	    WIDGETS.put(WIDGET_AIRPLANE, new WidgetInfo(
                 WIDGET_AIRPLANE, R.string.title_toggle_airplane,
-                    R.drawable.widget_airplane));
+                "com.android.systemui:drawable/widget_airplane_icon"));
         WIDGETS.put(WIDGET_BRIGHTNESS, new WidgetInfo(
                 WIDGET_BRIGHTNESS, R.string.title_toggle_brightness,
-                    R.drawable.widget_brightness));
+                "com.android.systemui:drawable/widget_brightness_icon"));
         WIDGETS.put(WIDGET_WIMAX, new WidgetInfo(
                 WIDGET_WIMAX, R.string.title_toggle_wimax,
-                    R.drawable.widget_wimax));
+                "com.android.systemui:drawable/widget_wimax_icon"));
         WIDGETS.put(WIDGET_NOTIFICATIONS, new WidgetInfo(
                 WIDGET_NOTIFICATIONS, R.string.title_toggle_notifications,
-                    R.drawable.widget_notifications));
+                "com.android.systemui:drawable/widget_notifications_icon"));
     }
 
     private static final String WIDGET_DELIMITER = "|";
@@ -134,17 +134,17 @@ public class ToolboxUtil {
     public static class WidgetInfo {
         private String mId;
         private int mTitleResId;
-        private int mIconResId;
+        private String mIcon;
 
-        public WidgetInfo(String id, int titleResId, int iconResId) {
+        public WidgetInfo(String id, int titleResId, String icon) {
             mId = id;
             mTitleResId = titleResId;
-            mIconResId = iconResId;
+            mIcon = icon;
         }
 
         public String getId() { return mId; }
         public int getTitleResId() { return mTitleResId; }
-        public int getIconResId() { return mIconResId; }
+        public String getIcon() { return mIcon; }
     }
 
     public static String arrayToString(String[] a, String separator) {
@@ -158,4 +158,13 @@ public class ToolboxUtil {
         return result;
     }
 
+    public static boolean doesWidgetExist(Context c, String id) {
+        ArrayList<String> widgets = getWidgetListFromString(getCurrentWidgets(c));
+        if (widgets.contains(id)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
 }
