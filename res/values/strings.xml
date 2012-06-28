@@ -69,10 +69,6 @@
 
     <string name="default_qwik_widgets">toggleWifi|toggleBluetooth|toggleAutoRotate</string>
 
-        <!-- Music Control Options -->
-    <string name="pref_lockscreen_cat_music_controls_title">Music Controls</string>
-    <string name="pref_lockscreen_music_controls_volbtn_title">Volume btn music control</string>
-    <string name="pref_lockscreen_music_controls_volbtn_summary">Change music tracks by long pressing vol-up(next) or vol-down(prev)</string>
 
         <!-- Interface Settings -->
     <string name="interface_title">Interface</string>
@@ -81,9 +77,13 @@
     <string name="pref_interface_buttons_title">Buttons</string>
     <string name="pref_interface_buttons_summary">Control actions of hardware buttons</string>
     <string name="pref_trackball_wake_toggle_title">Trackball wake</string>
-    <string name="pref_trackball_wake_toggle_summary">Allow trackball to wake the device</string>
-    <string name="pref_volume_wake_toggle_title">Volume btn wake</string>
-    <string name="pref_volume_wake_toggle_summary">Press volume up or down to wake the device</string>
+    <string name="pref_trackball_wake_toggle_summary">Wake the device by pressing the trackball</string>
+    <string name="pref_volume_wake_toggle_title">Volume wake</string>
+    <string name="pref_volume_wake_toggle_summary">Wake the device by pressing vol-up or vol-down</string>
+    <string name="pref_lockscreen_music_controls_volbtn_title">Volume music control</string>
+    <string name="pref_lockscreen_music_controls_volbtn_summary">Change music tracks by long pressing vol-up(next) or vol-down(prev)</string>
+    <string name="pref_kill_app_longpress_back_title">Back app kill</string>
+    <string name="pref_kill_app_longpress_back_summary">Kill the foreground app by long pressing back</string>
         <!-- Interface >> Rotation -->
     <string name="pref_interface_rotation_title">Rotation settings</string>
     <string name="pref_interface_rotation_summary">Toggle specific angles</string>
