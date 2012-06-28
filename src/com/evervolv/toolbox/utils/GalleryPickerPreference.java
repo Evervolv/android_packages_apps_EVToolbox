@@ -7,6 +7,7 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.preference.Preference;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,6 +26,9 @@ import com.evervolv.toolbox.R;
 public class GalleryPickerPreference extends Preference implements OnClickListener {
 
     private static final String TAG = "EVToolbox";
+
+    private static final int DEFAULT_X = 240;
+    private static final int DEFAULT_Y = 400;
 
     private Gallery mGallery;
     private ImageAdapter mAdapter;
@@ -52,7 +56,7 @@ public class GalleryPickerPreference extends Preference implements OnClickListen
                 .GalleryPickerPreference_entryDrawables, 0));
         TypedArray array = res.obtainTypedArray(a.getResourceId(R.styleable
                 .GalleryPickerPreference_entryDrawables, 0));
-        
+
         int count = array.length();
         mDrawableIds = new int[count];
         Log.d(TAG, "Drawable count: " + count);
@@ -103,7 +107,7 @@ public class GalleryPickerPreference extends Preference implements OnClickListen
 
         private Context myContext;
         private int[] mResIds;
-        
+
         public ImageAdapter(Context c, int[] drawableIds) {
             myContext = c;
             mResIds = drawableIds;
@@ -121,7 +125,24 @@ public class GalleryPickerPreference extends Preference implements OnClickListen
            ImageView i = new ImageView(myContext);
            i.setImageResource(mResIds[position]);
            i.setScaleType(ImageView.ScaleType.FIT_XY);
-           i.setLayoutParams(new Gallery.LayoutParams(160, 267));
+           int x = DEFAULT_X;
+           int y = DEFAULT_Y;
+
+           DisplayMetrics dm = myContext.getResources().getDisplayMetrics();
+           switch(dm.densityDpi){
+                case DisplayMetrics.DENSITY_MEDIUM:
+                    x = (int) (x * .50);
+                    y = (int) (y * .75);
+                    break;
+                case DisplayMetrics.DENSITY_HIGH:
+                    x = (int) (x * .75);
+                    y = (int) (y * .75);
+                    break;
+                case DisplayMetrics.DENSITY_XHIGH:
+                    //use defaults
+                    break;
+           }
+           i.setLayoutParams(new Gallery.LayoutParams(x, y));
            return i;
         }
 
@@ -165,9 +186,7 @@ public class GalleryPickerPreference extends Preference implements OnClickListen
             mStyleNameView.setText(caption);
         }
         @Override
-        public void onNothingSelected(AdapterView<?> parent) {
-
-        }
+        public void onNothingSelected(AdapterView<?> parent) { }
     };
 
     @Override
