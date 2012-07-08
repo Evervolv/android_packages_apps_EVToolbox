@@ -45,7 +45,7 @@ public class LockscreenStyle extends SettingsFragment implements
     private static final int LOCK_STYLE_ICS_3WAY = 1;
     //Unused for now.
     //private static final int LOCK_STYLE_GB   = 2;
-    //private static final int LOCK_STYLE_ECLAIR = 3;
+    private static final int LOCK_STYLE_ECLAIR = 3;
     //private static final int LOCK_STYLE_HC = 4;
     private static final int LOCK_STYLE_DEFAULT = LOCK_STYLE_ICS;
 
@@ -131,24 +131,37 @@ public class LockscreenStyle extends SettingsFragment implements
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (preference == mLockscreenStyle) {
             int value = Integer.parseInt((String) newValue);
+            switch (value) {
+                case LOCK_STYLE_ICS_3WAY:
+                    mPrefSet.addPreference(mCatIcs);
+                    mPrefSet.addPreference(mCatAppOne);
+                    mPrefSet.addPreference(mCatAppTwo);
+                    mPrefSet.addPreference(mCatAppThree);
+                    break;
+                case LOCK_STYLE_ICS:
+                    mPrefSet.removePreference(mCatAppTwo);
+                    mPrefSet.addPreference(mCatIcs);
+                    mPrefSet.addPreference(mCatAppOne);
+                    mPrefSet.addPreference(mCatAppThree);
+                    break;
+                case LOCK_STYLE_ECLAIR:
+                    if (!getResources().getBoolean(R.bool.config_allow_eclair_lock)) {
+                        Toast toast = Toast.makeText(getContext(), R.string
+                                .pref_lockscreen_style_no_eclair_toast,
+                                Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
+                        return true;
+                    }
+                    break;
+                default:
+                    mPrefSet.removePreference(mCatIcs);
+                    mPrefSet.removePreference(mCatAppOne);
+                    mPrefSet.removePreference(mCatAppTwo);
+                    mPrefSet.removePreference(mCatAppThree);
+            }
             Settings.System.putInt(mCr, Settings.System.LOCKSCREEN_STYLE, value);
             mCurrLockscreen = value;
-            if (mCurrLockscreen == LOCK_STYLE_ICS) {
-                mPrefSet.removePreference(mCatAppTwo);
-                mPrefSet.addPreference(mCatIcs);
-                mPrefSet.addPreference(mCatAppOne);
-                mPrefSet.addPreference(mCatAppThree);
-            } else if (mCurrLockscreen != LOCK_STYLE_ICS_3WAY && mCurrLockscreen != LOCK_STYLE_ICS) {
-                mPrefSet.removePreference(mCatIcs);
-                mPrefSet.removePreference(mCatAppOne);
-                mPrefSet.removePreference(mCatAppTwo);
-                mPrefSet.removePreference(mCatAppThree);
-            } else {
-                mPrefSet.addPreference(mCatIcs);
-                mPrefSet.addPreference(mCatAppOne);
-                mPrefSet.addPreference(mCatAppTwo);
-                mPrefSet.addPreference(mCatAppThree);
-            }
             return true;
         } else if (preference == mCustApp[0]) {
             return processPick(0, newValue);

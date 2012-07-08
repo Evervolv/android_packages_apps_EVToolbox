@@ -21,6 +21,7 @@
     <string name="select_custom_app_title">Select custom application</string>
     <string name="group_applications">Applications</string>
 
+    <string name="pref_lockscreen_style_no_eclair_toast">Eclair style is unavailable for this device!\nPlease choose another style.</string>
     <string name="pref_lockscreen_style_custom_app_sound">Sound toggle</string>
     <string name="pref_lockscreen_style_custom_app_unlock">Unlock switch</string>
     <string name="pref_lockscreen_style_custom_app_pick">Click here to pick a shortcut!</string>

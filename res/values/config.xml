@@ -9,4 +9,5 @@
     <bool name="config_has_bluetooth" translatable="false">true</bool>
     <bool name="config_has_mobile_data" translatable="false">true</bool>
     <bool name="config_has_mobile_radio" translatable="false">true</bool>
+    <bool name="config_allow_eclair_lock" translatable="false">true</bool>
 </resources>
