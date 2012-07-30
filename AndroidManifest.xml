@@ -26,6 +26,7 @@
             <intent-filter >
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
@@ -35,6 +36,7 @@
 
 
         <!--- Lockscreen -->
+<!--
         <activity android:name="Settings$LockscreenActivity"
                 android:label="@string/lockscreen_title"
                 android:configChanges="orientation|keyboardHidden|screenSize"
@@ -64,8 +66,9 @@
             <meta-data android:name="com.evervolv.toolbox.PARENT_FRAGMENT_CLASS"
                 android:value="com.evervolv.toolbox.activities.Lockscreen" />
         </activity>
-
+-->
         <!-- Statusbar -->
+<!--
         <activity android:name="Settings$StatusbarActivity"
                 android:label="@string/statusbar_title"
                 android:configChanges="orientation|keyboardHidden|screenSize"
@@ -95,8 +98,9 @@
             <meta-data android:name="com.evervolv.toolbox.PARENT_FRAGMENT_CLASS"
                 android:value="com.evervolv.toolbox.activities.Statusbar" />
         </activity>
-
+-->
         <!-- Interface -->
+<!--
         <activity android:name="Settings$InterfaceActivity"
                 android:label="@string/interface_title"
                 android:configChanges="orientation|keyboardHidden|screenSize"
@@ -163,8 +167,9 @@
                 android:value="com.evervolv.toolbox.activities.Interface" />
 
         </activity>
-
-        <!-- Qwik Widgets -->
+-->
+        <!-- Qwik Widgets -->'
+<!--
         <activity android:name="Settings$QwikWidgetsActivity"
                 android:label="@string/pref_qwik_widgets_title"
                 android:configChanges="orientation|keyboardHidden|screenSize"
@@ -177,8 +182,9 @@
             <meta-data android:name="com.evervolv.toolbox.TOP_LEVEL_HEADER_ID"
                 android:resource="@id/qwik_widgets_settings" />
         </activity>
-
+-->
         <!-- Performance -->
+<!--
         <activity android:name="Settings$PerformanceActivity"
                 android:label="@string/performance_title"
                 android:configChanges="orientation|keyboardHidden|screenSize"
@@ -231,6 +237,6 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-
+-->
     </application>
 </manifest>

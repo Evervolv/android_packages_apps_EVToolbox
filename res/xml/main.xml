@@ -3,33 +3,43 @@
         xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Lockscreen Settings -->
+<!--
     <header
         android:id="@+id/lockscreen_settings"
         android:fragment="com.evervolv.toolbox.activities.Lockscreen"
         android:title="@string/pref_lockscreen_title_head"
         />
+-->
     <!-- Statusbar Settings -->
+<!--
     <header
         android:id="@+id/statusbar_settings"
         android:fragment="com.evervolv.toolbox.activities.Statusbar"
         android:title="@string/pref_statusbar_title_head"
         />
+-->
     <!-- Interface Settings -->
+<!--
     <header
         android:id="@+id/interface_settings"
         android:fragment="com.evervolv.toolbox.activities.Interface"
         android:title="@string/pref_interface_title_head"
         />
-    <!-- Notification Toolbox Settings -->
+-->
+    <!-- QwikWidgets Settings -->
+<!--
     <header
         android:id="@+id/qwik_widgets_settings"
         android:fragment="com.evervolv.toolbox.activities.QwikWidgets"
         android:title="@string/pref_qwik_widgets_title_head"
         />
+-->
     <!-- Performance Settings -->
+<!--
     <header
         android:id="@+id/performance_settings"
         android:fragment="com.evervolv.toolbox.activities.Performance"
         android:title="@string/pref_performance_title_head"
         />
+-->
 </preference-headers>

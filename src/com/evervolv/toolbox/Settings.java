@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.evervolv.toolbox.utils.QwikWidgetsEnabler;
-
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -286,7 +284,7 @@ public class Settings extends PreferenceActivity {
         static final int HEADER_TYPE_SWITCH = 2;
         private static final int HEADER_TYPE_COUNT = HEADER_TYPE_SWITCH + 1;
 
-        private final QwikWidgetsEnabler mQwikWidgetsEnabler;
+        //private final QwikWidgetsEnabler mQwikWidgetsEnabler;
 
         private static class HeaderViewHolder {
             ImageView icon;
@@ -300,8 +298,8 @@ public class Settings extends PreferenceActivity {
         static int getHeaderType(Header header) {
             if (header.fragment == null && header.intent == null) {
                 return HEADER_TYPE_CATEGORY;
-            } else if (header.id == R.id.qwik_widgets_settings) {
-                return HEADER_TYPE_SWITCH;
+            //} else if (header.id == R.id.qwik_widgets_settings) {
+            //    return HEADER_TYPE_SWITCH;
             } else {
                 return HEADER_TYPE_NORMAL;
             }
@@ -336,7 +334,7 @@ public class Settings extends PreferenceActivity {
         public HeaderAdapter(Context context, List<Header> objects) {
             super(context, 0, objects);
             mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            mQwikWidgetsEnabler = new QwikWidgetsEnabler(context, new Switch(context));
+            //mQwikWidgetsEnabler = new QwikWidgetsEnabler(context, new Switch(context));
         }
 
         @Override
@@ -387,9 +385,9 @@ public class Settings extends PreferenceActivity {
                     break;
 
                 case HEADER_TYPE_SWITCH:
-                    if (header.id == R.id.qwik_widgets_settings) {
-                        mQwikWidgetsEnabler.setSwitch(holder.switch_);
-                    }
+                    //if (header.id == R.id.qwik_widgets_settings) {
+                    //    mQwikWidgetsEnabler.setSwitch(holder.switch_);
+                    //}
                 case HEADER_TYPE_NORMAL:
                     holder.icon.setImageResource(header.iconRes);
                     holder.title.setText(header.getTitle(getContext().getResources()));
@@ -407,11 +405,11 @@ public class Settings extends PreferenceActivity {
         }
 
         public void resume() {
-            mQwikWidgetsEnabler.resume();
+            //mQwikWidgetsEnabler.resume();
         }
 
         public void pause() {
-            mQwikWidgetsEnabler.pause();
+            //mQwikWidgetsEnabler.pause();
         }
 
     }
@@ -434,13 +432,13 @@ public class Settings extends PreferenceActivity {
         return true;
     }
 
-    public static class LockscreenActivity extends Settings { /* */ }
-    public static class StatusbarActivity extends Settings { /* */ }
-    public static class QwikWidgetsActivity extends Settings { /* */ }
-    public static class LockscreenStyleActivity extends Settings { /* */ }
-    public static class StatusbarIconsActivity extends Settings { /* */ }
-    public static class InterfaceActivity extends Settings { /* */ }
-    public static class InterfaceButtonsActivity extends Settings { /* */ }
-    public static class InterfaceRotationActivity extends Settings { /* */ }
-    public static class InterfacePowerMenuActivity extends Settings { /* */ }
+    //public static class LockscreenActivity extends Settings { /* */ }
+    //public static class StatusbarActivity extends Settings { /* */ }
+    //public static class QwikWidgetsActivity extends Settings { /* */ }
+    //public static class LockscreenStyleActivity extends Settings { /* */ }
+    //public static class StatusbarIconsActivity extends Settings { /* */ }
+    //public static class InterfaceActivity extends Settings { /* */ }
+    //public static class InterfaceButtonsActivity extends Settings { /* */ }
+    //public static class InterfaceRotationActivity extends Settings { /* */ }
+    //public static class InterfacePowerMenuActivity extends Settings { /* */ }
 }
