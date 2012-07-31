@@ -36,7 +36,6 @@
 
 
         <!--- Lockscreen -->
-<!--
         <activity android:name="Settings$LockscreenActivity"
                 android:label="@string/lockscreen_title"
                 android:configChanges="orientation|keyboardHidden|screenSize"
@@ -66,7 +65,7 @@
             <meta-data android:name="com.evervolv.toolbox.PARENT_FRAGMENT_CLASS"
                 android:value="com.evervolv.toolbox.activities.Lockscreen" />
         </activity>
--->
+
         <!-- Statusbar -->
 <!--
         <activity android:name="Settings$StatusbarActivity"

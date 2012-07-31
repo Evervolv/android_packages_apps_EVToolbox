@@ -18,19 +18,17 @@
 <resources>
 
     <array name="lockscreen_style_captions" >
+        <item>Jellybean</item>
         <item>Ice Cream Sandwich</item>
-        <item>Ice Cream Sandwich (3Way)</item>
         <item>Gingerbread</item>
         <item>Eclair</item>
-        <item>Honeycomb</item>
     </array>
 
     <array name="lockscreen_style_drawables" translatable="false">
-        <item>@drawable/lock_ics_2way</item>
-        <item>@drawable/lock_ics_3way</item>
+        <item>@drawable/lock_jb</item>
+        <item>@drawable/lock_ics</item>
         <item>@drawable/lock_gingerbread</item>
         <item>@drawable/lock_eclair</item>
-        <item>@drawable/lock_honeycomb</item>
     </array>
 
     <string-array name="lockscreen_custom_app_entries">
