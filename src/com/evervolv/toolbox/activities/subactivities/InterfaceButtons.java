@@ -53,9 +53,9 @@ public class InterfaceButtons extends SettingsFragment {
                 Settings.System.LOCKSCREEN_MUSIC_CONTROLS_VOLBTN, 1) == 1);
 
         /* Kill app long press pack */
-        mKillAppBackBtn = (CheckBoxPreference) mPrefSet.findPreference(KILL_APP_LONGPRESS_BACK);
-        mKillAppBackBtn.setChecked(Settings.Secure.getInt(mCr,
-                Settings.Secure.KILL_APP_LONGPRESS_BACK, 0) == 1);
+        //mKillAppBackBtn = (CheckBoxPreference) mPrefSet.findPreference(KILL_APP_LONGPRESS_BACK);
+        //mKillAppBackBtn.setChecked(Settings.Secure.getInt(mCr,
+        //        Settings.Secure.KILL_APP_LONGPRESS_BACK, 0) == 1);
 
         /* Remove mTrackballWake on devices without trackballs */
         if (!getResources().getBoolean(R.bool.has_trackball)) {
@@ -81,11 +81,11 @@ public class InterfaceButtons extends SettingsFragment {
             Settings.System.putInt(mCr, Settings.System.LOCKSCREEN_MUSIC_CONTROLS_VOLBTN,
                     value ? 1 : 0);
             return true;
-        } else if (preference == mKillAppBackBtn) {
-            value = mKillAppBackBtn.isChecked();
-            Settings.Secure.putInt(mCr, Settings.Secure.KILL_APP_LONGPRESS_BACK,
-                    value ? 1 : 0);
-            return true;
+        //} else if (preference == mKillAppBackBtn) {
+        //    value = mKillAppBackBtn.isChecked();
+        //    Settings.Secure.putInt(mCr, Settings.Secure.KILL_APP_LONGPRESS_BACK,
+        //            value ? 1 : 0);
+        //    return true;
         }
         return false;
     }

@@ -43,9 +43,8 @@ public class LockscreenStyle extends SettingsFragment implements
 
     private static final int LOCK_STYLE_JB = 0;
     private static final int LOCK_STYLE_ICS = 1;
-    //Unused for now.
-    //private static final int LOCK_STYLE_HC = 2;
-    //private static final int LOCK_STYLE_GB   = 3;
+    private static final int LOCK_STYLE_HC = 2;
+    private static final int LOCK_STYLE_GB   = 3;
     private static final int LOCK_STYLE_ECLAIR = 4;
 
     private static final int LOCK_STYLE_DEFAULT = LOCK_STYLE_JB;
@@ -154,7 +153,8 @@ public class LockscreenStyle extends SettingsFragment implements
                         toast.show();
                         return true;
                     }
-                    break;
+                case LOCK_STYLE_HC:
+                case LOCK_STYLE_GB:
                 default:
                     //mPrefSet.removePreference(mCatIcs);
                     //mPrefSet.removePreference(mCatAppOne);

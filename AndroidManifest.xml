@@ -99,7 +99,6 @@
         </activity>
 -->
         <!-- Interface -->
-<!--
         <activity android:name="Settings$InterfaceActivity"
                 android:label="@string/interface_title"
                 android:configChanges="orientation|keyboardHidden|screenSize"
@@ -130,7 +129,7 @@
                 android:value="com.evervolv.toolbox.activities.Interface" />
 
         </activity>
-
+<!--
         <activity android:name="Settings$InterfaceRotationActivity"
                 android:label="@string/pref_interface_rotation_title"
                 android:configChanges="orientation|keyboardHidden|screenSize"

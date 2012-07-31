@@ -16,11 +16,11 @@
             android:title="@string/pref_lockscreen_music_controls_volbtn_title"
             android:summary="@string/pref_lockscreen_music_controls_volbtn_summary">
         </CheckBoxPreference>
-
+<!--
         <CheckBoxPreference
             android:key="pref_kill_app_longpress_back"
             android:title="@string/pref_kill_app_longpress_back_title"
             android:summary="@string/pref_kill_app_longpress_back_summary">
         </CheckBoxPreference>
-
+-->
 </PreferenceScreen>
