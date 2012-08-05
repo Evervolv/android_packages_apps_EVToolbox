@@ -20,14 +20,18 @@ import android.content.Context;
 import android.content.ContentResolver;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.os.UserHandle;
+import android.os.Handler;
+import android.os.RemoteException;
 import android.provider.Settings;
+import android.support.v14.preference.SwitchPreference;
 import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceCategory;
 import android.support.v7.preference.PreferenceGroup;
 import android.support.v7.preference.PreferenceScreen;
 import android.util.Log;
+import android.view.IWindowManager;
+import android.view.WindowManagerGlobal;
 
 import evervolv.provider.EVSettings;
 import com.evervolv.toolbox.R;
@@ -47,6 +51,8 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
     private static final String KEY_ASSIST_LONG_PRESS = "button_assist_long_press";
     private static final String KEY_APP_SWITCH_PRESS = "button_app_switch_press";
     private static final String KEY_APP_SWITCH_LONG_PRESS = "button_app_switch_long_press";
+
+    private static final String DISABLE_NAV_KEYS = "disable_nav_keys";
 
     private static final String CATEGORY_HOME = "home_key";
     private static final String CATEGORY_BACK = "back_key";
@@ -100,6 +106,9 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
     private ListPreference mAppSwitchPressAction;
     private ListPreference mAppSwitchLongPressAction;
 
+    private SwitchPreference mDisableNavigationKeys;
+    private Handler mHandler;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,6 +136,11 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
         final PreferenceGroup appSwitchCategory =
                 (PreferenceCategory) prefScreen.findPreference(CATEGORY_APPSWITCH);
 
+        mHandler = new Handler();
+
+        // Force Navigation bar related options
+        mDisableNavigationKeys = (SwitchPreference) findPreference(DISABLE_NAV_KEYS);
+
         Action defaultHomeLongPressAction = Action.fromIntSafe(res.getInteger(
                 com.android.internal.R.integer.config_longPressOnHomeBehavior));
         Action defaultHomeDoubleTapAction = Action.fromIntSafe(res.getInteger(
@@ -137,6 +151,23 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
         Action homeDoubleTapAction = Action.fromSettings(resolver,
                 EVSettings.System.KEY_HOME_DOUBLE_TAP_ACTION,
                 defaultHomeDoubleTapAction);
+
+        // Only visible on devices that does not have a navigation bar already,
+        // and don't even try unless the existing keys can be disabled
+        boolean needsNavigationBar = false;
+        try {
+            IWindowManager wm = WindowManagerGlobal.getWindowManagerService();
+            needsNavigationBar = wm.needsNavigationBar();
+        } catch (RemoteException e) {
+        }
+
+        if (needsNavigationBar) {
+            prefScreen.removePreference(mDisableNavigationKeys);
+        } else {
+            // Remove keys that can be provided by the navbar
+            updateDisableNavkeysOption();
+            updateDisableNavkeysCategories(mDisableNavigationKeys.isChecked());
+        }
 
         if (hasHomeKey) {
             mHomeLongPressAction = initList(KEY_HOME_LONG_PRESS, homeLongPressAction);
@@ -239,5 +270,69 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
             return true;
         }
         return false;
+    }
+
+    private static void writeDisableNavkeysOption(Context context, boolean enabled) {
+        EVSettings.Secure.putInt(context.getContentResolver(),
+                EVSettings.Secure.DEV_FORCE_SHOW_NAVBAR, enabled ? 1 : 0);
+    }
+
+    private void updateDisableNavkeysOption() {
+        boolean enabled = EVSettings.Secure.getInt(getActivity().getContentResolver(),
+                EVSettings.Secure.DEV_FORCE_SHOW_NAVBAR, 0) != 0;
+
+        mDisableNavigationKeys.setChecked(enabled);
+    }
+
+    private void updateDisableNavkeysCategories(boolean navbarEnabled) {
+        final PreferenceScreen prefScreen = getPreferenceScreen();
+
+        /* Disable hw-key options if they're disabled */
+        final PreferenceCategory homeCategory =
+                (PreferenceCategory) prefScreen.findPreference(CATEGORY_HOME);
+        final PreferenceCategory backCategory =
+                (PreferenceCategory) prefScreen.findPreference(CATEGORY_BACK);
+        final PreferenceCategory menuCategory =
+                (PreferenceCategory) prefScreen.findPreference(CATEGORY_MENU);
+        final PreferenceCategory assistCategory =
+                (PreferenceCategory) prefScreen.findPreference(CATEGORY_ASSIST);
+        final PreferenceCategory appSwitchCategory =
+                (PreferenceCategory) prefScreen.findPreference(CATEGORY_APPSWITCH);
+
+        /* Toggle hardkey control availability depending on navbar state */
+        if (homeCategory != null) {
+            homeCategory.setEnabled(!navbarEnabled);
+        }
+        if (backCategory != null) {
+            backCategory.setEnabled(!navbarEnabled);
+        }
+        if (menuCategory != null) {
+            menuCategory.setEnabled(!navbarEnabled);
+        }
+        if (assistCategory != null) {
+            assistCategory.setEnabled(!navbarEnabled);
+        }
+        if (appSwitchCategory != null) {
+            appSwitchCategory.setEnabled(!navbarEnabled);
+        }
+    }
+
+    @Override
+    public boolean onPreferenceTreeClick(Preference preference) {
+        if (preference == mDisableNavigationKeys) {
+            mDisableNavigationKeys.setEnabled(false);
+            writeDisableNavkeysOption(getActivity(), mDisableNavigationKeys.isChecked());
+            updateDisableNavkeysOption();
+            updateDisableNavkeysCategories(true);
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mDisableNavigationKeys.setEnabled(true);
+                    updateDisableNavkeysCategories(mDisableNavigationKeys.isChecked());
+                }
+            }, 1000);
+        }
+
+        return super.onPreferenceTreeClick(preference);
     }
 }

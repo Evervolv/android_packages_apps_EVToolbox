@@ -18,6 +18,12 @@
         android:key="button_settings"
         android:title="@string/button_settings_title">
 
+    <SwitchPreference
+        android:key="disable_nav_keys"
+        android:title="@string/disable_navkeys_title"
+        android:summary="@string/disable_navkeys_summary"
+        android:defaultValue="false" />
+
     <PreferenceCategory
         android:key="home_key"
         android:title="@string/home_key_title" >
