@@ -503,7 +503,7 @@ public class Settings extends PreferenceActivity implements CompoundButton.OnChe
     }
 
     public static class LockscreenActivity extends Settings { /* */ }
-    //public static class StatusbarActivity extends Settings { /* */ }
+    public static class StatusbarActivity extends Settings { /* */ }
     //public static class QwikWidgetsActivity extends Settings { /* */ }
     //public static class LockscreenStyleActivity extends Settings { /* */ }
     //public static class StatusbarIconsActivity extends Settings { /* */ }

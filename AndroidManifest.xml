@@ -66,7 +66,6 @@
         </activity>
 
         <!-- Statusbar -->
-<!--
         <activity android:name="Settings$StatusbarActivity"
                 android:label="@string/statusbar_title"
                 android:configChanges="orientation|keyboardHidden|screenSize"
@@ -96,7 +95,7 @@
             <meta-data android:name="com.evervolv.toolbox.PARENT_FRAGMENT_CLASS"
                 android:value="com.evervolv.toolbox.activities.Statusbar" />
         </activity>
--->
+
         <!-- Interface -->
         <activity android:name="Settings$InterfaceActivity"
                 android:label="@string/interface_title"

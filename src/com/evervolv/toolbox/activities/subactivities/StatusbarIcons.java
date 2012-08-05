@@ -34,15 +34,15 @@ public class StatusbarIcons extends SettingsFragment implements OnPreferenceChan
         mCr = getContentResolver();
 
         /* Sixbar Signal Icons */
-        mUseSixbaricons = (CheckBoxPreference) mPrefSet.findPreference(
+        /*mUseSixbaricons = (CheckBoxPreference) mPrefSet.findPreference(
                 STATUSBAR_SIXBAR_SIGNAL);
         mUseSixbaricons.setChecked(Settings.System.getInt(getContentResolver(),
-                Settings.System.STATUSBAR_6BAR_SIGNAL, 1) == 1);
+                Settings.System.STATUSBAR_6BAR_SIGNAL, 1) == 1);*/
 
         /* Remove mUseSixbaricons on devices without mobile radios*/
-        if (!getResources().getBoolean(R.bool.config_has_mobile_radio)) {
+        /*if (!getResources().getBoolean(R.bool.config_has_mobile_radio)) {
             mPrefSet.removePreference(mUseSixbaricons);
-        }
+        }*/
         
         /* Battery Icon Style */
         mBattStyle = (ListPreference) mPrefSet.findPreference(STATUSBAR_BATTERY_STYLE);
@@ -62,7 +62,7 @@ public class StatusbarIcons extends SettingsFragment implements OnPreferenceChan
         return false;
     }
 
-    @Override
+    /*@Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         boolean value;
         if (preference == mUseSixbaricons) {
@@ -72,5 +72,5 @@ public class StatusbarIcons extends SettingsFragment implements OnPreferenceChan
             return true;
         }
         return false;
-    }
+    }*/
 }
