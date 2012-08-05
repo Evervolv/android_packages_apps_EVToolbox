@@ -35,6 +35,7 @@ import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import android.view.WindowManagerGlobal;
 
+import evervolv.hardware.HardwareManager;
 import evervolv.provider.EVSettings;
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.SettingsPreferenceFragment;
@@ -178,22 +179,28 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
                 EVSettings.System.KEY_HOME_DOUBLE_TAP_ACTION,
                 defaultHomeDoubleTapAction);
 
+        final HardwareManager hardware = HardwareManager.getInstance(getActivity());
+
         // Only visible on devices that does not have a navigation bar already,
         // and don't even try unless the existing keys can be disabled
         boolean needsNavigationBar = false;
-        try {
-            IWindowManager wm = WindowManagerGlobal.getWindowManagerService();
-            needsNavigationBar = wm.needsNavigationBar();
-        } catch (RemoteException e) {
-        }
+        if (hardware.isSupported(HardwareManager.FEATURE_KEY_DISABLE)) {
+            try {
+                IWindowManager wm = WindowManagerGlobal.getWindowManagerService();
+                needsNavigationBar = wm.needsNavigationBar();
+            } catch (RemoteException e) {
+            }
 
-        if (needsNavigationBar) {
-            prefScreen.removePreference(mDisableNavigationKeys);
+            if (needsNavigationBar) {
+                prefScreen.removePreference(mDisableNavigationKeys);
+            } else {
+                // Remove keys that can be provided by the navbar
+                updateDisableNavkeysOption();
+                mNavigationPreferencesCat.setEnabled(mDisableNavigationKeys.isChecked());
+                updateDisableNavkeysCategories(mDisableNavigationKeys.isChecked());
+            }
         } else {
-            // Remove keys that can be provided by the navbar
-            updateDisableNavkeysOption();
-            mNavigationPreferencesCat.setEnabled(mDisableNavigationKeys.isChecked());
-            updateDisableNavkeysCategories(mDisableNavigationKeys.isChecked());
+            prefScreen.removePreference(mDisableNavigationKeys);
         }
 
         boolean advancedReboot = EVSettings.Secure.getInt(
@@ -281,6 +288,23 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
             }
         } else {
             prefScreen.removePreference(volumeCategory);
+        }
+
+        try {
+            // Only show the navigation bar category on devices that have a navigation bar
+            // unless we are forcing it
+            boolean forceNavbar = EVSettings.Global.getInt(getContentResolver(),
+                    EVSettings.Secure.DEV_FORCE_SHOW_NAVBAR, 0) == 1;
+            boolean hasNavBar = WindowManagerGlobal.getWindowManagerService().hasNavigationBar()
+                    || forceNavbar;
+
+            if (!hasNavBar && (needsNavigationBar ||
+                    !hardware.isSupported(HardwareManager.FEATURE_KEY_DISABLE))) {
+                    // Hide navigation bar category
+                    prefScreen.removePreference(mNavigationPreferencesCat);
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "Error getting navigation bar status");
         }
     }
 
@@ -385,6 +409,16 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
         if (appSwitchCategory != null) {
             appSwitchCategory.setEnabled(!navbarEnabled);
         }
+    }
+
+    public static void restoreKeyDisabler(Context context) {
+        HardwareManager hardware = HardwareManager.getInstance(context);
+        if (!hardware.isSupported(HardwareManager.FEATURE_KEY_DISABLE)) {
+            return;
+        }
+
+        writeDisableNavkeysOption(context, EVSettings.Secure.getInt(context.getContentResolver(),
+                EVSettings.Secure.DEV_FORCE_SHOW_NAVBAR, 0) != 0);
     }
 
     @Override
