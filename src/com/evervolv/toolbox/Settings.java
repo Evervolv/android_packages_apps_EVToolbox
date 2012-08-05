@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import android.app.ActionBar;
 import android.content.ComponentName;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -14,18 +16,22 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
+import android.provider.Settings.System;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.Switch;
 import android.widget.TextView;
 
-public class Settings extends PreferenceActivity {
+public class Settings extends PreferenceActivity implements CompoundButton.OnCheckedChangeListener {
 
     private static final String LOG_TAG = "Settings";
     private static final String META_DATA_KEY_HEADER_ID =
@@ -52,6 +58,11 @@ public class Settings extends PreferenceActivity {
 
     protected HashMap<Integer, Integer> mHeaderIndexMap = new HashMap<Integer, Integer>();
     private List<Header> mHeaders;
+    private HeaderAdapter mHeaderAdapter;
+
+    private ActionBar mActionBar;
+    private Switch mToolboxSwitch;
+    private static ContentResolver mCr;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,6 +93,17 @@ public class Settings extends PreferenceActivity {
                 }
             });
         }
+
+        //add a switch to disable the toolbox
+        mCr = getContentResolver();
+        mToolboxSwitch = new Switch(this);
+        mActionBar = getActionBar();
+        mActionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM,
+                ActionBar.DISPLAY_SHOW_CUSTOM);
+        mActionBar.setCustomView(mToolboxSwitch, new ActionBar.LayoutParams(
+                ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT,
+                        Gravity.CENTER_VERTICAL | Gravity.RIGHT));
+
     }
 
     @Override
@@ -99,6 +121,9 @@ public class Settings extends PreferenceActivity {
     public void onResume() {
         super.onResume();
 
+        updateToolboxSwitch();
+        mToolboxSwitch.setOnCheckedChangeListener(this);
+
         ListAdapter listAdapter = getListAdapter();
         if (listAdapter instanceof HeaderAdapter) {
             ((HeaderAdapter) listAdapter).resume();
@@ -108,6 +133,8 @@ public class Settings extends PreferenceActivity {
     @Override
     public void onPause() {
         super.onPause();
+
+        mToolboxSwitch.setOnCheckedChangeListener(null);
 
         ListAdapter listAdapter = getListAdapter();
         if (listAdapter instanceof HeaderAdapter) {
@@ -401,6 +428,15 @@ public class Settings extends PreferenceActivity {
                     break;
             }
 
+            //grey out the header text when disabled
+            if (System.getInt(mCr, System.DISABLE_TOOLBOX, 0) == 0) {
+                holder.title.setEnabled(true);
+                holder.summary.setEnabled(true);
+            } else {
+                holder.title.setEnabled(false);
+                holder.summary.setEnabled(false);
+            }
+
             return view;
         }
 
@@ -422,7 +458,8 @@ public class Settings extends PreferenceActivity {
                 mHeaders.add((Header) adapter.getItem(i));
             }
         }
-        super.setListAdapter(new HeaderAdapter(this, mHeaders));
+        mHeaderAdapter = new HeaderAdapter(this, mHeaders);
+        super.setListAdapter(mHeaderAdapter);
     }
 
     @Override
@@ -430,6 +467,39 @@ public class Settings extends PreferenceActivity {
         CharSequence title = pref.getTitle();
         startPreferencePanel(pref.getFragment(), pref.getExtras(), 0, title, null, 0);
         return true;
+    }
+
+    @Override
+    public void onHeaderClick(Header header, int position) {
+        //only recognize clicks when toolbox is enabled
+        if (mToolboxSwitch.isChecked()) {
+            super.onHeaderClick(header, position);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // app icon in action bar clicked; go back
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        //update system setting when switch is pressed
+        System.putInt(mCr, System.DISABLE_TOOLBOX, isChecked ? 0 : 1);
+
+        //refresh headers
+        mHeaderAdapter.notifyDataSetChanged();
+    }
+
+    private void updateToolboxSwitch() {
+        //ensure that the switch matches the current value in the system setting
+        mToolboxSwitch.setChecked(System.getInt(mCr, System.DISABLE_TOOLBOX, 0) == 0);
     }
 
     public static class LockscreenActivity extends Settings { /* */ }

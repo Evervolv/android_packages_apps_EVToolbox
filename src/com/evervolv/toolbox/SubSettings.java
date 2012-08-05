@@ -16,9 +16,27 @@
 
 package com.evervolv.toolbox;
 
+import android.app.ActionBar;
+import android.os.Bundle;
+import android.view.View;
+
 /**
  * Stub class for showing sub-settings; we can't use the main Settings class
  * since for our app it is a special singleTask class.
  */
 public class SubSettings extends Settings {
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        ActionBar mActionBar = getActionBar();
+
+        //hide toolbox switch outside of the home activity
+        mActionBar.getCustomView().setVisibility(View.GONE);
+
+        //use the action bar icon to navigate back
+        mActionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
 }
