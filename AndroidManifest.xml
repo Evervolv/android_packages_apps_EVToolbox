@@ -180,7 +180,6 @@
         </activity>
 -->
         <!-- Performance -->
-<!--
         <activity android:name="Settings$PerformanceActivity"
                 android:label="@string/performance_title"
                 android:configChanges="orientation|keyboardHidden|screenSize"
@@ -233,6 +232,5 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
--->
     </application>
 </manifest>

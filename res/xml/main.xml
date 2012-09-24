@@ -32,11 +32,9 @@
         />
 -->
     <!-- Performance Settings -->
-<!--
     <header
         android:id="@+id/performance_settings"
         android:fragment="com.evervolv.toolbox.activities.Performance"
         android:title="@string/pref_performance_title_head"
         />
--->
 </preference-headers>
