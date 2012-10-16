@@ -9,4 +9,8 @@
             android:fragment="com.evervolv.toolbox.activities.Lockscreen$LockStyle">
     </PreferenceScreen>
 
+    <CheckBoxPreference
+        android:key="pref_lockscreen_transparent"
+        android:title="@string/pref_lockscreen_transparent"/>
+
 </PreferenceScreen>
