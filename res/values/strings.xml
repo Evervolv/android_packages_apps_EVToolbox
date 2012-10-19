@@ -77,6 +77,8 @@
         <!-- Interface Settings -->
     <string name="interface_title">Interface</string>
     <string name="pref_interface_title_head">Interface</string>
+    <string name="pref_interface_sense4_recent_apps_title">Sense 4.0 recent apps</string>
+    <string name="pref_interface_sense4_recent_apps_summary">Toggle for recent apps view resembling HTC\'s sense 4.0</string>
         <!-- Interface >> Buttons -->
     <string name="pref_interface_buttons_title">Buttons</string>
     <string name="pref_interface_buttons_summary">Control actions of hardware buttons</string>

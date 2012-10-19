@@ -5,6 +5,11 @@
         android:summary="@string/pref_interface_buttons_summary"
         android:fragment="com.evervolv.toolbox.activities.Interface$Buttons">
     </PreferenceScreen>
+
+    <CheckBoxPreference
+        android:key="pref_interface_sense4_recent_apps"
+        android:title="@string/pref_interface_sense4_recent_apps_title"
+        android:summary="@string/pref_interface_sense4_recent_apps_summary" />
 <!--
     <PreferenceScreen android:key="pref_interface_rotation"
         android:title="@string/pref_interface_rotation_title"
