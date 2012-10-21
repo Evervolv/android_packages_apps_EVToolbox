@@ -100,10 +100,10 @@
         <!-- Interface >> Power Menu -->
     <string name="pref_interface_power_menu_title">Power menu settings</string>
     <string name="pref_interface_power_menu_summary">Customize your power menu</string>
-    <string name="pref_power_menu_show_screenshot_title">Show screenshot option</string>
-    <string name="pref_power_menu_show_sound_title">Show sound options</string>
-    <string name="pref_power_menu_show_airplane_mode_title">Show airplane mode</string>
-    <string name="pref_power_menu_show_reboot_menu_title">Show reboot menu</string>
+    <string name="pref_power_menu_hide_screenshot_title">Hide screenshot option</string>
+    <string name="pref_power_menu_hide_sound_title">Hide sound options</string>
+    <string name="pref_power_menu_hide_airplane_mode_title">Hide airplane mode</string>
+    <string name="pref_power_menu_hide_reboot_menu_title">Hide reboot menu</string>
     <string name="pref_power_menu_screenshot_delay_title">Set screenshot delay</string>
 
         <!-- Performance Settings -->

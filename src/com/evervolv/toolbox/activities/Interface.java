@@ -11,6 +11,7 @@ import android.util.Log;
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.SettingsFragment;
 import com.evervolv.toolbox.activities.subactivities.InterfaceButtons;
+import com.evervolv.toolbox.activities.subactivities.InterfacePowerMenu;
 //import com.evervolv.toolbox.activities.subactivities.InterfacePowerMenu;
 //import com.evervolv.toolbox.activities.subactivities.InterfaceRotation;
 import com.evervolv.toolbox.activities.subactivities.InterfaceRotation;
@@ -71,5 +72,5 @@ public class Interface extends SettingsFragment {
 
     public static class Buttons extends InterfaceButtons { }
     public static class Rotation extends InterfaceRotation { }
-    //public static class PowerMenu extends InterfacePowerMenu { }
+    public static class PowerMenu extends InterfacePowerMenu { }
 }
