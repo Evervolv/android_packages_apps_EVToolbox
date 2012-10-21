@@ -10,12 +10,13 @@
         android:key="pref_interface_sense4_recent_apps"
         android:title="@string/pref_interface_sense4_recent_apps_title"
         android:summary="@string/pref_interface_sense4_recent_apps_summary" />
-<!--
+
     <PreferenceScreen android:key="pref_interface_rotation"
         android:title="@string/pref_interface_rotation_title"
         android:summary="@string/pref_interface_rotation_summary"
         android:fragment="com.evervolv.toolbox.activities.Interface$Rotation">
     </PreferenceScreen>
+<!--
     <PreferenceScreen android:key="pref_interface_power_menu"
         android:title="@string/pref_interface_power_menu_title"
         android:summary="@string/pref_interface_power_menu_summary"

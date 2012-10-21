@@ -127,7 +127,7 @@
                 android:value="com.evervolv.toolbox.activities.Interface" />
 
         </activity>
-<!--
+
         <activity android:name="Settings$InterfaceRotationActivity"
                 android:label="@string/pref_interface_rotation_title"
                 android:configChanges="orientation|keyboardHidden|screenSize"
@@ -145,7 +145,7 @@
                 android:value="com.evervolv.toolbox.activities.Interface" />
 
         </activity>
-
+<!--
         <activity android:name="Settings$InterfacePowerMenuActivity"
                 android:label="@string/pref_interface_power_menu_title"
                 android:configChanges="orientation|keyboardHidden|screenSize"
