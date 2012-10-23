@@ -5,13 +5,12 @@ import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
-import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
-import android.util.Log;
 
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.SettingsFragment;
+import com.evervolv.toolbox.utils.NumberPickerPreference;
 
 public class InterfacePowerMenu extends SettingsFragment implements OnPreferenceChangeListener {
 
@@ -21,7 +20,7 @@ public class InterfacePowerMenu extends SettingsFragment implements OnPreference
     private static final String PREF_HIDE_SOUND             =    "pref_power_menu_hide_sound";
     private static final String PREF_HIDE_AIRPLANE_MODE     =    "pref_power_menu_hide_airplane_mode";
     private static final String PREF_HIDE_REBOOT_MENU       =    "pref_power_menu_hide_reboot_menu";
-    private static final String PREF_SHOW_SCREENSHOT_DELAY  =    "pref_power_menu_screenshot_delay";
+    private static final String PREF_SCREENSHOT_DELAY       =    "pref_power_menu_screenshot_delay";
 
     private static final int HIDE_REBOOT = 1;
     private static final int HIDE_SCREENSHOT = 2;
@@ -35,7 +34,7 @@ public class InterfacePowerMenu extends SettingsFragment implements OnPreference
     private CheckBoxPreference mHideSound;
     private CheckBoxPreference mHideAirplaneMode;
     private CheckBoxPreference mHideRebootMenu;
-    //private NumberPickerPreference mScreenshotDelay;
+    private NumberPickerPreference mScreenshotDelay;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,10 +64,9 @@ public class InterfacePowerMenu extends SettingsFragment implements OnPreference
                 PREF_HIDE_REBOOT_MENU);
         mHideRebootMenu.setChecked((hiddenOptions & HIDE_REBOOT) != 0);
 
-        //mScreenshotDelay = (NumberPickerPreference) mPrefSet.findPreference(
-        //        PREF_SHOW_SCREENSHOT_DELAY);
-        //mScreenshotDelay.setDependency(PREF_SHOW_SCREENSHOT);
-        //mScreenshotDelay.setOnPreferenceChangeListener(this);
+        mScreenshotDelay = (NumberPickerPreference) mPrefSet.findPreference(
+                PREF_SCREENSHOT_DELAY);
+        mScreenshotDelay.setOnPreferenceChangeListener(this);
     }
 
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
@@ -90,11 +88,11 @@ public class InterfacePowerMenu extends SettingsFragment implements OnPreference
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        //if (preference == mScreenshotDelay) {
-        //    int value = Integer.parseInt(newValue.toString());
-        //    Settings.System.putInt(mCr, Settings.System.POWER_MENU_SCREENSHOT_DELAY,
-        //            value);
-        //}
+        if (preference == mScreenshotDelay) {
+            int value = Integer.parseInt(newValue.toString());
+            Settings.System.putInt(mCr, Settings.System.POWER_MENU_SCREENSHOT_DELAY,
+                    value);
+        }
         return false;
     }
 }

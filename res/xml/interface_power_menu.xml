@@ -2,7 +2,8 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
         <CheckBoxPreference android:key="pref_power_menu_hide_screenshot"
-            android:title="@string/pref_power_menu_hide_screenshot_title">
+            android:title="@string/pref_power_menu_hide_screenshot_title"
+            android:disableDependentsState="true">
         </CheckBoxPreference>
 
         <CheckBoxPreference android:key="pref_power_menu_hide_sound"
@@ -16,9 +17,9 @@
         <CheckBoxPreference android:key="pref_power_menu_hide_reboot_menu"
             android:title="@string/pref_power_menu_hide_reboot_menu_title">
         </CheckBoxPreference>
-<!--
+
         <com.evervolv.toolbox.utils.NumberPickerPreference android:key="pref_power_menu_screenshot_delay"
-            android:title="@string/pref_power_menu_screenshot_delay_title">
+            android:title="@string/pref_power_menu_screenshot_delay_title"
+            android:dependency="pref_power_menu_hide_screenshot">
         </com.evervolv.toolbox.utils.NumberPickerPreference>
--->
 </PreferenceScreen>
