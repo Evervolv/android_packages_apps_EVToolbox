@@ -28,6 +28,7 @@ import com.evervolv.toolbox.utils.FileUtil;
 import com.evervolv.toolbox.activities.subactivities.MemoryManagement;
 import com.evervolv.toolbox.activities.subactivities.Processor;
 
+import java.lang.Integer;
 import java.util.Arrays;
 import java.util.List;
 
@@ -102,9 +103,23 @@ public class BootReceiver extends BroadcastReceiver {
     private void configureKSM(Context ctx) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
 
-        boolean ksm = prefs.getBoolean(MemoryManagement.KSM_PREF, false);
+        boolean ksm = prefs.getBoolean(MemoryManagement.KSM_PREF, isLowMemDevice());
 
         FileUtil.fileWriteOneLine(MemoryManagement.KSM_RUN_FILE, ksm ? "1" : "0");
         Log.d(TAG, "KSM settings restored.");
     }
+
+    // True for 512MB devices
+    private boolean isLowMemDevice() {
+        boolean result = false;
+        String firstLine = FileUtil.fileReadOneLine("/proc/meminfo");
+        if (firstLine != null) {
+            String parts[] = firstLine.split("\\s+");
+            if (parts.length == 3) {
+                result = Integer.parseInt(parts[1]) < 600000;
+            }
+        }
+        return result;
+    }
+
 }
