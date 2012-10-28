@@ -1,25 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceScreen android:key="pref_interface_buttons"
-        android:title="@string/pref_interface_buttons_title"
-        android:summary="@string/pref_interface_buttons_summary"
-        android:fragment="com.evervolv.toolbox.activities.Interface$Buttons">
-    </PreferenceScreen>
 
-    <CheckBoxPreference
-        android:key="pref_interface_sense4_recent_apps"
-        android:title="@string/pref_interface_sense4_recent_apps_title"
-        android:summary="@string/pref_interface_sense4_recent_apps_summary" />
+    <PreferenceCategory android:key="pref_interface_category_buttons"
+        android:title="@string/pref_interface_category_buttons">
 
-    <PreferenceScreen android:key="pref_interface_rotation"
-        android:title="@string/pref_interface_rotation_title"
-        android:summary="@string/pref_interface_rotation_summary"
-        android:fragment="com.evervolv.toolbox.activities.Interface$Rotation">
-    </PreferenceScreen>
+        <CheckBoxPreference android:key="pref_trackball_wake_toggle"
+            android:title="@string/pref_trackball_wake_toggle_title"
+            android:summary="@string/pref_trackball_wake_toggle_summary">
+        </CheckBoxPreference>
 
-    <PreferenceScreen android:key="pref_interface_power_menu"
-        android:title="@string/pref_interface_power_menu_title"
-        android:summary="@string/pref_interface_power_menu_summary"
-        android:fragment="com.evervolv.toolbox.activities.Interface$PowerMenu">
-    </PreferenceScreen>
+        <CheckBoxPreference android:key="pref_volume_wake_toggle"
+            android:title="@string/pref_volume_wake_toggle_title"
+            android:summary="@string/pref_volume_wake_toggle_summary">
+        </CheckBoxPreference>
+
+        <CheckBoxPreference
+            android:key="pref_lockscreen_music_controls_volbtn"
+            android:title="@string/pref_lockscreen_music_controls_volbtn_title"
+            android:summary="@string/pref_lockscreen_music_controls_volbtn_summary">
+        </CheckBoxPreference>
+<!--
+        <CheckBoxPreference
+            android:key="pref_kill_app_longpress_back"
+            android:title="@string/pref_kill_app_longpress_back_title"
+            android:summary="@string/pref_kill_app_longpress_back_summary">
+        </CheckBoxPreference>
+-->
+    </PreferenceCategory>
+
+    <PreferenceCategory android:key="pref_interface_category_tabletdpi"
+        android:title="@string/pref_interface_category_tabletdpi">
+
+        <CheckBoxPreference android:key="pref_interface_tablet_mode"
+            android:title="@string/pref_interface_tablet_mode_title"
+            android:summary="@string/pref_interface_tablet_mode_summary">
+        </CheckBoxPreference>
+
+        <com.evervolv.toolbox.utils.NumberPickerPreference android:key="pref_interface_density_picker"
+            android:title="@string/pref_interface_density_picker_title">
+        </com.evervolv.toolbox.utils.NumberPickerPreference>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:key="pref_interface_category_misc"
+        android:title="@string/pref_interface_category_misc">
+
+        <CheckBoxPreference
+            android:key="pref_interface_sense4_recent_apps"
+            android:title="@string/pref_interface_sense4_recent_apps_title"
+            android:summary="@string/pref_interface_sense4_recent_apps_summary" />
+
+        <PreferenceScreen android:key="pref_interface_rotation"
+            android:title="@string/pref_interface_rotation_title"
+            android:summary="@string/pref_interface_rotation_summary"
+            android:fragment="com.evervolv.toolbox.activities.Interface$Rotation">
+        </PreferenceScreen>
+
+        <PreferenceScreen android:key="pref_interface_power_menu"
+            android:title="@string/pref_interface_power_menu_title"
+            android:summary="@string/pref_interface_power_menu_summary"
+            android:fragment="com.evervolv.toolbox.activities.Interface$PowerMenu">
+        </PreferenceScreen>
+
+    </PreferenceCategory>
 </PreferenceScreen>

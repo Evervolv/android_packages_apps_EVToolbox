@@ -27,6 +27,9 @@ public class InterfacePowerMenu extends SettingsFragment implements OnPreference
     private static final int HIDE_SOUND = 4;
     private static final int HIDE_AIRPLANE = 8;
 
+    private static final int MIN_DELAY_VALUE = 1;
+    private static final int MAX_DELAY_VALUE = 30;
+
     private ContentResolver mCr;
     private PreferenceScreen mPrefSet;
 
@@ -67,6 +70,11 @@ public class InterfacePowerMenu extends SettingsFragment implements OnPreference
         mScreenshotDelay = (NumberPickerPreference) mPrefSet.findPreference(
                 PREF_SCREENSHOT_DELAY);
         mScreenshotDelay.setOnPreferenceChangeListener(this);
+        mScreenshotDelay.setMinValue(MIN_DELAY_VALUE);
+        mScreenshotDelay.setMaxValue(MAX_DELAY_VALUE);
+        int ssDelay = Settings.System.getInt(mCr,
+                Settings.System.POWER_MENU_SCREENSHOT_DELAY, 1);
+        mScreenshotDelay.setCurrentValue(ssDelay);
     }
 
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
