@@ -6,6 +6,10 @@
 
     <string name="apply">Apply</string>
     <string name="item_count">%1$d/%2$d</string>
+    <string name="okay">Okay</string>
+    <string name="cancel">Cancel</string>
+    <string name="reboot">Reboot</string>
+    <string name="later">Later</string>
 
         <!-- Lockscreen Settings -->
     <string name="lockscreen_title">Lockscreen</string>
@@ -77,11 +81,21 @@
         <!-- Interface Settings -->
     <string name="interface_title">Interface</string>
     <string name="pref_interface_title_head">Interface</string>
+    <string name="pref_interface_category_buttons">Buttons</string>
+    <string name="pref_interface_category_tabletdpi">Tablet &amp; DPI</string>
+    <string name="pref_interface_category_misc">Miscellaneous</string>
     <string name="pref_interface_sense4_recent_apps_title">Sense 4.0 recent apps</string>
     <string name="pref_interface_sense4_recent_apps_summary">Toggle for recent apps view resembling HTC\'s sense 4.0</string>
+    <string name="pref_interface_tablet_mode_title">Tablet mode</string>
+    <string name="pref_interface_tablet_mode_summary">Force tablet mode</string>
+    <string name="pref_interface_density_picker_title">Custom display density</string>
+    <string name="pref_interface_density_picker_summary">Current dpi: %1$d\nRecommended tablet dpi: %2$d\nDefault dpi: %3$d</string>
+    <string name="pref_interface_density_change_recommended_title">Density change recommended!</string>
+    <string name="pref_interface_density_change_recommended_text">A display density change is recommended for this device. Use the setting below.</string>
+    <string name="pref_interface_reboot_required_title">Reboot required!</string>
+    <string name="pref_interface_reboot_required_text">A reboot is required for this setting to apply.\n\nWARNING: Minimal support is given for tablet mode and DPI changing.</string>
+
         <!-- Interface >> Buttons -->
-    <string name="pref_interface_buttons_title">Buttons</string>
-    <string name="pref_interface_buttons_summary">Control actions of hardware buttons</string>
     <string name="pref_trackball_wake_toggle_title">Trackball wake</string>
     <string name="pref_trackball_wake_toggle_summary">Wake the device by pressing the trackball</string>
     <string name="pref_volume_wake_toggle_title">Volume wake</string>
