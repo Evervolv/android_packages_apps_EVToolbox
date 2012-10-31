@@ -25,6 +25,7 @@ import java.io.IOException;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemProperties;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
@@ -46,6 +47,7 @@ public class Processor extends SettingsFragment implements
     public static final String GOV_PREF = "pref_cpu_gov";
     public static final String GOV_LIST_FILE = "/sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors";
     public static final String GOV_FILE = "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor";
+    public static final String GOV_CHANGED_PROP = "sys.governor.changed";
     public static final String FREQ_MIN_PREF = "pref_cpu_freq_min";
     public static final String FREQ_MAX_PREF = "pref_cpu_freq_max";
     public static final String FREQ_LIST_FILE = "/sys/devices/system/cpu/cpu0/cpufreq/scaling_available_frequencies";
@@ -223,6 +225,7 @@ public class Processor extends SettingsFragment implements
             if (FileUtil.fileWriteOneLine(fname, (String) newValue)) {
                 if (preference == mGovernorPref) {
                     mGovernorPref.setSummary(String.format(mGovernorFormat, (String) newValue));
+                    SystemProperties.set(GOV_CHANGED_PROP, (String) newValue);
                 } else if (preference == mMinFrequencyPref) {
                     mMinFrequencyPref.setSummary(String.format(mMinFrequencyFormat,
                             toMHz((String) newValue)));

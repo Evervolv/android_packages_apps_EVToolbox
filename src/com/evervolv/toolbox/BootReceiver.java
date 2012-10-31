@@ -89,6 +89,7 @@ public class BootReceiver extends BroadcastReceiver {
             }
             if (governor != null && governors != null && governors.contains(governor)) {
                 FileUtil.fileWriteOneLine(Processor.GOV_FILE, governor);
+                SystemProperties.set(Processor.GOV_CHANGED_PROP, governor);
             }
             if (maxFrequency != null && frequencies != null && frequencies.contains(maxFrequency)) {
                 FileUtil.fileWriteOneLine(Processor.FREQ_MAX_FILE, maxFrequency);
