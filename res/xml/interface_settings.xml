@@ -31,10 +31,12 @@
     <PreferenceCategory android:key="pref_interface_category_tabletdpi"
         android:title="@string/pref_interface_category_tabletdpi">
 
+<!--
         <CheckBoxPreference android:key="pref_interface_tablet_mode"
             android:title="@string/pref_interface_tablet_mode_title"
             android:summary="@string/pref_interface_tablet_mode_summary">
         </CheckBoxPreference>
+-->
 
         <com.evervolv.toolbox.utils.NumberPickerPreference android:key="pref_interface_density_picker"
             android:title="@string/pref_interface_density_picker_title">
@@ -45,10 +47,12 @@
     <PreferenceCategory android:key="pref_interface_category_misc"
         android:title="@string/pref_interface_category_misc">
 
+<!--
         <CheckBoxPreference
             android:key="pref_interface_sense4_recent_apps"
             android:title="@string/pref_interface_sense4_recent_apps_title"
             android:summary="@string/pref_interface_sense4_recent_apps_summary" />
+-->
 
         <PreferenceScreen android:key="pref_interface_rotation"
             android:title="@string/pref_interface_rotation_title"

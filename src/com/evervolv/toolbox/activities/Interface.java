@@ -41,8 +41,8 @@ public class Interface extends SettingsFragment implements OnPreferenceChangeLis
 
     private static final String ROTATION_PREF = "pref_interface_rotation";
     private static final String POWER_MENU_PREF = "pref_interface_power_menu";
-    private static final String SENSE4_RECENT_APPS_PREF = "pref_interface_sense4_recent_apps";
-    private static final String TABLET_MODE_PREF = "pref_interface_tablet_mode";
+//    private static final String SENSE4_RECENT_APPS_PREF = "pref_interface_sense4_recent_apps";
+//    private static final String TABLET_MODE_PREF = "pref_interface_tablet_mode";
     private static final String DENSITY_PICKER_PREF = "pref_interface_density_picker";
     private static final String TRACKBALL_WAKE_TOGGLE = "pref_trackball_wake_toggle";
     private static final String VOLUME_WAKE_TOGGLE = "pref_volume_wake_toggle";
@@ -59,8 +59,8 @@ public class Interface extends SettingsFragment implements OnPreferenceChangeLis
     private PreferenceScreen mPrefSet;
     private PreferenceScreen mRotation;
     private PreferenceScreen mPowerMenu;
-    private CheckBoxPreference mSense4RecentApps;
-    private CheckBoxPreference mTabletMode;
+//    private CheckBoxPreference mSense4RecentApps;
+//    private CheckBoxPreference mTabletMode;
     private NumberPickerPreference mDensityPicker;
     private CheckBoxPreference mTrackballWake;
     private CheckBoxPreference mVolumeWake;
@@ -86,8 +86,8 @@ public class Interface extends SettingsFragment implements OnPreferenceChangeLis
         //preferences
         mRotation = (PreferenceScreen) mPrefSet.findPreference(ROTATION_PREF);
         mPowerMenu = (PreferenceScreen) mPrefSet.findPreference(POWER_MENU_PREF);
-        mSense4RecentApps = (CheckBoxPreference) mPrefSet.findPreference(SENSE4_RECENT_APPS_PREF);
-        mTabletMode = (CheckBoxPreference) mPrefSet.findPreference(TABLET_MODE_PREF);
+//        mSense4RecentApps = (CheckBoxPreference) mPrefSet.findPreference(SENSE4_RECENT_APPS_PREF);
+//        mTabletMode = (CheckBoxPreference) mPrefSet.findPreference(TABLET_MODE_PREF);
 
         /* Trackball wake pref */
         mTrackballWake = (CheckBoxPreference) mPrefSet.findPreference(
@@ -129,9 +129,9 @@ public class Interface extends SettingsFragment implements OnPreferenceChangeLis
         mDensityPicker.setMaxValue(MAX_DENSITY_VALUE);
         mDensityPicker.setCurrentValue(currentDensity);
 
-        if (getResources().getBoolean(R.bool.config_disableTabletForce)) {
-            mTabletDpi.removePreference(mTabletMode);
-        }
+//        if (getResources().getBoolean(R.bool.config_disableTabletForce)) {
+//            mTabletDpi.removePreference(mTabletMode);
+//        }
     }
 
     @Override
@@ -149,29 +149,29 @@ public class Interface extends SettingsFragment implements OnPreferenceChangeLis
             startPreferencePanel(mPowerMenu.getFragment(),
                     null, mPowerMenu.getTitleRes(), null, null, -1);
             return true;
-        } else if (preference == mSense4RecentApps) {
-            value = mSense4RecentApps.isChecked();
-            Settings.System.putInt(mCr, Settings.System.SENSE4_RECENT_APPS,
-                    value ? 1 : 0);
-            return true;
-        } else if (preference == mTabletMode) {
-            value = mTabletMode.isChecked();
-            Settings.System.putInt(mCr, Settings.System.TABLET_MODE,
-                    value ? 1:0);
-            if (value) {
-                if (mDensityPicker.getValue() != mRecommendedDpi) {
-                    showDialog(DIALOG_DENSITY_CHANGE_REQ);
-                } else {
-                    showDialog(DIALOG_REBOOT_REQ);
-                }
-            } else {
-                if (mDensityPicker.getValue() != mDefaultDpi) {
-                    showDialog(DIALOG_DENSITY_CHANGE_REQ);
-                } else {
-                    showDialog(DIALOG_REBOOT_REQ);
-                }
-            }
-            return true;
+//        } else if (preference == mSense4RecentApps) {
+//            value = mSense4RecentApps.isChecked();
+//            Settings.System.putInt(mCr, Settings.System.SENSE4_RECENT_APPS,
+//                    value ? 1 : 0);
+//            return true;
+//        } else if (preference == mTabletMode) {
+//            value = mTabletMode.isChecked();
+//            Settings.System.putInt(mCr, Settings.System.TABLET_MODE,
+//                    value ? 1:0);
+//            if (value) {
+//                if (mDensityPicker.getValue() != mRecommendedDpi) {
+//                    showDialog(DIALOG_DENSITY_CHANGE_REQ);
+//                } else {
+//                    showDialog(DIALOG_REBOOT_REQ);
+//                }
+//            } else {
+//                if (mDensityPicker.getValue() != mDefaultDpi) {
+//                    showDialog(DIALOG_DENSITY_CHANGE_REQ);
+//                } else {
+//                    showDialog(DIALOG_REBOOT_REQ);
+//                }
+//            }
+//            return true;
         } else if (preference == mTrackballWake) {
             value = mTrackballWake.isChecked();
             Settings.System.putInt(mCr, Settings.System.TRACKBALL_WAKE_SCREEN,
@@ -234,7 +234,7 @@ public class Interface extends SettingsFragment implements OnPreferenceChangeLis
                         new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        mTabletMode.setChecked(!mTabletMode.isChecked());
+//                        mTabletMode.setChecked(!mTabletMode.isChecked());
                         dialog.dismiss();
                     }
                 });

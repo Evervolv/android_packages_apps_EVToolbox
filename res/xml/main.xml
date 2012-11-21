@@ -3,11 +3,13 @@
         xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Lockscreen Settings -->
+<!--
     <header
         android:id="@+id/lockscreen_settings"
         android:fragment="com.evervolv.toolbox.activities.Lockscreen"
         android:title="@string/pref_lockscreen_title_head"
         />
+-->
 
     <!-- Statusbar Settings -->
     <header
