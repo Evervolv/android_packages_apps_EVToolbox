@@ -96,7 +96,7 @@ public class GalleryPickerPreference extends Preference implements OnClickListen
         mGallery.setOnItemSelectedListener(mItemSelected);
         mGallery.setFocusable(true);
         mGallery.setFocusableInTouchMode(true);
-        mGallery.setUnselectedAlpha(0.5f); 
+        mGallery.setUnselectedAlpha(0.5f);
         mGallery.setSelection(mCurrStylePosition);
 
         applyButton = (Button) view.findViewById(R.id.apply);
@@ -113,8 +113,8 @@ public class GalleryPickerPreference extends Preference implements OnClickListen
             mResIds = drawableIds;
         }
 
-        public Object getItem(int position) { 
-            return position; 
+        public Object getItem(int position) {
+            return position;
         }
 
         public long getItemId(int position) {
@@ -161,16 +161,16 @@ public class GalleryPickerPreference extends Preference implements OnClickListen
 
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-            // Shrink the view that was zoomed 
-            try { 
+            // Shrink the view that was zoomed
+            try {
                 if (lastView != null) lastView.clearAnimation();
             } catch (Exception clear) {
                 //What to do?
             }
 
             // Zoom the new selected view
-            try { 
-                view.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.grow)); 
+            try {
+                view.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.grow));
             } catch (Exception animate) {
                 //What to do?
             }
@@ -178,7 +178,7 @@ public class GalleryPickerPreference extends Preference implements OnClickListen
             if (mCurrStylePosition == position) {
                 caption += " (current)";
             }
-            // Set the last view so we can clear the animation 
+            // Set the last view so we can clear the animation
             lastView = view;
             //Set the current views caption & position
             mCurrentPositionView.setText(res.getString(R.string.item_count,
@@ -190,7 +190,7 @@ public class GalleryPickerPreference extends Preference implements OnClickListen
     };
 
     @Override
-    public void onClick(View v) {       
+    public void onClick(View v) {
         if (v == applyButton) {
             String value = Integer.toString(mGallery.getSelectedItemPosition());
             if (callChangeListener(value)) {

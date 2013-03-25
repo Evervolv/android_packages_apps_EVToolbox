@@ -43,9 +43,8 @@ public class LockscreenStyle extends SettingsFragment implements
 
     private static final int LOCK_STYLE_JB = 0;
     private static final int LOCK_STYLE_ICS = 1;
-    private static final int LOCK_STYLE_HC = 2;
-    private static final int LOCK_STYLE_GB   = 3;
-    private static final int LOCK_STYLE_ECLAIR = 4;
+    private static final int LOCK_STYLE_GB   = 2;
+    private static final int LOCK_STYLE_ECLAIR = 3;
 
     private static final int LOCK_STYLE_DEFAULT = LOCK_STYLE_JB;
 
@@ -60,11 +59,11 @@ public class LockscreenStyle extends SettingsFragment implements
     private PreferenceCategory mCatAppThree;
     private ListPreference[] mCustApp;
     private int mWhichApp = -1;
-    
+
     private int mMaxCustomApps;
-    
+
     private int mCurrLockscreen;
-    
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,18 +92,18 @@ public class LockscreenStyle extends SettingsFragment implements
                 CATEGORY_CUSTOM_APP_TWO);
         mCatAppThree = (PreferenceCategory) mPrefSet.findPreference(
                 CATEGORY_CUSTOM_APP_THREE);
-        
+
         mCustApp = new ListPreference[3];
         mCustApp[0] = (ListPreference) mPrefSet.findPreference(
                 LOCKSCREEN_CUSTOM_APP_ONE);
         mCustApp[0].setOnPreferenceChangeListener(this);
         mCustApp[0].setLayoutResource(R.layout.app_preference);
-        
+
         mCustApp[1] = (ListPreference) mPrefSet.findPreference(
                 LOCKSCREEN_CUSTOM_APP_TWO);
         mCustApp[1].setOnPreferenceChangeListener(this);
         mCustApp[1].setLayoutResource(R.layout.app_preference);
-        
+
         mCustApp[2] = (ListPreference) mPrefSet.findPreference(
                 LOCKSCREEN_CUSTOM_APP_THREE);
         mCustApp[2].setOnPreferenceChangeListener(this);
@@ -128,7 +127,7 @@ public class LockscreenStyle extends SettingsFragment implements
         mPrefSet.removePreference(mCatAppOne);
         mPrefSet.removePreference(mCatAppTwo);
         mPrefSet.removePreference(mCatAppThree);
-        
+
         //mPicker = new ShortcutPickHelper(this, this);
         //setCustomAppSummaries();
     }
@@ -153,7 +152,6 @@ public class LockscreenStyle extends SettingsFragment implements
                         toast.show();
                         return true;
                     }
-                case LOCK_STYLE_HC:
                 case LOCK_STYLE_GB:
                 default:
                     //mPrefSet.removePreference(mCatIcs);

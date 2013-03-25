@@ -36,6 +36,8 @@ public class Lockscreen extends SettingsFragment {
                 LOCKSCREEN_STYLE_PREF);
         mLockTransparent = (CheckBoxPreference) mPrefSet.findPreference(
                 LOCKSCREEN_TRANSPARENT_PREF);
+        // unimplemented yet
+        mPrefSet.removePreference(mLockTransparent);
     }
 
     @Override
@@ -46,9 +48,10 @@ public class Lockscreen extends SettingsFragment {
                     null, mLockStyle.getTitleRes(), null, null, -1);
             return true;
         } else if (preference == mLockTransparent) {
-            value = mLockTransparent.isChecked();
-            Settings.System.putInt(mCr, Settings.System.LOCKSCREEN_TRANSPARENT,
-                    value ? 1 : 0);
+            // unimplemented yet
+            //value = mLockTransparent.isChecked();
+            //Settings.System.putInt(mCr, Settings.System.LOCKSCREEN_TRANSPARENT,
+            //        value ? 1 : 0);
         }
         return false;
     }
