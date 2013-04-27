@@ -144,15 +144,16 @@ public class LockscreenStyle extends SettingsFragment implements
                 //    mPrefSet.addPreference(mCatAppThree);
                 //    break;
                 case LOCK_STYLE_ECLAIR:
-                    if (!getResources().getBoolean(R.bool.config_allow_eclair_lock)) {
+                    //fallthrough
+                case LOCK_STYLE_GB:
+                    if (getResources().getBoolean(R.bool.config_disableOldLocks)) {
                         Toast toast = Toast.makeText(getContext(), R.string
-                                .pref_lockscreen_style_no_eclair_toast,
+                                .pref_lockscreen_style_unavailable,
                                 Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.CENTER, 0, 0);
                         toast.show();
                         return true;
                     }
-                case LOCK_STYLE_GB:
                 default:
                     //mPrefSet.removePreference(mCatIcs);
                     //mPrefSet.removePreference(mCatAppOne);

@@ -9,7 +9,7 @@
     <bool name="config_has_bluetooth" translatable="false">true</bool>
     <bool name="config_has_mobile_data" translatable="false">true</bool>
     <bool name="config_has_mobile_radio" translatable="false">true</bool>
-    <bool name="config_allow_eclair_lock" translatable="false">true</bool>
+    <bool name="config_disableOldLocks" translatable="false">false</bool>
 
     <bool name="config_disableTabletForce" translatable="false">false</bool>
     <string name="config_defaultDpi" translatable="false">-1</string>

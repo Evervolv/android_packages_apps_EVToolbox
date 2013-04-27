@@ -52,14 +52,12 @@ public class GalleryPickerPreference extends Preference implements OnClickListen
 
         mCaptions = a.getTextArray(R.styleable.GalleryPickerPreference_entryCaptions);
         Resources res = getContext().getResources();
-        Log.d(TAG, "Array ResourceID: " + a.getResourceId(R.styleable
-                .GalleryPickerPreference_entryDrawables, 0));
+
         TypedArray array = res.obtainTypedArray(a.getResourceId(R.styleable
                 .GalleryPickerPreference_entryDrawables, 0));
 
         int count = array.length();
         mDrawableIds = new int[count];
-        Log.d(TAG, "Drawable count: " + count);
         for (int i = 0; i < count; i++) {
             Log.d(TAG, "Drawable ResourceID: " + array.getResourceId(i, 0));
             mDrawableIds[i] = array.getResourceId(i, 0);
