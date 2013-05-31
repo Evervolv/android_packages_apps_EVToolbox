@@ -14,8 +14,10 @@
         android:title="@string/pref_lockscreen_message_title"
         android:dialogTitle="@string/pref_lockscreen_message_dialog_title"/>
 
-    <CheckBoxPreference
-        android:key="pref_lockscreen_transparent"
-        android:title="@string/pref_lockscreen_transparent"/>
+    <ListPreference
+        android:key="pref_lockscreen_background"
+        android:title="@string/pref_lockscreen_background_title"
+        android:entries="@array/lockscreen_background_entries"
+        android:entryValues="@array/lockscreen_background_values"/>
 
 </PreferenceScreen>

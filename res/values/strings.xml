@@ -14,10 +14,17 @@
         <!-- Lockscreen Settings -->
     <string name="lockscreen_title">Lockscreen</string>
     <string name="pref_lockscreen_title_head">Lockscreen</string>
-    <string name="pref_lockscreen_transparent">Enable transparent lockscreen</string>
     <string name="pref_lockscreen_message_title">Message</string>
     <string name="pref_lockscreen_message_summary">Change the message displayed on the lockscreen</string>
     <string name="pref_lockscreen_message_dialog_title">Enter message to be displayed</string>
+    <string name="pref_lockscreen_background_title">Background</string>
+    <string name="lockscreen_custom_background_dialog_title">Choose color</string>
+    <string name="lockscreen_background_color_fill">Color fill</string>
+    <string name="lockscreen_background_custom_image">Custom image</string>
+    <string name="lockscreen_background_transparent">Transparent</string>
+    <string name="lockscreen_background_default_wallpaper">Default wallpaper</string>
+    <string name="lockscreen_background_result_successful">Background changed successfully</string>
+    <string name="lockscreen_background_result_not_successful">Background could not be changed</string>
 
         <!-- Statusbar >> Style -->
     <string name="pref_lockscreen_style_title">Lockscreen style</string>

@@ -31,6 +31,20 @@
         <item>@drawable/lock_eclair</item>
     </array>
 
+    <string-array name="lockscreen_background_entries" translatable="false">
+        <item>@string/lockscreen_background_color_fill</item>
+        <item>@string/lockscreen_background_custom_image</item>
+        <item>@string/lockscreen_background_default_wallpaper</item>
+        <item>@string/lockscreen_background_transparent</item>
+    </string-array>
+
+    <string-array name="lockscreen_background_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
     <string-array name="lockscreen_custom_app_entries">
         <item>App shortcut</item>
         <item>Unlock toggle</item>
