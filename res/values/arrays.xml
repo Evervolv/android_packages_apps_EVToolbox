@@ -134,4 +134,23 @@
         <item>18</item>
         <item>26</item>
     </string-array>
+
+    <string-array name="updates_schedule_entries">
+        <item>Never</item>
+        <item>On boot</item>
+        <item>Daily</item>
+        <item>Weekly</item>
+        <item>Bi-weekly</item>
+        <item>Monthly</item>
+    </string-array>
+
+    <string-array name="updates_schedule_entry_values" translatable="false">
+        <item>-2</item>
+        <item>-1</item>
+        <item>86400</item>
+        <item>604800</item>
+        <item>1209600</item>
+        <item>2419200</item>
+    </string-array>
+
 </resources>

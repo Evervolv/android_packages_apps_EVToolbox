@@ -13,7 +13,6 @@ public class Statusbar extends SettingsFragment {
 
     private static final String TAG = "EVToolbox";
 
-    private static final String NOTIFICATION_TOOLBOX_PREF = "pref_notification_toolbox";
     private static final String STATUSBAR_ICONS_PREF = "pref_statusbar_icons";
 
     private PreferenceScreen mPrefSet;

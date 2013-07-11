@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference
+        android:key="pref_updates_release_schedule"
+        android:title="@string/pref_updates_schedule_title"
+        android:dialogTitle="@string/pref_updates_schedule_dialog_title"
+        android:entries="@array/updates_schedule_entries"
+        android:entryValues="@array/updates_schedule_entry_values"
+        android:defaultValue="2419200"/>
+
+    <PreferenceCategory android:key="pref_updates_release_category_available_updates"
+        android:title="@string/pref_updates_category_available_updates_title">
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
+

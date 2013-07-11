@@ -14,4 +14,6 @@
     <bool name="config_disableTabletForce" translatable="false">false</bool>
     <string name="config_defaultDpi" translatable="false">-1</string>
     <string name="config_recommendedTabletDpi" translatable="false">-1</string>
+    <!-- Updates -->
+    <integer name="updates_webview_text_zoom">60</integer>
 </resources>

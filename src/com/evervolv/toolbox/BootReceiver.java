@@ -24,6 +24,7 @@ import android.os.SystemProperties;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.evervolv.toolbox.updates.services.UpdateManifestService;
 import com.evervolv.toolbox.utils.FileUtil;
 import com.evervolv.toolbox.activities.subactivities.MemoryManagement;
 import com.evervolv.toolbox.activities.subactivities.Processor;
@@ -58,6 +59,11 @@ public class BootReceiver extends BroadcastReceiver {
                 SystemProperties.set(KSM_SETTINGS_PROP, "false");
             }
         }
+
+        Intent onBootIntent = new Intent(ctx, UpdateManifestService.class);
+        onBootIntent.setAction(UpdateManifestService.ACTION_BOOT_COMPLETED);
+        ctx.startService(onBootIntent);
+
     }
 
     private void configureCPU(Context ctx) {

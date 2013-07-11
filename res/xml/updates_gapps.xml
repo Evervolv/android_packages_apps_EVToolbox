@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:key="pref_updates_gapps_category_available_updates"
+        android:title="@string/pref_updates_category_available_updates_title">
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
+

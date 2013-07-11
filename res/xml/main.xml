@@ -37,4 +37,10 @@
         android:fragment="com.evervolv.toolbox.activities.Performance"
         android:title="@string/pref_performance_title_head"
         />
+
+    <header
+        android:id="@+id/evervolv_updates"
+        android:fragment="com.evervolv.toolbox.activities.Updates"
+        android:title="@string/pref_updates_title_head"
+        />
 </preference-headers>
