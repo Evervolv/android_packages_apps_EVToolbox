@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 
 <!--
  * Copyright (C) 2013 The Evervolv Project
@@ -16,11 +16,8 @@
  * limitations under the License.
  -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <com.evervolv.toolbox.custom.GalleryPickerPreference android:key="pref_lockscreen_style_picker"
-        xmlns:ev="http://schemas.android.com/apk/res/com.evervolv.toolbox"
-        ev:entryDrawables="@array/lockscreen_style_picker_drawables"
-        ev:entryCaptions="@array/lockscreen_style_picker_captions"/>
-
-</PreferenceScreen>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menu_switch"
+        android:showAsAction="always"
+        android:actionLayout="@layout/action_view_switch" />
+</menu>

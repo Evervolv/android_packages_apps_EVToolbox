@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ * Copyright (C) 2013 The Evervolv Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ -->
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:key="pref_performance_processor"
+        android:title="@string/pref_processor_title">
+
+        <Preference
+                android:key="pref_cpu_freq_cur"
+                style="?android:preferenceInformationStyle"
+                android:title="@string/pref_cpu_cur_freq_title"
+                android:selectable="false" />
+
+        <ListPreference
+                android:key="pref_cpu_gov"
+                android:dialogTitle="@string/pref_cpu_governors_title"
+                android:title="@string/pref_cpu_governors_title" />
+
+        <ListPreference
+                android:key="pref_cpu_freq_min"
+                android:dialogTitle="@string/pref_cpu_min_freq_title"
+                android:title="@string/pref_cpu_min_freq_title" />
+
+        <ListPreference
+                android:key="pref_cpu_freq_max"
+                android:dialogTitle="@string/pref_cpu_max_freq_title"
+                android:title="@string/pref_cpu_max_freq_title" />
+
+        <CheckBoxPreference
+                android:key="pref_cpu_set_on_boot"
+                android:title="@string/pref_cpu_set_on_boot"
+                android:summary="@string/pref_cpu_set_on_boot_summary"/>
+
+    </PreferenceCategory>
+    <PreferenceCategory android:key="pref_performance_memory"
+                        android:title="@string/pref_memory_management_title">
+
+        <ListPreference
+                android:key="pref_zram_size"
+                android:dialogTitle="@string/pref_zram_title"
+                android:title="@string/pref_zram_title"
+                android:summary="@string/pref_zram_summary"
+                android:entries="@array/pref_zram_size_entries"
+                android:entryValues="@array/pref_zram_size_values" />
+
+        <CheckBoxPreference
+                android:key="pref_ksm"
+                android:title="@string/pref_ksm_title"
+                android:summary="@string/pref_ksm_summary" />
+
+    </PreferenceCategory>
+</PreferenceScreen>

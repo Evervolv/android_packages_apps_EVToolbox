@@ -1,312 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.evervolv.toolbox"
-    android:versionCode="1"
-    android:versionName="1.0" 
+    android:sharedUserId="android.uid.system"
+    android:versionCode="2"
+    android:versionName="2.0"
     coreApp="true"
     >
-    
+
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.HARDWARE_TEST" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.REBOOT" />
-    <uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER" />
-    <uses-permission android:name="android.permission.ACCESS_CACHE_FILESYSTEM"/>
 
-    <uses-sdk android:minSdkVersion="16"
-        android:targetSdkVersion="16" />
+    <uses-sdk android:minSdkVersion="18"
+        android:targetSdkVersion="18" />
 
     <application
-        android:icon="@drawable/ic_launcher_evtoolbox"
+        android:icon="@drawable/ic_launcher_toolbox"
         android:label="@string/app_name"
         android:hardwareAccelerated="true">
+
         <activity
-            android:label="@string/app_name"
-            android:name="com.evervolv.toolbox.Settings"
-            android:taskAffinity="com.evervolv.toolbox"
-            android:launchMode="singleTask">
-            <intent-filter >
+            android:name="com.evervolv.toolbox.Toolbox"
+            android:label="@string/app_name" >
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
-        <activity android:name="com.evervolv.toolbox.SubSettings"
-                android:taskAffinity="com.evervolv.toolbox">
-        </activity>
-
-        <!--- Lockscreen -->
-        <activity android:name="Settings$LockscreenActivity"
-                android:label="@string/lockscreen_title"
-                android:configChanges="orientation|keyboardHidden|screenSize"
-                android:clearTaskOnLaunch="true">
+        <receiver android:name=".receivers.BootReceiver">
             <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-            <meta-data android:name="com.evervolv.toolbox.FRAGMENT_CLASS"
-                android:value="com.evervolv.toolbox.activities.Lockscreen" />
-            <meta-data android:name="com.evervolv.toolbox.TOP_LEVEL_HEADER_ID"
-                android:resource="@id/lockscreen_settings" />
-        </activity>
-
-        <activity android:name="Settings$LockscreenStyleActivity"
-                android:label="@string/pref_lockscreen_style_title"
-                android:clearTaskOnLaunch="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.android.settings.SHORTCUT" />
-            </intent-filter>
-            <meta-data android:name="com.evervolv.toolbox.FRAGMENT_CLASS"
-                android:value="com.evervolv.toolbox.activities.Lockscreen$LockStyle" />
-            <meta-data android:name="com.evervolv.toolbox.TOP_LEVEL_HEADER_ID"
-                android:resource="@id/lockscreen_settings" />
-            <meta-data android:name="com.evervolv.toolbox.PARENT_FRAGMENT_TITLE"
-                android:resource="@string/pref_lockscreen_title_head" />
-            <meta-data android:name="com.evervolv.toolbox.PARENT_FRAGMENT_CLASS"
-                android:value="com.evervolv.toolbox.activities.Lockscreen" />
-        </activity>
-
-        <!-- Statusbar -->
-        <activity android:name="Settings$StatusbarActivity"
-                android:label="@string/statusbar_title"
-                android:configChanges="orientation|keyboardHidden|screenSize"
-                android:clearTaskOnLaunch="true">
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-            <meta-data android:name="com.evervolv.toolbox.FRAGMENT_CLASS"
-                android:value="com.evervolv.toolbox.activities.Statusbar" />
-            <meta-data android:name="com.evervolv.toolbox.TOP_LEVEL_HEADER_ID"
-                android:resource="@id/statusbar_settings" />
-        </activity>
-
-        <activity android:name="Settings$StatusbarIconsActivity"
-                android:label="@string/pref_statusbar_icons_title"
-                android:configChanges="orientation|keyboardHidden|screenSize"
-                android:clearTaskOnLaunch="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
-            <meta-data android:name="com.evervolv.toolbox.FRAGMENT_CLASS"
-                android:value="com.evervolv.toolbox.activities.Statusbar$StatusIcons" />
-            <meta-data android:name="com.evervolv.toolbox.TOP_LEVEL_HEADER_ID"
-                android:resource="@id/statusbar_settings" />
-            <meta-data android:name="com.evervolv.toolbox.PARENT_FRAGMENT_TITLE"
-                android:resource="@string/pref_statusbar_title_head" />
-            <meta-data android:name="com.evervolv.toolbox.PARENT_FRAGMENT_CLASS"
-                android:value="com.evervolv.toolbox.activities.Statusbar" />
-        </activity>
-
-        <!-- Interface -->
-        <activity android:name="Settings$InterfaceActivity"
-                android:label="@string/interface_title"
-                android:configChanges="orientation|keyboardHidden|screenSize"
-                android:clearTaskOnLaunch="true">
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-            <meta-data android:name="com.evervolv.toolbox.FRAGMENT_CLASS"
-                android:value="com.evervolv.toolbox.activities.Interface" />
-            <meta-data android:name="com.evervolv.toolbox.TOP_LEVEL_HEADER_ID"
-                android:resource="@id/interface_settings" />
-        </activity>
-
-        <activity android:name="Settings$InterfaceRotationActivity"
-                android:label="@string/pref_interface_rotation_title"
-                android:configChanges="orientation|keyboardHidden|screenSize"
-                android:clearTaskOnLaunch="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
-            <meta-data android:name="com.evervolv.toolbox.FRAGMENT_CLASS"
-                android:value="com.evervolv.toolbox.activities.Interface$Rotation" />
-            <meta-data android:name="com.evervolv.toolbox.TOP_LEVEL_HEADER_ID"
-                android:resource="@id/interface_settings" />
-            <meta-data android:name="com.evervolv.toolbox.PARENT_FRAGMENT_TITLE"
-                android:resource="@string/pref_interface_title_head" />
-            <meta-data android:name="com.evervolv.toolbox.PARENT_FRAGMENT_CLASS"
-                android:value="com.evervolv.toolbox.activities.Interface" />
-
-        </activity>
-
-        <activity android:name="Settings$InterfacePowerMenuActivity"
-                android:label="@string/pref_interface_power_menu_title"
-                android:configChanges="orientation|keyboardHidden|screenSize"
-                android:clearTaskOnLaunch="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
-            <meta-data android:name="com.evervolv.toolbox.FRAGMENT_CLASS"
-                android:value="com.evervolv.toolbox.activities.Interface$PowerMenu" />
-            <meta-data android:name="com.evervolv.toolbox.TOP_LEVEL_HEADER_ID"
-                android:resource="@id/interface_settings" />
-            <meta-data android:name="com.evervolv.toolbox.PARENT_FRAGMENT_TITLE"
-                android:resource="@string/pref_interface_title_head" />
-            <meta-data android:name="com.evervolv.toolbox.PARENT_FRAGMENT_CLASS"
-                android:value="com.evervolv.toolbox.activities.Interface" />
-
-        </activity>
-
-        <!-- Qwik Widgets -->'
-<!--
-        <activity android:name="Settings$QwikWidgetsActivity"
-                android:label="@string/pref_qwik_widgets_title"
-                android:configChanges="orientation|keyboardHidden|screenSize"
-                android:clearTaskOnLaunch="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
-            <meta-data android:name="com.evervolv.toolbox.FRAGMENT_CLASS"
-                android:value="com.evervolv.toolbox.activities.QwikWidgets" />
-            <meta-data android:name="com.evervolv.toolbox.TOP_LEVEL_HEADER_ID"
-                android:resource="@id/qwik_widgets_settings" />
-        </activity>
--->
-        <!-- Performance -->
-        <activity android:name="Settings$PerformanceActivity"
-                android:label="@string/performance_title"
-                android:configChanges="orientation|keyboardHidden|screenSize"
-                android:clearTaskOnLaunch="true">
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-            <meta-data android:name="com.evervolv.toolbox.FRAGMENT_CLASS"
-                android:value="com.evervolv.toolbox.activities.Performance" />
-            <meta-data android:name="com.evervolv.toolbox.TOP_LEVEL_HEADER_ID"
-                android:resource="@id/performance_settings" />
-        </activity>
-
-        <activity android:name="Settings$MemoryManagementActivity"
-                android:label="@string/pref_memory_management_title"
-                android:configChanges="orientation|keyboardHidden|screenSize"
-                android:clearTaskOnLaunch="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
-            <meta-data android:name="com.evervolv.toolbox.FRAGMENT_CLASS"
-                android:value="com.evervolv.toolbox.activities.Performance$MemMgr" />
-            <meta-data android:name="com.evervolv.toolbox.TOP_LEVEL_HEADER_ID"
-                android:resource="@id/performance_settings" />
-            <meta-data android:name="com.evervolv.toolbox.PARENT_FRAGMENT_TITLE"
-                android:resource="@string/pref_performance_title_head" />
-            <meta-data android:name="com.evervolv.toolbox.PARENT_FRAGMENT_CLASS"
-                android:value="com.evervolv.toolbox.activities.Performance" />
-        </activity>
-
-        <activity android:name="Settings$ProcessorActivity"
-                android:label="@string/pref_processor_title"
-                android:configChanges="orientation|keyboardHidden|screenSize"
-                android:clearTaskOnLaunch="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
-            <meta-data android:name="com.evervolv.toolbox.FRAGMENT_CLASS"
-                android:value="com.evervolv.toolbox.activities.Performance$Cpu" />
-            <meta-data android:name="com.evervolv.toolbox.TOP_LEVEL_HEADER_ID"
-                android:resource="@id/performance_settings" />
-            <meta-data android:name="com.evervolv.toolbox.PARENT_FRAGMENT_TITLE"
-                android:resource="@string/pref_performance_title_head" />
-            <meta-data android:name="com.evervolv.toolbox.PARENT_FRAGMENT_CLASS"
-                android:value="com.evervolv.toolbox.activities.Performance" />
-        </activity>
-
-        <!-- Updates -->
-        <activity android:name="Settings$UpdatesActivity"
-                android:label="@string/updates_title"
-                android:configChanges="orientation|keyboardHidden|screenSize"
-                android:clearTaskOnLaunch="true">
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-            <meta-data android:name="com.evervolv.toolbox.FRAGMENT_CLASS"
-                android:value="com.evervolv.toolbox.activities.Updates" />
-            <meta-data android:name="com.evervolv.toolbox.TOP_LEVEL_HEADER_ID"
-                android:resource="@id/evervolv_updates" />
-        </activity>
-
-        <activity android:name="Settings$UpdatesNightlyActivity"
-                android:label="@string/pref_updates_nightly_title"
-                android:configChanges="orientation|keyboardHidden|screenSize"
-                android:clearTaskOnLaunch="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
-            <meta-data android:name="com.evervolv.toolbox.FRAGMENT_CLASS"
-                android:value="com.evervolv.toolbox.activities.Updates$Nightly" />
-            <meta-data android:name="com.evervolv.toolbox.TOP_LEVEL_HEADER_ID"
-                android:resource="@id/evervolv_updates" />
-            <meta-data android:name="com.evervolv.toolbox.PARENT_FRAGMENT_TITLE"
-                android:resource="@string/pref_updates_title_head" />
-            <meta-data android:name="com.evervolv.toolbox.PARENT_FRAGMENT_CLASS"
-                android:value="com.evervolv.toolbox.activities.Updates" />
-        </activity>
-
-        <activity android:name="Settings$UpdatesTestActivity"
-                android:label="@string/pref_updates_test_title"
-                android:configChanges="orientation|keyboardHidden|screenSize"
-                android:clearTaskOnLaunch="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
-            <meta-data android:name="com.evervolv.toolbox.FRAGMENT_CLASS"
-                android:value="com.evervolv.toolbox.activities.Updates$Test" />
-            <meta-data android:name="com.evervolv.toolbox.TOP_LEVEL_HEADER_ID"
-                android:resource="@id/evervolv_updates" />
-            <meta-data android:name="com.evervolv.toolbox.PARENT_FRAGMENT_TITLE"
-                android:resource="@string/pref_updates_title_head" />
-            <meta-data android:name="com.evervolv.toolbox.PARENT_FRAGMENT_CLASS"
-                android:value="com.evervolv.toolbox.activities.Updates" />
-        </activity>
-
-        <activity android:name="Settings$UpdatesGappsActivity"
-                android:label="@string/pref_updates_gapps_title"
-                android:configChanges="orientation|keyboardHidden|screenSize"
-                android:clearTaskOnLaunch="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
-            <meta-data android:name="com.evervolv.toolbox.FRAGMENT_CLASS"
-                android:value="com.evervolv.toolbox.activities.Updates$Gapps" />
-            <meta-data android:name="com.evervolv.toolbox.TOP_LEVEL_HEADER_ID"
-                android:resource="@id/evervolv_updates" />
-            <meta-data android:name="com.evervolv.toolbox.PARENT_FRAGMENT_TITLE"
-                android:resource="@string/pref_updates_title_head" />
-            <meta-data android:name="com.evervolv.toolbox.PARENT_FRAGMENT_CLASS"
-                android:value="com.evervolv.toolbox.activities.Updates" />
-        </activity>
-
-        <service android:name=".updates.services.UpdateManifestService"
-                android:process=":ManifestService" >
-        </service>
-
-        <service android:name=".updates.services.DownloadService"
-                android:process=":DownloadService">
-        </service>
-
-        <receiver android:name=".updates.receivers.DownloadCompleteReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.DOWNLOAD_COMPLETE"/>
-                <category android:name="android.intent.category.HOME"></category>
-            </intent-filter>
-        </receiver>
-
-        <receiver android:name=".updates.receivers.DownloadNotificationClickReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.DOWNLOAD_NOTIFICATION_CLICKED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <category android:name="android.intent.category.HOME"/>
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".BootReceiver" android:enabled="true">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <category android:name="android.intent.category.HOME"></category>
-            </intent-filter>
-        </receiver>
     </application>
 </manifest>
