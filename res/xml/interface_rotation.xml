@@ -18,9 +18,16 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <com.evervolv.toolbox.custom.GalleryPickerPreference android:key="pref_lockscreen_style_picker"
-        xmlns:ev="http://schemas.android.com/apk/res/com.evervolv.toolbox"
-        ev:entryDrawables="@array/lockscreen_style_picker_drawables"
-        ev:entryCaptions="@array/lockscreen_style_picker_captions"/>
+    <CheckBoxPreference android:key="pref_rotation_0"
+        android:title="@string/pref_rotation_0_title" />
+
+    <CheckBoxPreference android:key="pref_rotation_90"
+        android:title="@string/pref_rotation_90_title" />
+
+    <CheckBoxPreference android:key="pref_rotation_180"
+        android:title="@string/pref_rotation_180_title" />
+
+    <CheckBoxPreference android:key="pref_rotation_270"
+        android:title="@string/pref_rotation_270_title" />
 
 </PreferenceScreen>

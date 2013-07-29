@@ -1,109 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-        <!-- Generic -->
-    <string name="app_name">Toolbox</string>
 
+<!--
+ * Copyright (C) 2013 The Evervolv Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ -->
+
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+        <!-- Generic Strings, multiple uses -->
+    <string name="app_name">Toolbox</string>
     <string name="apply">Apply</string>
-    <string name="item_count">%1$d/%2$d</string>
     <string name="okay">Okay</string>
     <string name="cancel">Cancel</string>
     <string name="reboot">Reboot</string>
     <string name="later">Later</string>
     <string name="flash">Flash</string>
 
-        <!-- Lockscreen Settings -->
-    <string name="lockscreen_title">Lockscreen</string>
-    <string name="pref_lockscreen_title_head">Lockscreen</string>
-    <string name="pref_lockscreen_message_title">Message</string>
-    <string name="pref_lockscreen_message_summary">Change the message displayed on the lockscreen</string>
-    <string name="pref_lockscreen_message_dialog_title">Enter message to be displayed</string>
-    <string name="pref_lockscreen_background_title">Background</string>
-    <string name="lockscreen_custom_background_dialog_title">Choose color</string>
-    <string name="lockscreen_background_color_fill">Color fill</string>
-    <string name="lockscreen_background_custom_image">Custom image</string>
-    <string name="lockscreen_background_transparent">Transparent</string>
-    <string name="lockscreen_background_default_wallpaper">Default wallpaper</string>
-    <string name="lockscreen_background_result_successful">Background changed successfully</string>
-    <string name="lockscreen_background_result_not_successful">Background could not be changed</string>
+        <!-- Main app strings ( immediate tabs ) -->
+    <string name="tab_title_lockscreen">Lockscreen</string>
+    <string name="tab_title_statusbar">Statusbar</string>
+    <string name="tab_title_interface">Interface</string>
+    <string name="tab_title_performance">Performance</string>
 
-        <!-- Statusbar >> Style -->
-    <string name="pref_lockscreen_style_title">Lockscreen style</string>
+        <!-- Lockscreen -->
+    <string name="pref_lockscreen_style_title">Style</string>
     <string name="pref_lockscreen_style_summary">Choose your style of lockscreen</string>
-    <string name="pref_lockscreen_style_ics_style">ICS lockscreen options</string>
-    <string name="pref_lockscreen_multiwaveview_3way_title">Tri-State</string>
-    <string name="pref_lockscreen_multiwaveview_3way_summary">Adds a third option to the lockscreen</string>
-    <string name="pref_lockscreen_multiwaveview_silentmode_title">Silentmode toggle</string>
-    <string name="pref_lockscreen_multiwaveview_silentmode_summary">Toggle silentmode instead of opening the camera app</string>
-    <string name="pref_lockscreen_custom_app_title">Select a custom app to launch</string>
-    <string name="select_custom_app_title">Select custom application</string>
-    <string name="group_applications">Applications</string>
 
-    <string name="pref_lockscreen_style_unavailable">This style is unavailable for this device!\nPlease choose another style.</string>
-    <string name="pref_lockscreen_style_custom_app_sound">Sound toggle</string>
-    <string name="pref_lockscreen_style_custom_app_unlock">Unlock switch</string>
-    <string name="pref_lockscreen_style_custom_app_pick">Click here to pick a shortcut!</string>
-    <string name="pref_lockscreen_category_custom_app_one_title">Custom mapping (Right)</string>
-    <string name="pref_lockscreen_category_custom_app_two_title">Custom mapping (Top)</string>
-    <string name="pref_lockscreen_category_custom_app_three_title">Custom mapping (Left)</string>
-    <string name="pref_lockscreen_category_custom_app_unlock_toast">Operation Aborted!\n\nAn unlock is necessary, please set a target to unlock before continuing!</string>
+        <!-- Lockscreen >> Main-->
+    <string name="pref_lockscreen_main_message_title">Message</string>
+    <string name="pref_lockscreen_main_message_summary">Change the message displayed on the lockscreen</string>
+    <string name="pref_lockscreen_main_message_dialog_title">Enter message to be displayed</string>
+    <string name="pref_lockscreen_main_background_title">Background</string>
+    <string name="pref_lockscreen_main_background_color_fill">Color fill</string>
+    <string name="pref_lockscreen_main_background_custom_image">Custom image</string>
+    <string name="pref_lockscreen_main_background_transparent">Transparent</string>
+    <string name="pref_lockscreen_main_background_default_wallpaper">Default wallpaper</string>
+    <string name="pref_lockscreen_main_background_result_successful">Background changed successfully</string>
+    <string name="pref_lockscreen_main_background_result_not_successful">Background could not be changed</string>
+    <string name="pref_lockscreen_main_background_dialog_title">Choose color</string>
 
+        <!-- Lockscreen >> Styles-->
+    <string name="pref_lockscreen_style_picker_unavailable">This style is unavailable for this device!\nPlease choose another style.</string>
+    <string name="pref_lockscreen_style_picker_caption_jellybean">Jellybean</string>
+    <string name="pref_lockscreen_style_picker_caption_ics">Ice Cream Sandwich</string>
+    <string name="pref_lockscreen_style_picker_caption_gingerbread">Gingerbread</string>
+    <string name="pref_lockscreen_style_picker_caption_eclair">Eclair</string>
 
-        <!-- Statusbar Settings -->
-    <string name="statusbar_title">Statusbar</string>
-    <string name="pref_statusbar_title_head">Statusbar</string>
-        <!-- Statusbar >> Icons -->
-    <string name="pref_statusbar_icons_title">Statusbar Icons</string>
-    <string name="pref_statusbar_icons_summary">Settings to control statusbar icons</string>
-        <!-- Statusbar >> Icons >> Signal Sixbar -->
-    <string name="pref_statusbar_sixbar_signal_title">Use sixbar signal icons</string>
-    <string name="pref_statusbar_sixbar_signal_summary">Choose whether or or not to use sixbar icons (modded) for cell signal strength</string>
-        <!-- Statusbar >> Icons >> Battery Style -->
-    <string name="pref_statusbar_batt_style_title">Battery style</string>
-    <string name="pref_statusbar_batt_style_summary">Choose a battery icon style</string>
-
-        <!-- Notification toolbox-->
-    <string name="pref_qwik_widgets_title_head">QwikWidgets</string>
-    <string name="pref_qwik_widgets_max_per_line_title">Max widgets per line</string>
-    <string name="pref_qwik_widgets_title">QwikWidgets</string>
-    <string name="pref_qwik_widgets_summary">Settings for QwikWidgets</string>
-    <string name="pref_notification_dropdown_title">Show QwikWidgets first</string>
-    <string name="pref_notification_dropdown_summary">Set QwikWidgets as default view on pulldown of status bar</string>
-    <string name="title_qwik_widgets_manage_widgets">Manage QwikWidgets</string>
-    <string name="dialog_add">Add</string>
-    <string name="dialog_done">Done</string>
-    <string name="dialog_cancel">Cancel</string>
-    <string name="title_toggle_wifi">Wifi</string>
-    <string name="title_toggle_bluetooth">Bluetooth</string>
-    <string name="title_toggle_gps">GPS</string>
-    <string name="title_toggle_sync">Sync</string>
-    <string name="title_toggle_wifiap">Wifi Tether</string>
-    <string name="title_toggle_mobiledata">Mobile Data</string>
-    <string name="title_toggle_usbtether">Usb Tether</string>
-    <string name="title_toggle_autorotate">Auto Rotate</string>
-    <string name="title_toggle_airplane">Airplane Mode</string>
-    <string name="title_toggle_brightness">Brightness</string>
-    <string name="title_toggle_wimax">Wimax</string>
-    <string name="title_toggle_notifications">DnD</string>
-
-    <string name="default_qwik_widgets">toggleWifi|toggleBluetooth|toggleAutoRotate</string>
+        <!-- GalleryPickerPreference -->
+    <string name="item_count">%1$d/%2$d</string>
 
 
-        <!-- Interface Settings -->
+
+
+
+            <!-- NEED TO UPDATE -->
+
+        <!-- Interface -->
     <string name="interface_title">Interface</string>
     <string name="pref_interface_title_head">Interface</string>
-    <string name="pref_interface_category_buttons">Buttons</string>
     <string name="pref_interface_category_tabletdpi">Tablet &amp; DPI</string>
-    <string name="pref_interface_category_misc">Miscellaneous</string>
-    <string name="pref_interface_sense4_recent_apps_title">Sense 4.0 recent apps</string>
-    <string name="pref_interface_sense4_recent_apps_summary">Toggle for recent apps view resembling HTC\'s sense 4.0</string>
-    <string name="pref_interface_tablet_mode_title">Tablet mode</string>
-    <string name="pref_interface_tablet_mode_summary">Force tablet mode</string>
     <string name="pref_interface_density_picker_title">Custom display density</string>
     <string name="pref_interface_density_picker_summary">Current dpi: %1$d\nRecommended tablet dpi: %2$d\nDefault dpi: %3$d</string>
     <string name="pref_interface_density_change_recommended_title">Density change recommended!</string>
     <string name="pref_interface_density_change_recommended_text">A display density change is recommended for this device. Use the setting below.</string>
     <string name="pref_interface_reboot_required_title">Reboot required!</string>
-    <string name="pref_interface_reboot_required_text">A reboot is required for this setting to apply.\n\nWARNING: Minimal support is given for tablet mode and DPI changing.</string>
+    <string name="pref_interface_reboot_required_text">A reboot is required for this setting to apply.\n\nWARNING: Minimal support is given for DPI changing.</string>
 
         <!-- Interface >> Buttons -->
     <string name="pref_trackball_wake_toggle_title">Trackball wake</string>
@@ -112,8 +84,6 @@
     <string name="pref_volume_wake_toggle_summary">Wake the device by pressing vol-up or vol-down</string>
     <string name="pref_lockscreen_music_controls_volbtn_title">Volume music control</string>
     <string name="pref_lockscreen_music_controls_volbtn_summary">Change music tracks by long pressing vol-up(next) or vol-down(prev)</string>
-    <string name="pref_kill_app_longpress_back_title">Back app kill</string>
-    <string name="pref_kill_app_longpress_back_summary">Kill the foreground app by long pressing back</string>
         <!-- Interface >> Rotation -->
     <string name="pref_interface_rotation_title">Rotation settings</string>
     <string name="pref_interface_rotation_summary">Toggle specific angles</string>
@@ -129,6 +99,40 @@
     <string name="pref_power_menu_hide_airplane_mode_title">Hide airplane mode</string>
     <string name="pref_power_menu_hide_reboot_menu_title">Hide reboot menu</string>
     <string name="pref_power_menu_screenshot_delay_title">Set screenshot delay</string>
+
+        <!-- Statusbar -->
+    <string name="statusbar_title">Statusbar</string>
+    <string name="pref_statusbar_title_head">Statusbar</string>
+        <!-- Statusbar >> Icons -->
+    <string name="pref_statusbar_icons_title">Statusbar Icons</string>
+    <string name="pref_statusbar_icons_summary">Settings to control statusbar icons</string>
+        <!-- Statusbar >> Icons >> Signal Sixbar -->
+    <string name="pref_statusbar_sixbar_signal_title">Use sixbar signal icons</string>
+    <string name="pref_statusbar_sixbar_signal_summary">Choose whether or or not to use sixbar icons (modded) for cell signal strength</string>
+        <!-- Statusbar >> Icons >> Battery Style -->
+    <string name="pref_statusbar_batt_style_title">Battery style</string>
+    <string name="pref_statusbar_batt_style_summary">Choose a battery icon style</string>
+
+        <!-- aFileDialog -->
+    <string name="daidalos_hello">Hello World!</string>
+    <string name="daidalos_app_name">aFileDialog</string>
+    <color name="daidalos_gray">#888</color>
+    <string name="daidalos_select">Select</string>
+    <string name="daidalos_cancel">Cancel</string>
+    <string name="daidalos_ok">OK</string>
+    <string name="daidalos_new_file">New</string>
+    <string name="daidalos_create_file">Create file</string>
+    <string name="daidalos_create_folder">Create folder</string>
+    <string name="daidalos_accept">Accept</string>
+    <string name="daidalos_enter_file_name">Enter the name of the file that you want to create</string>
+    <string name="daidalos_enter_folder_name">Enter the name of the folder that you want to create</string>
+    <string name="daidalos_yes">Yes</string>
+    <string name="daidalos_no">No</string>
+    <string name="daidalos_confirm_select_file">Are you sure that you want to select the file \'$file_name\'?</string>
+    <string name="daidalos_confirm_create_file">The file \'$file_name\' do not exists, are you sure that you want to create it?</string>
+    <string name="daidalos_confirm_select_folder">Are you sure that you want to select the folder \'$file_name\'?</string>
+    <string name="daidalos_confirm_create_folder">The folder \'$file_name\' do not exists, are you sure that you want to create it?</string>
+
 
         <!-- Performance Settings -->
     <string name="performance_title">Performance</string>
@@ -153,52 +157,5 @@
     <string name="pref_cpu_max_freq_summary">%s</string>
     <string name="pref_cpu_set_on_boot">Set on boot</string>
     <string name="pref_cpu_set_on_boot_summary">Restore the processor settings on boot</string>
-
-        <!-- Updates -->
-    <string name="updates_title">Updates</string>
-    <string name="pref_updates_title_head">Updates</string>
-        <!-- Updates Main -->
-    <string name="pref_updates_nightly_title">Nightlies</string>
-    <string name="pref_updates_nightly_summary">Updates that are compiled nightly\n\tWARNING: These may or may not be stable.</string>
-    <string name="pref_updates_release_title">Releases</string>
-    <string name="pref_updates_release_summary">Updates that are in either preview, alpha or beta form\n\tBugs can be reported for these builds.</string>
-    <string name="pref_updates_test_title">Tests</string>
-    <string name="pref_updates_test_summary">Updates that need specific testing done to them\n\tReporting bugs needs to be done on IRC</string>
-    <string name="pref_updates_gapps_title">Gapps</string>
-    <string name="pref_updates_gapps_summary">Google apps (required for Google Experience) </string>
-        <!-- Updates Sub -->
-    <string name="menu_refresh">Refresh</string>
-    <string name="status_downloaded">Downloaded</string>
-    <string name="status_installed">Installed</string>
-    <string name="status_downloaded_and_installed">Downloaded &amp; installed</string>
-    <string name="status_new">New</string>
-
-    <string name="pref_updates_schedule_title">Check for updates</string>
-    <string name="pref_updates_schedule_dialog_title">Check for updates</string>
-    <string name="pref_updates_category_available_updates_title">Available updates</string>
-        <!-- Updates (Dialogs) -->
-    <string name="alert_dialog_error_title">Error!</string>
-    <string name="alert_dialog_manifest_download_error">Error downloading manifest entries</string>
-    <string name="alert_dialog_cancel_title">Cancel</string>
-    <string name="alert_dialog_confirm_cancel">Are you sure you want to cancel this update?</string>
-    <string name="alert_dialog_delete_title">Delete</string>
-    <string name="alert_dialog_confirm_delete">Are you sure you want to delete this update?</string>
-    <string name="alert_dialag_gapps_title">Select gapps to install</string>
-    <string name="alert_dialag_warning_title">Warning!</string>
-    <string name="alert_dialag_warning_message">TWRP Is the only recovery supported at the moment.</string>
-        <!-- Updates (Changelog/Info) -->
-    <string name="changelog_info_dialog_title">Changelog &amp; info</string>
-    <string name="changelog_info_dialog_tab_title_info">Info</string>
-    <string name="changelog_info_dialog_tab_title_changelog">Changelog</string>
-
-    <string name="changelog_info_dialog_tab_info_date">Date:</string>
-    <string name="changelog_info_dialog_tab_info_filename">Filename:</string>
-    <string name="changelog_info_dialog_tab_info_size">Size:</string>
-    <string name="changelog_info_dialog_tab_info_md5sum_server">Md5Sum: \n(on server)</string>
-    <string name="changelog_info_dialog_tab_info_md5sum_local">Md5Sum: \n(on device)</string>
-    <string name="changelog_info_dialog_tab_info_status">Status:</string>
-
-    <string name="changelog_info_dialog_tab_info_md5sum_local_not_exist">Not downloaded</string>
-    <string name="changelog_info_dialog_tab_info_md5sum_calculate">Calculating md5sum…</string>
 
 </resources>

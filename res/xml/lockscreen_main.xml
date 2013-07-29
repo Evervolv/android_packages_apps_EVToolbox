@@ -18,9 +18,16 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <com.evervolv.toolbox.custom.GalleryPickerPreference android:key="pref_lockscreen_style_picker"
-        xmlns:ev="http://schemas.android.com/apk/res/com.evervolv.toolbox"
-        ev:entryDrawables="@array/lockscreen_style_picker_drawables"
-        ev:entryCaptions="@array/lockscreen_style_picker_captions"/>
+    <!-- Lockscreen main -->
+    <EditTextPreference
+        android:key="pref_lockscreen_main_message"
+        android:title="@string/pref_lockscreen_main_message_title"
+        android:dialogTitle="@string/pref_lockscreen_main_message_dialog_title"/>
+
+    <ListPreference
+        android:key="pref_lockscreen_main_background"
+        android:title="@string/pref_lockscreen_main_background_title"
+        android:entries="@array/lockscreen_main_background_entries"
+        android:entryValues="@array/lockscreen_main_background_values"/>
 
 </PreferenceScreen>
