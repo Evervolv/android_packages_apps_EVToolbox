@@ -131,4 +131,31 @@
         <!-- GalleryPickerPreference -->
     <string name="item_count">%1$d/%2$d</string>
 
+        <!--Superuser-->
+    <string name="superuser_description">full permissions to all device features and storage</string>
+    <string name="superuser_description_more">Superuser grants full access to all device features and storage, including the secure and sensitive hardware elements of your device. This permission is potentially dangerous.</string>
+    <string name="allow">Allow</string>
+    <string name="deny">Deny</string>
+    <string name="interactive">Interactive</string>
+    <string name="remember_for">Remember choice for %s minutes</string>
+    <string name="remember_forever">Remember choice forever</string>
+    <string name="unknown_uid">Unknown UID: %s</string>
+    <string name="application_request">%s is requesting Superuser access.</string>
+    <string name="this_time_only">This time only</string>
+    <string name="superuser_granted">Superuser granted to %s</string>
+    <string name="superuser_denied">Superuser denied to %s</string>
+    <string name="superuser">Superuser</string>
+    <string name="incorrect_pin">Incorrect PIN</string>
+    <string name="enter_pin">Enter PIN</string>
+    <string name="owner_login_info">Please switch to the owner account to approve or deny this request.</string>
+    <string name="package_header">Package:</string>
+    <string name="app_header">App:</string>
+    <string name="uid_header">Requested UID:</string>
+    <string name="command_header">Command:</string>
+    <string name="status_incoming">Incoming Superuser Request...</string>
+    <string name="developer_warning">Developer Warning:\nandroid.permission.ACCESS_SUPERUSER\nnot declared in manifest.</string>
+    <string name="info">Warning: If you do not understand this, you should deny the request.</string>
+    <string name="request">Superuser Request</string>
+    <string name="no_apps">There are currently no Superuser app policies.</string>
+
 </resources>
