@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2013 The Evervolv Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.evervolv.toolbox.fragments;
 
 import android.app.Activity;
@@ -29,10 +45,10 @@ import com.evervolv.toolbox.custom.ColorPickerView;
 import java.io.File;
 import java.io.IOException;
 
-public class LockscreenMain extends PreferenceFragment implements OnPreferenceChangeListener {
+public class LockscreenGeneral extends PreferenceFragment implements OnPreferenceChangeListener {
 
-    private static final String LOCKSCREEN_MESSAGE_PREF = "pref_lockscreen_main_message";
-    private static final String LOCKSCREEN_BACKGROUND_PREF = "pref_lockscreen_main_background";
+    private static final String LOCKSCREEN_MESSAGE_PREF = "pref_lockscreen_general_message";
+    private static final String LOCKSCREEN_BACKGROUND_PREF = "pref_lockscreen_general_background";
 
     private static final int LOCKSCREEN_BACKGROUND_COLOR_FILL = 0;
     private static final int LOCKSCREEN_BACKGROUND_CUSTOM_IMAGE = 1;
@@ -53,7 +69,7 @@ public class LockscreenMain extends PreferenceFragment implements OnPreferenceCh
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        addPreferencesFromResource(R.xml.lockscreen_main);
+        addPreferencesFromResource(R.xml.lockscreen_general);
 
         mPrefSet = getPreferenceScreen();
         mCr = getActivity().getContentResolver();
@@ -78,7 +94,7 @@ public class LockscreenMain extends PreferenceFragment implements OnPreferenceCh
         if (message == null || message.equals("")) {
             mLockMessage.setText("");
             mLockMessage.setSummary(R.string
-                    .pref_lockscreen_main_message_summary);
+                    .pref_lockscreen_general_message_summary);
         } else {
             mLockMessage.setSummary(message);
             mLockMessage.setText(message);
@@ -90,16 +106,16 @@ public class LockscreenMain extends PreferenceFragment implements OnPreferenceCh
         int value = Settings.System.getInt(mCr,
                 Settings.System.LOCKSCREEN_BACKGROUND, -1);
         if (value == -1) {
-            resId = R.string.pref_lockscreen_main_background_default_wallpaper;
+            resId = R.string.pref_lockscreen_general_background_default_wallpaper;
             mLockBackground.setValueIndex(LOCKSCREEN_BACKGROUND_DEFAULT_WALLPAPER);
         } else if (value == -2) {
-            resId = R.string.pref_lockscreen_main_background_custom_image;
+            resId = R.string.pref_lockscreen_general_background_custom_image;
             mLockBackground.setValueIndex(LOCKSCREEN_BACKGROUND_CUSTOM_IMAGE);
         } else if (value == -3) {
-            resId = R.string.pref_lockscreen_main_background_transparent;
+            resId = R.string.pref_lockscreen_general_background_transparent;
             mLockBackground.setValueIndex(LOCKSCREEN_BACKGROUND_TRANSPARENT);
         } else {
-            resId = R.string.pref_lockscreen_main_background_color_fill;
+            resId = R.string.pref_lockscreen_general_background_color_fill;
             mLockBackground.setValueIndex(LOCKSCREEN_BACKGROUND_COLOR_FILL);
         }
         mLockBackground.setSummary(getResources().getString(resId));
@@ -136,7 +152,7 @@ public class LockscreenMain extends PreferenceFragment implements OnPreferenceCh
             colorView.setAlphaSliderVisible(true);
 
             new AlertDialog.Builder(getActivity())
-                    .setTitle(R.string.pref_lockscreen_main_background_dialog_title)
+                    .setTitle(R.string.pref_lockscreen_general_background_dialog_title)
                     .setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -217,7 +233,7 @@ public class LockscreenMain extends PreferenceFragment implements OnPreferenceCh
                     mWallpaperTemporary.renameTo(mWallpaperImage);
                 }
                 mWallpaperImage.setReadOnly();
-                hintId = R.string.pref_lockscreen_main_background_result_successful;
+                hintId = R.string.pref_lockscreen_general_background_result_successful;
                 Settings.System.putInt(mCr,
                         Settings.System.LOCKSCREEN_BACKGROUND, -2);
                 updateLockBackgroundSummary();
@@ -225,7 +241,7 @@ public class LockscreenMain extends PreferenceFragment implements OnPreferenceCh
                 if (mWallpaperTemporary.exists()) {
                     mWallpaperTemporary.delete();
                 }
-                hintId = R.string.pref_lockscreen_main_background_result_not_successful;
+                hintId = R.string.pref_lockscreen_general_background_result_not_successful;
             }
             Toast.makeText(getActivity(),
                     getResources().getString(hintId), Toast.LENGTH_LONG).show();

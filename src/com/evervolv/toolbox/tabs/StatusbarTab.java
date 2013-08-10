@@ -16,35 +16,40 @@
 
 package com.evervolv.toolbox.tabs;
 
-import android.app.FragmentTransaction;
+import android.content.res.Resources;
 import android.os.Bundle;
-import android.preference.PreferenceFragment;
+import android.support.v13.app.FragmentTabHost;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
-import com.evervolv.toolbox.fragments.StatusbarMain;
+import com.evervolv.toolbox.R;
+import com.evervolv.toolbox.custom.PagerFragment;
+import com.evervolv.toolbox.fragments.StatusbarGeneral;
 
-public class StatusbarTab extends PreferenceFragment {
+public class StatusbarTab extends PagerFragment {
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public StatusbarTab() {
+        super();
+    }
+
+    public StatusbarTab(String title, int pageIndex) {
+        super(title, pageIndex);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
 
-        // TODO: This is temporary until we split it up into tabs
-        FrameLayout view = new FrameLayout(getActivity().getApplicationContext());
-        view.setId(10101011); // do we need to fake this id?
-        PreferenceFragment frag = new StatusbarMain();
-        FragmentTransaction ft = getFragmentManager().beginTransaction(); 
-        ft.add(view.getId(), frag);
-        ft.commit();
-        return view;
+        Resources res = getResources();
+        mTabHost = new FragmentTabHost(getActivity());
+        mTabHost.setup(getActivity(), getChildFragmentManager(), container.getId());
+
+        mTabHost.addTab(mTabHost.newTabSpec("general").setIndicator(
+                res.getString(R.string.general_title)),
+                StatusbarGeneral.class, null);
+        mTabHost.setOnTabChangedListener(this);
+        return mTabHost;
     }
-
 }

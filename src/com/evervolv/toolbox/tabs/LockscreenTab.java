@@ -16,45 +16,44 @@
 
 package com.evervolv.toolbox.tabs;
 
-import android.app.Fragment;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v13.app.FragmentTabHost;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.evervolv.toolbox.fragments.LockscreenMain;
+import com.evervolv.toolbox.R;
+import com.evervolv.toolbox.custom.PagerFragment;
+import com.evervolv.toolbox.fragments.LockscreenGeneral;
 import com.evervolv.toolbox.fragments.LockscreenStyle;
 
-public class LockscreenTab extends Fragment {
+public class LockscreenTab extends PagerFragment {
 
-    private FragmentTabHost mTabHost;
+    public LockscreenTab() {
+        super();
+    }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public LockscreenTab(String title, int pageIndex) {
+        super(title, pageIndex);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-
+        Resources res = getResources();
         mTabHost = new FragmentTabHost(getActivity());
         mTabHost.setup(getActivity(), getChildFragmentManager(), container.getId());
 
-        mTabHost.addTab(mTabHost.newTabSpec("main").setIndicator("Main"),
-                LockscreenMain.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("style").setIndicator("Style"),
+        mTabHost.addTab(mTabHost.newTabSpec("general").setIndicator(
+                res.getString(R.string.general_title)),
+                LockscreenGeneral.class, null);
+        mTabHost.addTab(mTabHost.newTabSpec("style").setIndicator(
+                res.getString(R.string.lockscreen_style_title)),
                 LockscreenStyle.class, null);
-
+        mTabHost.setOnTabChangedListener(this);
         return mTabHost;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        mTabHost = null;
     }
 
 }

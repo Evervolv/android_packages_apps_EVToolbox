@@ -17,27 +17,38 @@
 package com.evervolv.toolbox;
 
 import android.app.ActionBar;
-import android.app.ActionBar.Tab;
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.app.NotificationManager;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v13.app.FragmentPagerAdapter;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import com.evervolv.toolbox.R;
+import com.evervolv.toolbox.custom.DrawerLayoutAdapter;
+import com.evervolv.toolbox.custom.PagerFragment;
+import com.evervolv.toolbox.fragments.PerformanceMemory;
 import com.evervolv.toolbox.tabs.InterfaceTab;
 import com.evervolv.toolbox.tabs.LockscreenTab;
 import com.evervolv.toolbox.tabs.PerformanceTab;
@@ -45,35 +56,151 @@ import com.evervolv.toolbox.tabs.StatusbarTab;
 
 import java.util.ArrayList;
 
-public class Toolbox extends FragmentActivity {
+public class Toolbox extends FragmentActivity implements PagerFragment.OnTabChangeListener {
 
     private ViewPager mViewPager;
-    private TabsAdapter mTabsAdapter;
+    private MainSettingsAdapter mSettingsAdapter;
     private ContentResolver mCr;
+
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+    private CharSequence mDrawerTitle;
+    private CharSequence mTitle;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private DrawerLayoutAdapter mDrawerAdapter;
+    private RelativeLayout mBottomActionBar;
+    private ArrayList<int[]> mPositionsList = new ArrayList<int[]>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.toolbox);
 
-        mViewPager = (ViewPager) findViewById(R.id.view_pager);
+        mCr = getApplicationContext().getContentResolver();
+        mViewPager = (ViewPager) findViewById(R.id.pager_frame);
+        mTitle = mDrawerTitle = getTitle();
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        mDrawerAdapter = new DrawerLayoutAdapter(this);
+
+        TypedArray bundles = getResources().obtainTypedArray(R.array.nav_bundles);
+        int count = bundles.length();
+
+        for (int i = 0; i < count; i++) {
+            int bundleId = bundles.getResourceId(i, -1);
+            String[] navItems = getResources().getStringArray(bundleId);
+            for (int j = 0; j < navItems.length; j++) {
+                //assume first entry is the header
+                if (j == 0) {
+                    mDrawerAdapter.addHeader(navItems[j], R.drawable.ic_header);
+                } else {
+                    /* TODO: Don't assign icons just yet for nav items
+                     * there's a little bit more we need to do to make this
+                     * a little cleaner and more efficient
+                     */
+                    mDrawerAdapter.addNavItem(navItems[j], -1);
+                }
+                mPositionsList.add(new int[]{i, j});
+            }
+        }
+
+        mDrawerList.setAdapter(mDrawerAdapter);
+        mDrawerList.setOnItemClickListener(new ListView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView parent, View view, int position, long id) {
+                mDrawerLayout.closeDrawer(mDrawerList);
+                setTab(position);
+            }
+        });
+
+        mDrawerToggle = new ActionBarDrawerToggle(
+                this,
+                mDrawerLayout,
+                R.drawable.ic_drawer,
+                R.string.drawer_open,
+                R.string.drawer_close
+                ) {
+            public void onDrawerClosed(View view) {
+                getActionBar().setTitle(mTitle);
+                invalidateOptionsMenu();
+            }
+
+            public void onDrawerOpened(View drawerView) {
+                getActionBar().setTitle(mDrawerTitle);
+                invalidateOptionsMenu();
+            }
+        };
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        mDrawerLayout.openDrawer(mDrawerList);
 
         final ActionBar bar = getActionBar();
-        bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        bar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE, ActionBar.DISPLAY_SHOW_TITLE);
+        bar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE,
+                ActionBar.DISPLAY_SHOW_TITLE);
         bar.setTitle(R.string.app_name);
         bar.setDisplayHomeAsUpEnabled(true);
+        bar.setHomeButtonEnabled(true);
 
-        mTabsAdapter = new TabsAdapter(this, mViewPager);
-        mTabsAdapter.addTab(bar.newTab().setText(R.string.tab_title_lockscreen),
-                LockscreenTab.class, null);
-        mTabsAdapter.addTab(bar.newTab().setText(R.string.tab_title_interface),
-                InterfaceTab.class, null);
-        mTabsAdapter.addTab(bar.newTab().setText(R.string.tab_title_statusbar),
-                StatusbarTab.class, null);
-        mTabsAdapter.addTab(bar.newTab().setText(R.string.tab_title_performance),
-                PerformanceTab.class, null);
-        mCr = getApplicationContext().getContentResolver();
+        mSettingsAdapter = new MainSettingsAdapter(this);
+        mSettingsAdapter.addFragment(new LockscreenTab(getResources().getString(
+                R.string.tab_title_lockscreen), mSettingsAdapter.getCount()));
+        mSettingsAdapter.addFragment(new InterfaceTab(getResources().getString(
+                R.string.tab_title_interface), mSettingsAdapter.getCount()));
+        mSettingsAdapter.addFragment(new StatusbarTab(getResources().getString(
+                R.string.tab_title_statusbar), mSettingsAdapter.getCount()));
+        mSettingsAdapter.addFragment(new PerformanceTab(getResources().getString(
+                R.string.tab_title_performance), mSettingsAdapter.getCount()));
+
+        mBottomActionBar = (RelativeLayout) findViewById(R.id.bottom_action_bar);
+        TextView bottomTextView = (TextView) findViewById(R.id.boot_text);
+        bottomTextView.setText("Restore performance settings on boot");
+
+        final SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(getApplicationContext());
+
+        Switch bootSwitch = (Switch) findViewById(R.id.boot_switch);
+        bootSwitch.setChecked((prefs.getBoolean(PerformanceMemory.SOB_PREF,
+                false) == true));
+        bootSwitch.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView,
+                    boolean isChecked) {
+                prefs.edit().putBoolean(PerformanceMemory.SOB_PREF,
+                        isChecked).commit();
+            }
+        });
+
+        mViewPager.setAdapter(mSettingsAdapter);
+        mViewPager.setOnPageChangeListener(new OnPageChangeListener() {
+
+            @Override
+            public void onPageScrollStateChanged(int arg0) { }
+
+            @Override
+            public void onPageScrolled(int arg0, float arg1, int arg2) { }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (mSettingsAdapter.getItem(position).getClass()
+                        == PerformanceTab.class) {
+                    mBottomActionBar.setVisibility(View.VISIBLE);
+                } else {
+                    mBottomActionBar.setVisibility(View.GONE);
+                }
+
+                mDrawerList.setItemChecked(getDrawerItem(position,
+                        mSettingsAdapter.getItem(position).getCurrentTab()), true);
+            }
+        });
+    }
+
+    private int getDrawerItem(int pagePosition, int tabPosition) {
+        for (int i = 0; i < mPositionsList.size(); i++) {
+            int[] item = mPositionsList.get(i);
+            if (item[0] == pagePosition && item[1] == (tabPosition + 1)) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     @Override
@@ -108,78 +235,64 @@ public class Toolbox extends FragmentActivity {
     }
 
     @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-        case android.R.id.home:
-            onBackPressed();
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    static class TabsAdapter extends FragmentPagerAdapter
-            implements ActionBar.TabListener, ViewPager.OnPageChangeListener {
-        private final Context mContext;
-        private final ActionBar mActionBar;
-        private final ViewPager mViewPager;
-        private final ArrayList<TabInfo> mTabs = new ArrayList<TabInfo>();
+    private void setTab(int position) {
+        int[] list = mPositionsList.get(position);
+        mViewPager.setCurrentItem(list[0]);
+        PagerFragment child = mSettingsAdapter.getItem(list[0]);
+        child.tabScrollTo(list[1]-1);
+    }
 
-        static final class TabInfo {
-            private final Class<?> clss;
-            private final Bundle args;
+    private class MainSettingsAdapter extends FragmentPagerAdapter {
 
-            TabInfo(Class<?> _class, Bundle _args) {
-                clss = _class;
-                args = _args;
-            }
-        }
+        private final ArrayList<PagerFragment> mFragmentList = new ArrayList<PagerFragment>();
 
-        public TabsAdapter(Activity activity, ViewPager pager) {
+        public MainSettingsAdapter(Activity activity) {
             super(activity.getFragmentManager());
-            mContext = activity;
-            mActionBar = activity.getActionBar();
-            mViewPager = pager;
-            mViewPager.setAdapter(this);
-            mViewPager.setOnPageChangeListener(this);
         }
 
-        public void addTab(ActionBar.Tab tab, Class<?> clss, Bundle args) {
-            TabInfo info = new TabInfo(clss, args);
-            tab.setTag(info);
-            tab.setTabListener(this);
-            mTabs.add(info);
-            mActionBar.addTab(tab);
-            notifyDataSetChanged();
+        public void addFragment(PagerFragment fragment) {
+            mFragmentList.add(fragment);
         }
 
         @Override
         public int getCount() {
-            return mTabs.size();
+            return mFragmentList.size();
         }
 
         @Override
-        public Fragment getItem(int position) {
-            TabInfo info = mTabs.get(position);
-            return Fragment.instantiate(mContext, info.clss.getName(), info.args);
+        public PagerFragment getItem(int position) {
+            return mFragmentList.get(position);
         }
 
-        public void onPageSelected(int position) {
-            mActionBar.setSelectedNavigationItem(position);
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentList.get(position).getTitle();
         }
+    }
 
-        public void onTabSelected(Tab tab, FragmentTransaction ft) {
-            Object tag = tab.getTag();
-            for (int i=0; i<mTabs.size(); i++) {
-                if (mTabs.get(i) == tag) {
-                    mViewPager.setCurrentItem(i);
-                }
-            }
-        }
-
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { }
-        public void onPageScrollStateChanged(int state) { }
-        public void onTabUnselected(Tab tab, FragmentTransaction ft) { }
-        public void onTabReselected(Tab tab, FragmentTransaction ft) { }
+    @Override
+    public void onTabChanged(int pagePosition, int tabPosition) {
+        mDrawerList.setItemChecked(getDrawerItem(pagePosition,
+                tabPosition), true);
     }
 
 }

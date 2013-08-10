@@ -16,38 +16,45 @@
 
 package com.evervolv.toolbox.tabs;
 
-import android.app.FragmentTransaction;
+import android.content.res.Resources;
 import android.os.Bundle;
-import android.preference.PreferenceFragment;
+import android.support.v13.app.FragmentTabHost;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
-import com.evervolv.toolbox.fragments.PerformanceMain;
+import com.evervolv.toolbox.R;
+import com.evervolv.toolbox.custom.PagerFragment;
+import com.evervolv.toolbox.fragments.PerformanceMemory;
+import com.evervolv.toolbox.fragments.PerformanceProcessor;
 
-public class PerformanceTab extends PreferenceFragment {
+public class PerformanceTab extends PagerFragment {
 
-    private static final String TAG = "EVToolbox";
+    public PerformanceTab() {
+        super();
+    }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public PerformanceTab(String title, int pageIndex) {
+        super(title, pageIndex);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
 
-        // TODO: This is temporary until we split it up into tabs
-        // Processor / Memory Management?
-        FrameLayout view = new FrameLayout(getActivity().getApplicationContext());
-        view.setId(10101010);
-        PreferenceFragment frag = new PerformanceMain();
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.add(view.getId(), frag);
-        ft.commit();
-        return view;
+        Resources res = getResources();
+        mTabHost = new FragmentTabHost(getActivity());
+        mTabHost.setup(getActivity(), getChildFragmentManager(), container.getId());
+
+        mTabHost.addTab(mTabHost.newTabSpec("processor").setIndicator(
+                res.getString(R.string.performance_processor_title)),
+                PerformanceProcessor.class, null);
+        mTabHost.addTab(mTabHost.newTabSpec("memory").setIndicator(
+                res.getString(R.string.performance_memory_title)),
+                PerformanceMemory.class, null);
+        mTabHost.setOnTabChangedListener(this);
+        return mTabHost;
     }
 
 }

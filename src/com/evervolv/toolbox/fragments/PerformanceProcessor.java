@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2013 The Evervolv Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.evervolv.toolbox.fragments;
 
 import android.os.Bundle;
@@ -16,13 +32,9 @@ import com.evervolv.toolbox.misc.FileUtil;
 
 import java.io.File;
 
-public class PerformanceMain extends PreferenceFragment implements Preference.OnPreferenceChangeListener  {
+public class PerformanceProcessor extends PreferenceFragment implements Preference.OnPreferenceChangeListener  {
     private static final String TAG = "EVToolbox";
 
-    public static final String KSM_RUN_FILE = "/sys/kernel/mm/ksm/run";
-    public static final String KSM_PREF = "pref_ksm";
-    public static final String KSM_PREF_DISABLED = "0";
-    public static final String KSM_PREF_ENABLED = "1";
     public static final String FREQ_CUR_PREF = "pref_cpu_freq_cur";
     public static final String SCALE_CUR_FILE = "/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq";
     public static final String FREQINFO_CUR_FILE = "/sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_cur_freq";
@@ -37,32 +49,16 @@ public class PerformanceMain extends PreferenceFragment implements Preference.On
     public static final String FREQ_MIN_FILE = "/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq";
     public static final String SOB_PREF = "pref_cpu_set_on_boot";
 
-    private static final String PERFORMANCE_PROCESSOR_CATEGORY = "pref_performance_processor";
-    private static final String PERFORMANCE_MEMORY_CATEGORY = "pref_performance_memory";
-
-    private static final String ZRAM_PREF = "pref_zram_size";
-    private static final String ZRAM_PERSIST_PROP = "persist.service.zram";
-    private static final String ZRAM_DEFAULT = "0";
-
     private static String FREQ_CUR_FILE = SCALE_CUR_FILE;
 
-    private int swapAvailable = -1;
-
-    private String mGovernorFormat;
-    private String mMinFrequencyFormat;
-    private String mMaxFrequencyFormat;
-
     private PreferenceScreen mPrefSet;
-
-    private PreferenceCategory mProcessor;
-    private PreferenceCategory mMemory;
-
-    private CheckBoxPreference mKSMPref;
     private Preference mCurFrequencyPref;
     private ListPreference mGovernorPref;
     private ListPreference mMinFrequencyPref;
     private ListPreference mMaxFrequencyPref;
-    private ListPreference mzRAM;
+    private String mGovernorFormat;
+    private String mMinFrequencyFormat;
+    private String mMaxFrequencyFormat;
 
     private class CurCPUThread extends Thread {
         private boolean mInterrupt = false;
@@ -95,36 +91,9 @@ public class PerformanceMain extends PreferenceFragment implements Preference.On
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.performance_main);
+        addPreferencesFromResource(R.xml.performance_processor);
 
         mPrefSet = getPreferenceScreen();
-
-        mProcessor = (PreferenceCategory) mPrefSet.findPreference(
-                PERFORMANCE_PROCESSOR_CATEGORY);
-        mMemory = (PreferenceCategory) mPrefSet.findPreference(
-                PERFORMANCE_MEMORY_CATEGORY);
-
-        /* KSM */
-
-        mKSMPref = (CheckBoxPreference) mPrefSet.findPreference(KSM_PREF);
-
-        /* Zram */
-
-        mzRAM = (ListPreference) mPrefSet.findPreference(ZRAM_PREF);
-        if (isSwapAvailable()) {
-            if (SystemProperties.get(ZRAM_PERSIST_PROP) == null)
-                SystemProperties.set(ZRAM_PERSIST_PROP, ZRAM_DEFAULT);
-            mzRAM.setValue(SystemProperties.get(ZRAM_PERSIST_PROP, ZRAM_DEFAULT));
-            mzRAM.setOnPreferenceChangeListener(this);
-        } else {
-            mMemory.removePreference(mzRAM);
-        }
-
-        if (FileUtil.fileExists(KSM_RUN_FILE)) {
-            mKSMPref.setChecked(KSM_PREF_ENABLED.equals(FileUtil.fileReadOneLine(KSM_RUN_FILE)));
-        } else {
-            mMemory.removePreference(mKSMPref);
-        }
 
         /* Governor */
 
@@ -157,7 +126,7 @@ public class PerformanceMain extends PreferenceFragment implements Preference.On
 
         // Some systems might not use governors
         if (temp == null) {
-            mProcessor.removePreference(mGovernorPref);
+            mPrefSet.removePreference(mGovernorPref);
         }
 
         if (!FileUtil.fileExists(FREQ_CUR_FILE)) {
@@ -183,7 +152,7 @@ public class PerformanceMain extends PreferenceFragment implements Preference.On
         mMinFrequencyPref.setOnPreferenceChangeListener(this);
 
         if (temp == null) {
-            mProcessor.removePreference(mMinFrequencyPref);
+            mPrefSet.removePreference(mMinFrequencyPref);
         }
 
         // Max frequency
@@ -197,7 +166,7 @@ public class PerformanceMain extends PreferenceFragment implements Preference.On
         mMaxFrequencyPref.setOnPreferenceChangeListener(this);
 
         if (temp == null) {
-            mProcessor.removePreference(mMaxFrequencyPref);
+            mPrefSet.removePreference(mMaxFrequencyPref);
         }
 
         // Disable the min/max list if we dont have a list file
@@ -209,7 +178,6 @@ public class PerformanceMain extends PreferenceFragment implements Preference.On
         mCurCPUThread.start();
 
     }
-
 
     @Override
     public void onResume() {
@@ -239,24 +207,10 @@ public class PerformanceMain extends PreferenceFragment implements Preference.On
         }
     }
 
-    @Override
-    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-        if (preference == mKSMPref) {
-            FileUtil.fileWriteOneLine(KSM_RUN_FILE, mKSMPref.isChecked() ? "1" : "0");
-            return true;
-        }
-        return false;
-    }
-
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         String fname = "";
         if (newValue != null) {
-            if (preference == mzRAM) {
-                if (newValue != null) {
-                    SystemProperties.set(ZRAM_PERSIST_PROP, (String) newValue);
-                    return true;
-                }
-            } else if (preference == mGovernorPref) {
+            if (preference == mGovernorPref) {
                 fname = GOV_FILE;
             } else if (preference == mMinFrequencyPref) {
                 fname = FREQ_MIN_FILE;
@@ -281,16 +235,6 @@ public class PerformanceMain extends PreferenceFragment implements Preference.On
             }
         }
         return false;
-    }
-
-    /**
-     * Check if swap support is available on the system
-     */
-    private boolean isSwapAvailable() {
-        if (swapAvailable < 0) {
-            swapAvailable = new File("/proc/swaps").exists() ? 1 : 0;
-        }
-        return swapAvailable > 0;
     }
 
     private String toMHz(String mhzString) {

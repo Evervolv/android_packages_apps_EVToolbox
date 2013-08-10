@@ -16,24 +16,27 @@
 
 package com.evervolv.toolbox.tabs;
 
+import android.content.res.Resources;
 import android.os.Bundle;
-import android.preference.PreferenceFragment;
 import android.support.v13.app.FragmentTabHost;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.evervolv.toolbox.fragments.InterfaceMain;
+import com.evervolv.toolbox.R;
+import com.evervolv.toolbox.custom.PagerFragment;
+import com.evervolv.toolbox.fragments.InterfaceGeneral;
 import com.evervolv.toolbox.fragments.InterfacePowerMenu;
 import com.evervolv.toolbox.fragments.InterfaceRotation;
 
-public class InterfaceTab extends PreferenceFragment {
+public class InterfaceTab extends PagerFragment {
 
-    private FragmentTabHost mTabHost;
+    public InterfaceTab() {
+        super();
+    }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public InterfaceTab(String title, int pageIndex) {
+        super(title, pageIndex);
     }
 
     @Override
@@ -41,23 +44,21 @@ public class InterfaceTab extends PreferenceFragment {
             Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
+        Resources res = getResources();
         mTabHost = new FragmentTabHost(getActivity());
         mTabHost.setup(getActivity(), getChildFragmentManager(), container.getId());
 
-        mTabHost.addTab(mTabHost.newTabSpec("main").setIndicator("Main"),
-                InterfaceMain.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("rotation").setIndicator("Rotation"),
+        mTabHost.addTab(mTabHost.newTabSpec("general").setIndicator(res.getString(
+                R.string.general_title)),
+                InterfaceGeneral.class, null);
+        mTabHost.addTab(mTabHost.newTabSpec("rotation").setIndicator(res.getString(
+                R.string.interface_rotation_title)),
                 InterfaceRotation.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("power_menu").setIndicator("Power menu"),
+        mTabHost.addTab(mTabHost.newTabSpec("power_menu").setIndicator(
+                res.getString(R.string.interface_power_menu_title)),
                 InterfacePowerMenu.class, null);
-
+        mTabHost.setOnTabChangedListener(this);
         return mTabHost;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        mTabHost = null;
     }
 
 }

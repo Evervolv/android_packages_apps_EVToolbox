@@ -18,16 +18,17 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- Lockscreen main -->
-    <EditTextPreference
-        android:key="pref_lockscreen_main_message"
-        android:title="@string/pref_lockscreen_main_message_title"
-        android:dialogTitle="@string/pref_lockscreen_main_message_dialog_title"/>
-
     <ListPreference
-        android:key="pref_lockscreen_main_background"
-        android:title="@string/pref_lockscreen_main_background_title"
-        android:entries="@array/lockscreen_main_background_entries"
-        android:entryValues="@array/lockscreen_main_background_values"/>
+            android:key="pref_zram_size"
+            android:dialogTitle="@string/pref_zram_title"
+            android:title="@string/pref_zram_title"
+            android:summary="@string/pref_zram_summary"
+            android:entries="@array/pref_zram_size_entries"
+            android:entryValues="@array/pref_zram_size_values" />
+
+    <CheckBoxPreference
+            android:key="pref_ksm"
+            android:title="@string/pref_ksm_title"
+            android:summary="@string/pref_ksm_summary" />
 
 </PreferenceScreen>

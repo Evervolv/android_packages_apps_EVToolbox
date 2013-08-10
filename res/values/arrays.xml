@@ -18,6 +18,45 @@
 
 <resources>
 
+    <!-- These need to match order in Toolbox.java -->
+    <string-array name="drawer_tabs" translatable="false">
+        <item>@string/tab_title_lockscreen</item>
+        <item>@string/tab_title_statusbar</item>
+        <item>@string/tab_title_interface</item>
+        <item>@string/tab_title_performance</item>
+    </string-array>
+
+    <array name="nav_bundles" translatable="false">
+        <item>@array/lockscreen_nav</item>
+        <item>@array/interface_nav</item>
+        <item>@array/statusbar_nav</item>
+        <item>@array/performance_nav</item>
+    </array>
+
+    <string-array name="lockscreen_nav" translatable="false">
+        <item>@string/tab_title_lockscreen</item>
+        <item>@string/general_title</item>
+        <item>@string/lockscreen_style_title</item>
+    </string-array>
+
+    <string-array name="statusbar_nav" translatable="false">
+        <item>@string/tab_title_statusbar</item>
+        <item>@string/general_title</item>
+    </string-array>
+
+    <string-array name="interface_nav" translatable="false">
+        <item>@string/tab_title_interface</item>
+        <item>@string/general_title</item>
+        <item>@string/interface_rotation_title</item>
+        <item>@string/interface_power_menu_title</item>
+    </string-array>
+
+    <string-array name="performance_nav" translatable="false">
+        <item>@string/tab_title_performance</item>
+        <item>@string/performance_processor_title</item>
+        <item>@string/performance_memory_title</item>
+    </string-array>
+
     <array name="lockscreen_style_picker_captions" translatable="false">
         <item>@string/pref_lockscreen_style_picker_caption_jellybean</item>
         <item>@string/pref_lockscreen_style_picker_caption_ics</item>
@@ -32,23 +71,19 @@
         <item>@drawable/lock_eclair</item>
     </array>
 
-    <string-array name="lockscreen_main_background_entries" translatable="false">
-        <item>@string/pref_lockscreen_main_background_color_fill</item>
-        <item>@string/pref_lockscreen_main_background_custom_image</item>
-        <item>@string/pref_lockscreen_main_background_default_wallpaper</item>
-        <item>@string/pref_lockscreen_main_background_transparent</item>
+    <string-array name="lockscreen_general_background_entries" translatable="false">
+        <item>@string/pref_lockscreen_general_background_color_fill</item>
+        <item>@string/pref_lockscreen_general_background_custom_image</item>
+        <item>@string/pref_lockscreen_general_background_default_wallpaper</item>
+        <item>@string/pref_lockscreen_general_background_transparent</item>
     </string-array>
 
-    <string-array name="lockscreen_main_background_values" translatable="false">
+    <string-array name="lockscreen_general_background_values" translatable="false">
         <item>0</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
     </string-array>
-
-
-
-    <!-- NEED TO UPDATE ( Use localization )-->
 
     <string-array name="pref_zram_size_entries">
         <item>Disabled (default)</item>
@@ -65,10 +100,10 @@
     </string-array>
 
 
-    <string-array name="statusbar_batt_style_entries">
-        <item>Stock</item>
-        <item>Stock w/ Percentage</item>
-        <item>Hidden</item>
+    <string-array name="statusbar_batt_style_entries" translatable="false">
+        <item>@string/pref_statusbar_batt_style_stock</item>
+        <item>@string/pref_statusbar_batt_style_percent</item>
+        <item>@string/pref_statusbar_batt_style_hidden</item>
     </string-array>
 
     <string-array name="statusbar_batt_style_entryvalues" translatable="false">

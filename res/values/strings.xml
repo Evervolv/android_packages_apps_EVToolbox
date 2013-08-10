@@ -32,23 +32,25 @@
     <string name="tab_title_statusbar">Statusbar</string>
     <string name="tab_title_interface">Interface</string>
     <string name="tab_title_performance">Performance</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="general_title">General</string>
 
         <!-- Lockscreen -->
-    <string name="pref_lockscreen_style_title">Style</string>
-    <string name="pref_lockscreen_style_summary">Choose your style of lockscreen</string>
+    <string name="lockscreen_style_title">Style</string>
 
-        <!-- Lockscreen >> Main-->
-    <string name="pref_lockscreen_main_message_title">Message</string>
-    <string name="pref_lockscreen_main_message_summary">Change the message displayed on the lockscreen</string>
-    <string name="pref_lockscreen_main_message_dialog_title">Enter message to be displayed</string>
-    <string name="pref_lockscreen_main_background_title">Background</string>
-    <string name="pref_lockscreen_main_background_color_fill">Color fill</string>
-    <string name="pref_lockscreen_main_background_custom_image">Custom image</string>
-    <string name="pref_lockscreen_main_background_transparent">Transparent</string>
-    <string name="pref_lockscreen_main_background_default_wallpaper">Default wallpaper</string>
-    <string name="pref_lockscreen_main_background_result_successful">Background changed successfully</string>
-    <string name="pref_lockscreen_main_background_result_not_successful">Background could not be changed</string>
-    <string name="pref_lockscreen_main_background_dialog_title">Choose color</string>
+        <!-- Lockscreen >> General-->
+    <string name="pref_lockscreen_general_message_title">Message</string>
+    <string name="pref_lockscreen_general_message_summary">Change the message displayed on the lockscreen</string>
+    <string name="pref_lockscreen_general_message_dialog_title">Enter message to be displayed</string>
+    <string name="pref_lockscreen_general_background_title">Background</string>
+    <string name="pref_lockscreen_general_background_color_fill">Color fill</string>
+    <string name="pref_lockscreen_general_background_custom_image">Custom image</string>
+    <string name="pref_lockscreen_general_background_transparent">Transparent</string>
+    <string name="pref_lockscreen_general_background_default_wallpaper">Default wallpaper</string>
+    <string name="pref_lockscreen_general_background_result_successful">Background changed successfully</string>
+    <string name="pref_lockscreen_general_background_result_not_successful">Background could not be changed</string>
+    <string name="pref_lockscreen_general_background_dialog_title">Choose color</string>
 
         <!-- Lockscreen >> Styles-->
     <string name="pref_lockscreen_style_picker_unavailable">This style is unavailable for this device!\nPlease choose another style.</string>
@@ -57,18 +59,17 @@
     <string name="pref_lockscreen_style_picker_caption_gingerbread">Gingerbread</string>
     <string name="pref_lockscreen_style_picker_caption_eclair">Eclair</string>
 
-        <!-- GalleryPickerPreference -->
-    <string name="item_count">%1$d/%2$d</string>
-
-
-
-
-
-            <!-- NEED TO UPDATE -->
-
         <!-- Interface -->
-    <string name="interface_title">Interface</string>
-    <string name="pref_interface_title_head">Interface</string>
+    <string name="interface_rotation_title">Rotation</string>
+    <string name="interface_power_menu_title">Power menu</string>
+
+        <!-- Interface >> General -->
+    <string name="pref_trackball_wake_toggle_title">Trackball wake</string>
+    <string name="pref_trackball_wake_toggle_summary">Wake the device by pressing the trackball</string>
+    <string name="pref_volume_wake_toggle_title">Volume wake</string>
+    <string name="pref_volume_wake_toggle_summary">Wake the device by pressing vol-up or vol-down</string>
+    <string name="pref_lockscreen_music_controls_volbtn_title">Volume music control</string>
+    <string name="pref_lockscreen_music_controls_volbtn_summary">Change music tracks by long pressing vol-up(next) or vol-down(prev)</string>
     <string name="pref_interface_category_tabletdpi">Tablet &amp; DPI</string>
     <string name="pref_interface_density_picker_title">Custom display density</string>
     <string name="pref_interface_density_picker_summary">Current dpi: %1$d\nRecommended tablet dpi: %2$d\nDefault dpi: %3$d</string>
@@ -77,23 +78,15 @@
     <string name="pref_interface_reboot_required_title">Reboot required!</string>
     <string name="pref_interface_reboot_required_text">A reboot is required for this setting to apply.\n\nWARNING: Minimal support is given for DPI changing.</string>
 
-        <!-- Interface >> Buttons -->
-    <string name="pref_trackball_wake_toggle_title">Trackball wake</string>
-    <string name="pref_trackball_wake_toggle_summary">Wake the device by pressing the trackball</string>
-    <string name="pref_volume_wake_toggle_title">Volume wake</string>
-    <string name="pref_volume_wake_toggle_summary">Wake the device by pressing vol-up or vol-down</string>
-    <string name="pref_lockscreen_music_controls_volbtn_title">Volume music control</string>
-    <string name="pref_lockscreen_music_controls_volbtn_summary">Change music tracks by long pressing vol-up(next) or vol-down(prev)</string>
         <!-- Interface >> Rotation -->
-    <string name="pref_interface_rotation_title">Rotation settings</string>
-    <string name="pref_interface_rotation_summary">Toggle specific angles</string>
+
     <string name="pref_rotation_0_title">0 degrees</string>
     <string name="pref_rotation_90_title">90 degrees</string>
     <string name="pref_rotation_180_title">180 degrees</string>
     <string name="pref_rotation_270_title">270 degrees</string>
+
         <!-- Interface >> Power Menu -->
-    <string name="pref_interface_power_menu_title">Power menu settings</string>
-    <string name="pref_interface_power_menu_summary">Customize your power menu</string>
+
     <string name="pref_power_menu_hide_screenshot_title">Hide screenshot option</string>
     <string name="pref_power_menu_hide_sound_title">Hide sound options</string>
     <string name="pref_power_menu_hide_airplane_mode_title">Hide airplane mode</string>
@@ -101,52 +94,29 @@
     <string name="pref_power_menu_screenshot_delay_title">Set screenshot delay</string>
 
         <!-- Statusbar -->
-    <string name="statusbar_title">Statusbar</string>
-    <string name="pref_statusbar_title_head">Statusbar</string>
-        <!-- Statusbar >> Icons -->
+
+        <!-- Statusbar >> General -->
     <string name="pref_statusbar_icons_title">Statusbar Icons</string>
     <string name="pref_statusbar_icons_summary">Settings to control statusbar icons</string>
-        <!-- Statusbar >> Icons >> Signal Sixbar -->
     <string name="pref_statusbar_sixbar_signal_title">Use sixbar signal icons</string>
     <string name="pref_statusbar_sixbar_signal_summary">Choose whether or or not to use sixbar icons (modded) for cell signal strength</string>
-        <!-- Statusbar >> Icons >> Battery Style -->
     <string name="pref_statusbar_batt_style_title">Battery style</string>
     <string name="pref_statusbar_batt_style_summary">Choose a battery icon style</string>
-
-        <!-- aFileDialog -->
-    <string name="daidalos_hello">Hello World!</string>
-    <string name="daidalos_app_name">aFileDialog</string>
-    <color name="daidalos_gray">#888</color>
-    <string name="daidalos_select">Select</string>
-    <string name="daidalos_cancel">Cancel</string>
-    <string name="daidalos_ok">OK</string>
-    <string name="daidalos_new_file">New</string>
-    <string name="daidalos_create_file">Create file</string>
-    <string name="daidalos_create_folder">Create folder</string>
-    <string name="daidalos_accept">Accept</string>
-    <string name="daidalos_enter_file_name">Enter the name of the file that you want to create</string>
-    <string name="daidalos_enter_folder_name">Enter the name of the folder that you want to create</string>
-    <string name="daidalos_yes">Yes</string>
-    <string name="daidalos_no">No</string>
-    <string name="daidalos_confirm_select_file">Are you sure that you want to select the file \'$file_name\'?</string>
-    <string name="daidalos_confirm_create_file">The file \'$file_name\' do not exists, are you sure that you want to create it?</string>
-    <string name="daidalos_confirm_select_folder">Are you sure that you want to select the folder \'$file_name\'?</string>
-    <string name="daidalos_confirm_create_folder">The folder \'$file_name\' do not exists, are you sure that you want to create it?</string>
-
+    <string name="pref_statusbar_batt_style_stock">Stock</string>
+    <string name="pref_statusbar_batt_style_percent">Stock w/ percentage</string>
+    <string name="pref_statusbar_batt_style_hidden">Hidden</string>
 
         <!-- Performance Settings -->
-    <string name="performance_title">Performance</string>
-    <string name="pref_performance_title_head">Performance</string>
+    <string name="performance_memory_title">Memory</string>
+    <string name="performance_processor_title">Processor</string>
+
         <!-- Performance >> MemoryManagement -->
-    <string name="pref_memory_management_title">Memory management</string>
-    <string name="pref_memory_management_summary">Customize memory usage to alter system performance</string>
     <string name="pref_zram_title">zRam</string>
     <string name="pref_zram_summary">Compress memory for increased virtual capacity (requires reboot)</string>
     <string name="pref_ksm_title">Kernel samepage merging</string>
     <string name="pref_ksm_summary">Ksm reduces physical memory requirements and improves performance</string>
+
         <!-- Performance >> Processor -->
-    <string name="processor_title">Processor</string>
-    <string name="pref_processor_title">Processor</string>
     <string name="pref_processor_summary">Change CPU governor and clock speed</string>
     <string name="pref_cpu_cur_freq_title">Current CPU frequency</string>
     <string name="pref_cpu_governors_title">CPU governor</string>
@@ -157,5 +127,8 @@
     <string name="pref_cpu_max_freq_summary">%s</string>
     <string name="pref_cpu_set_on_boot">Set on boot</string>
     <string name="pref_cpu_set_on_boot_summary">Restore the processor settings on boot</string>
+
+        <!-- GalleryPickerPreference -->
+    <string name="item_count">%1$d/%2$d</string>
 
 </resources>
