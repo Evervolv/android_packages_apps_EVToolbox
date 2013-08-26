@@ -54,6 +54,7 @@ import com.evervolv.toolbox.tabs.LockscreenTab;
 import com.evervolv.toolbox.tabs.PerformanceTab;
 import com.evervolv.toolbox.tabs.StatusbarTab;
 import com.evervolv.toolbox.tabs.SuperuserTab;
+import com.evervolv.toolbox.tabs.SystemTab;
 
 import java.util.ArrayList;
 
@@ -152,6 +153,8 @@ public class Toolbox extends FragmentActivity implements PagerFragment.OnTabChan
                 R.string.tab_title_performance), mSettingsAdapter.getCount()));
         mSettingsAdapter.addFragment(new SuperuserTab(getResources().getString(
                 R.string.tab_title_superuser), mSettingsAdapter.getCount()));
+        mSettingsAdapter.addFragment(new SystemTab(getResources().getString(
+                R.string.tab_title_system), mSettingsAdapter.getCount()));
 
         mBottomActionBar = (RelativeLayout) findViewById(R.id.bottom_action_bar);
         TextView bottomTextView = (TextView) findViewById(R.id.boot_text);

@@ -26,6 +26,7 @@
     <string name="reboot">Reboot</string>
     <string name="later">Later</string>
     <string name="flash">Flash</string>
+    <string name="send">Send</string>
 
         <!-- Main app strings ( immediate tabs ) -->
     <string name="tab_title_lockscreen">Lockscreen</string>
@@ -33,6 +34,7 @@
     <string name="tab_title_interface">Interface</string>
     <string name="tab_title_performance">Performance</string>
     <string name="tab_title_superuser">Superuser</string>
+    <string name="tab_title_system">System</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="general_title">General</string>
@@ -226,5 +228,35 @@
     <string name="info">Warning: If you do not understand this, you should deny the request.</string>
     <string name="request">Superuser Request</string>
     <string name="no_apps">There are currently no Superuser app policies.</string>
+
+        <!-- System >> Debug -->
+    <string name="system_debug_title">Debug</string>
+    <string name="pref_system_logcat_message">Choose which buffer(s) you would like to fetch.\nOnce finished, upload and grab url to give to your maintainer!</string>
+    <string name="pref_system_debug_generated_log_url">Generated log url:</string>
+    <string name="logcat_toast_ready">Ready to upload</string>
+    <string name="logcat_toast_supply_option">Error: Please supply a logging option</string>
+    <string name="logcat_toast_url_copied">Copied url to clipboard</string>
+
+    <string name="pref_system_logcat_fetch_button">Fetch logs</string>
+    <string name="pref_system_logcat_fetching_button">Fetching...</string>
+    <string name="pref_system_logcat_upload_button">Upload logs</string>
+    <string name="pref_system_logcat_uploading_button">Uploading...</string>
+
+    <string name="log_options">Log options</string>
+    <string name="general_logcat">General logcat</string>
+    <string name="radio_logcat">Radio logcat</string>
+    <string name="dmesg_log">Dmesg</string>
+    <string name="last_kmsg">Last_kmsg</string>
+
+    <string name="copy_url">Copy URL</string>
+    <string name="open_url">Open URL</string>
+    <string name="log_url_label">Log URL</string>
+
+        <!-- Upload Service -->
+    <string name="logcat_toast_start">Uploading Logcat</string>
+    <string name="logcat_toast_upload_failed">Uploading logcat failed</string>
+    <string name="logcat_post_author">EVLogcat Uploader</string>
+    <string name="logcat_post_title">Logcat: %1$s</string>
+    <string name="logcat_notification_title">Logcat Uploaded</string>
 
 </resources>

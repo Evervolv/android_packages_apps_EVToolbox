@@ -25,6 +25,7 @@
         <item>@string/tab_title_interface</item>
         <item>@string/tab_title_performance</item>
         <item>@string/tab_title_superuser</item>
+        <item>@string/tab_title_system</item>
     </string-array>
 
     <array name="nav_bundles" translatable="false">
@@ -33,6 +34,7 @@
         <item>@array/statusbar_nav</item>
         <item>@array/performance_nav</item>
         <item>@array/superuser_nav</item>
+        <item>@array/system_nav</item>
     </array>
 
     <string-array name="lockscreen_nav" translatable="false">
@@ -63,6 +65,11 @@
         <item>@string/tab_title_superuser</item>
         <item>@string/superuser_security_title</item>
         <item>@string/superuser_settings_title</item>
+    </string-array>
+
+    <string-array name="system_nav" translatable="false">
+        <item>@string/tab_title_system</item>
+        <item>@string/system_debug_title</item>
     </string-array>
 
     <array name="lockscreen_style_picker_captions" translatable="false">
