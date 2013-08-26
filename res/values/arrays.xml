@@ -24,6 +24,7 @@
         <item>@string/tab_title_statusbar</item>
         <item>@string/tab_title_interface</item>
         <item>@string/tab_title_performance</item>
+        <item>@string/tab_title_superuser</item>
     </string-array>
 
     <array name="nav_bundles" translatable="false">
@@ -31,6 +32,7 @@
         <item>@array/interface_nav</item>
         <item>@array/statusbar_nav</item>
         <item>@array/performance_nav</item>
+        <item>@array/superuser_nav</item>
     </array>
 
     <string-array name="lockscreen_nav" translatable="false">
@@ -55,6 +57,12 @@
         <item>@string/tab_title_performance</item>
         <item>@string/performance_processor_title</item>
         <item>@string/performance_memory_title</item>
+    </string-array>
+
+    <string-array name="superuser_nav" translatable="false">
+        <item>@string/tab_title_superuser</item>
+        <item>@string/superuser_security_title</item>
+        <item>@string/superuser_settings_title</item>
     </string-array>
 
     <array name="lockscreen_style_picker_captions" translatable="false">
@@ -110,6 +118,56 @@
         <item>0</item>
         <item>1</item>
         <item>2</item>
+    </string-array>
+
+    <string-array name="pref_superuser_auto_response_entries" translatable="false">
+        <item>@string/pref_superuser_auto_response_prompt</item>
+        <item>@string/pref_superuser_auto_response_allow</item>
+        <item>@string/pref_superuser_auto_response_deny</item>
+    </string-array>
+
+    <string-array name="pref_superuser_auto_response_entryvalues" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="pref_superuser_notifications_entries" translatable="false">
+        <item>@string/pref_superuser_notifications_none</item>
+        <item>@string/pref_superuser_notifications_toast</item>
+        <item>@string/pref_superuser_notifications_notification</item>
+    </string-array>
+
+    <string-array name="pref_superuser_notifications_entryvalues" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="pref_superuser_multiuser_policy_entries" translatable="false">
+        <item>@string/pref_superuser_multiuser_owner_only</item>
+        <item>@string/pref_superuser_multiuser_owner_managed</item>
+        <item>@string/pref_superuser_multiuser_user</item>
+    </string-array>
+
+    <string-array name="pref_superuser_multiuser_policy_entryvalues" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="pref_superuser_request_timeout_entries" translatable="false">
+        <item>@string/pref_superuser_request_timeout_ten</item>
+        <item>@string/pref_superuser_request_timeout_twenty</item>
+        <item>@string/pref_superuser_request_timeout_thirty</item>
+        <item>@string/pref_superuser_request_timeout_sixty</item>
+    </string-array>
+
+    <string-array name="pref_superuser_request_timeout_entryvalues" translatable="false">
+        <item>10</item>
+        <item>20</item>
+        <item>30</item>
+        <item>60</item>
     </string-array>
 
 </resources>

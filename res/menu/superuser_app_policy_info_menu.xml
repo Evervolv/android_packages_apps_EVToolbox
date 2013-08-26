@@ -17,9 +17,8 @@
  -->
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menu_switch"
-        android:showAsAction="always"
-        android:actionLayout="@layout/action_view_switch"
-        android:menuCategory="container"
-        android:orderInCategory="3" />
+    <item android:id="@+id/menu_delete_policy"
+          android:icon="@drawable/ic_menu_delete"
+          android:title="@string/superuser_app_policy_info_delete"
+          android:showAsAction="ifRoom" />
 </menu>

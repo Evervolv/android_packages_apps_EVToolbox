@@ -16,10 +16,9 @@
  * limitations under the License.
  -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menu_switch"
-        android:showAsAction="always"
-        android:actionLayout="@layout/action_view_switch"
-        android:menuCategory="container"
-        android:orderInCategory="3" />
-</menu>
+<ListView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/app_list"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:choiceMode="singleChoice" />

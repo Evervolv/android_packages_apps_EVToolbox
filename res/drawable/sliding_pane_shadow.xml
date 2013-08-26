@@ -16,10 +16,9 @@
  * limitations under the License.
  -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menu_switch"
-        android:showAsAction="always"
-        android:actionLayout="@layout/action_view_switch"
-        android:menuCategory="container"
-        android:orderInCategory="3" />
-</menu>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" >
+    <gradient
+        android:endColor="#000000"
+        android:startColor="#FFFFFF" />
+    <size android:width="5.0dp" android:height="0.5dp" />
+</shape>

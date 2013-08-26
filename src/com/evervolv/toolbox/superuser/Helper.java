@@ -31,12 +31,23 @@ public class Helper {
     public static Drawable loadPackageIcon(Context context, String pn) {
         try {
             PackageManager pm = context.getPackageManager();
-            PackageInfo pi = context.getPackageManager().getPackageInfo(pn, 0);
+            PackageInfo pi = context.getPackageManager().getPackageInfo(pn, PackageManager.GET_PERMISSIONS);
             Drawable ret = ImageCache.getInstance().get(pn);
             if (ret != null)
                 return ret;
             ImageCache.getInstance().put(pn, ret = pi.applicationInfo.loadIcon(pm));
             return ret;
+        }
+        catch (Exception ex) {
+        }
+        return null;
+    }
+
+    public static Drawable loadIcon(Context context, String pkg) {
+        try {
+            PackageManager pm = context.getPackageManager();
+            PackageInfo pi = context.getPackageManager().getPackageInfo(pkg, 0);
+            return pi.applicationInfo.loadIcon(pm);
         }
         catch (Exception ex) {
         }

@@ -3,4 +3,8 @@
     <dimen name="section_padding">8dp</dimen>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="superuser_activity_avatar_height">144dp</dimen>
+    <dimen name="superuser_activity_avatar_width">144dp</dimen>
+    <dimen name="superuser_info_item_height">48dp</dimen>
 </resources>

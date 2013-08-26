@@ -21,7 +21,6 @@ import java.io.File;
 import java.util.HashMap;
 
 import junit.framework.Assert;
-import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -49,7 +48,6 @@ import android.widget.Toast;
 import com.evervolv.toolbox.superuser.db.SuDatabaseHelper;
 import com.evervolv.toolbox.superuser.db.UidPolicy;
 import com.evervolv.toolbox.superuser.util.Settings;
-import com.evervolv.toolbox.superuser.util.SuHelper;
 import com.evervolv.toolbox.R;
 
 public class MultitaskSuRequestActivity extends FragmentActivity {

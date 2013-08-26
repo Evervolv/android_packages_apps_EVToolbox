@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2013 Koushik Dutta (@koush)
+ * Portions copyright (C) 2013, The Evervolv Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +25,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.text.TextUtils;
+import android.util.Log;
 
 public class SuDatabaseHelper extends SQLiteOpenHelper {
     private static final int CURRENT_VERSION = 6;
@@ -144,6 +146,19 @@ public class SuDatabaseHelper extends SQLiteOpenHelper {
         u.logging = c.getInt(c.getColumnIndex("logging")) != 0;
         u.notification = c.getInt(c.getColumnIndex("notification")) != 0;
         return u;
+    }
+
+    public static UidPolicy getPolicy(Context context, int index) {
+        SQLiteDatabase db = new SuDatabaseHelper(context).getWritableDatabase();
+        try {
+            return getPolicies(db).get(index);
+        } catch (IndexOutOfBoundsException e) {
+            Log.d("TOOLBOX", "CAUGHT!!!");
+            return null;
+        }
+        finally {
+            db.close();
+        }
     }
 
     public static ArrayList<UidPolicy> getPolicies(SQLiteDatabase db) {

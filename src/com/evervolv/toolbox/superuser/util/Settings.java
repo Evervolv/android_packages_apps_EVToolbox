@@ -11,12 +11,11 @@ import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.security.MessageDigest;
 
-import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Build;
+import android.os.SystemProperties;
 import android.text.TextUtils;
 import android.util.Base64;
 
@@ -24,6 +23,44 @@ import com.evervolv.toolbox.superuser.Helper;
 import com.evervolv.toolbox.superuser.db.SuperuserDatabaseHelper;
 
 public class Settings {
+
+    private static final String KEY_TIMEOUT = "timeout";
+    public static final String KEY_PIN = "pin";
+    private static final String KEY_NOTIFICATION = "notification";
+    private static final String KEY_AUTOMATIC_RESPONSE = "automatic_response";
+    private static final String KEY_REQUIRE_PREMISSION = "require_permission";
+
+
+    public static final int NOTIFICATION_TYPE_NONE = 0;
+    public static final int NOTIFICATION_TYPE_TOAST = 1;
+    public static final int NOTIFICATION_TYPE_NOTIFICATION = 2;
+    public static final int NOTIFICATION_TYPE_DEFAULT = NOTIFICATION_TYPE_TOAST;
+
+    public static final int AUTOMATIC_RESPONSE_PROMPT = 0;
+    public static final int AUTOMATIC_RESPONSE_ALLOW = 1;
+    public static final int AUTOMATIC_RESPONSE_DENY = 2;
+    public static final int AUTOMATIC_RESPONSE_DEFAULT = AUTOMATIC_RESPONSE_PROMPT;
+
+    public static final int SUPERUSER_ACCESS_DISABLED = 0;
+    public static final int SUPERUSER_ACCESS_APPS_ONLY = 1;
+    public static final int SUPERUSER_ACCESS_ADB_ONLY = 2;
+    public static final int SUPERUSER_ACCESS_APPS_AND_ADB = 3;
+
+    public static final int MULTIUSER_MODE_OWNER_ONLY = 0;
+    public static final int MULTIUSER_MODE_OWNER_MANAGED = 1;
+    public static final int MULTIUSER_MODE_USER = 2;
+    public static final int MULTIUSER_MODE_NONE = 3;
+    
+    public static final int REQUEST_TIMEOUT_TEN = 10;
+    public static final int REQUEST_TIMEOUT_TWENTY = 20;
+    public static final int REQUEST_TIMEOUT_THIRTY = 30;
+    public static final int REQUEST_TIMEOUT_SIXTY = 60;
+    public static final int REQUEST_TIMEOUT_DEFAULT = REQUEST_TIMEOUT_THIRTY;
+
+    private static final String MULTIUSER_VALUE_OWNER_ONLY  = "owner";
+    private static final String MULTIUSER_VALUE_OWNER_MANAGED = "managed";
+    private static final String MULTIUSER_VALUE_USER = "user";
+
     SQLiteDatabase mDatabase;
     Context mContext;
 
@@ -107,8 +144,7 @@ public class Settings {
         setBoolean(context, KEY_LOGGING, logging);
     }
 
-    private static final String KEY_TIMEOUT = "timeout";
-    public static final int REQUEST_TIMEOUT_DEFAULT = 30;
+
     public static int getRequestTimeout(Context context) {
         return getInt(context, KEY_TIMEOUT, REQUEST_TIMEOUT_DEFAULT);
     }
@@ -117,11 +153,6 @@ public class Settings {
         setInt(context, KEY_TIMEOUT, timeout);
     }
 
-    private static final String KEY_NOTIFICATION = "notification";
-    public static final int NOTIFICATION_TYPE_NONE = 0;
-    public static final int NOTIFICATION_TYPE_TOAST = 1;
-    public static final int NOTIFICATION_TYPE_NOTIFICATION = 2;
-    public static final int NOTIFICATION_TYPE_DEFAULT = NOTIFICATION_TYPE_TOAST;
     public static int getNotificationType(Context context) {
         switch (getInt(context, KEY_NOTIFICATION, NOTIFICATION_TYPE_DEFAULT)) {
         case NOTIFICATION_TYPE_NONE:
@@ -139,7 +170,6 @@ public class Settings {
         setInt(context, KEY_NOTIFICATION, notification);
     }
 
-    public static final String KEY_PIN = "pin";
     public static final boolean isPinProtected(Context context) {
         return Settings.getString(context, KEY_PIN) != null;
     }
@@ -173,7 +203,6 @@ public class Settings {
         return pin.equals(hashed);
     }
 
-    private static final String KEY_REQUIRE_PREMISSION = "require_permission";
     public static boolean getRequirePermission(Context context) {
         return getBoolean(context, KEY_REQUIRE_PREMISSION, false);
     }
@@ -182,11 +211,6 @@ public class Settings {
         setBoolean(context, KEY_REQUIRE_PREMISSION, require);
     }
 
-    private static final String KEY_AUTOMATIC_RESPONSE = "automatic_response";
-    public static final int AUTOMATIC_RESPONSE_PROMPT = 0;
-    public static final int AUTOMATIC_RESPONSE_ALLOW = 1;
-    public static final int AUTOMATIC_RESPONSE_DENY = 2;
-    public static final int AUTOMATIC_RESPONSE_DEFAULT = AUTOMATIC_RESPONSE_PROMPT;
     public static int getAutomaticResponse(Context context) {
         switch (getInt(context, KEY_AUTOMATIC_RESPONSE, AUTOMATIC_RESPONSE_DEFAULT)) {
         case AUTOMATIC_RESPONSE_ALLOW:
@@ -245,18 +269,7 @@ public class Settings {
         return new String(readToEndAsArray(input));
     }
 
-    public static final int MULTIUSER_MODE_OWNER_ONLY = 0;
-    public static final int MULTIUSER_MODE_OWNER_MANAGED = 1;
-    public static final int MULTIUSER_MODE_USER = 2;
-    public static final int MULTIUSER_MODE_NONE = 3;
-
-    private static final String MULTIUSER_VALUE_OWNER_ONLY  = "owner";
-    private static final String MULTIUSER_VALUE_OWNER_MANAGED = "managed";
-    private static final String MULTIUSER_VALUE_USER = "user";
-
     public static final int getMultiuserMode(Context context) {
-        if (Build.VERSION.SDK_INT < 17)
-            return MULTIUSER_MODE_NONE;
 
         if (!Helper.supportsMultipleUsers(context))
             return MULTIUSER_MODE_NONE;
@@ -308,42 +321,28 @@ public class Settings {
         }
     }
 
-    public static final int SUPERUSER_ACCESS_DISABLED = 0;
-    public static final int SUPERUSER_ACCESS_APPS_ONLY = 1;
-    public static final int SUPERUSER_ACCESS_ADB_ONLY = 2;
-    public static final int SUPERUSER_ACCESS_APPS_AND_ADB = 3;
-    public static int getSuperuserAccess() {
+    public static boolean getSuperuserAccess() {
         try {
             Class c = Class.forName("android.os.SystemProperties");
             Method m = c.getMethod("get", String.class);
             String value = (String)m.invoke(null, "persist.sys.root_access");
             int val = Integer.valueOf(value);
             switch (val) {
-            case SUPERUSER_ACCESS_DISABLED:
-            case SUPERUSER_ACCESS_APPS_ONLY:
-            case SUPERUSER_ACCESS_ADB_ONLY:
-            case SUPERUSER_ACCESS_APPS_AND_ADB:
-                return val;
-            default:
-                return SUPERUSER_ACCESS_APPS_AND_ADB;
+                case SUPERUSER_ACCESS_DISABLED:
+                    return false;
+                case SUPERUSER_ACCESS_APPS_AND_ADB:
+                    return true;
+                default:
+                    return true;
             }
         }
         catch (Exception e) {
-            return SUPERUSER_ACCESS_APPS_AND_ADB;
+            return true;
         }
     }
 
     public static void setSuperuserAccess(int mode) {
-        // TODO: fallback to using SystemProperties.set if this has system uid (ie, embedded)
-        try {
-            String command = "setprop persist.sys.root_access " + mode;
-            Process p = Runtime.getRuntime().exec("su");
-            p.getOutputStream().write(command.getBytes());
-            p.getOutputStream().close();
-            p.waitFor();
-        }
-        catch (Exception ex) {
-        }
+        SystemProperties.set("persist.sys.root_access", Integer.toString(mode));
     }
 
     private static final String CHECK_SU_QUIET = "check_su_quiet";
@@ -353,28 +352,6 @@ public class Settings {
 
     public static final void setCheckSuQuietCounter(Context context, int counter) {
         setInt(context, CHECK_SU_QUIET, counter);
-    }
-
-    private static final String KEY_THEME = "theme";
-    public static final int THEME_LIGHT = 0;
-    public static final int THEME_DARK = 1;
-    public static void applyDarkThemeSetting(Activity activity, int dark) {
-        if (!"com.koushikdutta.superuser".equals(activity.getPackageName()))
-            return;
-        try {
-            if (getTheme(activity) == THEME_DARK)
-                activity.setTheme(dark);
-        }
-        catch (Exception e) {
-        }
-    }
-
-    public static final int getTheme(Context context) {
-        return getInt(context, KEY_THEME, THEME_LIGHT);
-    }
-
-    public static final void setTheme(Context context, int theme) {
-        setInt(context, KEY_THEME, theme);
     }
 
 }

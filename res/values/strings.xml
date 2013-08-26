@@ -32,6 +32,7 @@
     <string name="tab_title_statusbar">Statusbar</string>
     <string name="tab_title_interface">Interface</string>
     <string name="tab_title_performance">Performance</string>
+    <string name="tab_title_superuser">Superuser</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="general_title">General</string>
@@ -131,7 +132,75 @@
         <!-- GalleryPickerPreference -->
     <string name="item_count">%1$d/%2$d</string>
 
-        <!--Superuser-->
+        <!-- Superuser -->
+
+    <string name="superuser_settings_title">Settings</string>
+    <string name="superuser_security_title">Security</string>
+
+    <!-- Superuser >> Security -->
+    <string name="pref_superuser_superuser_access_title">Superuser access</string>
+    <string name="pref_superuser_superuser_access_summary_on">Apps are allowed to access Superuser</string>
+    <string name="pref_superuser_superuser_access_summary_off">Apps are not allowed to access Superuser</string>
+
+    <string name="pref_superuser_auto_response_title">Automatic response</string>
+    <string name="pref_superuser_auto_response_prompt_summary">Set to prompt</string>
+    <string name="pref_superuser_auto_response_allow_summary">Set to allow</string>
+    <string name="pref_superuser_auto_response_deny_summary">Set to deny</string>
+
+    <string name="pref_superuser_declared_permission_title">Declared permission</string>
+    <string name="pref_superuser_declared_permission_summary">Only allow requests from apps that explicitly declare permission</string>
+
+    <string name="pref_superuser_auto_response_prompt">Prompt</string>
+    <string name="pref_superuser_auto_response_allow">Allow</string>
+    <string name="pref_superuser_auto_response_deny">Deny</string>
+
+    <string name="pref_superuser_multiuser_policy_title">Multiuser policy</string>
+    <string name="pref_superuser_multiuser_owner_only_summary">Only the device owner can request Superuser</string>
+    <string name="pref_superuser_multiuser_owner_managed_summary">The device owner will be prompted when another user requests Superuser</string>
+    <string name="pref_superuser_multiuser_user_summary">All users can request Superuser</string>
+    <string name="pref_superuser_multiuser_owner_only">Owner only</string>
+    <string name="pref_superuser_multiuser_owner_managed">Owner managed</string>
+    <string name="pref_superuser_multiuser_user">All Users</string>
+    <string name="pref_superuser_multiuser_require_owner">The multiuser policy can only be managed by the device owner.</string>
+
+    <string name="pref_superuser_pin_entry_title">PIN Protection</string>
+    <string name="verify_pin">Verify PIN</string>
+
+    <string name="pref_superuser_request_timeout_title">Request timeout</string>
+    <string name="pref_superuser_request_timeout_ten">10 Seconds</string>
+    <string name="pref_superuser_request_timeout_twenty">20 Seconds</string>
+    <string name="pref_superuser_request_timeout_thirty">30 Seconds</string>
+    <string name="pref_superuser_request_timeout_sixty">60 Seconds</string>
+    <string name="pref_superuser_request_timeout_summary">Superuser requests will time out and be denied after %s seconds</string>
+
+    <!-- Superuser >> Settings -->
+
+    <string name="pref_superuser_logging_title">Logging</string>
+    <string name="pref_superuser_logging_summary">Enable or disable all Superuser request logging</string>
+
+    <string name="pref_superuser_notifications_title">Notifications</string>
+    <string name="pref_superuser_notifications_summary">A %s will be shown when an app is granted or denied Superuser permissions</string>
+    <string name="pref_superuser_notifications_no_notification_summary">No notification will be shown</string>
+    <string name="pref_superuser_notifications_none">None</string>
+    <string name="pref_superuser_notifications_toast">Toast</string>
+    <string name="pref_superuser_notifications_notification">Notification</string>
+
+    <string name="superuser_app_policies_title">App policies</string>
+    <string name="superuser_app_policies_logs_title">Logs</string>
+
+    <string name="superuser_switch_logging">Logging</string>
+    <string name="superuser_switch_notifications">Notifications</string>
+    <string name="superuser_app_id">Id</string>
+    <string name="superuser_app_package">Package</string>
+    <string name="superuser_app_requested_uuid">Requested UUID</string>
+    <string name="superuser_app_command">Command</string>
+    <string name="superuser_app_all_commands">All commands</string>
+
+    <string name="superuser_app_policy_info_delete">Delete app policy</string>
+<!--
+    <string name=""></string>
+-->
+
     <string name="superuser_description">full permissions to all device features and storage</string>
     <string name="superuser_description_more">Superuser grants full access to all device features and storage, including the secure and sensitive hardware elements of your device. This permission is potentially dangerous.</string>
     <string name="allow">Allow</string>
