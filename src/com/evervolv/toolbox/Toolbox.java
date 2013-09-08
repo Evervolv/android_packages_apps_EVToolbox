@@ -94,7 +94,7 @@ public class Toolbox extends FragmentActivity implements PagerFragment.OnTabChan
             for (int j = 0; j < navItems.length; j++) {
                 //assume first entry is the header
                 if (j == 0) {
-                    mDrawerAdapter.addHeader(navItems[j], R.drawable.ic_header);
+                    mDrawerAdapter.addHeader(navItems[j], 0);
                 } else {
                     /* TODO: Don't assign icons just yet for nav items
                      * there's a little bit more we need to do to make this
