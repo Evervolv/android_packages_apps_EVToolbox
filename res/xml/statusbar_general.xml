@@ -29,4 +29,12 @@
                 android:dialogTitle="@string/pref_statusbar_batt_style_title"
                 android:entries="@array/statusbar_batt_style_entries"
                 android:entryValues="@array/statusbar_batt_style_entryvalues" />
+
+        <ListPreference
+                android:key="pref_statusbar_clock_am_pm_style"
+                android:title="@string/pref_statusbar_clock_am_pm_style_title"
+                android:summary="@string/pref_statusbar_clock_am_pm_style_summary"
+                android:dialogTitle="@string/pref_statusbar_clock_am_pm_style_title"
+                android:entries="@array/statusbar_clock_am_pm_style_entries"
+                android:entryValues="@array/statusbar_clock_am_pm_style_entryvalues" />
 </PreferenceScreen>

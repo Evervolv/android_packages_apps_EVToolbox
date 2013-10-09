@@ -38,14 +38,17 @@ public class StatusbarGeneral extends PreferenceFragment implements OnPreference
 
     private static final String STATUSBAR_SIXBAR_SIGNAL = "pref_statusbar_sixbar_signal";
     private static final String STATUSBAR_BATTERY_STYLE = "pref_statusbar_batt_style";
+    private static final String STATUSBAR_CLOCK_AM_PM_STYLE = "pref_statusbar_clock_am_pm_style";
 
     private static final int BATT_STYLE_DEFAULT = 1;
+    private static final int AM_PM_STYLE_DEFAULT = 2;
 
     private ContentResolver mCr;
     private PreferenceScreen mPrefSet;
 
     private CheckBoxPreference mUseSixbaricons;
     private ListPreference mBattStyle;
+    private ListPreference mClockAmPmStyle;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,12 +75,23 @@ public class StatusbarGeneral extends PreferenceFragment implements OnPreference
         mBattStyle.setValue(Integer.toString(Settings.System.getInt(mCr,
                 Settings.System.STATUSBAR_BATT_STYLE, BATT_STYLE_DEFAULT)));
         mBattStyle.setOnPreferenceChangeListener(this);
+
+        /* Clock AM/PM Style */
+        mClockAmPmStyle = (ListPreference) mPrefSet.findPreference(STATUSBAR_CLOCK_AM_PM_STYLE);
+        mClockAmPmStyle.setValue(Integer.toString(Settings.System.getInt(mCr,
+                Settings.System.STATUSBAR_CLOCK_AM_PM_STYLE, AM_PM_STYLE_DEFAULT)));
+        mClockAmPmStyle.setOnPreferenceChangeListener(this);
     }
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (preference == mBattStyle) {
             Settings.System.putInt(mCr, Settings.System.STATUSBAR_BATT_STYLE,
+                    Integer.valueOf((String) newValue));
+            return true;
+        }
+        if (preference == mClockAmPmStyle) {
+            Settings.System.putInt(mCr, Settings.System.STATUSBAR_CLOCK_AM_PM_STYLE,
                     Integer.valueOf((String) newValue));
             return true;
         }
