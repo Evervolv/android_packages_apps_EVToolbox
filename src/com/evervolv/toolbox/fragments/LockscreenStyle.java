@@ -52,13 +52,13 @@ public class LockscreenStyle extends PreferenceFragment implements OnPreferenceC
         mPrefSet = getPreferenceScreen();
         mCr = getActivity().getContentResolver();
 
-        mCurrLockscreen = Settings.System.getInt(mCr,
-                Settings.System.LOCKSCREEN_STYLE , LOCK_STYLE_DEFAULT);
+        mCurrLockscreen = LOCK_STYLE_DEFAULT; //Settings.System.getInt(mCr,
+        //        Settings.System.LOCKSCREEN_STYLE , LOCK_STYLE_DEFAULT);
         //mMaxCustomApps = Settings.System.LOCKSCREEN_CUSTOM_APP_ACTIVITIES.length;
 
         /* Lockscreen style */
-        String position = Settings.System.getString(mCr,
-                Settings.System.LOCKSCREEN_STYLE);
+        String position = null; //Settings.System.getString(mCr,
+        //        Settings.System.LOCKSCREEN_STYLE);
         mLockscreenStyle = (GalleryPickerPreference) mPrefSet.findPreference(LOCKSCREEN_STYLE_PREF);
         mLockscreenStyle.setCurrPos(position == null ? 0 : Integer.valueOf(position));
         mLockscreenStyle.setSharedPrefs(mPrefSet.getSharedPreferences());
@@ -83,7 +83,7 @@ public class LockscreenStyle extends PreferenceFragment implements OnPreferenceC
                 default:
 ;
             }
-            Settings.System.putInt(mCr, Settings.System.LOCKSCREEN_STYLE, value);
+            //Settings.System.putInt(mCr, Settings.System.LOCKSCREEN_STYLE, value);
             mCurrLockscreen = value;
             return true;
         }

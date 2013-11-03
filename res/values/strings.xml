@@ -54,6 +54,10 @@
     <string name="pref_lockscreen_general_background_result_successful">Background changed successfully</string>
     <string name="pref_lockscreen_general_background_result_not_successful">Background could not be changed</string>
     <string name="pref_lockscreen_general_background_dialog_title">Choose color</string>
+    <string name="pref_lockscreen_general_translucent_title">Enable translucent decor</string>
+    <string name="pref_lockscreen_general_translucent_summary"></string>
+    <string name="pref_lockscreen_general_rotation_title">Allow rotation</string>
+    <string name="pref_lockscreen_general_rotation_summary"></string>
 
         <!-- Lockscreen >> Styles-->
     <string name="pref_lockscreen_style_picker_unavailable">This style is unavailable for this device!\nPlease choose another style.</string>

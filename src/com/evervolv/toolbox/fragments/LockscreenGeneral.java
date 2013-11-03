@@ -27,6 +27,7 @@ import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -49,6 +50,8 @@ public class LockscreenGeneral extends PreferenceFragment implements OnPreferenc
 
     private static final String LOCKSCREEN_MESSAGE_PREF = "pref_lockscreen_general_message";
     private static final String LOCKSCREEN_BACKGROUND_PREF = "pref_lockscreen_general_background";
+    private static final String LOCKSCREEN_TRANSLUCENT_PREF = "pref_lockscreen_general_translucent";
+    private static final String LOCKSCREEN_ROTATION_PREF = "pref_lockscreen_general_rotation";
 
     private static final int LOCKSCREEN_BACKGROUND_COLOR_FILL = 0;
     private static final int LOCKSCREEN_BACKGROUND_CUSTOM_IMAGE = 1;
@@ -59,6 +62,8 @@ public class LockscreenGeneral extends PreferenceFragment implements OnPreferenc
 
     private EditTextPreference mLockMessage;
     private ListPreference mLockBackground;
+    private CheckBoxPreference mTranslucent;
+    private CheckBoxPreference mRotation;
     private PreferenceScreen mPrefSet;
     private ContentResolver mCr;
 
@@ -85,6 +90,18 @@ public class LockscreenGeneral extends PreferenceFragment implements OnPreferenc
         String message = Settings.System.getString(mCr,
                 Settings.System.LOCKSCREEN_MESSAGE);
         setLockMessageSummaryAndText(message);
+
+        mTranslucent = (CheckBoxPreference) mPrefSet.findPreference(
+                LOCKSCREEN_TRANSLUCENT_PREF);
+        mTranslucent.setChecked(Settings.System.getInt(mCr,
+                Settings.System.LOCKSCREEN_TRANSLUCENT_DECOR,
+                getResources().getBoolean(R.bool.config_enableLockScreenTranslucentDecor) ? 1 : 0) == 1);
+
+        mRotation = (CheckBoxPreference) mPrefSet.findPreference(
+                LOCKSCREEN_ROTATION_PREF);
+        mRotation.setChecked(Settings.System.getInt(mCr,
+                Settings.System.LOCKSCREEN_ENABLE_ROTATION,
+                getResources().getBoolean(R.bool.config_enableLockScreenRotation) ? 1 : 0) == 1);
 
         mWallpaperImage = new File(getActivity().getFilesDir() + "/lock_wallpaper");
         mWallpaperTemporary = new File(getActivity().getCacheDir() + "/lock_wallpaper.tmp");
@@ -138,6 +155,20 @@ public class LockscreenGeneral extends PreferenceFragment implements OnPreferenc
             return handleBackgroundSelection(selection);
         }
         return false;
+    }
+
+    @Override
+    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+        if (preference == mTranslucent) {
+            Settings.System.putInt(mCr, Settings.System.LOCKSCREEN_TRANSLUCENT_DECOR,
+                    mTranslucent.isChecked() ? 1 : 0);
+            return true;
+        } else if (preference == mRotation) {
+            Settings.System.putInt(mCr, Settings.System.LOCKSCREEN_ENABLE_ROTATION,
+                    mRotation.isChecked() ? 1 : 0);
+            return true;
+        }
+        return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 
     private boolean handleBackgroundSelection(int selection) {
