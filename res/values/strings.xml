@@ -79,4 +79,8 @@
     <!-- Volume key music controls -->
     <string name="volbtn_music_controls_title">Control playback</string>
     <string name="volbtn_music_controls_summary">Seek music tracks by long pressing the volume keys while the display is off</string>
+
+    <!-- Device specific buttons -->
+    <string name="extra_keys_title">Extra buttons</string>
+    <string name="extra_keys_summary">Settings for device specific buttons</string>
 </resources>

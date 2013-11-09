@@ -124,4 +124,11 @@
 
     </PreferenceCategory>
 
+    <Preference
+        android:key="extra_keys"
+        android:title="@string/extra_keys_title"
+        android:summary="@string/extra_keys_summary" >
+        <intent android:action="org.lineageos.settings.device.ADDITIONAL_BUTTONS_SETTINGS" />
+    </Preference>
+
 </PreferenceScreen>
