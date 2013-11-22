@@ -63,6 +63,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
     private static final String CATEGORY_ASSIST = "assist_key";
     private static final String CATEGORY_APPSWITCH = "app_switch_key";
     private static final String CATEGORY_VOLUME = "volume_keys";
+    private static final String CATEGORY_NAVBAR = "navigation_bar_category";
 
     // Available custom actions to perform on a key press.
     // Must match values for KEY_HOME_LONG_PRESS_ACTION in:
@@ -111,6 +112,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
     private ListPreference mAppSwitchLongPressAction;
 
     private SwitchPreference mDisableNavigationKeys;
+    private PreferenceCategory mNavigationPreferencesCat;
     private Handler mHandler;
 
     @Override
@@ -163,6 +165,8 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
         // Force Navigation bar related options
         mDisableNavigationKeys = (SwitchPreference) findPreference(DISABLE_NAV_KEYS);
 
+        mNavigationPreferencesCat = (PreferenceCategory) findPreference(CATEGORY_NAVBAR);
+
         Action defaultHomeLongPressAction = Action.fromIntSafe(res.getInteger(
                 com.android.internal.R.integer.config_longPressOnHomeBehavior));
         Action defaultHomeDoubleTapAction = Action.fromIntSafe(res.getInteger(
@@ -188,6 +192,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
         } else {
             // Remove keys that can be provided by the navbar
             updateDisableNavkeysOption();
+            mNavigationPreferencesCat.setEnabled(mDisableNavigationKeys.isChecked());
             updateDisableNavkeysCategories(mDisableNavigationKeys.isChecked());
         }
 
@@ -386,6 +391,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
     public boolean onPreferenceTreeClick(Preference preference) {
         if (preference == mDisableNavigationKeys) {
             mDisableNavigationKeys.setEnabled(false);
+            mNavigationPreferencesCat.setEnabled(false);
             writeDisableNavkeysOption(getActivity(), mDisableNavigationKeys.isChecked());
             updateDisableNavkeysOption();
             updateDisableNavkeysCategories(true);
@@ -393,6 +399,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
                 @Override
                 public void run() {
                     mDisableNavigationKeys.setEnabled(true);
+                    mNavigationPreferencesCat.setEnabled(mDisableNavigationKeys.isChecked());
                     updateDisableNavkeysCategories(mDisableNavigationKeys.isChecked());
                 }
             }, 1000);
