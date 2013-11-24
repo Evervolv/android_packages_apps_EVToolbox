@@ -16,8 +16,6 @@
 
 package com.evervolv.toolbox.superuser;
 
-import java.lang.reflect.Method;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -26,6 +24,8 @@ import android.graphics.drawable.Drawable;
 import android.os.UserManager;
 
 import com.evervolv.toolbox.superuser.util.ImageCache;
+
+import java.lang.reflect.Method;
 
 public class Helper {
     public static Drawable loadPackageIcon(Context context, String pn) {

@@ -18,21 +18,13 @@ package com.evervolv.toolbox;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.NotificationManager;
-import android.content.ContentResolver;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.content.res.TypedArray;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.provider.Settings;
-import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -41,69 +33,54 @@ import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.Switch;
-import android.widget.TextView;
 
-import com.evervolv.toolbox.R;
+import com.evervolv.toolbox.categories.InterfaceCategory;
+import com.evervolv.toolbox.categories.LockscreenCategory;
+import com.evervolv.toolbox.categories.PerformanceCategory;
+import com.evervolv.toolbox.categories.StatusbarCategory;
+import com.evervolv.toolbox.categories.SuperuserCategory;
 import com.evervolv.toolbox.custom.DrawerLayoutAdapter;
-import com.evervolv.toolbox.custom.PagerFragment;
-import com.evervolv.toolbox.fragments.PerformanceMemory;
-import com.evervolv.toolbox.tabs.InterfaceTab;
-import com.evervolv.toolbox.tabs.LockscreenTab;
-import com.evervolv.toolbox.tabs.PerformanceTab;
-import com.evervolv.toolbox.tabs.StatusbarTab;
-import com.evervolv.toolbox.tabs.SuperuserTab;
-import com.evervolv.toolbox.tabs.SystemTab;
+import com.evervolv.toolbox.fragments.BugReport;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class Toolbox extends FragmentActivity implements PagerFragment.OnTabChangeListener {
+public class Toolbox extends Activity {
 
-    private ViewPager mViewPager;
-    private MainSettingsAdapter mSettingsAdapter;
-    private ContentResolver mCr;
+    private Context mContext;
+    private List<DisabledListener> mCallbacks = new ArrayList<DisabledListener>();
 
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
-    private CharSequence mDrawerTitle;
-    private CharSequence mTitle;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayoutAdapter mDrawerAdapter;
-    private RelativeLayout mBottomActionBar;
-    private ArrayList<int[]> mPositionsList = new ArrayList<int[]>();
+
+    /**
+     * Implemented by child preferences affected by DISABLE_TOOLBOX
+     */
+    public interface DisabledListener {
+        public void onToolboxDisabled(boolean enabled);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.toolbox);
 
-        mCr = getApplicationContext().getContentResolver();
-        mViewPager = (ViewPager) findViewById(R.id.pager_frame);
-        mTitle = mDrawerTitle = getTitle();
+        mContext = this;
+
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
         mDrawerAdapter = new DrawerLayoutAdapter(this);
 
-        TypedArray bundles = getResources().obtainTypedArray(R.array.nav_bundles);
-        int count = bundles.length();
-
-        for (int i = 0; i < count; i++) {
-            int bundleId = bundles.getResourceId(i, -1);
-            String[] navItems = getResources().getStringArray(bundleId);
-            for (int j = 0; j < navItems.length; j++) {
-                //assume first entry is the header
-                if (j == 0) {
-                    mDrawerAdapter.addHeader(navItems[j], 0);
-                } else {
-                    /* TODO: Don't assign icons just yet for nav items
-                     * there's a little bit more we need to do to make this
-                     * a little cleaner and more efficient
-                     */
-                    mDrawerAdapter.addNavItem(navItems[j], -1);
-                }
-                mPositionsList.add(new int[]{i, j});
-            }
+        String[] navItems = getResources().getStringArray(R.array.drawer_tabs);
+        for (String title: navItems) {
+            /* Don't assign icons just yet for nav items
+             * there's a little bit more we need to do to make this
+             * a little cleaner and more efficient
+             */
+            mDrawerAdapter.addNavItem(title, -1);
         }
 
         mDrawerList.setAdapter(mDrawerAdapter);
@@ -111,7 +88,7 @@ public class Toolbox extends FragmentActivity implements PagerFragment.OnTabChan
             @Override
             public void onItemClick(AdapterView parent, View view, int position, long id) {
                 mDrawerLayout.closeDrawer(mDrawerList);
-                setTab(position);
+                navigateCategory(position);
             }
         });
 
@@ -122,13 +99,22 @@ public class Toolbox extends FragmentActivity implements PagerFragment.OnTabChan
                 R.string.drawer_open,
                 R.string.drawer_close
                 ) {
+            final CharSequence drawerTitle = getResources().getString(R.string.app_name);
+            CharSequence fragmentTitle;
+
             public void onDrawerClosed(View view) {
-                getActionBar().setTitle(mTitle);
+                if (fragmentTitle != null &&
+                        // Fragments set title so if it changed, don't replace
+                        getActionBar().getTitle().equals(drawerTitle)) {
+                    getActionBar().setTitle(fragmentTitle);
+                }
                 invalidateOptionsMenu();
             }
 
             public void onDrawerOpened(View drawerView) {
-                getActionBar().setTitle(mDrawerTitle);
+                // Save old title in case we don't switch fragments
+                fragmentTitle = getActionBar().getTitle();
+                getActionBar().setTitle(drawerTitle);
                 invalidateOptionsMenu();
             }
         };
@@ -136,84 +122,10 @@ public class Toolbox extends FragmentActivity implements PagerFragment.OnTabChan
         mDrawerLayout.openDrawer(mDrawerList);
 
         final ActionBar bar = getActionBar();
-        bar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE,
-                ActionBar.DISPLAY_SHOW_TITLE);
+        bar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE, ActionBar.DISPLAY_SHOW_TITLE);
         bar.setTitle(R.string.app_name);
         bar.setDisplayHomeAsUpEnabled(true);
         bar.setHomeButtonEnabled(true);
-
-        mSettingsAdapter = new MainSettingsAdapter(this);
-        mSettingsAdapter.addFragment(new LockscreenTab(getResources().getString(
-                R.string.tab_title_lockscreen), mSettingsAdapter.getCount()));
-        mSettingsAdapter.addFragment(new InterfaceTab(getResources().getString(
-                R.string.tab_title_interface), mSettingsAdapter.getCount()));
-        mSettingsAdapter.addFragment(new StatusbarTab(getResources().getString(
-                R.string.tab_title_statusbar), mSettingsAdapter.getCount()));
-        mSettingsAdapter.addFragment(new PerformanceTab(getResources().getString(
-                R.string.tab_title_performance), mSettingsAdapter.getCount()));
-        mSettingsAdapter.addFragment(new SuperuserTab(getResources().getString(
-                R.string.tab_title_superuser), mSettingsAdapter.getCount()));
-        mSettingsAdapter.addFragment(new SystemTab(getResources().getString(
-                R.string.tab_title_system), mSettingsAdapter.getCount()));
-
-        mBottomActionBar = (RelativeLayout) findViewById(R.id.bottom_action_bar);
-        TextView bottomTextView = (TextView) findViewById(R.id.boot_text);
-        bottomTextView.setText("Restore performance settings on boot");
-
-        final SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(getApplicationContext());
-
-        Switch bootSwitch = (Switch) findViewById(R.id.boot_switch);
-        bootSwitch.setChecked((prefs.getBoolean(PerformanceMemory.SOB_PREF,
-                false) == true));
-        bootSwitch.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView,
-                    boolean isChecked) {
-                prefs.edit().putBoolean(PerformanceMemory.SOB_PREF,
-                        isChecked).commit();
-            }
-        });
-
-        mViewPager.setAdapter(mSettingsAdapter);
-        mViewPager.setOnPageChangeListener(new OnPageChangeListener() {
-
-            @Override
-            public void onPageScrollStateChanged(int arg0) { }
-
-            @Override
-            public void onPageScrolled(int arg0, float arg1, int arg2) { }
-
-            @Override
-            public void onPageSelected(int position) {
-                if (mSettingsAdapter.getItem(position).getClass()
-                        == PerformanceTab.class) {
-                    mBottomActionBar.setVisibility(View.VISIBLE);
-                } else {
-                    mBottomActionBar.setVisibility(View.GONE);
-                }
-
-                mDrawerList.setItemChecked(getDrawerItem(position,
-                        mSettingsAdapter.getItem(position).getCurrentTab()), true);
-            }
-        });
-    }
-
-    private int getDrawerItem(int pagePosition, int tabPosition) {
-        for (int i = 0; i < mPositionsList.size(); i++) {
-            int[] item = mPositionsList.get(i);
-            if (item[0] == pagePosition && item[1] == (tabPosition + 1)) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE))
-                .cancelAll();
     }
 
     @Override
@@ -223,17 +135,16 @@ public class Toolbox extends FragmentActivity implements PagerFragment.OnTabChan
         MenuItem item = menu.findItem(R.id.menu_switch);
 
         Switch toolboxSwitch = (Switch) item.getActionView();
-        toolboxSwitch.setChecked(Settings.System.getInt(mCr,
-                Settings.System.DISABLE_TOOLBOX, 0) == 0);
+        toolboxSwitch.setChecked(isEnabled(mContext));
         toolboxSwitch.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView,
-                    boolean isChecked) {
-                /* TODO: Make the ViewPager disabled ( grey'd out, disabled )
-                 *  Most likely requires a custom class.
-                 */     
-                Settings.System.putInt(mCr, Settings.System.DISABLE_TOOLBOX,
-                        isChecked ? 0 : 1);
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Settings.System.putInt(mContext.getContentResolver(),
+                        Settings.System.DISABLE_TOOLBOX, isChecked ? 0 : 1);
+                // Inform children of state change
+                for (DisabledListener cb: mCallbacks) {
+                    cb.onToolboxDisabled(isChecked);
+                }
             }
         });
 
@@ -260,45 +171,58 @@ public class Toolbox extends FragmentActivity implements PagerFragment.OnTabChan
         return super.onOptionsItemSelected(item);
     }
 
-    private void setTab(int position) {
-        int[] list = mPositionsList.get(position);
-        mViewPager.setCurrentItem(list[0]);
-        PagerFragment child = mSettingsAdapter.getItem(list[0]);
-        child.tabScrollTo(list[1]-1);
-    }
 
-    private class MainSettingsAdapter extends FragmentPagerAdapter {
-
-        private final ArrayList<PagerFragment> mFragmentList = new ArrayList<PagerFragment>();
-
-        public MainSettingsAdapter(Activity activity) {
-            super(activity.getFragmentManager());
-        }
-
-        public void addFragment(PagerFragment fragment) {
-            mFragmentList.add(fragment);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragmentList.size();
-        }
-
-        @Override
-        public PagerFragment getItem(int position) {
-            return mFragmentList.get(position);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentList.get(position).getTitle();
+    // TODO clean this up
+    private void navigateCategory(int position) {
+        Log.d("Toolbox", "Selected item=" + position);
+        switch (position) {
+            case 0:
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.container, new InterfaceCategory()).commit();
+                break;
+            case 1:
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.container, new LockscreenCategory()).commit();
+                break;
+            case 2:
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.container, new PerformanceCategory()).commit();
+                break;
+            case 3:
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.container, new StatusbarCategory()).commit();
+                break;
+            case 4:
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.container, new SuperuserCategory()).commit();
+                break;
+            case 5:
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.container, new BugReport()).commit();
+                break;
         }
     }
 
-    @Override
-    public void onTabChanged(int pagePosition, int tabPosition) {
-        mDrawerList.setItemChecked(getDrawerItem(pagePosition,
-                tabPosition), true);
+    /**
+     * Register self for DisabledListener interface
+     */
+    public void registerCallback(DisabledListener cb) {
+        mCallbacks.add(cb);
+    }
+
+    /**
+     * UnRegister self for DisabledListener interface
+     */
+    public void unRegisterCallback(DisabledListener cb) {
+        mCallbacks.remove(cb);
+    }
+
+    /**
+     * Checks if toolbox is enabled
+     */
+    public static boolean isEnabled(Context context) {
+        return Settings.System.getInt(context.getContentResolver(),
+                Settings.System.DISABLE_TOOLBOX, 0) != 1;
     }
 
 }

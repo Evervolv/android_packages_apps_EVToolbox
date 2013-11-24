@@ -20,19 +20,19 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemProperties;
-import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.PreferenceCategory;
+import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 
 import com.evervolv.toolbox.R;
+import com.evervolv.toolbox.Toolbox;
 import com.evervolv.toolbox.misc.FileUtil;
 
-import java.io.File;
-
-public class PerformanceProcessor extends PreferenceFragment implements Preference.OnPreferenceChangeListener  {
+public class PerformanceProcessor extends PreferenceFragment implements
+        OnPreferenceChangeListener,
+        Toolbox.DisabledListener {
     private static final String TAG = "EVToolbox";
 
     public static final String FREQ_CUR_PREF = "pref_cpu_freq_cur";
@@ -198,6 +198,19 @@ public class PerformanceProcessor extends PreferenceFragment implements Preferen
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        mPrefSet.setEnabled(Toolbox.isEnabled(getActivity()));
+        ((Toolbox) getActivity()).registerCallback(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        ((Toolbox) getActivity()).unRegisterCallback(this);
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         mCurCPUThread.interrupt();
@@ -240,6 +253,11 @@ public class PerformanceProcessor extends PreferenceFragment implements Preferen
     private String toMHz(String mhzString) {
         return new StringBuilder().append(Integer.valueOf(mhzString) / 1000).append(" MHz")
                 .toString();
+    }
+
+    @Override
+    public void onToolboxDisabled(boolean enabled) {
+        mPrefSet.setEnabled(enabled);
     }
 
 }

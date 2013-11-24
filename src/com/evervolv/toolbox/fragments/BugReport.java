@@ -44,7 +44,7 @@ import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.misc.Constants;
 import com.evervolv.toolbox.services.UploadService;
 
-public class SystemDebug extends Fragment {
+public class BugReport extends Fragment {
 
     private static final String TAG = "EVToolbox";
 
@@ -75,10 +75,10 @@ public class SystemDebug extends Fragment {
                 if (action.equals(Constants.ACTION_DUMPLOGCAT_FINISHED)) {
                     mPrefs.edit().putString(PREF_LOGCAT_FILE,
                             intent.getStringExtra(Constants.EXTRA_LOGCAT)).commit();
-                    Toast.makeText(mCtx, R.string.logcat_toast_ready, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mCtx, R.string.bugreport_toast_ready, Toast.LENGTH_SHORT).show();
                     mUploadButton.setEnabled(true);
                     mFetchButton.setEnabled(true);
-                    mFetchButton.setText(R.string.pref_system_logcat_fetch_button);
+                    mFetchButton.setText(R.string.bugreport_fetch_button);
                     mProgressBar.setVisibility(View.GONE);
                 } else if (action.equals(Constants.ACTION_UPLOAD_FINISHED)) {
                     String url = intent.getStringExtra(Constants.EXTRA_URL);
@@ -87,7 +87,7 @@ public class SystemDebug extends Fragment {
                         mPrefs.edit().putString(PREF_LOGCAT_FILE, null).commit();
                         mPrefs.edit().putBoolean(PREF_PLAINTEXT, false).commit();
                         mUploadButton.setEnabled(false);
-                        mUploadButton.setText(R.string.pref_system_logcat_upload_button);
+                        mUploadButton.setText(R.string.bugreport_upload_button);
                         mFetchButton.setEnabled(true);
                         mProgressBar.setVisibility(View.GONE);
                     }
@@ -122,7 +122,7 @@ public class SystemDebug extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.debug_fragment, container, false);
+        View v = inflater.inflate(R.layout.bugreport, container, false);
         mLogcat = (CheckBox) v.findViewById(R.id.checkbox_general);
         mRadio = (CheckBox) v.findViewById(R.id.checkbox_radio);
         mDmesg = (CheckBox) v.findViewById(R.id.checkbox_dmesg);
@@ -171,12 +171,12 @@ public class SystemDebug extends Fragment {
                 }
 
                 if (noneSelected) {
-                    Toast.makeText(mCtx, R.string.logcat_toast_supply_option, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mCtx, R.string.bugreport_toast_supply_option, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 mProgressBar.setVisibility(View.VISIBLE);
-                mFetchButton.setText(R.string.pref_system_logcat_fetching_button);
+                mFetchButton.setText(R.string.bugreport_fetching_button);
                 mFetchButton.setEnabled(false);
                 mUploadButton.setEnabled(false);
                 Log.d(TAG, "Calling " + serviceCall);
@@ -189,7 +189,7 @@ public class SystemDebug extends Fragment {
             @Override
             public void onClick(View view) {
                 mProgressBar.setVisibility(View.VISIBLE);
-                mUploadButton.setText(R.string.pref_system_logcat_uploading_button);
+                mUploadButton.setText(R.string.bugreport_uploading_button);
                 mUploadButton.setEnabled(false);
                 mFetchButton.setEnabled(false);
                 Intent i = new Intent(mCtx, UploadService.class);
@@ -205,12 +205,18 @@ public class SystemDebug extends Fragment {
         return v;
     }
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        getActivity().getActionBar().setTitle(getResources().getString(R.string.tab_title_bugreport));
+    }
+
     private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
 
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
             MenuInflater inflater = mode.getMenuInflater();
-            inflater.inflate(R.menu.logcat_url_menu, menu);
+            inflater.inflate(R.menu.bugreport_url_menu, menu);
             return true;
         }
 
@@ -230,7 +236,7 @@ public class SystemDebug extends Fragment {
                             .getString(R.string.log_url_label), url);
                     clipboard.setPrimaryClip(clip);
 
-                    Toast.makeText(mCtx, R.string.logcat_toast_url_copied, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mCtx, R.string.bugreport_toast_url_copied, Toast.LENGTH_SHORT).show();
                     mode.finish();
                     return true;
                 case R.id.menu_open_url:

@@ -24,11 +24,11 @@ import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
 
+import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.superuser.db.LogEntry;
 import com.evervolv.toolbox.superuser.db.SuperuserDatabaseHelper;
 import com.evervolv.toolbox.superuser.db.UidPolicy;
 import com.evervolv.toolbox.superuser.util.Settings;
-import com.evervolv.toolbox.R;
 
 public class SuReceiver extends BroadcastReceiver {
 

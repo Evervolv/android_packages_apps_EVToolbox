@@ -17,22 +17,23 @@
 package com.evervolv.toolbox.fragments;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.os.SystemProperties;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.PreferenceCategory;
+import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 
 import com.evervolv.toolbox.R;
+import com.evervolv.toolbox.Toolbox;
 import com.evervolv.toolbox.misc.FileUtil;
 
 import java.io.File;
 
-public class PerformanceMemory extends PreferenceFragment implements Preference.OnPreferenceChangeListener  {
+public class PerformanceMemory extends PreferenceFragment implements
+        OnPreferenceChangeListener,
+        Toolbox.DisabledListener {
     private static final String TAG = "EVToolbox";
 
     public static final String SOB_PREF = "pref_cpu_set_on_boot";    
@@ -82,6 +83,19 @@ public class PerformanceMemory extends PreferenceFragment implements Preference.
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        mPrefSet.setEnabled(Toolbox.isEnabled(getActivity()));
+        ((Toolbox) getActivity()).registerCallback(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        ((Toolbox) getActivity()).unRegisterCallback(this);
+    }
+
+    @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         if (preference == mKSMPref) {
             FileUtil.fileWriteOneLine(KSM_RUN_FILE, mKSMPref.isChecked() ? "1" : "0");
@@ -112,6 +126,11 @@ public class PerformanceMemory extends PreferenceFragment implements Preference.
             swapAvailable = new File("/proc/swaps").exists() ? 1 : 0;
         }
         return swapAvailable > 0;
+    }
+
+    @Override
+    public void onToolboxDisabled(boolean enabled) {
+        mPrefSet.setEnabled(enabled);
     }
 
 }

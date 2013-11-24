@@ -3,7 +3,6 @@ package com.evervolv.toolbox.superuser;
 import android.app.ListActivity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.MenuItem;

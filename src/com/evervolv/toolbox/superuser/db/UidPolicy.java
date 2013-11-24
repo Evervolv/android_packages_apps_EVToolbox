@@ -16,9 +16,9 @@
 
 package com.evervolv.toolbox.superuser.db;
 
-import java.util.Date;
-
 import com.evervolv.toolbox.R;
+
+import java.util.Date;
 
 public class UidPolicy extends UidCommand {
     public static final String ALLOW = "allow";

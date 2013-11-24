@@ -19,17 +19,19 @@ package com.evervolv.toolbox.fragments;
 import android.content.ContentResolver;
 import android.os.Bundle;
 import android.preference.Preference;
+import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
-import android.preference.Preference.OnPreferenceChangeListener;
-import android.provider.Settings;
 import android.view.Gravity;
 import android.widget.Toast;
 
 import com.evervolv.toolbox.R;
+import com.evervolv.toolbox.Toolbox;
 import com.evervolv.toolbox.custom.GalleryPickerPreference;
 
-public class LockscreenStyle extends PreferenceFragment implements OnPreferenceChangeListener {
+public class LockscreenStyle extends PreferenceFragment implements
+        OnPreferenceChangeListener,
+        Toolbox.DisabledListener {
 
     private static final String LOCKSCREEN_STYLE_PREF = "pref_lockscreen_style_picker";
 
@@ -50,6 +52,7 @@ public class LockscreenStyle extends PreferenceFragment implements OnPreferenceC
         addPreferencesFromResource(R.xml.lockscreen_style);
 
         mPrefSet = getPreferenceScreen();
+
         mCr = getActivity().getContentResolver();
 
         mCurrLockscreen = LOCK_STYLE_DEFAULT; //Settings.System.getInt(mCr,
@@ -63,6 +66,19 @@ public class LockscreenStyle extends PreferenceFragment implements OnPreferenceC
         mLockscreenStyle.setCurrPos(position == null ? 0 : Integer.valueOf(position));
         mLockscreenStyle.setSharedPrefs(mPrefSet.getSharedPreferences());
         mLockscreenStyle.setOnPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mPrefSet.setEnabled(Toolbox.isEnabled(getActivity()));
+        ((Toolbox) getActivity()).registerCallback(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        ((Toolbox) getActivity()).unRegisterCallback(this);
     }
 
     @Override
@@ -88,6 +104,11 @@ public class LockscreenStyle extends PreferenceFragment implements OnPreferenceC
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void onToolboxDisabled(boolean enabled) {
+        mPrefSet.setEnabled(enabled);
     }
 
 }

@@ -16,8 +16,6 @@
 
 package com.evervolv.toolbox.superuser;
 
-import com.evervolv.toolbox.superuser.util.Settings;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageInfo;

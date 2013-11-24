@@ -16,8 +16,6 @@
 
 package com.evervolv.toolbox.superuser.db;
 
-import java.util.ArrayList;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -26,6 +24,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.text.TextUtils;
 
 import com.evervolv.toolbox.superuser.util.Settings;
+
+import java.util.ArrayList;
 
 public class SuperuserDatabaseHelper extends SQLiteOpenHelper {
     private static final int CURRENT_VERSION = 1;

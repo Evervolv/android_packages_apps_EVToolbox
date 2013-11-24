@@ -20,14 +20,14 @@
 
     <item android:id="@+id/menu_logs"
           android:icon="@drawable/ic_menu_logs"
-          android:title="@string/superuser_app_policies_title"
+          android:title="@string/superuser_app_policies_logs_title"
           android:showAsAction="ifRoom"
           android:menuCategory="container"
           android:orderInCategory="2" />
 
     <item android:id="@+id/menu_app_policies"
           android:icon="@drawable/ic_menu_app_policies"
-          android:title="@string/superuser_app_policies_logs_title"
+          android:title="@string/superuser_app_policies_title"
           android:showAsAction="ifRoom"
           android:menuCategory="container"
           android:orderInCategory="1" />

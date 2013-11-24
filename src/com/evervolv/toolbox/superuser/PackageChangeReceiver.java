@@ -1,7 +1,5 @@
 package com.evervolv.toolbox.superuser;
 
-import java.util.ArrayList;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +8,8 @@ import android.text.TextUtils;
 
 import com.evervolv.toolbox.superuser.db.SuDatabaseHelper;
 import com.evervolv.toolbox.superuser.db.UidPolicy;
+
+import java.util.ArrayList;
 
 public class PackageChangeReceiver extends BroadcastReceiver {
     @Override

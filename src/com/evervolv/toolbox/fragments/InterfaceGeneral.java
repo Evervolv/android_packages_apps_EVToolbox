@@ -31,11 +31,14 @@ import android.preference.PreferenceScreen;
 import android.provider.Settings;
 
 import com.evervolv.toolbox.R;
+import com.evervolv.toolbox.Toolbox;
 import com.evervolv.toolbox.custom.NumberPickerPreference;
 import com.evervolv.toolbox.misc.CMDProcessor;
 import com.evervolv.toolbox.misc.FileUtil;
 
-public class InterfaceGeneral extends PreferenceFragment implements OnPreferenceChangeListener {
+public class InterfaceGeneral extends PreferenceFragment implements
+        OnPreferenceChangeListener,
+        Toolbox.DisabledListener {
 
     private static final String TAG = "EVToolbox";
 
@@ -66,6 +69,7 @@ public class InterfaceGeneral extends PreferenceFragment implements OnPreference
         addPreferencesFromResource(R.xml.interface_general);
 
         mPrefSet = getPreferenceScreen();
+
         mCr = getActivity().getContentResolver();
 
         /* Trackball wake pref */
@@ -103,6 +107,19 @@ public class InterfaceGeneral extends PreferenceFragment implements OnPreference
         mDensityPicker.setMinValue(MIN_DENSITY_VALUE);
         mDensityPicker.setMaxValue(MAX_DENSITY_VALUE);
         mDensityPicker.setCurrentValue(currentDensity);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mPrefSet.setEnabled(Toolbox.isEnabled(getActivity()));
+        ((Toolbox) getActivity()).registerCallback(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        ((Toolbox) getActivity()).unRegisterCallback(this);
     }
 
     @Override
@@ -212,4 +229,8 @@ public class InterfaceGeneral extends PreferenceFragment implements OnPreference
         }
     }
 
+    @Override
+    public void onToolboxDisabled(boolean enabled) {
+        mPrefSet.setEnabled(enabled);
+    }
 }

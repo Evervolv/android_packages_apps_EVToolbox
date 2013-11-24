@@ -17,24 +17,21 @@
 package com.evervolv.toolbox.fragments;
 
 import android.content.ContentResolver;
-import android.content.Context;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.PreferenceCategory;
+import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
-import android.preference.Preference.OnPreferenceChangeListener;
 import android.provider.Settings;
-import android.view.Gravity;
-import android.widget.Toast;
 
 import com.evervolv.toolbox.R;
-import com.evervolv.toolbox.custom.GalleryPickerPreference;
+import com.evervolv.toolbox.Toolbox;
 
-public class StatusbarGeneral extends PreferenceFragment implements OnPreferenceChangeListener {
+public class StatusbarGeneral extends PreferenceFragment implements
+        OnPreferenceChangeListener,
+        Toolbox.DisabledListener {
 
     private static final String STATUSBAR_SIXBAR_SIGNAL = "pref_statusbar_sixbar_signal";
     private static final String STATUSBAR_BATTERY_STYLE = "pref_statusbar_batt_style";
@@ -55,8 +52,9 @@ public class StatusbarGeneral extends PreferenceFragment implements OnPreference
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.statusbar_general);
 
-        mCr = getActivity().getContentResolver();
         mPrefSet = getPreferenceScreen();
+
+        mCr = getActivity().getContentResolver();
 
         /* Sixbar Signal Icons */
         mUseSixbaricons = (CheckBoxPreference) mPrefSet.findPreference(
@@ -84,6 +82,19 @@ public class StatusbarGeneral extends PreferenceFragment implements OnPreference
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        mPrefSet.setEnabled(Toolbox.isEnabled(getActivity()));
+        ((Toolbox) getActivity()).registerCallback(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        ((Toolbox) getActivity()).unRegisterCallback(this);
+    }
+
+    @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (preference == mBattStyle) {
             Settings.System.putInt(mCr, Settings.System.STATUSBAR_BATT_STYLE,
@@ -108,6 +119,11 @@ public class StatusbarGeneral extends PreferenceFragment implements OnPreference
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void onToolboxDisabled(boolean enabled) {
+        mPrefSet.setEnabled(enabled);
     }
 
 }

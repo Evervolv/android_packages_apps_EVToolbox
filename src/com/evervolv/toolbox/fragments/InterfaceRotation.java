@@ -17,7 +17,6 @@
 package com.evervolv.toolbox.fragments;
 
 import android.content.ContentResolver;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
@@ -26,8 +25,10 @@ import android.preference.PreferenceScreen;
 import android.provider.Settings;
 
 import com.evervolv.toolbox.R;
+import com.evervolv.toolbox.Toolbox;
 
-public class InterfaceRotation extends PreferenceFragment {
+public class InterfaceRotation extends PreferenceFragment implements
+        Toolbox.DisabledListener {
 
     private static final String ROTATION_0_PREF = "pref_rotation_0";
     private static final String ROTATION_90_PREF = "pref_rotation_90";
@@ -54,6 +55,7 @@ public class InterfaceRotation extends PreferenceFragment {
         addPreferencesFromResource(R.xml.interface_rotation);
 
         mPrefSet = getPreferenceScreen();
+
         mCr = getActivity().getContentResolver();
 
         mRotation0Pref = (CheckBoxPreference) mPrefSet.findPreference(ROTATION_0_PREF);
@@ -76,6 +78,19 @@ public class InterfaceRotation extends PreferenceFragment {
         mRotation270Pref.setChecked((angles & ROTATION_270) != 0);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        mPrefSet.setEnabled(Toolbox.isEnabled(getActivity()));
+        ((Toolbox) getActivity()).registerCallback(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        ((Toolbox) getActivity()).unRegisterCallback(this);
+    }
+
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         boolean value;
 
@@ -94,6 +109,11 @@ public class InterfaceRotation extends PreferenceFragment {
         }
 
         return true;
+    }
+
+    @Override
+    public void onToolboxDisabled(boolean enabled) {
+        mPrefSet.setEnabled(enabled);
     }
 
 }

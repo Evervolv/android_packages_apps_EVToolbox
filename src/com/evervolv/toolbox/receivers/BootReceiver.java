@@ -28,7 +28,6 @@ import com.evervolv.toolbox.fragments.PerformanceMemory;
 import com.evervolv.toolbox.fragments.PerformanceProcessor;
 import com.evervolv.toolbox.misc.FileUtil;
 
-import java.lang.Integer;
 import java.util.Arrays;
 import java.util.List;
 

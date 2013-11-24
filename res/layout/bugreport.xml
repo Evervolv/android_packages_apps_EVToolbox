@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:textSize="16sp"
-            android:text="@string/pref_system_logcat_message"/>
+            android:text="@string/bugreport_message"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:textSize="16sp"
-                android:text="@string/pref_system_debug_generated_log_url"/>
+                android:text="@string/bugreport_generated_log_url"/>
 
             <TextView android:id="@+id/generated_log"
                 android:layout_width="match_parent"
@@ -140,14 +140,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/pref_system_logcat_fetch_button"
+            android:text="@string/bugreport_fetch_button"
             style="?android:buttonBarButtonStyle" />
         <Button
             android:id="@+id/button_upload"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/pref_system_logcat_upload_button"
+            android:text="@string/bugreport_upload_button"
             style="?android:buttonBarButtonStyle" />
 
     </LinearLayout>

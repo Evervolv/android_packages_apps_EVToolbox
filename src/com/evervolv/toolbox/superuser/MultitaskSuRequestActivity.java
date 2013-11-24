@@ -16,11 +16,6 @@
 
 package com.evervolv.toolbox.superuser;
 
-import java.io.DataInputStream;
-import java.io.File;
-import java.util.HashMap;
-
-import junit.framework.Assert;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -45,10 +40,16 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.superuser.db.SuDatabaseHelper;
 import com.evervolv.toolbox.superuser.db.UidPolicy;
 import com.evervolv.toolbox.superuser.util.Settings;
-import com.evervolv.toolbox.R;
+
+import junit.framework.Assert;
+
+import java.io.DataInputStream;
+import java.io.File;
+import java.util.HashMap;
 
 public class MultitaskSuRequestActivity extends FragmentActivity {
     private static final String LOGTAG = "Superuser";

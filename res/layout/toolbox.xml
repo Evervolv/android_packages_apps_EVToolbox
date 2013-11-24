@@ -21,54 +21,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <FrameLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical" >
-
-        <android.support.v4.view.ViewPager
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/pager_frame"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
-
-
-            <android.support.v4.view.PagerTitleStrip
-                android:id="@+id/pager_title_strip"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top"
-                android:background="#33b5e5"
-                android:paddingBottom="4dp"
-                android:paddingTop="4dp"
-                android:textColor="#fff" />
-
-        </android.support.v4.view.ViewPager>
-
-        <RelativeLayout android:id="@+id/bottom_action_bar"
-            android:layout_width="match_parent"
-            android:layout_height="?android:attr/actionBarSize"
-            android:background="@drawable/ab_bottom_solid_inverse_holo"
-            android:visibility="gone">
-
-            <Switch android:id="@+id/boot_switch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"/>
-
-            <TextView android:id="@+id/boot_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:textColor="?android:attr/textColorPrimaryInverse"
-                android:layout_toLeftOf="@+id/boot_switch" />
-
-        </RelativeLayout>
-
-    </LinearLayout>
+        android:layout_height="match_parent" />
 
     <ListView android:id="@+id/left_drawer"
         style="?android:attr/listViewStyle"

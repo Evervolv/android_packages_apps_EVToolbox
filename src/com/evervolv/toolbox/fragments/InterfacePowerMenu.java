@@ -26,9 +26,12 @@ import android.preference.PreferenceScreen;
 import android.provider.Settings;
 
 import com.evervolv.toolbox.R;
+import com.evervolv.toolbox.Toolbox;
 import com.evervolv.toolbox.custom.NumberPickerPreference;
 
-public class InterfacePowerMenu extends PreferenceFragment implements OnPreferenceChangeListener {
+public class InterfacePowerMenu extends PreferenceFragment implements
+        OnPreferenceChangeListener,
+        Toolbox.DisabledListener {
 
     private static final String TAG = "EVToolbox";
 
@@ -61,6 +64,7 @@ public class InterfacePowerMenu extends PreferenceFragment implements OnPreferen
         addPreferencesFromResource(R.xml.interface_power_menu);
 
         mPrefSet = getPreferenceScreen();
+
         mCr = getActivity().getContentResolver();
 
         int hiddenOptions = Settings.System.getInt(mCr,
@@ -92,6 +96,19 @@ public class InterfacePowerMenu extends PreferenceFragment implements OnPreferen
         mScreenshotDelay.setCurrentValue(ssDelay);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        mPrefSet.setEnabled(Toolbox.isEnabled(getActivity()));
+        ((Toolbox) getActivity()).registerCallback(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        ((Toolbox) getActivity()).unRegisterCallback(this);
+    }
+
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
 
         if (preference == mHideScreenshot ||
@@ -117,6 +134,11 @@ public class InterfacePowerMenu extends PreferenceFragment implements OnPreferen
                     value);
         }
         return false;
+    }
+
+    @Override
+    public void onToolboxDisabled(boolean enabled) {
+        mPrefSet.setEnabled(enabled);
     }
 
 }

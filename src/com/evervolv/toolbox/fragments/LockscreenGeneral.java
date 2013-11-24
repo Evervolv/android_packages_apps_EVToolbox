@@ -41,12 +41,15 @@ import android.view.Window;
 import android.widget.Toast;
 
 import com.evervolv.toolbox.R;
+import com.evervolv.toolbox.Toolbox;
 import com.evervolv.toolbox.custom.ColorPickerView;
 
 import java.io.File;
 import java.io.IOException;
 
-public class LockscreenGeneral extends PreferenceFragment implements OnPreferenceChangeListener {
+public class LockscreenGeneral extends PreferenceFragment implements
+        OnPreferenceChangeListener,
+        Toolbox.DisabledListener {
 
     private static final String LOCKSCREEN_MESSAGE_PREF = "pref_lockscreen_general_message";
     private static final String LOCKSCREEN_BACKGROUND_PREF = "pref_lockscreen_general_background";
@@ -77,6 +80,7 @@ public class LockscreenGeneral extends PreferenceFragment implements OnPreferenc
         addPreferencesFromResource(R.xml.lockscreen_general);
 
         mPrefSet = getPreferenceScreen();
+
         mCr = getActivity().getContentResolver();
 
         mLockBackground = (ListPreference) mPrefSet.findPreference(
@@ -105,6 +109,19 @@ public class LockscreenGeneral extends PreferenceFragment implements OnPreferenc
 
         mWallpaperImage = new File(getActivity().getFilesDir() + "/lock_wallpaper");
         mWallpaperTemporary = new File(getActivity().getCacheDir() + "/lock_wallpaper.tmp");
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mPrefSet.setEnabled(Toolbox.isEnabled(getActivity()));
+        ((Toolbox) getActivity()).registerCallback(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        ((Toolbox) getActivity()).unRegisterCallback(this);
     }
 
     private void setLockMessageSummaryAndText(String message) {
@@ -277,6 +294,11 @@ public class LockscreenGeneral extends PreferenceFragment implements OnPreferenc
             Toast.makeText(getActivity(),
                     getResources().getString(hintId), Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public void onToolboxDisabled(boolean enabled) {
+        mPrefSet.setEnabled(enabled);
     }
 
 }
