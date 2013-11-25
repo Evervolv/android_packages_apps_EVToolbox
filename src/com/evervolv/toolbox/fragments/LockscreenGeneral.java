@@ -276,11 +276,13 @@ public class LockscreenGeneral extends PreferenceFragment implements
         if (requestCode == REQUEST_CODE_BG_WALLPAPER) {
             int hintId;
 
-            if (resultCode == Activity.RESULT_OK) {
+            if (resultCode == Activity.RESULT_OK
+                    && mWallpaperTemporary.length() > 0) {
                 if (mWallpaperTemporary.exists()) {
                     mWallpaperTemporary.renameTo(mWallpaperImage);
                 }
                 mWallpaperImage.setReadOnly();
+                mWallpaperImage.setReadable(true, false);
                 hintId = R.string.pref_lockscreen_general_background_result_successful;
                 Settings.System.putInt(mCr,
                         Settings.System.LOCKSCREEN_BACKGROUND, -2);
@@ -290,6 +292,9 @@ public class LockscreenGeneral extends PreferenceFragment implements
                     mWallpaperTemporary.delete();
                 }
                 hintId = R.string.pref_lockscreen_general_background_result_not_successful;
+                Settings.System.putInt(mCr,
+                        Settings.System.LOCKSCREEN_BACKGROUND, -1);
+                updateLockBackgroundSummary();
             }
             Toast.makeText(getActivity(),
                     getResources().getString(hintId), Toast.LENGTH_LONG).show();
