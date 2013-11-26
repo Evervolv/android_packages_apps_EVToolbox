@@ -322,22 +322,14 @@ public class Settings {
     }
 
     public static boolean getSuperuserAccess() {
-        try {
-            Class c = Class.forName("android.os.SystemProperties");
-            Method m = c.getMethod("get", String.class);
-            String value = (String)m.invoke(null, "persist.sys.root_access");
-            int val = Integer.valueOf(value);
-            switch (val) {
-                case SUPERUSER_ACCESS_DISABLED:
-                    return false;
-                case SUPERUSER_ACCESS_APPS_AND_ADB:
-                    return true;
-                default:
-                    return true;
-            }
-        }
-        catch (Exception e) {
-            return true;
+        int val = SystemProperties.getInt("persist.sys.root_access", SUPERUSER_ACCESS_APPS_AND_ADB);
+        switch (val) {
+            case SUPERUSER_ACCESS_DISABLED:
+                return false;
+            case SUPERUSER_ACCESS_APPS_AND_ADB:
+                return true;
+            default:
+                return true;
         }
     }
 
