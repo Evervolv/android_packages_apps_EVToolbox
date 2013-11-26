@@ -27,6 +27,7 @@ import android.util.Log;
 
 import com.evervolv.toolbox.fragments.PerformanceMemory;
 import com.evervolv.toolbox.fragments.PerformanceProcessor;
+import com.evervolv.toolbox.fragments.SystemNetwork;
 import com.evervolv.toolbox.misc.FileUtil;
 
 import java.util.Arrays;
@@ -39,6 +40,7 @@ public class BootReceiver extends BroadcastReceiver {
     private static final String CPU_SETTINGS_PROP = "sys.cpufreq.restored";
     private static final String KSM_SETTINGS_PROP = "sys.ksm.restored";
     private static final String ZRAM_SETTINGS_PROP = "sys.zram.restored";
+    private static final String SSHD_SETTINGS_PROP = "sys.sshd.restored";
 
     @Override
     public void onReceive(Context ctx, Intent intent) {
@@ -62,6 +64,10 @@ public class BootReceiver extends BroadcastReceiver {
 
             if (!SystemProperties.getBoolean(ZRAM_SETTINGS_PROP, false)) {
                 maybeEnableZram(ctx);
+            }
+
+            if (!SystemProperties.getBoolean(SSHD_SETTINGS_PROP, false)) {
+                maybeEnableSshd(ctx);
             }
 
         }
@@ -126,6 +132,17 @@ public class BootReceiver extends BroadcastReceiver {
             SystemProperties.set(ZRAM_SETTINGS_PROP, "true");
         } else {
             SystemProperties.set(ZRAM_SETTINGS_PROP, "false");
+        }
+    }
+
+    private void maybeEnableSshd(Context ctx) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
+
+        if (prefs.getBoolean(SystemNetwork.PREF_SSHD, false)) {
+            SystemProperties.set("ctl.start", "sshd");
+            SystemProperties.set(SSHD_SETTINGS_PROP, "true");
+        } else {
+            SystemProperties.set(SSHD_SETTINGS_PROP, "false");
         }
     }
 

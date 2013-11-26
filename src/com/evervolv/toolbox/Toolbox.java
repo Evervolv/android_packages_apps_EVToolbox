@@ -40,6 +40,7 @@ import com.evervolv.toolbox.categories.LockscreenCategory;
 import com.evervolv.toolbox.categories.PerformanceCategory;
 import com.evervolv.toolbox.categories.StatusbarCategory;
 import com.evervolv.toolbox.categories.SuperuserCategory;
+import com.evervolv.toolbox.categories.SystemCategory;
 import com.evervolv.toolbox.custom.DrawerLayoutAdapter;
 import com.evervolv.toolbox.fragments.BugReport;
 
@@ -197,6 +198,10 @@ public class Toolbox extends Activity {
                         .replace(R.id.container, new SuperuserCategory()).commit();
                 break;
             case 5:
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.container, new SystemCategory()).commit();
+                break;
+            case 6:
                 getFragmentManager().beginTransaction()
                         .replace(R.id.container, new BugReport()).commit();
                 break;

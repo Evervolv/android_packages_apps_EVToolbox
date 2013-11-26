@@ -25,6 +25,7 @@
         <item>@string/tab_title_performance</item>
         <item>@string/tab_title_statusbar</item>
         <item>@string/tab_title_superuser</item>
+        <item>@string/tab_title_system</item>
         <item>@string/tab_title_bugreport</item>
     </string-array>
 
@@ -56,6 +57,11 @@
         <item>@string/tab_title_superuser</item>
         <item>@string/superuser_security_title</item>
         <item>@string/superuser_settings_title</item>
+    </string-array>
+
+    <string-array name="system_nav" translatable="false">
+        <item>@string/tab_title_system</item>
+        <item>@string/system_network_title</item>
     </string-array>
 
     <array name="lockscreen_style_picker_captions" translatable="false">
