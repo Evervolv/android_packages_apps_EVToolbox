@@ -27,6 +27,7 @@
     <string name="later">Later</string>
     <string name="flash">Flash</string>
     <string name="send">Send</string>
+    <string name="reboot_required">Reboot required</string>
 
         <!-- Main app strings ( immediate tabs ) -->
     <string name="tab_title_lockscreen">Lockscreen</string>
@@ -124,7 +125,8 @@
 
         <!-- Performance >> MemoryManagement -->
     <string name="pref_zram_title">zRam</string>
-    <string name="pref_zram_summary">Compress memory for increased virtual capacity (requires reboot)</string>
+    <string name="pref_zram_summary">Compress memory for increased virtual capacity</string>
+    <string name="pref_zram_reboot_text">New zRam settings will be applied on next boot</string>
     <string name="pref_ksm_title">Kernel samepage merging</string>
     <string name="pref_ksm_summary">Ksm reduces physical memory requirements and improves performance</string>
 

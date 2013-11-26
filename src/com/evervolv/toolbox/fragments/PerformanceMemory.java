@@ -16,20 +16,24 @@
 
 package com.evervolv.toolbox.fragments;
 
+import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.os.SystemProperties;
+import android.os.PowerManager;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
+import android.util.Log;
 
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.Toolbox;
 import com.evervolv.toolbox.misc.FileUtil;
-
-import java.io.File;
 
 public class PerformanceMemory extends PreferenceFragment implements
         OnPreferenceChangeListener,
@@ -42,13 +46,13 @@ public class PerformanceMemory extends PreferenceFragment implements
     public static final String KSM_PREF_DISABLED = "0";
     public static final String KSM_PREF_ENABLED = "1";
 
-    private static final String ZRAM_PREF = "pref_zram_size";
-    private static final String ZRAM_PERSIST_PROP = "persist.service.zram";
-    private static final String ZRAM_DEFAULT = "0";
+    public static final String ZRAM_PREF = "pref_zram_size";
+    public static final String ZRAM_FSTAB_FILENAME = "/data/system/fstab.zram";
+    private static final String ZRAM_FSTAB_ENTRY =
+            "/dev/block/zram0 none swap defaults zramsize=";
 
     private CheckBoxPreference mKSMPref;
     private ListPreference mzRAM;
-    private int swapAvailable = -1;
     private PreferenceScreen mPrefSet;
 
     @Override
@@ -61,23 +65,19 @@ public class PerformanceMemory extends PreferenceFragment implements
         /* KSM */
 
         mKSMPref = (CheckBoxPreference) mPrefSet.findPreference(KSM_PREF);
-
-        /* Zram */
-
-        mzRAM = (ListPreference) mPrefSet.findPreference(ZRAM_PREF);
-        if (isSwapAvailable()) {
-            if (SystemProperties.get(ZRAM_PERSIST_PROP) == null)
-                SystemProperties.set(ZRAM_PERSIST_PROP, ZRAM_DEFAULT);
-            mzRAM.setValue(SystemProperties.get(ZRAM_PERSIST_PROP, ZRAM_DEFAULT));
-            mzRAM.setOnPreferenceChangeListener(this);
-        } else {
-            mPrefSet.removePreference(mzRAM);
-        }
-
         if (FileUtil.fileExists(KSM_RUN_FILE)) {
             mKSMPref.setChecked(KSM_PREF_ENABLED.equals(FileUtil.fileReadOneLine(KSM_RUN_FILE)));
         } else {
             mPrefSet.removePreference(mKSMPref);
+        }
+
+        /* Zram */
+
+        mzRAM = (ListPreference) mPrefSet.findPreference(ZRAM_PREF);
+        if (isZramAvailable()) {
+            mzRAM.setOnPreferenceChangeListener(this);
+        } else {
+            mPrefSet.removePreference(mzRAM);
         }
 
     }
@@ -107,12 +107,35 @@ public class PerformanceMemory extends PreferenceFragment implements
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (newValue != null) {
             if (preference == mzRAM) {
-                if (newValue != null) {
-                    SystemProperties.set(ZRAM_PERSIST_PROP, (String) newValue);
-                    return true;
+                String percent = (String) newValue;
+                if (!"0".equals(percent)) {
+                    FileUtil.fileWriteOneLine(ZRAM_FSTAB_FILENAME,
+                            ZRAM_FSTAB_ENTRY + getZramBytes(percent) + "\n");
+                    new AlertDialog.Builder(getActivity())
+                        .setTitle(R.string.reboot_required)
+                        .setMessage(getString(R.string.pref_zram_reboot_text))
+                        .setPositiveButton(getString(R.string.reboot),
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                    PowerManager power = (PowerManager) getActivity()
+                                            .getSystemService(Context.POWER_SERVICE);
+                                    power.reboot("UI Change");
+                                }
+                            })
+                        .setNegativeButton(getString(R.string.later),
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                        .show();
+                } else {
+                    FileUtil.fileDelete(ZRAM_FSTAB_FILENAME);
                 }
-            } else {
-                return false;
+                return true;
             }
         }
         return false;
@@ -121,11 +144,22 @@ public class PerformanceMemory extends PreferenceFragment implements
     /**
      * Check if swap support is available on the system
      */
-    private boolean isSwapAvailable() {
-        if (swapAvailable < 0) {
-            swapAvailable = new File("/proc/swaps").exists() ? 1 : 0;
-        }
-        return swapAvailable > 0;
+    private static boolean isSwapAvailable() {
+        return FileUtil.fileExists("/proc/swaps");
+    }
+
+    public static boolean isZramAvailable() {
+        return isSwapAvailable() && FileUtil.fileExists("/sys/block/zram0/disksize");
+    }
+
+    private int getZramBytes(String percent) {
+        ActivityManager.MemoryInfo memoryInfo = new ActivityManager.MemoryInfo();
+        ActivityManager activityManager = (ActivityManager) getActivity().getSystemService(Activity.ACTIVITY_SERVICE);
+        activityManager.getMemoryInfo(memoryInfo);
+        long totalMem = memoryInfo.totalMem;
+        int zramBytes = (int) (totalMem * Long.valueOf(percent) / 100L);
+        Log.i(TAG, "totalMem=" + totalMem + " zramMem=" + zramBytes + " " + percent + "%");
+        return zramBytes;
     }
 
     @Override

@@ -50,6 +50,11 @@ public class FileUtil {
         return true;
     }
 
+    public static boolean fileDelete(String fname) {
+        File f = new File(fname);
+        return f.exists() && f.delete();
+    }
+
     public static String[] getMounts(final String path) {
         try {
             BufferedReader br = new BufferedReader(new FileReader("/proc/mounts"), 256);

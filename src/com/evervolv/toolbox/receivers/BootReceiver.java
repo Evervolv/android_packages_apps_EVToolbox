@@ -16,6 +16,7 @@
 
 package com.evervolv.toolbox.receivers;
 
+import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -37,32 +38,39 @@ public class BootReceiver extends BroadcastReceiver {
 
     private static final String CPU_SETTINGS_PROP = "sys.cpufreq.restored";
     private static final String KSM_SETTINGS_PROP = "sys.ksm.restored";
+    private static final String ZRAM_SETTINGS_PROP = "sys.zram.restored";
 
     @Override
     public void onReceive(Context ctx, Intent intent) {
-        if (SystemProperties.getBoolean(CPU_SETTINGS_PROP, false) == false
-                && intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
-            SystemProperties.set(CPU_SETTINGS_PROP, "true");
-            configureCPU(ctx);
-        } else {
-            SystemProperties.set(CPU_SETTINGS_PROP, "false");
-        }
+        if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
 
-        if (FileUtil.fileExists(PerformanceMemory.KSM_RUN_FILE)) {
-            if (SystemProperties.getBoolean(KSM_SETTINGS_PROP, false) == false
-                    && intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
-                SystemProperties.set(KSM_SETTINGS_PROP, "true");
-                configureKSM(ctx);
+            if (!SystemProperties.getBoolean(CPU_SETTINGS_PROP, false)) {
+                SystemProperties.set(CPU_SETTINGS_PROP, "true");
+                configureCPU(ctx);
             } else {
-                SystemProperties.set(KSM_SETTINGS_PROP, "false");
+                SystemProperties.set(CPU_SETTINGS_PROP, "false");
             }
+
+            if (FileUtil.fileExists(PerformanceMemory.KSM_RUN_FILE)) {
+                if (!SystemProperties.getBoolean(KSM_SETTINGS_PROP, false)) {
+                    SystemProperties.set(KSM_SETTINGS_PROP, "true");
+                    configureKSM(ctx);
+                } else {
+                    SystemProperties.set(KSM_SETTINGS_PROP, "false");
+                }
+            }
+
+            if (!SystemProperties.getBoolean(ZRAM_SETTINGS_PROP, false)) {
+                maybeEnableZram(ctx);
+            }
+
         }
     }
 
     private void configureCPU(Context ctx) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
 
-        if (prefs.getBoolean(PerformanceMemory.SOB_PREF, false) == false) {
+        if (!prefs.getBoolean(PerformanceMemory.SOB_PREF, false)) {
             Log.i(TAG, "Restore disabled by user preference.");
             return;
         }
@@ -103,23 +111,22 @@ public class BootReceiver extends BroadcastReceiver {
     private void configureKSM(Context ctx) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
 
-        boolean ksm = prefs.getBoolean(PerformanceMemory.KSM_PREF, isLowMemDevice());
+        boolean ksm = prefs.getBoolean(PerformanceMemory.KSM_PREF, ActivityManager.isLowRamDeviceStatic());
 
         FileUtil.fileWriteOneLine(PerformanceMemory.KSM_RUN_FILE, ksm ? "1" : "0");
         Log.d(TAG, "KSM settings restored.");
     }
 
-    // True for 512MB devices
-    private boolean isLowMemDevice() {
-        boolean result = false;
-        String firstLine = FileUtil.fileReadOneLine("/proc/meminfo");
-        if (firstLine != null) {
-            String parts[] = firstLine.split("\\s+");
-            if (parts.length == 3) {
-                result = Integer.parseInt(parts[1]) < 600000;
-            }
+    private void maybeEnableZram(Context ctx) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
+
+        if (PerformanceMemory.isZramAvailable()
+                && Integer.valueOf(prefs.getString(PerformanceMemory.ZRAM_PREF, "0")) > 0
+                && FileUtil.fileExists(PerformanceMemory.ZRAM_FSTAB_FILENAME)) {
+            SystemProperties.set(ZRAM_SETTINGS_PROP, "true");
+        } else {
+            SystemProperties.set(ZRAM_SETTINGS_PROP, "false");
         }
-        return result;
     }
 
 }
