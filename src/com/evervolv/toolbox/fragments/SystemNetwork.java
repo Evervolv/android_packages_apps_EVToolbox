@@ -72,6 +72,6 @@ public class SystemNetwork extends PreferenceFragment implements
 
     @Override
     public void onToolboxDisabled(boolean enabled) {
-
+        mPrefSet.setEnabled(enabled);
     }
 }
