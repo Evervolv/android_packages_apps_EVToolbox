@@ -25,6 +25,7 @@ import android.os.SystemProperties;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.evervolv.toolbox.Toolbox;
 import com.evervolv.toolbox.fragments.PerformanceMemory;
 import com.evervolv.toolbox.fragments.PerformanceProcessor;
 import com.evervolv.toolbox.fragments.SystemNetwork;
@@ -45,6 +46,10 @@ public class BootReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context ctx, Intent intent) {
         if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
+
+            if (!Toolbox.isEnabled(ctx)) {
+                return;
+            }
 
             if (!SystemProperties.getBoolean(CPU_SETTINGS_PROP, false)) {
                 SystemProperties.set(CPU_SETTINGS_PROP, "true");
