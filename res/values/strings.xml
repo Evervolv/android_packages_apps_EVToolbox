@@ -74,11 +74,11 @@
 
         <!-- Interface >> General -->
     <string name="pref_trackball_wake_toggle_title">Trackball wake</string>
-    <string name="pref_trackball_wake_toggle_summary">Wake the device by pressing the trackball</string>
-    <string name="pref_volume_wake_toggle_title">Volume wake</string>
-    <string name="pref_volume_wake_toggle_summary">Wake the device by pressing vol-up or vol-down</string>
+    <string name="pref_trackball_wake_toggle_summary">Trackball presses wake device</string>
+    <string name="pref_volume_wake_toggle_title">Volume button wake</string>
+    <string name="pref_volume_wake_toggle_summary">Volume button presses wake device</string>
     <string name="pref_lockscreen_music_controls_volbtn_title">Volume music control</string>
-    <string name="pref_lockscreen_music_controls_volbtn_summary">Change music tracks by long pressing vol-up(next) or vol-down(prev)</string>
+    <string name="pref_lockscreen_music_controls_volbtn_summary">Long press up to skip; down for previous</string>
     <string name="pref_interface_category_tabletdpi">Tablet &amp; DPI</string>
     <string name="pref_interface_density_picker_title">Custom display density</string>
     <string name="pref_interface_density_picker_summary">Current dpi: %1$d\nRecommended tablet dpi: %2$d\nDefault dpi: %3$d</string>
@@ -107,8 +107,8 @@
         <!-- Statusbar >> General -->
     <string name="pref_statusbar_icons_title">Statusbar Icons</string>
     <string name="pref_statusbar_icons_summary">Settings to control statusbar icons</string>
-    <string name="pref_statusbar_sixbar_signal_title">Use sixbar signal icons</string>
-    <string name="pref_statusbar_sixbar_signal_summary">Choose whether or or not to use sixbar icons (modded) for cell signal strength</string>
+    <string name="pref_statusbar_sixbar_signal_title">Use 6bar signal icons</string>
+    <string name="pref_statusbar_sixbar_signal_summary">Cell signal strength with greater precision</string>
     <string name="pref_statusbar_batt_style_title">Battery style</string>
     <string name="pref_statusbar_batt_style_summary">Choose a battery icon style</string>
     <string name="pref_statusbar_batt_style_stock">Stock</string>
