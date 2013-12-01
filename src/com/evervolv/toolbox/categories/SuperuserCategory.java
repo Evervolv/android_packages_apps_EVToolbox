@@ -45,7 +45,7 @@ public class SuperuserCategory extends CategoryFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        getActivity().getActionBar().setTitle(getResources().getString(R.string.tab_title_statusbar));
+        getActivity().getActionBar().setTitle(getResources().getString(R.string.tab_title_superuser));
     }
 
     @Override
