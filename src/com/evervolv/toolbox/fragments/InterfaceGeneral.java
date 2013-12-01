@@ -16,6 +16,7 @@
 
 package com.evervolv.toolbox.fragments;
 
+import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -46,6 +47,7 @@ public class InterfaceGeneral extends PreferenceFragment implements
     private static final String TRACKBALL_WAKE_TOGGLE = "pref_trackball_wake_toggle";
     private static final String VOLUME_WAKE_TOGGLE = "pref_volume_wake_toggle";
     private static final String LOCKSCREEN_MUSIC_CTRL_VOLBTN = "pref_lockscreen_music_controls_volbtn";
+    private static final String FANCY_UI = "pref_interface_fancy_ui";
 
     private static final int MIN_DENSITY_VALUE = 100;
     private static final int MAX_DENSITY_VALUE = 400; // This may need to change for future devices
@@ -56,6 +58,7 @@ public class InterfaceGeneral extends PreferenceFragment implements
     private CheckBoxPreference mTrackballWake;
     private CheckBoxPreference mVolumeWake;
     private CheckBoxPreference mMusicCtrlVolBtn;
+    private CheckBoxPreference mFancyUi;
     private NumberPickerPreference mDensityPicker;
     private ContentResolver mCr;
     private PreferenceScreen mPrefSet;
@@ -92,6 +95,13 @@ public class InterfaceGeneral extends PreferenceFragment implements
         mMusicCtrlVolBtn = (CheckBoxPreference) mPrefSet.findPreference(LOCKSCREEN_MUSIC_CTRL_VOLBTN);
         mMusicCtrlVolBtn.setChecked(Settings.System.getInt(mCr,
                 Settings.System.LOCKSCREEN_MUSIC_CONTROLS_VOLBTN, 1) == 1);
+
+        mFancyUi = (CheckBoxPreference) mPrefSet.findPreference(FANCY_UI);
+        mFancyUi.setChecked(ActivityManager.isForcedHighEndGfx());
+        // This only affects low mem devices
+        if (!ActivityManager.isLowRamDeviceStatic()) {
+            mPrefSet.removePreference(mFancyUi);
+        }
 
         /* Density picker */
         int currentDensity = Integer.valueOf(SystemProperties.get("ro.sf.lcd_density"));
@@ -141,6 +151,36 @@ public class InterfaceGeneral extends PreferenceFragment implements
             Settings.System.putInt(mCr, Settings.System.LOCKSCREEN_MUSIC_CONTROLS_VOLBTN,
                     value ? 1 : 0);
             return true;
+        } else if (preference == mFancyUi) {
+            if (mFancyUi.isChecked()) {
+                SystemProperties.set("persist.sys.force_highendgfx", "true");
+            } else {
+                SystemProperties.set("persist.sys.force_highendgfx", "false");
+                // Lockscreen Translucency depends on this
+                Settings.System.putInt(mCr, Settings.System.LOCKSCREEN_TRANSLUCENT_DECOR, 0);
+            }
+            // Must reboot
+            new AlertDialog.Builder(getActivity())
+                    .setTitle(R.string.reboot_required)
+                    .setMessage(getString(R.string.pref_interface_fancy_ui_reboot_message))
+                    .setPositiveButton(getString(R.string.reboot),
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                    PowerManager power = (PowerManager) getActivity()
+                                            .getSystemService(Context.POWER_SERVICE);
+                                    power.reboot("UI Change");
+                                }
+                            })
+                    .setNegativeButton(getString(R.string.later),
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                    .show();
         }
         return false;
     }

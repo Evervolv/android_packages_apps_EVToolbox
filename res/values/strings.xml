@@ -86,6 +86,9 @@
     <string name="pref_interface_density_change_recommended_text">A display density change is recommended for this device. Use the setting below.</string>
     <string name="pref_interface_reboot_required_title">Reboot required!</string>
     <string name="pref_interface_reboot_required_text">A reboot is required for this setting to apply.\n\nWARNING: Minimal support is given for DPI changing.</string>
+    <string name="pref_interface_fancy_ui_title">Force fancy ui elements</string>
+    <string name="pref_interface_fancy_ui_summary">Transparent status bar and other resource intensive chrome</string>
+    <string name="pref_interface_fancy_ui_reboot_message">Must reload system resources</string>
 
         <!-- Interface >> Rotation -->
 

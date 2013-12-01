@@ -17,9 +17,11 @@
 package com.evervolv.toolbox.fragments;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -27,6 +29,8 @@ import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.PowerManager;
+import android.os.SystemProperties;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
@@ -177,8 +181,38 @@ public class LockscreenGeneral extends PreferenceFragment implements
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         if (preference == mTranslucent) {
-            Settings.System.putInt(mCr, Settings.System.LOCKSCREEN_TRANSLUCENT_DECOR,
-                    mTranslucent.isChecked() ? 1 : 0);
+            if (mTranslucent.isChecked()) {
+                Settings.System.putInt(mCr, Settings.System.LOCKSCREEN_TRANSLUCENT_DECOR, 1);
+                // This won't work unless we force HighEndGfx
+                if (ActivityManager.isLowRamDeviceStatic() && !ActivityManager.isForcedHighEndGfx()) {
+                    SystemProperties.set("persist.sys.force_highendgfx", "true");
+                    // Must reboot to enable fancy ui
+                    new AlertDialog.Builder(getActivity())
+                            .setTitle(R.string.reboot_required)
+                            .setMessage(getString(R.string.pref_interface_fancy_ui_reboot_message))
+                            .setPositiveButton(getString(R.string.reboot),
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                            PowerManager power = (PowerManager) getActivity()
+                                                    .getSystemService(Context.POWER_SERVICE);
+                                            power.reboot("UI Change");
+                                        }
+                                    })
+                            .setNegativeButton(getString(R.string.later),
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    })
+                            .show();
+                }
+            } else {
+                Settings.System.putInt(mCr, Settings.System.LOCKSCREEN_TRANSLUCENT_DECOR, 0);
+            }
+
             return true;
         } else if (preference == mRotation) {
             Settings.System.putInt(mCr, Settings.System.LOCKSCREEN_ENABLE_ROTATION,
