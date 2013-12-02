@@ -122,6 +122,9 @@ public class Toolbox extends Activity {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mDrawerLayout.openDrawer(mDrawerList);
 
+        // Open Interface category on start
+        navigateCategory(0);
+
         final ActionBar bar = getActionBar();
         bar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE, ActionBar.DISPLAY_SHOW_TITLE);
         bar.setTitle(R.string.app_name);
