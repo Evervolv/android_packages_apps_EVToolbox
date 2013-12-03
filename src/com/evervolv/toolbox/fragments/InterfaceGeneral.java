@@ -30,12 +30,11 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
+import android.util.DisplayMetrics;
 
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.Toolbox;
 import com.evervolv.toolbox.custom.NumberPickerPreference;
-import com.evervolv.toolbox.misc.CMDProcessor;
-import com.evervolv.toolbox.misc.FileUtil;
 
 public class InterfaceGeneral extends PreferenceFragment implements
         OnPreferenceChangeListener,
@@ -49,11 +48,8 @@ public class InterfaceGeneral extends PreferenceFragment implements
     private static final String LOCKSCREEN_MUSIC_CTRL_VOLBTN = "pref_lockscreen_music_controls_volbtn";
     private static final String FANCY_UI = "pref_interface_fancy_ui";
 
-    private static final int MIN_DENSITY_VALUE = 100;
-    private static final int MAX_DENSITY_VALUE = 400; // This may need to change for future devices
-
-    private static final int DIALOG_DENSITY_CHANGE_REQ = 0;
-    private static final int DIALOG_REBOOT_REQ = 1;
+    private static final int MIN_DENSITY_VALUE = DisplayMetrics.DENSITY_LOW;
+    private static final int MAX_DENSITY_VALUE = DisplayMetrics.DENSITY_XXXHIGH; //4k
 
     private CheckBoxPreference mTrackballWake;
     private CheckBoxPreference mVolumeWake;
@@ -104,14 +100,15 @@ public class InterfaceGeneral extends PreferenceFragment implements
         }
 
         /* Density picker */
-        int currentDensity = Integer.valueOf(SystemProperties.get("ro.sf.lcd_density"));
-        mRecommendedDpi = Integer.valueOf(getActivity().getApplicationContext().getString(
-                R.string.config_recommendedTabletDpi));
-        mDefaultDpi = Integer.valueOf(getActivity().getApplicationContext().getString(
-                R.string.config_defaultDpi));
+        int currentDensity = SystemProperties.getInt("persist.sys.fake_density", 0);
+        if (currentDensity == 0) {
+            currentDensity = SystemProperties.getInt("ro.sf.lcd_density", DisplayMetrics.DENSITY_DEFAULT);
+        }
+        mRecommendedDpi = Integer.valueOf(getActivity().getString(R.string.config_recommendedTabletDpi));
+        mDefaultDpi = SystemProperties.getInt("ro.sf.lcd_density", DisplayMetrics.DENSITY_DEFAULT);
         mDensityPicker = (NumberPickerPreference) mPrefSet.findPreference(DENSITY_PICKER_PREF);
         mDensityPicker.setOnPreferenceChangeListener(this);
-        mDensityPicker.setSummary(String.format(getActivity().getApplicationContext().getString(
+        mDensityPicker.setSummary(String.format(getActivity().getString(
                 R.string.pref_interface_density_picker_summary,
                 currentDensity, mRecommendedDpi, mDefaultDpi)));
         mDensityPicker.setMinValue(MIN_DENSITY_VALUE);
@@ -159,28 +156,7 @@ public class InterfaceGeneral extends PreferenceFragment implements
                 // Lockscreen Translucency depends on this
                 Settings.System.putInt(mCr, Settings.System.LOCKSCREEN_TRANSLUCENT_DECOR, 0);
             }
-            // Must reboot
-            new AlertDialog.Builder(getActivity())
-                    .setTitle(R.string.reboot_required)
-                    .setMessage(getString(R.string.pref_interface_fancy_ui_reboot_message))
-                    .setPositiveButton(getString(R.string.reboot),
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                    PowerManager power = (PowerManager) getActivity()
-                                            .getSystemService(Context.POWER_SERVICE);
-                                    power.reboot("UI Change");
-                                }
-                            })
-                    .setNegativeButton(getString(R.string.later),
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            })
-                    .show();
+            requestReboot(R.string.pref_interface_fancy_ui_reboot_message);
         }
         return false;
     }
@@ -188,85 +164,45 @@ public class InterfaceGeneral extends PreferenceFragment implements
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (preference == mDensityPicker) {
-            int value = Integer.parseInt(newValue.toString());
-            FileUtil.getMount("rw");
-            new CMDProcessor().su.runWaitFor("busybox sed -i 's|ro.sf.lcd_density=.*|"
-                    + "ro.sf.lcd_density" + "=" + value + "|' " + "/system/build.prop");
-            FileUtil.getMount("ro");
-            mDensityPicker.setSummary(String.format(getActivity().getApplicationContext().getString(
+            int fakeDensity = (Integer) newValue;
+            int realDensity = SystemProperties.getInt("ro.sf.lcd_density", DisplayMetrics.DENSITY_DEFAULT);
+            if (fakeDensity != realDensity) {
+                // Use the new value
+                SystemProperties.set("persist.sys.fake_density", String.valueOf(fakeDensity));
+            } else {
+                // Set zero to use default
+                SystemProperties.set("persist.sys.fake_density", "0");
+            }
+            mDensityPicker.setSummary(String.format(getActivity().getString(
                     R.string.pref_interface_density_picker_summary,
-                    value, mRecommendedDpi, mDefaultDpi)));
-            showDialog(DIALOG_REBOOT_REQ);
+                    fakeDensity, mRecommendedDpi, mDefaultDpi)));
+            requestReboot(R.string.pref_interface_reboot_required_text);
         }
         return false;
     }
 
-    public void showDialog(int dialogId) {
-        AlertDialog dialog = new AlertDialog.Builder(
-                getActivity()).create();
-        switch (dialogId) {
-            case DIALOG_DENSITY_CHANGE_REQ:
-                dialog.setTitle(R.string
-                        .pref_interface_density_change_recommended_title);
-                dialog.setMessage(getString(R.string
-                        .pref_interface_density_change_recommended_text));
-                dialog.setButton(DialogInterface.BUTTON_POSITIVE,
-                        getString(R.string.okay),
+    private void requestReboot(int messageId) {
+        new AlertDialog.Builder(getActivity())
+                .setTitle(R.string.reboot_required)
+                .setMessage(getString(messageId))
+                .setPositiveButton(getString(R.string.reboot),
                         new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                dialog.setButton(DialogInterface.BUTTON_NEGATIVE,
-                        getString(R.string.cancel),
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                PowerManager power = (PowerManager) getActivity()
+                                        .getSystemService(Context.POWER_SERVICE);
+                                power.reboot("Toolbox");
+                            }
+                        })
+                .setNegativeButton(getString(R.string.later),
                         new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-//                        mTabletMode.setChecked(!mTabletMode.isChecked());
-                        dialog.dismiss();
-                    }
-                });
-                dialog.setButton(DialogInterface.BUTTON_NEUTRAL,
-                        getString(R.string.reboot),
-                        new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        PowerManager power = (PowerManager) getActivity().getApplicationContext()
-                                .getSystemService(Context.POWER_SERVICE);
-                        power.reboot("UI Change");
-                    }
-                });
-                dialog.show();
-                break;
-            case DIALOG_REBOOT_REQ:
-                dialog.setTitle(R.string
-                        .pref_interface_reboot_required_title);
-                dialog.setMessage(getString(R.string
-                        .pref_interface_reboot_required_text));
-                dialog.setButton(DialogInterface.BUTTON_POSITIVE,
-                        getString(R.string.reboot),
-                        new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        PowerManager power = (PowerManager) getActivity().getApplicationContext()
-                                .getSystemService(Context.POWER_SERVICE);
-                        power.reboot("UI Change");
-                    }
-                });
-                dialog.setButton(DialogInterface.BUTTON_NEGATIVE,
-                        getString(R.string.later),
-                        new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                dialog.show();
-                break;
-        }
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                .show();
     }
 
     @Override
