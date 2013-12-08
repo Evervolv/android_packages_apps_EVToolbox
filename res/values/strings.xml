@@ -258,6 +258,7 @@
     <string name="bugreport_toast_ready">Ready to upload</string>
     <string name="bugreport_toast_supply_option">Error: Please supply a logging option</string>
     <string name="bugreport_toast_url_copied">Copied url to clipboard</string>
+    <string name="bugreport_toast_please_wait">Please wait while we fetch the logs</string>
         <!-- Buttonbar -->
     <string name="bugreport_fetch_button">Fetch logs</string>
     <string name="bugreport_fetching_button">Fetching...</string>

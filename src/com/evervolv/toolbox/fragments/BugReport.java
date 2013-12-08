@@ -121,6 +121,12 @@ public class BugReport extends Fragment {
     }
 
     @Override
+    public void onStop() {
+        mCtx.unregisterReceiver(mFinishedReceiver);
+        super.onStop();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.bugreport, container, false);
         mLogcat = (CheckBox) v.findViewById(R.id.checkbox_general);
@@ -179,6 +185,7 @@ public class BugReport extends Fragment {
                 mFetchButton.setText(R.string.bugreport_fetching_button);
                 mFetchButton.setEnabled(false);
                 mUploadButton.setEnabled(false);
+                Toast.makeText(mCtx, R.string.bugreport_toast_please_wait, Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "Calling " + serviceCall);
                 SystemProperties.set("ctl.start", serviceCall);
             }
