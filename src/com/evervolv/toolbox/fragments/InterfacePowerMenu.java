@@ -132,6 +132,7 @@ public class InterfacePowerMenu extends PreferenceFragment implements
             int value = Integer.parseInt(newValue.toString());
             Settings.System.putInt(mCr, Settings.System.POWER_MENU_SCREENSHOT_DELAY,
                     value);
+            return true;
         }
         return false;
     }
