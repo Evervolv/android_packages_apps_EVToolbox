@@ -19,6 +19,7 @@ import android.os.Bundle;
 
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.fragments.SystemNetwork;
+import com.evervolv.toolbox.fragments.SystemAppDisabler;
 
 public class SystemCategory extends CategoryFragment {
 
@@ -31,6 +32,7 @@ public class SystemCategory extends CategoryFragment {
         super.onCreate(savedInstanceState);
         mCategoryAdapter.setPageTitles(getResources().getStringArray(R.array.system_nav));
         mCategoryAdapter.addFragment(new SystemNetwork());
+        mCategoryAdapter.addFragment(new SystemAppDisabler());
 
     }
 

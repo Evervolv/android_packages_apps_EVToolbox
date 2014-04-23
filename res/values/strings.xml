@@ -131,6 +131,11 @@
     <string name="pref_system_sshd_title">Enable sshd</string>
     <string name="pref_system_sshd_summary">Allow remote connections over ssh</string>
 
+        <!-- System >> App Disabler -->
+    <string name="system_disable_apps_title">Disable system apps</string>
+    <string name="system_disable_apps_notice"><b><i>Notice:</i></b> These are a list of apps that we have white listed and should not cause issues when disabled. This <b><i>does not</i></b> remove them, it only disables the packages and can be re-enabled when necessary.</string>
+    <string name="system_disable_apps_dialog_message">An alternate replacement is needed. In order to disable this app and keep critical functionality, install a replacement and try again</string>
+
         <!-- Performance Settings -->
     <string name="performance_memory_title">Memory</string>
     <string name="performance_processor_title">Processor</string>
