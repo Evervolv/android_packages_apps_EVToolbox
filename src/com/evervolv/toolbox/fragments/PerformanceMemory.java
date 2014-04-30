@@ -39,8 +39,7 @@ public class PerformanceMemory extends PreferenceFragment implements
         OnPreferenceChangeListener,
         Toolbox.DisabledListener {
     private static final String TAG = "EVToolbox";
-
-    public static final String SOB_PREF = "pref_cpu_set_on_boot";    
+  
     public static final String KSM_RUN_FILE = "/sys/kernel/mm/ksm/run";
     public static final String KSM_PREF = "pref_ksm";
     public static final String KSM_PREF_DISABLED = "0";

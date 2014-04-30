@@ -58,12 +58,12 @@ public class PerformanceCategory extends CategoryFragment {
                 .getDefaultSharedPreferences(getActivity().getApplicationContext());
 
         Switch bootSwitch = (Switch) v.findViewById(R.id.boot_switch);
-        bootSwitch.setChecked(prefs.getBoolean(PerformanceMemory.SOB_PREF, false));
+        bootSwitch.setChecked(prefs.getBoolean(PerformanceProcessor.SOB_PREF, false));
         bootSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView,
                                          boolean isChecked) {
-                prefs.edit().putBoolean(PerformanceMemory.SOB_PREF,
+                prefs.edit().putBoolean(PerformanceProcessor.SOB_PREF,
                         isChecked).commit();
             }
         });

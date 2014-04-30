@@ -25,6 +25,7 @@ import android.os.SystemProperties;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.Toolbox;
 import com.evervolv.toolbox.categories.DeviceCategory;
 import com.evervolv.toolbox.fragments.PerformanceMemory;
@@ -80,10 +81,18 @@ public class BootReceiver extends BroadcastReceiver {
         }
     }
 
+    private void initFreqCapFiles(Context ctx)
+    {
+        if (PerformanceProcessor.freqCapFilesInitialized) return;
+        PerformanceProcessor.FREQ_MAX_FILE = ctx.getResources().getString(R.string.pref_max_cpu_freq_file);
+        PerformanceProcessor.FREQ_MIN_FILE = ctx.getResources().getString(R.string.pref_min_cpu_freq_file);
+        PerformanceProcessor.freqCapFilesInitialized = true;
+    }
+
     private void configureCPU(Context ctx) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
 
-        if (!prefs.getBoolean(PerformanceMemory.SOB_PREF, false)) {
+        if (!prefs.getBoolean(PerformanceProcessor.SOB_PREF, false)) {
             Log.i(TAG, "Restore disabled by user preference.");
             return;
         }
@@ -101,6 +110,7 @@ public class BootReceiver extends BroadcastReceiver {
         if (noSettings) {
             Log.d(TAG, "No CPU settings saved. Nothing to restore.");
         } else {
+            initFreqCapFiles(ctx);
             if (availableGovernorsLine != null){
                 governors = Arrays.asList(availableGovernorsLine.split(" "));
             }
