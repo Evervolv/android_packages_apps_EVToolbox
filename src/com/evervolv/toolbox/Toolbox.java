@@ -21,6 +21,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -85,9 +86,14 @@ public class Toolbox extends Activity {
         mDrawerList.setAdapter(mDrawerAdapter);
         mDrawerList.setOnItemClickListener(new ListView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView parent, View view, int position, long id) {
+            public void onItemClick(AdapterView parent, View view, final int position, long id) {
                 mDrawerLayout.closeDrawer(mDrawerList);
-                navigateCategory(position);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        navigateCategory(position);
+                    }
+                }, 200);
             }
         });
 
