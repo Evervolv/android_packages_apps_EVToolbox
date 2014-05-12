@@ -35,12 +35,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
 import android.widget.Switch;
 
-import com.evervolv.toolbox.categories.InterfaceCategory;
-import com.evervolv.toolbox.categories.LockscreenCategory;
-import com.evervolv.toolbox.categories.PerformanceCategory;
-import com.evervolv.toolbox.categories.StatusbarCategory;
-import com.evervolv.toolbox.categories.SuperuserCategory;
-import com.evervolv.toolbox.categories.SystemCategory;
+import com.evervolv.toolbox.categories.*;
 import com.evervolv.toolbox.custom.DrawerLayoutAdapter;
 import com.evervolv.toolbox.fragments.BugReport;
 
@@ -82,6 +77,9 @@ public class Toolbox extends Activity {
              * a little cleaner and more efficient
              */
             mDrawerAdapter.addNavItem(title, -1);
+        }
+        if (DeviceCategory.areClassesPresent(mContext)) {
+            mDrawerAdapter.addNavItem("Device", -1);
         }
 
         mDrawerList.setAdapter(mDrawerAdapter);
@@ -150,6 +148,7 @@ public class Toolbox extends Activity {
                 // Inform children of state change
                 for (DisabledListener cb: mCallbacks) {
                     cb.onToolboxDisabled(isChecked);
+                    DeviceCategory.restoreSettings(mContext);
                 }
             }
         });
@@ -208,8 +207,12 @@ public class Toolbox extends Activity {
                 break;
             case 6:
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.container, new BugReport()).commit();
+                    .replace(R.id.container, new BugReport()).commit();
                 break;
+            case 7:
+                getFragmentManager().beginTransaction()
+                .replace(R.id.container,new DeviceCategory()).commit();
+            break;
         }
     }
 

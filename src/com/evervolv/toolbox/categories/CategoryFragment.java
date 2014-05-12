@@ -17,6 +17,7 @@ package com.evervolv.toolbox.categories;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -27,6 +28,7 @@ import android.view.ViewGroup;
 import com.evervolv.toolbox.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class CategoryFragment extends Fragment {
 
@@ -60,7 +62,7 @@ public class CategoryFragment extends Fragment {
     protected class CategoryAdapter extends FragmentPagerAdapter {
 
         private final ArrayList<Fragment> mFragmentList = new ArrayList<Fragment>();
-        private String[] mPageTitles;
+        private final ArrayList<String> mTitleList = new ArrayList<String>();
 
         public CategoryAdapter(FragmentManager fm) {
             super(fm);
@@ -70,7 +72,6 @@ public class CategoryFragment extends Fragment {
             mFragmentList.add(fragment);
         }
 
-        @Override
         public int getCount() {
             return mFragmentList.size();
         }
@@ -81,12 +82,19 @@ public class CategoryFragment extends Fragment {
         }
 
         public void setPageTitles(String[] titles) {
-            mPageTitles = titles;
+            for (String title: titles) {
+                mTitleList.add(title);
+            }
         }
 
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mPageTitles[position+1];
+        public void addPageTitle(String title) {
+            mTitleList.add(title);
         }
+
+        public CharSequence getPageTitle(int position) {
+            return mTitleList.get(position);
+        }
+
     }
+
 }

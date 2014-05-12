@@ -30,37 +30,31 @@
     </string-array>
 
     <string-array name="lockscreen_nav" translatable="false">
-        <item>@string/tab_title_lockscreen</item>
         <item>@string/general_title</item>
         <item>@string/lockscreen_style_title</item>
     </string-array>
 
     <string-array name="statusbar_nav" translatable="false">
-        <item>@string/tab_title_statusbar</item>
         <item>@string/general_title</item>
     </string-array>
 
     <string-array name="interface_nav" translatable="false">
-        <item>@string/tab_title_interface</item>
         <item>@string/general_title</item>
         <item>@string/interface_rotation_title</item>
         <item>@string/interface_power_menu_title</item>
     </string-array>
 
     <string-array name="performance_nav" translatable="false">
-        <item>@string/tab_title_performance</item>
         <item>@string/performance_processor_title</item>
         <item>@string/performance_memory_title</item>
     </string-array>
 
     <string-array name="superuser_nav" translatable="false">
-        <item>@string/tab_title_superuser</item>
         <item>@string/superuser_security_title</item>
         <item>@string/superuser_settings_title</item>
     </string-array>
 
     <string-array name="system_nav" translatable="false">
-        <item>@string/tab_title_system</item>
         <item>@string/system_network_title</item>
         <item>@string/system_disable_apps_title</item>
     </string-array>

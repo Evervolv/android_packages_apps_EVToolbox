@@ -1,0 +1,2 @@
+-keep public class com.evervolv.toolbox.fragments.*
+-keep public class com.evervolv.toolbox.custom.*
