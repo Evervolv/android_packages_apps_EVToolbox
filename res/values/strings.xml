@@ -30,7 +30,6 @@
     <string name="reboot_required">Reboot required</string>
 
         <!-- Main app strings ( immediate tabs ) -->
-    <string name="tab_title_lockscreen">Lockscreen</string>
     <string name="tab_title_statusbar">Statusbar</string>
     <string name="tab_title_interface">Interface</string>
     <string name="tab_title_performance">Performance</string>

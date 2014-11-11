@@ -153,8 +153,6 @@ public class InterfaceGeneral extends PreferenceFragment implements
                 SystemProperties.set("persist.sys.force_highendgfx", "true");
             } else {
                 SystemProperties.set("persist.sys.force_highendgfx", "false");
-                // Lockscreen Translucency depends on this
-                Settings.System.putInt(mCr, Settings.System.LOCKSCREEN_TRANSLUCENT_DECOR, 0);
             }
             requestReboot(R.string.pref_interface_fancy_ui_reboot_message);
         }
