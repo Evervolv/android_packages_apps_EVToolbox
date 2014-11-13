@@ -28,10 +28,10 @@
 -->
 <parts-catalog xmlns:android="http://schemas.android.com/apk/res/android"
                xmlns:evervolv="http://schemas.android.com/apk/res/evervolv.platform">
-<!--
-    <part android:key="battery_lights"
-          android:title="@string/battery_light_title"
-          android:fragment="com.evervolv.toolbox.notificationlight.BatteryLightSettings"
-          evervolv:xmlRes="@xml/battery_light_settings" />
--->
+
+    <part android:key="button_settings"
+          android:title="@string/button_settings_title"
+          android:fragment="com.evervolv.toolbox.input.ButtonSettings"
+          evervolv:xmlRes="@xml/button_settings" />
+
 </parts-catalog>

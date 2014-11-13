@@ -61,6 +61,25 @@
                 android:value="com.evervolv.toolbox.PartsUpdater" />
         </activity>
 
+        <!-- Button settings (System category) -->
+        <activity-alias
+            android:name=".input.ButtonSettings"
+            android:label="@string/button_settings_title"
+            android:icon="@drawable/ic_settings_buttons"
+            android:targetActivity="PartsActivity">
+            <intent-filter android:priority="256">
+                <action android:name="com.evervolv.toolbox.action.SETTINGS" />
+                <action android:name="com.evervolv.toolbox.BUTTON_SETTINGS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <meta-data
+                android:name="com.android.settings.category"
+                android:value="com.android.settings.category.ia.system" />
+            <meta-data
+                android:name="com.android.settings.summary"
+                android:value="@string/summary_empty" />
+        </activity-alias>
+
         <receiver android:name=".BootReceiver" android:enabled="true">
             <intent-filter android:priority="2147483647">
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

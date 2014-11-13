@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2008 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+        android:key="button_settings"
+        android:title="@string/button_settings_title">
+
+    <PreferenceCategory
+        android:key="home_key"
+        android:title="@string/home_key_title" >
+
+        <ListPreference
+            android:key="button_home_long_press"
+            android:dialogTitle="@string/long_press_title"
+            android:title="@string/long_press_title"
+            android:entries="@array/button_action_entries"
+            android:entryValues="@array/button_action_values"
+            android:persistent="false" />
+
+        <ListPreference
+            android:key="button_home_double_tap"
+            android:dialogTitle="@string/double_tap_title"
+            android:title="@string/double_tap_title"
+            android:entries="@array/button_action_entries"
+            android:entryValues="@array/button_action_values"
+            android:persistent="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="menu_key"
+        android:title="@string/menu_key_title" >
+
+        <ListPreference
+            android:key="button_menu_press"
+            android:dialogTitle="@string/short_press_title"
+            android:title="@string/short_press_title"
+            android:entries="@array/button_action_entries"
+            android:entryValues="@array/button_action_values"
+            android:persistent="false" />
+
+        <ListPreference
+            android:key="button_menu_long_press"
+            android:dialogTitle="@string/long_press_title"
+            android:title="@string/long_press_title"
+            android:entries="@array/button_action_entries"
+            android:entryValues="@array/button_action_values"
+            android:persistent="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="assist_key"
+        android:title="@string/assist_key_title" >
+
+        <ListPreference
+            android:key="button_assist_press"
+            android:dialogTitle="@string/short_press_title"
+            android:title="@string/short_press_title"
+            android:entries="@array/button_action_entries"
+            android:entryValues="@array/button_action_values"
+            android:persistent="false" />
+
+        <ListPreference
+            android:key="button_assist_long_press"
+            android:dialogTitle="@string/long_press_title"
+            android:title="@string/long_press_title"
+            android:entries="@array/button_action_entries"
+            android:entryValues="@array/button_action_values"
+            android:persistent="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="app_switch_key"
+        android:title="@string/appswitch_key_title" >
+
+        <ListPreference
+            android:key="button_app_switch_press"
+            android:dialogTitle="@string/short_press_title"
+            android:title="@string/short_press_title"
+            android:entries="@array/button_action_entries"
+            android:entryValues="@array/button_action_values"
+            android:persistent="false" />
+
+        <ListPreference
+            android:key="button_app_switch_long_press"
+            android:dialogTitle="@string/long_press_title"
+            android:title="@string/long_press_title"
+            android:entries="@array/button_action_entries"
+            android:entryValues="@array/button_action_values"
+            android:persistent="false" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
