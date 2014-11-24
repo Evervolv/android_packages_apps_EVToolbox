@@ -33,7 +33,6 @@ public class StatusbarGeneral extends PreferenceFragment implements
         OnPreferenceChangeListener,
         Toolbox.DisabledListener {
 
-    private static final String STATUSBAR_SIXBAR_SIGNAL = "pref_statusbar_sixbar_signal";
     private static final String STATUSBAR_BATTERY_STYLE = "pref_statusbar_batt_style";
     private static final String STATUSBAR_CLOCK_AM_PM_STYLE = "pref_statusbar_clock_am_pm_style";
 
@@ -55,18 +54,6 @@ public class StatusbarGeneral extends PreferenceFragment implements
         mPrefSet = getPreferenceScreen();
 
         mCr = getActivity().getContentResolver();
-
-        /* Sixbar Signal Icons */
-        mUseSixbaricons = (CheckBoxPreference) mPrefSet.findPreference(
-                STATUSBAR_SIXBAR_SIGNAL);
-        mUseSixbaricons.setChecked(Settings.System.getInt(mCr,
-                Settings.System.STATUSBAR_6BAR_SIGNAL, 1) == 1);
-
-        /* Remove mUseSixbaricons on devices without mobile radios */
-        if (!getResources().getBoolean(R.bool.config_has_mobile_radio)) {
-            mPrefSet.removePreference(mUseSixbaricons);
-
-        }
 
         /* Battery Icon Style */
         mBattStyle = (ListPreference) mPrefSet.findPreference(STATUSBAR_BATTERY_STYLE);
@@ -111,13 +98,6 @@ public class StatusbarGeneral extends PreferenceFragment implements
 
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-        boolean value;
-        if (preference == mUseSixbaricons) {
-            value = mUseSixbaricons.isChecked();
-            Settings.System.putInt(mCr, Settings.System.STATUSBAR_6BAR_SIGNAL,
-                    value ? 1 : 0);
-            return true;
-        }
         return false;
     }
 
