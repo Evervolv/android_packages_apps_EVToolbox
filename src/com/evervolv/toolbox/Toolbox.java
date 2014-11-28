@@ -23,8 +23,8 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
-import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -69,7 +69,7 @@ public class Toolbox extends Activity {
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        mDrawerAdapter = new DrawerLayoutAdapter(this);
+        mDrawerAdapter = new DrawerLayoutAdapter(mContext);
 
         String[] navItems = getResources().getStringArray(R.array.drawer_tabs);
         for (String title: navItems) {
@@ -86,7 +86,7 @@ public class Toolbox extends Activity {
         mDrawerList.setAdapter(mDrawerAdapter);
         mDrawerList.setOnItemClickListener(new ListView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView parent, View view, final int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 mDrawerLayout.closeDrawer(mDrawerList);
                 new Handler().postDelayed(new Runnable() {
                     @Override
@@ -100,7 +100,6 @@ public class Toolbox extends Activity {
         mDrawerToggle = new ActionBarDrawerToggle(
                 this,
                 mDrawerLayout,
-                R.drawable.ic_drawer,
                 R.string.drawer_open,
                 R.string.drawer_close
                 ) {
@@ -130,6 +129,7 @@ public class Toolbox extends Activity {
         bar.setTitle(R.string.app_name);
         bar.setDisplayHomeAsUpEnabled(true);
         bar.setHomeButtonEnabled(true);
+        bar.setElevation(0);
 
         if (savedInstanceState == null) {
             // Default options

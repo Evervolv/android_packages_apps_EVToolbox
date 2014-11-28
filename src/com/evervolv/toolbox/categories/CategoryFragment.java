@@ -17,7 +17,6 @@ package com.evervolv.toolbox.categories;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -28,7 +27,6 @@ import android.view.ViewGroup;
 import com.evervolv.toolbox.R;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class CategoryFragment extends Fragment {
 
