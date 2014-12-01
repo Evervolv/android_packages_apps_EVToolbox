@@ -60,6 +60,7 @@
     <string name="volume_keys_title">Volume buttons</string>
 
     <!-- Hardware key rebinding -->
+    <string name="button_wake_title">Wake device</string>
     <string name="short_press_title">Short press action</string>
     <string name="long_press_title">Long press action</string>
     <string name="double_tap_title">Double tap action</string>

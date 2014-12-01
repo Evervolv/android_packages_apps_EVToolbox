@@ -125,18 +125,30 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
 
         final int deviceKeys = res.getInteger(
                 com.evervolv.platform.internal.R.integer.config_deviceHardwareKeys);
+        final int deviceWakeKeys = res.getInteger(
+                com.evervolv.platform.internal.R.integer.config_deviceHardwareWakeKeys);
 
         final boolean hasPowerKey = KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_POWER);
         final boolean hasHomeKey = (deviceKeys & KEY_MASK_HOME) != 0;
+        final boolean hasBackKey = (deviceKeys & KEY_MASK_BACK) != 0;
         final boolean hasMenuKey = (deviceKeys & KEY_MASK_MENU) != 0;
         final boolean hasAssistKey = (deviceKeys & KEY_MASK_ASSIST) != 0;
         final boolean hasAppSwitchKey = (deviceKeys & KEY_MASK_APP_SWITCH) != 0;
         final boolean hasVolumeKeys = (deviceKeys & KEY_MASK_VOLUME) != 0;
 
+        final boolean showHomeWake = (deviceWakeKeys & KEY_MASK_HOME) != 0;
+        final boolean showBackWake = (deviceWakeKeys & KEY_MASK_BACK) != 0;
+        final boolean showMenuWake = (deviceWakeKeys & KEY_MASK_MENU) != 0;
+        final boolean showAssistWake = (deviceWakeKeys & KEY_MASK_ASSIST) != 0;
+        final boolean showAppSwitchWake = (deviceWakeKeys & KEY_MASK_APP_SWITCH) != 0;
+        final boolean showVolumeWake = (deviceWakeKeys & KEY_MASK_VOLUME) != 0;
+
         final PreferenceGroup powerCategory =
                 (PreferenceCategory) prefScreen.findPreference(CATEGORY_POWER);
         final PreferenceGroup homeCategory =
                 (PreferenceCategory) prefScreen.findPreference(CATEGORY_HOME);
+        final PreferenceGroup backCategory =
+                (PreferenceCategory) prefScreen.findPreference(CATEGORY_BACK);
         final PreferenceGroup menuCategory =
                 (PreferenceCategory) prefScreen.findPreference(CATEGORY_MENU);
         final PreferenceGroup assistCategory =
@@ -186,13 +198,24 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
         }
 
         if (hasHomeKey) {
+            if (!showHomeWake) {
+                homeCategory.removePreference(findPreference(EVSettings.System.HOME_WAKE_SCREEN));
+            }
             mHomeLongPressAction = initList(KEY_HOME_LONG_PRESS, homeLongPressAction);
             mHomeDoubleTapAction = initList(KEY_HOME_DOUBLE_TAP, homeDoubleTapAction);
         } else {
             prefScreen.removePreference(homeCategory);
         }
 
+        if (!hasBackKey || !showBackWake) {
+            prefScreen.removePreference(backCategory);
+        }
+
         if (hasMenuKey) {
+            if (!showMenuWake) {
+                menuCategory.removePreference(findPreference(EVSettings.System.MENU_WAKE_SCREEN));
+            }
+
             Action pressAction = Action.fromSettings(resolver,
                     EVSettings.System.KEY_MENU_ACTION, Action.MENU);
             mMenuPressAction = initList(KEY_MENU_PRESS, pressAction);
@@ -206,6 +229,10 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
         }
 
         if (hasAssistKey) {
+            if (!showAssistWake) {
+                assistCategory.removePreference(findPreference(EVSettings.System.ASSIST_WAKE_SCREEN));
+            }
+
             Action pressAction = Action.fromSettings(resolver,
                     EVSettings.System.KEY_ASSIST_ACTION, Action.SEARCH);
             mAssistPressAction = initList(KEY_ASSIST_PRESS, pressAction);
@@ -218,6 +245,11 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
         }
 
         if (hasAppSwitchKey) {
+            if (!showAppSwitchWake) {
+                appSwitchCategory.removePreference(findPreference(
+                        EVSettings.System.APP_SWITCH_WAKE_SCREEN));
+            }
+
             Action pressAction = Action.fromSettings(resolver,
                     EVSettings.System.KEY_APP_SWITCH_ACTION, Action.APP_SWITCH);
             mAppSwitchPressAction = initList(KEY_APP_SWITCH_PRESS, pressAction);
@@ -229,7 +261,20 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
             prefScreen.removePreference(appSwitchCategory);
         }
 
-        if (!hasVolumeKeys) {
+        if (hasVolumeKeys) {
+            if (showVolumeWake) {
+                SwitchPreference volumeWakeScreen = (SwitchPreference) findPreference(EVSettings.System.VOLUME_WAKE_SCREEN);
+                if (volumeWakeScreen != null) {
+                    SwitchPreference volumeMusicControls = (SwitchPreference) findPreference(EVSettings.System.VOLBTN_MUSIC_CONTROLS);
+                    if (volumeMusicControls != null) {
+                        volumeMusicControls.setDependency(EVSettings.System.VOLUME_WAKE_SCREEN);
+                        volumeWakeScreen.setDisableDependentsState(true);
+                    }
+                }
+            } else {
+                volumeCategory.removePreference(findPreference(EVSettings.System.VOLUME_WAKE_SCREEN));
+            }
+        } else {
             prefScreen.removePreference(volumeCategory);
         }
     }

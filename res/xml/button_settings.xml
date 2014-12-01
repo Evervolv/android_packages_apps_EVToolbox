@@ -41,6 +41,11 @@
         android:key="home_key"
         android:title="@string/home_key_title" >
 
+        <evervolv.preference.EVSystemSettingSwitchPreference
+            android:key="home_wake_screen"
+            android:title="@string/button_wake_title"
+            android:defaultValue="true" />
+
         <ListPreference
             android:key="button_home_long_press"
             android:dialogTitle="@string/long_press_title"
@@ -60,8 +65,24 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:key="back_key"
+        android:title="@string/back_key_title" >
+
+        <evervolv.preference.EVSystemSettingSwitchPreference
+            android:key="back_wake_screen"
+            android:title="@string/button_wake_title"
+            android:defaultValue="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:key="menu_key"
         android:title="@string/menu_key_title" >
+
+        <evervolv.preference.EVSystemSettingSwitchPreference
+            android:key="menu_wake_screen"
+            android:title="@string/button_wake_title"
+            android:defaultValue="false" />
 
         <ListPreference
             android:key="button_menu_press"
@@ -85,6 +106,11 @@
         android:key="assist_key"
         android:title="@string/assist_key_title" >
 
+        <evervolv.preference.EVSystemSettingSwitchPreference
+            android:key="assist_wake_screen"
+            android:title="@string/button_wake_title"
+            android:defaultValue="false" />
+
         <ListPreference
             android:key="button_assist_press"
             android:dialogTitle="@string/short_press_title"
@@ -107,6 +133,11 @@
         android:key="app_switch_key"
         android:title="@string/appswitch_key_title" >
 
+        <evervolv.preference.EVSystemSettingSwitchPreference
+            android:key="app_switch_wake_screen"
+            android:title="@string/button_wake_title"
+            android:defaultValue="false" />
+
         <ListPreference
             android:key="button_app_switch_press"
             android:dialogTitle="@string/short_press_title"
@@ -128,6 +159,11 @@
     <PreferenceCategory
         android:key="volume_keys"
         android:title="@string/volume_keys_title" >
+
+        <evervolv.preference.EVSystemSettingSwitchPreference
+            android:key="volume_wake_screen"
+            android:title="@string/button_wake_title"
+            android:defaultValue="false" />
 
         <evervolv.preference.EVSystemSettingSwitchPreference
             android:key="volbtn_music_controls"
