@@ -133,6 +133,10 @@
     <!-- Statusbar -->
     <string name="statusbar_settings_title">Statusbar</string>
 
+    <!-- Statusbar >> Notification count -->
+    <string name="status_bar_notif_count_title">Show notification count</string>
+    <string name="status_bar_notif_count_summary">Display the number of pending notifications</string>
+
     <!-- Statusbar >> Battery -->
     <string name="battery_category_title">Battery</string>
     <string name="battery_icon_title">Battery icon</string>
