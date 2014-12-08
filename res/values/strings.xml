@@ -76,6 +76,8 @@
     <string name="pref_trackball_wake_toggle_summary">Trackball presses wake device</string>
     <string name="pref_volume_wake_toggle_title">Volume button wake</string>
     <string name="pref_volume_wake_toggle_summary">Volume button presses wake device</string>
+    <string name="pref_home_wake_toggle_title">Home button wake</string>
+    <string name="pref_home_wake_toggle_summary">Home button presses wake device</string>
     <string name="pref_lockscreen_music_controls_volbtn_title">Volume music control</string>
     <string name="pref_lockscreen_music_controls_volbtn_summary">Long press up to skip; down for previous</string>
     <string name="pref_interface_category_tabletdpi">Tablet &amp; DPI</string>
