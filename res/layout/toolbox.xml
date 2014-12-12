@@ -27,11 +27,12 @@
         android:layout_height="match_parent" />
 
     <ListView android:id="@+id/left_drawer"
-        style="?android:attr/listViewStyle"
         android:layout_width="240dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:choiceMode="singleChoice"
-        android:background="@drawable/drawer_nav_background"/>
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp"
+        android:background="@color/evtoolbox_drawer_light" />
 
 </android.support.v4.widget.DrawerLayout>

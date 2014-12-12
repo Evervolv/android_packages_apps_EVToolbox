@@ -16,24 +16,16 @@
 
 package com.evervolv.toolbox.categories;
 
-import java.io.IOException;
-import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.preference.PreferenceFragment;
-import android.util.Log;
 
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.Toolbox;
 import com.evervolv.toolbox.fragments.*;
 
-import dalvik.system.DexFile;
 
 public class DeviceCategory extends CategoryFragment implements Toolbox.DisabledListener {
 
