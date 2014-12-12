@@ -45,6 +45,7 @@ public class InterfaceGeneral extends PreferenceFragment implements
     private static final String DENSITY_PICKER_PREF = "pref_interface_density_picker";
     private static final String TRACKBALL_WAKE_TOGGLE = "pref_trackball_wake_toggle";
     private static final String VOLUME_WAKE_TOGGLE = "pref_volume_wake_toggle";
+    private static final String HOME_WAKE_TOGGLE = "pref_home_wake_toggle";
     private static final String LOCKSCREEN_MUSIC_CTRL_VOLBTN = "pref_lockscreen_music_controls_volbtn";
     private static final String FANCY_UI = "pref_interface_fancy_ui";
 
@@ -53,6 +54,7 @@ public class InterfaceGeneral extends PreferenceFragment implements
 
     private CheckBoxPreference mTrackballWake;
     private CheckBoxPreference mVolumeWake;
+    private CheckBoxPreference mHomeWake;
     private CheckBoxPreference mMusicCtrlVolBtn;
     private CheckBoxPreference mFancyUi;
     private NumberPickerPreference mDensityPicker;
@@ -86,6 +88,11 @@ public class InterfaceGeneral extends PreferenceFragment implements
         mVolumeWake = (CheckBoxPreference) mPrefSet.findPreference(VOLUME_WAKE_TOGGLE);
         mVolumeWake.setChecked(Settings.System.getInt(mCr,
                 Settings.System.VOLUME_WAKE_SCREEN, 0) == 1);
+
+        /* Home wake pref */
+        mHomeWake = (CheckBoxPreference) mPrefSet.findPreference(HOME_WAKE_TOGGLE);
+        mHomeWake.setChecked(Settings.System.getInt(mCr,
+                Settings.System.HOME_WAKE_SCREEN, 0) == 1);
 
         /* Volume button music controls */
         mMusicCtrlVolBtn = (CheckBoxPreference) mPrefSet.findPreference(LOCKSCREEN_MUSIC_CTRL_VOLBTN);
@@ -141,6 +148,11 @@ public class InterfaceGeneral extends PreferenceFragment implements
         } else if (preference == mVolumeWake) {
             value = mVolumeWake.isChecked();
             Settings.System.putInt(mCr, Settings.System.VOLUME_WAKE_SCREEN,
+                    value ? 1 : 0);
+            return true;
+        } else if (preference == mHomeWake) {
+            value = mHomeWake.isChecked();
+            Settings.System.putInt(mCr, Settings.System.HOME_WAKE_SCREEN,
                     value ? 1 : 0);
             return true;
         } else if (preference == mMusicCtrlVolBtn) {

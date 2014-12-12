@@ -28,6 +28,11 @@
             android:summary="@string/pref_volume_wake_toggle_summary">
         </CheckBoxPreference>
 
+        <CheckBoxPreference android:key="pref_home_wake_toggle"
+            android:title="@string/pref_home_wake_toggle_title"
+            android:summary="@string/pref_home_wake_toggle_summary">
+        </CheckBoxPreference>
+
         <CheckBoxPreference
             android:key="pref_lockscreen_music_controls_volbtn"
             android:title="@string/pref_lockscreen_music_controls_volbtn_title"
