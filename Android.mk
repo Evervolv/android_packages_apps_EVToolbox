@@ -11,13 +11,13 @@ LOCAL_STATIC_JAVA_LIBRARIES += \
     android-support-v4 \
     android-support-v7-appcompat
 
+LOCAL_RESOURCE_DIR := $(addprefix $(LOCAL_PATH)/, $(res_dir))
+LOCAL_SRC_FILES := $(call all-java-files-under, src/)
+
 ifneq ($(BOARD_DEVICE_SETTINGS),)
     LOCAL_RESOURCE_DIR += $(BOARD_DEVICE_SETTINGS)/res
     LOCAL_SRC_FILES += $(call all-java-files-under, ../../../$(BOARD_DEVICE_SETTINGS)/src)
 endif
-
-LOCAL_RESOURCE_DIR := $(addprefix $(LOCAL_PATH)/, $(res_dir))
-LOCAL_SRC_FILES += $(call all-java-files-under, src)
 
 LOCAL_AAPT_FLAGS := --auto-add-overlay
 LOCAL_AAPT_FLAGS += --extra-packages android.support.v7.appcompat
