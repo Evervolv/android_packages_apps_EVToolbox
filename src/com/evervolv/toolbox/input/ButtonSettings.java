@@ -31,6 +31,8 @@ import android.support.v7.preference.PreferenceGroup;
 import android.support.v7.preference.PreferenceScreen;
 import android.util.Log;
 import android.view.IWindowManager;
+import android.view.KeyCharacterMap;
+import android.view.KeyEvent;
 import android.view.WindowManagerGlobal;
 
 import evervolv.provider.EVSettings;
@@ -54,6 +56,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
 
     private static final String DISABLE_NAV_KEYS = "disable_nav_keys";
 
+    private static final String CATEGORY_POWER = "power_key";
     private static final String CATEGORY_HOME = "home_key";
     private static final String CATEGORY_BACK = "back_key";
     private static final String CATEGORY_MENU = "menu_key";
@@ -123,12 +126,15 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
         final int deviceKeys = res.getInteger(
                 com.evervolv.platform.internal.R.integer.config_deviceHardwareKeys);
 
+        final boolean hasPowerKey = KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_POWER);
         final boolean hasHomeKey = (deviceKeys & KEY_MASK_HOME) != 0;
         final boolean hasMenuKey = (deviceKeys & KEY_MASK_MENU) != 0;
         final boolean hasAssistKey = (deviceKeys & KEY_MASK_ASSIST) != 0;
         final boolean hasAppSwitchKey = (deviceKeys & KEY_MASK_APP_SWITCH) != 0;
         final boolean hasVolumeKeys = (deviceKeys & KEY_MASK_VOLUME) != 0;
 
+        final PreferenceGroup powerCategory =
+                (PreferenceCategory) prefScreen.findPreference(CATEGORY_POWER);
         final PreferenceGroup homeCategory =
                 (PreferenceCategory) prefScreen.findPreference(CATEGORY_HOME);
         final PreferenceGroup menuCategory =
@@ -171,6 +177,12 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
             // Remove keys that can be provided by the navbar
             updateDisableNavkeysOption();
             updateDisableNavkeysCategories(mDisableNavigationKeys.isChecked());
+        }
+
+        boolean advancedReboot = EVSettings.Secure.getInt(
+                resolver, EVSettings.Secure.ADVANCED_REBOOT, 0) == 1;
+        if (!advancedReboot || !hasPowerKey) {
+            prefScreen.removePreference(powerCategory);
         }
 
         if (hasHomeKey) {

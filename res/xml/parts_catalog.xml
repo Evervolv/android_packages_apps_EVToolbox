@@ -34,4 +34,9 @@
           android:fragment="com.evervolv.toolbox.input.ButtonSettings"
           evervolv:xmlRes="@xml/button_settings" />
 
+    <part android:key="power_menu"
+          android:title="@string/power_menu_title"
+          android:fragment="com.evervolv.toolbox.input.PowerMenuActions"
+          evervolv:xmlRes="@xml/power_menu_settings" />
+
 </parts-catalog>
