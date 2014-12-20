@@ -49,6 +49,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
         Preference.OnPreferenceChangeListener {
     private static final String TAG = "ButtonSettings";
 
+    private static final String KEY_BUTTON_BACKLIGHT = "button_backlight";
     private static final String KEY_HOME_LONG_PRESS = "button_home_long_press";
     private static final String KEY_HOME_DOUBLE_TAP = "button_home_double_tap";
     private static final String KEY_MENU_PRESS = "button_menu_press";
@@ -284,6 +285,12 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
             prefScreen.removePreference(volumeCategory);
         }
 
+        final ButtonBacklightBrightness backlight = findPreference(KEY_BUTTON_BACKLIGHT);
+        if (!backlight.isButtonSupported(getActivity())
+                /*&& !backlight.isKeyboardSupported(getActivity())*/) {
+            prefScreen.removePreference(backlight);
+        }
+
         if (mCameraWakeScreen != null) {
             if (mCameraSleepOnRelease != null && !res.getBoolean(
                     com.evervolv.platform.internal.R.bool.config_singleStageCameraKey)) {
@@ -376,6 +383,15 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
                 (PreferenceCategory) prefScreen.findPreference(CATEGORY_ASSIST);
         final PreferenceCategory appSwitchCategory =
                 (PreferenceCategory) prefScreen.findPreference(CATEGORY_APPSWITCH);
+        final ButtonBacklightBrightness backlight =
+                (ButtonBacklightBrightness) prefScreen.findPreference(KEY_BUTTON_BACKLIGHT);
+
+        /* Toggle backlight control depending on navbar state, force it to
+           off if enabling */
+        if (backlight != null) {
+            backlight.setEnabled(!navbarEnabled);
+            backlight.updateSummary();
+        }
 
         /* Toggle hardkey control availability depending on navbar state */
         if (homeCategory != null) {

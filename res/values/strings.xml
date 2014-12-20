@@ -326,4 +326,14 @@
     <string name="network_traffic_show_units">Show units</string>
     <string name="network_traffic_show_units_summary">Whether to show traffic measurement units in the statusbar</string>
 
+    <!-- Key backlight -->
+    <string name="button_backlight_title">Backlight</string>
+    <string name="button_backlight_enabled">Illuminate buttons</string>
+    <string name="button_backlight_seekbar_title">Button brightness</string>
+    <string name="backlight_timeout_title">Illumination timeout</string>
+    <string name="backlight_timeout_unlimited">Don\'t turn off</string>
+    <string name="backlight_summary_disabled">Disabled</string>
+    <string name="backlight_summary_enabled_with_timeout">Enabled for <xliff:g id="timeout">%s</xliff:g></string>
+    <string name="backlight_summary_enabled">Enabled</string>
+
 </resources>

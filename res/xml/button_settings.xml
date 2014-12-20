@@ -26,6 +26,12 @@
         android:summary="@string/disable_navkeys_summary"
         android:defaultValue="false" />
 
+    <com.evervolv.toolbox.input.ButtonBacklightBrightness
+        android:key="button_backlight"
+        android:title="@string/button_backlight_title"
+        android:dialogTitle="@string/button_backlight_title"
+        android:persistent="false" />
+
     <PreferenceCategory
         android:key="power_key"
         android:title="@string/power_key_title" >
