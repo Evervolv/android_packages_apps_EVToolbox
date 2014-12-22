@@ -20,6 +20,9 @@
     <!-- Whether or not to display the trackball settings -->
     <bool name="has_trackball">false</bool>
 
+    <!-- Whether or not to display the home button settings -->
+    <bool name="has_physical_buttons">false</bool>
+
     <!-- Notification toolbox widges -->
     <bool name="config_has_gps" translatable="false">true</bool>
     <bool name="config_has_wimax" translatable="false">false</bool>

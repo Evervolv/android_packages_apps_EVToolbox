@@ -94,6 +94,11 @@ public class InterfaceGeneral extends PreferenceFragment implements
         mHomeWake.setChecked(Settings.System.getInt(mCr,
                 Settings.System.HOME_WAKE_SCREEN, 0) == 1);
 
+        /* Only show mHomeWake if the device has hardware buttons */
+        if (!getResources().getBoolean(R.bool.has_physical_buttons)) {
+            mPrefSet.removePreference(mHomeWake);
+        }
+
         /* Volume button music controls */
         mMusicCtrlVolBtn = (CheckBoxPreference) mPrefSet.findPreference(LOCKSCREEN_MUSIC_CTRL_VOLBTN);
         mMusicCtrlVolBtn.setChecked(Settings.System.getInt(mCr,
