@@ -32,4 +32,10 @@
                 android:dialogTitle="@string/pref_statusbar_clock_am_pm_style_title"
                 android:entries="@array/statusbar_clock_am_pm_style_entries"
                 android:entryValues="@array/statusbar_clock_am_pm_style_entryvalues" />
+
+        <CheckBoxPreference
+                android:key="pref_statusbar_quick_pulldown"
+                android:title="@string/pref_statusbar_quick_pulldown_title"
+                android:summary="@string/pref_statusbar_quick_pulldown_summary">
+        </CheckBoxPreference>
 </PreferenceScreen>

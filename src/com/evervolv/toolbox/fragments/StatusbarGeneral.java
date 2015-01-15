@@ -35,6 +35,7 @@ public class StatusbarGeneral extends PreferenceFragment implements
 
     private static final String STATUSBAR_BATTERY_STYLE = "pref_statusbar_batt_style";
     private static final String STATUSBAR_CLOCK_AM_PM_STYLE = "pref_statusbar_clock_am_pm_style";
+    private static final String STATUSBAR_QUICK_PULLDOWN = "pref_statusbar_quick_pulldown";
 
     private static final int BATT_STYLE_DEFAULT = 1;
     private static final int AM_PM_STYLE_DEFAULT = 2;
@@ -42,7 +43,7 @@ public class StatusbarGeneral extends PreferenceFragment implements
     private ContentResolver mCr;
     private PreferenceScreen mPrefSet;
 
-    private CheckBoxPreference mUseSixbaricons;
+    private CheckBoxPreference mQuickPulldown;
     private ListPreference mBattStyle;
     private ListPreference mClockAmPmStyle;
 
@@ -66,6 +67,11 @@ public class StatusbarGeneral extends PreferenceFragment implements
         mClockAmPmStyle.setValue(Integer.toString(Settings.System.getInt(mCr,
                 Settings.System.STATUSBAR_CLOCK_AM_PM_STYLE, AM_PM_STYLE_DEFAULT)));
         mClockAmPmStyle.setOnPreferenceChangeListener(this);
+
+        /* Quick Pulldown */
+        mQuickPulldown = (CheckBoxPreference) mPrefSet.findPreference(STATUSBAR_QUICK_PULLDOWN);
+        mQuickPulldown.setChecked(Settings.System.getInt(mCr,
+                Settings.System.STATUS_BAR_QUICK_QS_PULLDOWN, 1) == 1);
     }
 
     @Override
@@ -98,6 +104,13 @@ public class StatusbarGeneral extends PreferenceFragment implements
 
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+        boolean value;
+        if (preference == mQuickPulldown) {
+            value = mQuickPulldown.isChecked();
+            Settings.System.putInt(mCr, Settings.System.STATUS_BAR_QUICK_QS_PULLDOWN,
+                    value ? 1 : 0);
+            return true;
+        }
         return false;
     }
 
