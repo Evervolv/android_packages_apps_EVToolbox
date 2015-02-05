@@ -17,10 +17,10 @@
  -->
 
 <resources> 
-    <color name="evtoolbox_primary">#607D8B</color>
-    <color name="evtoolbox_primary_dark">#37474F</color>
-    <color name="evtoolbox_accent">#B0BEC5</color>
-    <color name="evtoolbox_drawer_light">#ECEFF1</color>
+    <color name="evtoolbox_primary">#ff263238</color>
+    <color name="evtoolbox_primary_dark">#ff21272b</color>
+    <color name="evtoolbox_accent">#ff009688</color>
+    <color name="evtoolbox_drawer_light">#ffe1e1e0</color>
 
     <color name="evtoolbox_text_primary">#D9FFFFFF</color>
     <color name="evtoolbox_text_secondary">#D9000000</color>

@@ -6,7 +6,6 @@
         <item name="android:colorAccent">@color/evtoolbox_accent</item>
         <item name="android:textColorPrimary">@color/evtoolbox_text_primary</item>
         <item name="android:textColor">@color/evtoolbox_text_secondary</item>
-        <item name="android:navigationBarColor">@color/evtoolbox_primary_dark</item>
     </style>
 
     <style name="PinButton">
