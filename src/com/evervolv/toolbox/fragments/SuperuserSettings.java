@@ -2,7 +2,7 @@ package com.evervolv.toolbox.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
+import android.preference.SwitchPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
@@ -20,7 +20,7 @@ public class SuperuserSettings extends PreferenceFragment implements OnPreferenc
     private PreferenceScreen mPrefSet;
     private Context mContext;
 
-    private CheckBoxPreference mLogging;
+    private SwitchPreference mLogging;
     private ListPreference mNotifications;
 
     @Override
@@ -31,7 +31,7 @@ public class SuperuserSettings extends PreferenceFragment implements OnPreferenc
         mContext = getActivity();
         mPrefSet = getPreferenceScreen();
 
-        mLogging = (CheckBoxPreference) mPrefSet.findPreference(
+        mLogging = (SwitchPreference) mPrefSet.findPreference(
                 PREF_SUPERUSER_LOGGING);
         mLogging.setChecked(Settings.getLogging(mContext));
 

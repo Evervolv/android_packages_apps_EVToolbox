@@ -18,7 +18,7 @@ package com.evervolv.toolbox.fragments;
 
 import android.content.ContentResolver;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
+import android.preference.SwitchPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
@@ -40,10 +40,10 @@ public class InterfaceRotation extends PreferenceFragment implements
     private static final int ROTATION_180 = 4;
     private static final int ROTATION_270 = 8;
 
-    private CheckBoxPreference mRotation0Pref;
-    private CheckBoxPreference mRotation90Pref;
-    private CheckBoxPreference mRotation180Pref;
-    private CheckBoxPreference mRotation270Pref;
+    private SwitchPreference mRotation0Pref;
+    private SwitchPreference mRotation90Pref;
+    private SwitchPreference mRotation180Pref;
+    private SwitchPreference mRotation270Pref;
 
     private ContentResolver mCr;
     private PreferenceScreen mPrefSet;
@@ -58,10 +58,10 @@ public class InterfaceRotation extends PreferenceFragment implements
 
         mCr = getActivity().getContentResolver();
 
-        mRotation0Pref = (CheckBoxPreference) mPrefSet.findPreference(ROTATION_0_PREF);
-        mRotation90Pref = (CheckBoxPreference) mPrefSet.findPreference(ROTATION_90_PREF);
-        mRotation180Pref = (CheckBoxPreference) mPrefSet.findPreference(ROTATION_180_PREF);
-        mRotation270Pref = (CheckBoxPreference) mPrefSet.findPreference(ROTATION_270_PREF);
+        mRotation0Pref = (SwitchPreference) mPrefSet.findPreference(ROTATION_0_PREF);
+        mRotation90Pref = (SwitchPreference) mPrefSet.findPreference(ROTATION_90_PREF);
+        mRotation180Pref = (SwitchPreference) mPrefSet.findPreference(ROTATION_180_PREF);
+        mRotation270Pref = (SwitchPreference) mPrefSet.findPreference(ROTATION_270_PREF);
 
         int defaultAngles = ROTATION_0 | ROTATION_90 | ROTATION_270;
         // 180 is default enabled on tablets, disabled on phones

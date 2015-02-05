@@ -18,28 +18,28 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <CheckBoxPreference android:key="pref_trackball_wake_toggle"
+        <SwitchPreference android:key="pref_trackball_wake_toggle"
             android:title="@string/pref_trackball_wake_toggle_title"
             android:summary="@string/pref_trackball_wake_toggle_summary">
-        </CheckBoxPreference>
+        </SwitchPreference>
 
-        <CheckBoxPreference android:key="pref_volume_wake_toggle"
+        <SwitchPreference android:key="pref_volume_wake_toggle"
             android:title="@string/pref_volume_wake_toggle_title"
             android:summary="@string/pref_volume_wake_toggle_summary">
-        </CheckBoxPreference>
+        </SwitchPreference>
 
-        <CheckBoxPreference android:key="pref_home_wake_toggle"
+        <SwitchPreference android:key="pref_home_wake_toggle"
             android:title="@string/pref_home_wake_toggle_title"
             android:summary="@string/pref_home_wake_toggle_summary">
-        </CheckBoxPreference>
+        </SwitchPreference>
 
-        <CheckBoxPreference
+        <SwitchPreference
             android:key="pref_lockscreen_music_controls_volbtn"
             android:title="@string/pref_lockscreen_music_controls_volbtn_title"
             android:summary="@string/pref_lockscreen_music_controls_volbtn_summary">
-        </CheckBoxPreference>
+        </SwitchPreference>
 
-        <CheckBoxPreference
+        <SwitchPreference
             android:key="pref_interface_fancy_ui"
             android:title="@string/pref_interface_fancy_ui_title"
             android:summary="@string/pref_interface_fancy_ui_summary"/>

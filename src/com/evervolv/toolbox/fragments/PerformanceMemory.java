@@ -23,7 +23,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.PowerManager;
-import android.preference.CheckBoxPreference;
+import android.preference.SwitchPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
@@ -50,7 +50,7 @@ public class PerformanceMemory extends PreferenceFragment implements
     private static final String ZRAM_FSTAB_ENTRY =
             "/dev/block/zram0 none swap defaults zramsize=";
 
-    private CheckBoxPreference mKSMPref;
+    private SwitchPreference mKSMPref;
     private ListPreference mzRAM;
     private PreferenceScreen mPrefSet;
 
@@ -63,7 +63,7 @@ public class PerformanceMemory extends PreferenceFragment implements
 
         /* KSM */
 
-        mKSMPref = (CheckBoxPreference) mPrefSet.findPreference(KSM_PREF);
+        mKSMPref = (SwitchPreference) mPrefSet.findPreference(KSM_PREF);
         if (FileUtil.fileExists(KSM_RUN_FILE)) {
             mKSMPref.setChecked(KSM_PREF_ENABLED.equals(FileUtil.fileReadOneLine(KSM_RUN_FILE)));
         } else {

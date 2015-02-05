@@ -18,22 +18,22 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <CheckBoxPreference android:key="pref_power_menu_hide_screenshot"
+        <SwitchPreference android:key="pref_power_menu_hide_screenshot"
             android:title="@string/pref_power_menu_hide_screenshot_title"
             android:disableDependentsState="true">
-        </CheckBoxPreference>
+        </SwitchPreference>
 
-        <CheckBoxPreference android:key="pref_power_menu_hide_sound"
+        <SwitchPreference android:key="pref_power_menu_hide_sound"
             android:title="@string/pref_power_menu_hide_sound_title">
-        </CheckBoxPreference>
+        </SwitchPreference>
 
-        <CheckBoxPreference android:key="pref_power_menu_hide_airplane_mode"
+        <SwitchPreference android:key="pref_power_menu_hide_airplane_mode"
             android:title="@string/pref_power_menu_hide_airplane_mode_title">
-        </CheckBoxPreference>
+        </SwitchPreference>
 
-        <CheckBoxPreference android:key="pref_power_menu_hide_reboot_menu"
+        <SwitchPreference android:key="pref_power_menu_hide_reboot_menu"
             android:title="@string/pref_power_menu_hide_reboot_menu_title">
-        </CheckBoxPreference>
+        </SwitchPreference>
 
         <com.evervolv.toolbox.custom.NumberPickerPreference android:key="pref_power_menu_screenshot_delay"
             android:title="@string/pref_power_menu_screenshot_delay_title"

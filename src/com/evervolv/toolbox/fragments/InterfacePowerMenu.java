@@ -18,7 +18,7 @@ package com.evervolv.toolbox.fragments;
 
 import android.content.ContentResolver;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
+import android.preference.SwitchPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceFragment;
@@ -52,10 +52,10 @@ public class InterfacePowerMenu extends PreferenceFragment implements
     private ContentResolver mCr;
     private PreferenceScreen mPrefSet;
 
-    private CheckBoxPreference mHideScreenshot;
-    private CheckBoxPreference mHideSound;
-    private CheckBoxPreference mHideAirplaneMode;
-    private CheckBoxPreference mHideRebootMenu;
+    private SwitchPreference mHideScreenshot;
+    private SwitchPreference mHideSound;
+    private SwitchPreference mHideAirplaneMode;
+    private SwitchPreference mHideRebootMenu;
     private NumberPickerPreference mScreenshotDelay;
 
     @Override
@@ -70,19 +70,19 @@ public class InterfacePowerMenu extends PreferenceFragment implements
         int hiddenOptions = Settings.System.getInt(mCr,
                 Settings.System.HIDDEN_POWER_MENU_OPTIONS, 0);
 
-        mHideScreenshot = (CheckBoxPreference) mPrefSet.findPreference(
+        mHideScreenshot = (SwitchPreference) mPrefSet.findPreference(
                 PREF_HIDE_SCREENSHOT);
         mHideScreenshot.setChecked((hiddenOptions & HIDE_SCREENSHOT) != 0);
 
-        mHideSound = (CheckBoxPreference) mPrefSet.findPreference(
+        mHideSound = (SwitchPreference) mPrefSet.findPreference(
                 PREF_HIDE_SOUND);
         mHideSound.setChecked((hiddenOptions & HIDE_SOUND) != 0);
 
-        mHideAirplaneMode = (CheckBoxPreference) mPrefSet.findPreference(
+        mHideAirplaneMode = (SwitchPreference) mPrefSet.findPreference(
                 PREF_HIDE_AIRPLANE_MODE);
         mHideAirplaneMode.setChecked((hiddenOptions & HIDE_AIRPLANE) != 0);
 
-        mHideRebootMenu = (CheckBoxPreference) mPrefSet.findPreference(
+        mHideRebootMenu = (SwitchPreference) mPrefSet.findPreference(
                 PREF_HIDE_REBOOT_MENU);
         mHideRebootMenu.setChecked((hiddenOptions & HIDE_REBOOT) != 0);
 

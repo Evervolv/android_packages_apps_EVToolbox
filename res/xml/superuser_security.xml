@@ -18,7 +18,7 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <CheckBoxPreference
+        <SwitchPreference
                 android:key="pref_superuser_superuser_access"
                 android:title="@string/pref_superuser_superuser_access_title"
                 android:summaryOn="@string/pref_superuser_superuser_access_summary_on"
@@ -38,7 +38,7 @@
                 android:entries="@array/pref_superuser_multiuser_policy_entries"
                 android:entryValues="@array/pref_superuser_multiuser_policy_entryvalues" />
 
-        <CheckBoxPreference
+        <SwitchPreference
                 android:key="pref_superuser_declared_permission"
                 android:title="@string/pref_superuser_declared_permission_title"
                 android:summary="@string/pref_superuser_declared_permission_summary" />

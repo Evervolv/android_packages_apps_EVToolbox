@@ -18,7 +18,7 @@ package com.evervolv.toolbox.fragments;
 
 import android.content.ContentResolver;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
+import android.preference.SwitchPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
@@ -43,7 +43,7 @@ public class StatusbarGeneral extends PreferenceFragment implements
     private ContentResolver mCr;
     private PreferenceScreen mPrefSet;
 
-    private CheckBoxPreference mQuickPulldown;
+    private SwitchPreference mQuickPulldown;
     private ListPreference mBattStyle;
     private ListPreference mClockAmPmStyle;
 
@@ -69,7 +69,7 @@ public class StatusbarGeneral extends PreferenceFragment implements
         mClockAmPmStyle.setOnPreferenceChangeListener(this);
 
         /* Quick Pulldown */
-        mQuickPulldown = (CheckBoxPreference) mPrefSet.findPreference(STATUSBAR_QUICK_PULLDOWN);
+        mQuickPulldown = (SwitchPreference) mPrefSet.findPreference(STATUSBAR_QUICK_PULLDOWN);
         mQuickPulldown.setChecked(Settings.System.getInt(mCr,
                 Settings.System.STATUS_BAR_QUICK_QS_PULLDOWN, 1) == 1);
     }

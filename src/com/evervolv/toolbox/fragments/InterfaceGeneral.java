@@ -24,7 +24,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.SystemProperties;
-import android.preference.CheckBoxPreference;
+import android.preference.SwitchPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceFragment;
@@ -52,11 +52,11 @@ public class InterfaceGeneral extends PreferenceFragment implements
     private static final int MIN_DENSITY_VALUE = DisplayMetrics.DENSITY_LOW;
     private static final int MAX_DENSITY_VALUE = DisplayMetrics.DENSITY_XXXHIGH; //4k
 
-    private CheckBoxPreference mTrackballWake;
-    private CheckBoxPreference mVolumeWake;
-    private CheckBoxPreference mHomeWake;
-    private CheckBoxPreference mMusicCtrlVolBtn;
-    private CheckBoxPreference mFancyUi;
+    private SwitchPreference mTrackballWake;
+    private SwitchPreference mVolumeWake;
+    private SwitchPreference mHomeWake;
+    private SwitchPreference mMusicCtrlVolBtn;
+    private SwitchPreference mFancyUi;
     private NumberPickerPreference mDensityPicker;
     private ContentResolver mCr;
     private PreferenceScreen mPrefSet;
@@ -74,7 +74,7 @@ public class InterfaceGeneral extends PreferenceFragment implements
         mCr = getActivity().getContentResolver();
 
         /* Trackball wake pref */
-        mTrackballWake = (CheckBoxPreference) mPrefSet.findPreference(
+        mTrackballWake = (SwitchPreference) mPrefSet.findPreference(
                 TRACKBALL_WAKE_TOGGLE);
         mTrackballWake.setChecked(Settings.System.getInt(mCr,
                 Settings.System.TRACKBALL_WAKE_SCREEN, 1) == 1);
@@ -85,12 +85,12 @@ public class InterfaceGeneral extends PreferenceFragment implements
         }
 
         /* Volume wake pref */
-        mVolumeWake = (CheckBoxPreference) mPrefSet.findPreference(VOLUME_WAKE_TOGGLE);
+        mVolumeWake = (SwitchPreference) mPrefSet.findPreference(VOLUME_WAKE_TOGGLE);
         mVolumeWake.setChecked(Settings.System.getInt(mCr,
                 Settings.System.VOLUME_WAKE_SCREEN, 0) == 1);
 
         /* Home wake pref */
-        mHomeWake = (CheckBoxPreference) mPrefSet.findPreference(HOME_WAKE_TOGGLE);
+        mHomeWake = (SwitchPreference) mPrefSet.findPreference(HOME_WAKE_TOGGLE);
         mHomeWake.setChecked(Settings.System.getInt(mCr,
                 Settings.System.HOME_WAKE_SCREEN, 0) == 1);
 
@@ -100,11 +100,11 @@ public class InterfaceGeneral extends PreferenceFragment implements
         }
 
         /* Volume button music controls */
-        mMusicCtrlVolBtn = (CheckBoxPreference) mPrefSet.findPreference(LOCKSCREEN_MUSIC_CTRL_VOLBTN);
+        mMusicCtrlVolBtn = (SwitchPreference) mPrefSet.findPreference(LOCKSCREEN_MUSIC_CTRL_VOLBTN);
         mMusicCtrlVolBtn.setChecked(Settings.System.getInt(mCr,
                 Settings.System.LOCKSCREEN_MUSIC_CONTROLS_VOLBTN, 1) == 1);
 
-        mFancyUi = (CheckBoxPreference) mPrefSet.findPreference(FANCY_UI);
+        mFancyUi = (SwitchPreference) mPrefSet.findPreference(FANCY_UI);
         mFancyUi.setChecked(ActivityManager.isForcedHighEndGfx());
         // This only affects low mem devices
         if (!ActivityManager.isLowRamDeviceStatic()) {

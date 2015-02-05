@@ -17,7 +17,7 @@ package com.evervolv.toolbox.fragments;
 
 import android.os.Bundle;
 import android.os.SystemProperties;
-import android.preference.CheckBoxPreference;
+import android.preference.SwitchPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
@@ -32,7 +32,7 @@ public class SystemNetwork extends PreferenceFragment implements
     public static final String PREF_SSHD = "pref_system_sshd";
 
     private PreferenceScreen mPrefSet;
-    CheckBoxPreference mSshd;
+    SwitchPreference mSshd;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,7 +41,7 @@ public class SystemNetwork extends PreferenceFragment implements
 
         mPrefSet = getPreferenceScreen();
 
-        mSshd = (CheckBoxPreference) findPreference(PREF_SSHD);
+        mSshd = (SwitchPreference) findPreference(PREF_SSHD);
     }
 
     @Override

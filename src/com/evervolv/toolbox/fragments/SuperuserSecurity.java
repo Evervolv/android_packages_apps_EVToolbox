@@ -3,7 +3,7 @@ package com.evervolv.toolbox.fragments;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
+import android.preference.SwitchPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
@@ -35,8 +35,8 @@ public class SuperuserSecurity extends PreferenceFragment implements OnPreferenc
     private ListPreference mAutoResponse;
     private ListPreference mMultiuserPolicy;
     private ListPreference mRequestTimeout;
-    private CheckBoxPreference mSuperuserAccess;
-    private CheckBoxPreference mSuperuserPermission;
+    private SwitchPreference mSuperuserAccess;
+    private SwitchPreference mSuperuserPermission;
     private PinEntryPreference mPin;
 
     @Override
@@ -47,7 +47,7 @@ public class SuperuserSecurity extends PreferenceFragment implements OnPreferenc
         mContext = getActivity();
         mPrefSet = getPreferenceScreen();
 
-        mSuperuserAccess = (CheckBoxPreference) mPrefSet.findPreference(
+        mSuperuserAccess = (SwitchPreference) mPrefSet.findPreference(
                 PREF_SUPERUSER_SUPERUSER_ACCESS);
         mSuperuserAccess.setChecked(Settings.getSuperuserAccess());
 
@@ -68,7 +68,7 @@ public class SuperuserSecurity extends PreferenceFragment implements OnPreferenc
         mAutoResponse.setValueIndex(Settings.getAutomaticResponse(mContext));
         setAutoResponseSummary(Settings.getAutomaticResponse(mContext));
 
-        mSuperuserPermission = (CheckBoxPreference) mPrefSet.findPreference(
+        mSuperuserPermission = (SwitchPreference) mPrefSet.findPreference(
                 PREF_SUPERUSER_DECLARED_PERMISSION);
         mSuperuserPermission.setChecked(Settings.getRequirePermission(mContext));
 
