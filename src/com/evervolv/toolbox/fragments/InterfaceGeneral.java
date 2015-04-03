@@ -43,18 +43,26 @@ public class InterfaceGeneral extends PreferenceFragment implements
     private static final String TAG = "EVToolbox";
 
     private static final String DENSITY_PICKER_PREF = "pref_interface_density_picker";
-    private static final String TRACKBALL_WAKE_TOGGLE = "pref_trackball_wake_toggle";
-    private static final String VOLUME_WAKE_TOGGLE = "pref_volume_wake_toggle";
-    private static final String HOME_WAKE_TOGGLE = "pref_home_wake_toggle";
     private static final String LOCKSCREEN_MUSIC_CTRL_VOLBTN = "pref_lockscreen_music_controls_volbtn";
     private static final String FANCY_UI = "pref_interface_fancy_ui";
+
+    private static final String ASSIST_WAKE_TOGGLE = "pref_assist_wake_toggle";
+    private static final String APP_SWITCH_WAKE_TOGGLE = "pref_app_switch_wake_toggle";
+    private static final String BACK_WAKE_TOGGLE = "pref_back_wake_toggle";
+    private static final String HOME_WAKE_TOGGLE = "pref_home_wake_toggle";
+    private static final String MENU_WAKE_TOGGLE = "pref_menu_wake_toggle";
+    private static final String VOLUME_WAKE_TOGGLE = "pref_volume_wake_toggle";
 
     private static final int MIN_DENSITY_VALUE = DisplayMetrics.DENSITY_LOW;
     private static final int MAX_DENSITY_VALUE = DisplayMetrics.DENSITY_XXXHIGH; //4k
 
-    private SwitchPreference mTrackballWake;
-    private SwitchPreference mVolumeWake;
+    private SwitchPreference mAssistWake;
+    private SwitchPreference mAppSwitchWake;
+    private SwitchPreference mBackWake;
     private SwitchPreference mHomeWake;
+    private SwitchPreference mMenuWake;
+    private SwitchPreference mVolumeWake;
+
     private SwitchPreference mMusicCtrlVolBtn;
     private SwitchPreference mFancyUi;
     private NumberPickerPreference mDensityPicker;
@@ -73,31 +81,62 @@ public class InterfaceGeneral extends PreferenceFragment implements
 
         mCr = getActivity().getContentResolver();
 
-        /* Trackball wake pref */
-        mTrackballWake = (SwitchPreference) mPrefSet.findPreference(
-                TRACKBALL_WAKE_TOGGLE);
-        mTrackballWake.setChecked(Settings.System.getInt(mCr,
-                Settings.System.TRACKBALL_WAKE_SCREEN, 1) == 1);
+        /* App switch wake pref */
+        mAppSwitchWake = (SwitchPreference) mPrefSet.findPreference(APP_SWITCH_WAKE_TOGGLE);
+        mAppSwitchWake.setChecked(Settings.System.getInt(mCr,
+                Settings.System.APP_SWITCH_WAKE_SCREEN, 0) == 1);
 
-        /* Remove mTrackballWake on devices without trackballs */
-        if (!getResources().getBoolean(R.bool.has_trackball)) {
-            mPrefSet.removePreference(mTrackballWake);
-        }
+        /* Assist wake pref */
+        mAssistWake = (SwitchPreference) mPrefSet.findPreference(ASSIST_WAKE_TOGGLE);
+        mAssistWake.setChecked(Settings.System.getInt(mCr,
+                Settings.System.ASSIST_WAKE_SCREEN, 0) == 1);
 
-        /* Volume wake pref */
-        mVolumeWake = (SwitchPreference) mPrefSet.findPreference(VOLUME_WAKE_TOGGLE);
-        mVolumeWake.setChecked(Settings.System.getInt(mCr,
-                Settings.System.VOLUME_WAKE_SCREEN, 0) == 1);
+        /* Back wake pref */
+        mBackWake = (SwitchPreference) mPrefSet.findPreference(BACK_WAKE_TOGGLE);
+        mBackWake.setChecked(Settings.System.getInt(mCr,
+                Settings.System.BACK_WAKE_SCREEN, 0) == 1);
 
         /* Home wake pref */
         mHomeWake = (SwitchPreference) mPrefSet.findPreference(HOME_WAKE_TOGGLE);
         mHomeWake.setChecked(Settings.System.getInt(mCr,
                 Settings.System.HOME_WAKE_SCREEN, 0) == 1);
 
-        /* Only show mHomeWake if the device has hardware buttons */
-        if (!getResources().getBoolean(R.bool.has_physical_buttons)) {
+        /* Menu wake pref */
+        mMenuWake = (SwitchPreference) mPrefSet.findPreference(MENU_WAKE_TOGGLE);
+        mMenuWake.setChecked(Settings.System.getInt(mCr,
+                Settings.System.MENU_WAKE_SCREEN, 0) == 1);
+
+        /* Only show wake keys if the device has hardware buttons */
+        if (getResources().getBoolean(R.bool.has_physical_buttons)) {
+            /* Allow an overlay to determine the wake keys the specific device has available */
+            if (!getResources().getBoolean(R.bool.has_app_switch_button)) {
+                mPrefSet.removePreference(mAppSwitchWake);
+            }
+            if (!getResources().getBoolean(R.bool.has_assist_button)) {
+                mPrefSet.removePreference(mAssistWake);
+            }
+            if (!getResources().getBoolean(R.bool.has_back_button)) {
+                mPrefSet.removePreference(mBackWake);
+            }
+            if (!getResources().getBoolean(R.bool.has_home_button)) {
+                mPrefSet.removePreference(mHomeWake);
+            }
+            if (!getResources().getBoolean(R.bool.has_menu_button)) {
+                mPrefSet.removePreference(mMenuWake);
+            }
+        } else {
+            /* No hardware buttons, no problem */
+            mPrefSet.removePreference(mAppSwitchWake);
+            mPrefSet.removePreference(mAssistWake);
+            mPrefSet.removePreference(mBackWake);
             mPrefSet.removePreference(mHomeWake);
+            mPrefSet.removePreference(mMenuWake);
         }
+
+        /* Volume wake pref */
+        mVolumeWake = (SwitchPreference) mPrefSet.findPreference(VOLUME_WAKE_TOGGLE);
+        mVolumeWake.setChecked(Settings.System.getInt(mCr,
+                Settings.System.VOLUME_WAKE_SCREEN, 0) == 1);
 
         /* Volume button music controls */
         mMusicCtrlVolBtn = (SwitchPreference) mPrefSet.findPreference(LOCKSCREEN_MUSIC_CTRL_VOLBTN);
@@ -145,19 +184,34 @@ public class InterfaceGeneral extends PreferenceFragment implements
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         boolean value;
 
-        if (preference == mTrackballWake) {
-            value = mTrackballWake.isChecked();
-            Settings.System.putInt(mCr, Settings.System.TRACKBALL_WAKE_SCREEN,
+        if (preference == mAssistWake) {
+            value = mAssistWake.isChecked();
+            Settings.System.putInt(mCr, Settings.System.ASSIST_WAKE_SCREEN,
                     value ? 1 : 0);
             return true;
-        } else if (preference == mVolumeWake) {
-            value = mVolumeWake.isChecked();
-            Settings.System.putInt(mCr, Settings.System.VOLUME_WAKE_SCREEN,
+        } else if (preference == mAppSwitchWake) {
+            value = mAppSwitchWake.isChecked();
+            Settings.System.putInt(mCr, Settings.System.APP_SWITCH_WAKE_SCREEN,
+                    value ? 1 : 0);
+            return true;
+        } else if (preference == mBackWake) {
+            value = mBackWake.isChecked();
+            Settings.System.putInt(mCr, Settings.System.BACK_WAKE_SCREEN,
                     value ? 1 : 0);
             return true;
         } else if (preference == mHomeWake) {
             value = mHomeWake.isChecked();
             Settings.System.putInt(mCr, Settings.System.HOME_WAKE_SCREEN,
+                    value ? 1 : 0);
+            return true;
+        } else if (preference == mMenuWake) {
+            value = mMenuWake.isChecked();
+            Settings.System.putInt(mCr, Settings.System.MENU_WAKE_SCREEN,
+                    value ? 1 : 0);
+            return true;
+        } else if (preference == mVolumeWake) {
+            value = mVolumeWake.isChecked();
+            Settings.System.putInt(mCr, Settings.System.VOLUME_WAKE_SCREEN,
                     value ? 1 : 0);
             return true;
         } else if (preference == mMusicCtrlVolBtn) {

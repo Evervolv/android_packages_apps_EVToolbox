@@ -18,19 +18,34 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <SwitchPreference android:key="pref_trackball_wake_toggle"
-            android:title="@string/pref_trackball_wake_toggle_title"
-            android:summary="@string/pref_trackball_wake_toggle_summary">
+        <SwitchPreference android:key="pref_app_switch_wake_toggle"
+            android:title="@string/pref_app_switch_wake_toggle_title"
+            android:summary="@string/pref_app_switch_wake_toggle_summary">
         </SwitchPreference>
 
-        <SwitchPreference android:key="pref_volume_wake_toggle"
-            android:title="@string/pref_volume_wake_toggle_title"
-            android:summary="@string/pref_volume_wake_toggle_summary">
+        <SwitchPreference android:key="pref_assist_wake_toggle"
+            android:title="@string/pref_assist_wake_toggle_title"
+            android:summary="@string/pref_assist_wake_toggle_summary">
+        </SwitchPreference>
+
+        <SwitchPreference android:key="pref_back_wake_toggle"
+            android:title="@string/pref_back_wake_toggle_title"
+            android:summary="@string/pref_back_wake_toggle_summary">
         </SwitchPreference>
 
         <SwitchPreference android:key="pref_home_wake_toggle"
             android:title="@string/pref_home_wake_toggle_title"
             android:summary="@string/pref_home_wake_toggle_summary">
+        </SwitchPreference>
+
+        <SwitchPreference android:key="pref_menu_wake_toggle"
+            android:title="@string/pref_menu_wake_toggle_title"
+            android:summary="@string/pref_menu_wake_toggle_summary">
+        </SwitchPreference>
+
+        <SwitchPreference android:key="pref_volume_wake_toggle"
+            android:title="@string/pref_volume_wake_toggle_title"
+            android:summary="@string/pref_volume_wake_toggle_summary">
         </SwitchPreference>
 
         <SwitchPreference

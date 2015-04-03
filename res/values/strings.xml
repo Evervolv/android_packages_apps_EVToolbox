@@ -71,13 +71,20 @@
     <string name="interface_rotation_title">Rotation</string>
     <string name="interface_power_menu_title">Power menu</string>
 
+
         <!-- Interface >> General -->
-    <string name="pref_trackball_wake_toggle_title">Trackball wake</string>
-    <string name="pref_trackball_wake_toggle_summary">Trackball presses wake device</string>
-    <string name="pref_volume_wake_toggle_title">Volume button wake</string>
-    <string name="pref_volume_wake_toggle_summary">Volume button presses wake device</string>
+    <string name="pref_assist_wake_toggle_title">Assist button wake</string>
+    <string name="pref_assist_wake_toggle_summary">Assist button presses wake device</string>
+    <string name="pref_app_switch_wake_toggle_title">App switch button wake</string>
+    <string name="pref_app_switch_wake_toggle_summary">App switch button presses wake device</string>
+    <string name="pref_back_wake_toggle_title">Back button wake</string>
+    <string name="pref_back_wake_toggle_summary">Back button presses wake device</string>
     <string name="pref_home_wake_toggle_title">Home button wake</string>
     <string name="pref_home_wake_toggle_summary">Home button presses wake device</string>
+    <string name="pref_menu_wake_toggle_title">Menu button wake</string>
+    <string name="pref_menu_wake_toggle_summary">Menu button presses wake device</string>
+    <string name="pref_volume_wake_toggle_title">Volume button wake</string>
+    <string name="pref_volume_wake_toggle_summary">Volume button presses wake device</string>
     <string name="pref_lockscreen_music_controls_volbtn_title">Volume music control</string>
     <string name="pref_lockscreen_music_controls_volbtn_summary">Long press up to skip; down for previous</string>
     <string name="pref_interface_category_tabletdpi">Tablet &amp; DPI</string>
