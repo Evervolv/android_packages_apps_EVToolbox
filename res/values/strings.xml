@@ -150,6 +150,7 @@
     <string name="performance_processor_title">Processor</string>
 
         <!-- Performance >> General -->
+    <string name="perf_profile_title">Battery mode</string>
     <string name="pref_zram_title">zRam</string>
     <string name="pref_zram_summary">Compress memory for increased virtual capacity</string>
     <string name="pref_zram_reboot_text">New zRam settings will be applied on next boot</string>
