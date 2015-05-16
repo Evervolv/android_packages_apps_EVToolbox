@@ -16,12 +16,12 @@
  * limitations under the License.
  -->
 
-<resources> 
-    <color name="evtoolbox_primary">#ff263238</color>
-    <color name="evtoolbox_primary_dark">#ff21272b</color>
-    <color name="evtoolbox_accent">#ff009688</color>
-    <color name="evtoolbox_drawer_light">#ffe1e1e0</color>
+<resources>
+    <color name="evtoolbox_primary">@*android:color/material_blue_grey_900</color>
+    <color name="evtoolbox_primary_dark">@*android:color/material_blue_grey_950</color>
+    <color name="evtoolbox_accent">@*android:color/material_deep_teal_500</color>
+    <color name="evtoolbox_drawer_light">@*android:color/white</color>
 
-    <color name="evtoolbox_text_primary">#D9FFFFFF</color>
-    <color name="evtoolbox_text_secondary">#D9000000</color>
+    <color name="evtoolbox_text_primary">@*android:color/white</color>
+    <color name="evtoolbox_text_secondary">@*android:color/black</color>
 </resources>
