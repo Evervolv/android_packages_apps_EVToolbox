@@ -35,7 +35,7 @@ import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.Toolbox;
 import com.evervolv.toolbox.misc.FileUtil;
 
-public class PerformanceMemory extends PreferenceFragment implements
+public class PerformanceGeneral extends PreferenceFragment implements
         OnPreferenceChangeListener,
         Toolbox.DisabledListener {
     private static final String TAG = "EVToolbox";
@@ -57,7 +57,7 @@ public class PerformanceMemory extends PreferenceFragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.performance_memory);
+        addPreferencesFromResource(R.xml.performance_general);
 
         mPrefSet = getPreferenceScreen();
 
