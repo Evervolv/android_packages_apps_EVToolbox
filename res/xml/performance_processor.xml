@@ -18,16 +18,21 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <Preference
-            android:key="pref_cpu_freq_cur"
-            style="?android:preferenceInformationStyle"
-            android:title="@string/pref_cpu_cur_freq_title"
-            android:selectable="false" />
+    <ListPreference
+            android:key="pref_cpu_io_sched"
+            android:dialogTitle="@string/pref_cpu_io_sched_title"
+            android:title="@string/pref_cpu_io_sched_title" />
 
     <ListPreference
             android:key="pref_cpu_gov"
             android:dialogTitle="@string/pref_cpu_governors_title"
             android:title="@string/pref_cpu_governors_title" />
+
+    <Preference
+            android:key="pref_cpu_freq_cur"
+            style="?android:preferenceInformationStyle"
+            android:title="@string/pref_cpu_cur_freq_title"
+            android:selectable="false" />
 
     <ListPreference
             android:key="pref_cpu_freq_min"

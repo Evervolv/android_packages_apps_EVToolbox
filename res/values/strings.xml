@@ -157,7 +157,6 @@
     <string name="pref_ksm_summary">Ksm reduces physical memory requirements and improves performance</string>
 
         <!-- Performance >> Processor -->
-    <string name="pref_processor_summary">Change CPU governor and clock speed</string>
     <string name="pref_cpu_cur_freq_title">Current CPU frequency</string>
     <string name="pref_cpu_governors_title">CPU governor</string>
     <string name="pref_cpu_governors_summary">%S</string>
@@ -167,6 +166,8 @@
     <string name="pref_cpu_max_freq_summary">%s</string>
     <string name="pref_cpu_set_on_boot">Set on boot</string>
     <string name="pref_cpu_set_on_boot_summary">Restore the processor settings on boot</string>
+    <string name="pref_cpu_io_sched_title">I/O scheduler</string>
+    <string name="pref_cpu_io_sched_summary">%S</string>
 
         <!-- GalleryPickerPreference -->
     <string name="item_count">%1$d/%2$d</string>
