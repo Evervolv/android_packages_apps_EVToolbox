@@ -28,7 +28,7 @@ import android.util.Log;
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.Toolbox;
 import com.evervolv.toolbox.categories.DeviceCategory;
-import com.evervolv.toolbox.fragments.PerformanceMemory;
+import com.evervolv.toolbox.fragments.PerformanceGeneral;
 import com.evervolv.toolbox.fragments.PerformanceProcessor;
 import com.evervolv.toolbox.fragments.SystemNetwork;
 import com.evervolv.toolbox.misc.FileUtil;
@@ -60,7 +60,7 @@ public class BootReceiver extends BroadcastReceiver {
                 SystemProperties.set(CPU_SETTINGS_PROP, "false");
             }
 
-            if (FileUtil.fileExists(PerformanceMemory.KSM_RUN_FILE)) {
+            if (FileUtil.fileExists(PerformanceGeneral.KSM_RUN_FILE)) {
                 if (!SystemProperties.getBoolean(KSM_SETTINGS_PROP, false)) {
                     SystemProperties.set(KSM_SETTINGS_PROP, "true");
                     configureKSM(ctx);
@@ -134,18 +134,18 @@ public class BootReceiver extends BroadcastReceiver {
     private void configureKSM(Context ctx) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
 
-        boolean ksm = prefs.getBoolean(PerformanceMemory.KSM_PREF, ActivityManager.isLowRamDeviceStatic());
+        boolean ksm = prefs.getBoolean(PerformanceGeneral.KSM_PREF, ActivityManager.isLowRamDeviceStatic());
 
-        FileUtil.fileWriteOneLine(PerformanceMemory.KSM_RUN_FILE, ksm ? "1" : "0");
+        FileUtil.fileWriteOneLine(PerformanceGeneral.KSM_RUN_FILE, ksm ? "1" : "0");
         Log.d(TAG, "KSM settings restored.");
     }
 
     private void maybeEnableZram(Context ctx) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
 
-        if (PerformanceMemory.isZramAvailable()
-                && Integer.valueOf(prefs.getString(PerformanceMemory.ZRAM_PREF, "0")) > 0
-                && FileUtil.fileExists(PerformanceMemory.ZRAM_FSTAB_FILENAME)) {
+        if (PerformanceGeneral.isZramAvailable()
+                && Integer.valueOf(prefs.getString(PerformanceGeneral.ZRAM_PREF, "0")) > 0
+                && FileUtil.fileExists(PerformanceGeneral.ZRAM_FSTAB_FILENAME)) {
             SystemProperties.set(ZRAM_SETTINGS_PROP, "true");
         } else {
             SystemProperties.set(ZRAM_SETTINGS_PROP, "false");

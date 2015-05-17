@@ -146,11 +146,10 @@
     <string name="system_disable_apps_notice"><b><i>Notice:</i></b> These are a list of apps that we have white listed and should not cause issues when disabled. This <b><i>does not</i></b> remove them, it only disables the packages and can be re-enabled when necessary.</string>
     <string name="system_disable_apps_dialog_message">An alternate replacement is needed. In order to disable this app and keep critical functionality, install a replacement and try again</string>
 
-        <!-- Performance Settings -->
-    <string name="performance_memory_title">Memory</string>
+        <!-- Performance -->
     <string name="performance_processor_title">Processor</string>
 
-        <!-- Performance >> MemoryManagement -->
+        <!-- Performance >> General -->
     <string name="pref_zram_title">zRam</string>
     <string name="pref_zram_summary">Compress memory for increased virtual capacity</string>
     <string name="pref_zram_reboot_text">New zRam settings will be applied on next boot</string>

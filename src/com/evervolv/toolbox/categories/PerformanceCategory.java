@@ -28,7 +28,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.evervolv.toolbox.R;
-import com.evervolv.toolbox.fragments.PerformanceMemory;
+import com.evervolv.toolbox.fragments.PerformanceGeneral;
 import com.evervolv.toolbox.fragments.PerformanceProcessor;
 
 public class PerformanceCategory extends CategoryFragment {
@@ -45,7 +45,7 @@ public class PerformanceCategory extends CategoryFragment {
         super.onCreate(savedInstanceState);
         mCategoryAdapter.setPageTitles(getResources().getStringArray(R.array.performance_nav));
         mCategoryAdapter.addFragment(new PerformanceProcessor());
-        mCategoryAdapter.addFragment(new PerformanceMemory());
+        mCategoryAdapter.addFragment(new PerformanceGeneral());
     }
 
     @Override
