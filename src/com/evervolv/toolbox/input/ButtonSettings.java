@@ -68,6 +68,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
     private static final String CATEGORY_APPSWITCH = "app_switch_key";
     private static final String CATEGORY_VOLUME = "volume_keys";
     private static final String CATEGORY_NAVBAR = "navigation_bar_category";
+    private static final String CATEGORY_CAMERA = "camera_key";
 
     // Available custom actions to perform on a key press.
     // Must match values for KEY_HOME_LONG_PRESS_ACTION in:
@@ -121,6 +122,10 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
     private PreferenceCategory mNavigationPreferencesCat;
     private Handler mHandler;
 
+    private SwitchPreference mCameraWakeScreen;
+    private SwitchPreference mCameraSleepOnRelease;
+    private SwitchPreference mCameraLaunch;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -142,6 +147,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
         final boolean hasMenuKey = (deviceKeys & KEY_MASK_MENU) != 0;
         final boolean hasAssistKey = (deviceKeys & KEY_MASK_ASSIST) != 0;
         final boolean hasAppSwitchKey = (deviceKeys & KEY_MASK_APP_SWITCH) != 0;
+        final boolean hasCameraKey = (deviceKeys & KEY_MASK_CAMERA) != 0;
         final boolean hasVolumeKeys = (deviceKeys & KEY_MASK_VOLUME) != 0;
 
         final boolean showHomeWake = (deviceWakeKeys & KEY_MASK_HOME) != 0;
@@ -149,6 +155,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
         final boolean showMenuWake = (deviceWakeKeys & KEY_MASK_MENU) != 0;
         final boolean showAssistWake = (deviceWakeKeys & KEY_MASK_ASSIST) != 0;
         final boolean showAppSwitchWake = (deviceWakeKeys & KEY_MASK_APP_SWITCH) != 0;
+        final boolean showCameraWake = (deviceWakeKeys & KEY_MASK_CAMERA) != 0;
         final boolean showVolumeWake = (deviceWakeKeys & KEY_MASK_VOLUME) != 0;
 
         final PreferenceGroup powerCategory =
@@ -165,6 +172,8 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
                 (PreferenceCategory) prefScreen.findPreference(CATEGORY_APPSWITCH);
         final PreferenceGroup volumeCategory =
                 (PreferenceCategory) prefScreen.findPreference(CATEGORY_VOLUME);
+        final PreferenceGroup cameraCategory =
+                (PreferenceCategory) prefScreen.findPreference(CATEGORY_CAMERA);
 
         mHandler = new Handler();
 
@@ -274,6 +283,23 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
             prefScreen.removePreference(appSwitchCategory);
         }
 
+        if (hasCameraKey) {
+            mCameraWakeScreen = (SwitchPreference) findPreference(EVSettings.System.CAMERA_WAKE_SCREEN);
+            mCameraSleepOnRelease =
+                    (SwitchPreference) findPreference(EVSettings.System.CAMERA_SLEEP_ON_RELEASE);
+            mCameraLaunch = (SwitchPreference) findPreference(EVSettings.System.CAMERA_LAUNCH);
+
+            if (!showCameraWake) {
+                prefScreen.removePreference(mCameraWakeScreen);
+            }
+            // Only show 'Camera sleep on release' if the device has a focus key
+            if (res.getBoolean(com.evervolv.platform.internal.R.bool.config_singleStageCameraKey)) {
+                prefScreen.removePreference(mCameraSleepOnRelease);
+            }
+        } else {
+            prefScreen.removePreference(cameraCategory);
+        }
+
         if (hasVolumeKeys) {
             if (showVolumeWake) {
                 SwitchPreference volumeWakeScreen = (SwitchPreference) findPreference(EVSettings.System.VOLUME_WAKE_SCREEN);
@@ -303,6 +329,13 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
         // or support disabling the hardware keys
         if (!hasNavigationBar && !supportsKeyDisabler) {
             prefScreen.removePreference(mNavigationPreferencesCat);
+        }
+
+        if (mCameraWakeScreen != null) {
+            if (mCameraSleepOnRelease != null && !res.getBoolean(
+                    com.evervolv.platform.internal.R.bool.config_singleStageCameraKey)) {
+                mCameraSleepOnRelease.setDependency(EVSettings.System.CAMERA_WAKE_SCREEN);
+            }
         }
     }
 
