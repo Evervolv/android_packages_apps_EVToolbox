@@ -17,9 +17,6 @@
  -->
 
 <resources>
-    <!-- Whether or not to display the trackball settings -->
-    <bool name="has_trackball">false</bool>
-
     <!-- Whether or not to display the home button settings -->
     <bool name="has_physical_buttons">false</bool>
 
@@ -29,6 +26,7 @@
     <bool name="has_back_button">false</bool>
     <bool name="has_home_button">true</bool>
     <bool name="has_menu_button">false</bool>
+    <bool name="has_trackball">false</bool>
 
     <!-- Notification toolbox widges -->
     <bool name="config_has_gps" translatable="false">true</bool>

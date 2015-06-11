@@ -73,34 +73,6 @@
         <item>net.cactii.flash2</item>
     </string-array>
 
-    <array name="lockscreen_style_picker_captions" translatable="false">
-        <item>@string/pref_lockscreen_style_picker_caption_jellybean</item>
-        <item>@string/pref_lockscreen_style_picker_caption_ics</item>
-        <item>@string/pref_lockscreen_style_picker_caption_gingerbread</item>
-        <item>@string/pref_lockscreen_style_picker_caption_eclair</item>
-    </array>
-
-    <array name="lockscreen_style_picker_drawables" translatable="false">
-        <item>@drawable/lock_jb</item>
-        <item>@drawable/lock_ics</item>
-        <item>@drawable/lock_gingerbread</item>
-        <item>@drawable/lock_eclair</item>
-    </array>
-
-    <string-array name="lockscreen_general_background_entries" translatable="false">
-        <item>@string/pref_lockscreen_general_background_color_fill</item>
-        <item>@string/pref_lockscreen_general_background_custom_image</item>
-        <item>@string/pref_lockscreen_general_background_default_wallpaper</item>
-        <item>@string/pref_lockscreen_general_background_transparent</item>
-    </string-array>
-
-    <string-array name="lockscreen_general_background_values" translatable="false">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-    </string-array>
-
     <string-array name="pref_zram_size_entries">
         <item>Disabled (default)</item>
         <item>20%</item>

@@ -18,61 +18,32 @@
 
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
-        <!-- Generic Strings, multiple uses -->
+    <!-- Generic Strings, multiple uses -->
     <string name="app_name">Toolbox</string>
     <string name="apply">Apply</string>
-    <string name="okay">Okay</string>
     <string name="cancel">Cancel</string>
-    <string name="reboot">Reboot</string>
-    <string name="later">Later</string>
     <string name="flash">Flash</string>
-    <string name="send">Send</string>
+    <string name="later">Later</string>
+    <string name="reboot">Reboot</string>
     <string name="reboot_required">Reboot required</string>
+    <string name="send">Send</string>
 
-        <!-- Main app strings ( immediate tabs ) -->
+    <!-- Main app strings ( immediate tabs ) -->
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="general_title">General</string>
     <string name="tab_title_statusbar">Statusbar</string>
     <string name="tab_title_interface">Interface</string>
     <string name="tab_title_performance">Performance</string>
     <string name="tab_title_superuser">Superuser</string>
     <string name="tab_title_system">System</string>
     <string name="tab_title_bugreport">Bug Report</string>
-    <string name="drawer_open">Open navigation drawer</string>
-    <string name="drawer_close">Close navigation drawer</string>
-    <string name="general_title">General</string>
 
-        <!-- Lockscreen -->
-    <string name="lockscreen_style_title">Style</string>
-
-        <!-- Lockscreen >> General-->
-    <string name="pref_lockscreen_general_message_title">Message</string>
-    <string name="pref_lockscreen_general_message_summary">Change the message displayed on the lockscreen</string>
-    <string name="pref_lockscreen_general_message_dialog_title">Enter message to be displayed</string>
-    <string name="pref_lockscreen_general_background_title">Background</string>
-    <string name="pref_lockscreen_general_background_color_fill">Color fill</string>
-    <string name="pref_lockscreen_general_background_custom_image">Custom image</string>
-    <string name="pref_lockscreen_general_background_transparent">Transparent</string>
-    <string name="pref_lockscreen_general_background_default_wallpaper">Default wallpaper</string>
-    <string name="pref_lockscreen_general_background_result_successful">Background changed successfully</string>
-    <string name="pref_lockscreen_general_background_result_not_successful">Background could not be changed</string>
-    <string name="pref_lockscreen_general_background_dialog_title">Choose color</string>
-    <string name="pref_lockscreen_general_translucent_title">Enable translucent decor</string>
-    <string name="pref_lockscreen_general_translucent_summary"></string>
-    <string name="pref_lockscreen_general_rotation_title">Allow rotation</string>
-    <string name="pref_lockscreen_general_rotation_summary"></string>
-
-        <!-- Lockscreen >> Styles-->
-    <string name="pref_lockscreen_style_picker_unavailable">This style is unavailable for this device!\nPlease choose another style.</string>
-    <string name="pref_lockscreen_style_picker_caption_jellybean">Jellybean</string>
-    <string name="pref_lockscreen_style_picker_caption_ics">Ice Cream Sandwich</string>
-    <string name="pref_lockscreen_style_picker_caption_gingerbread">Gingerbread</string>
-    <string name="pref_lockscreen_style_picker_caption_eclair">Eclair</string>
-
-        <!-- Interface -->
+    <!-- Interface -->
     <string name="interface_rotation_title">Rotation</string>
     <string name="interface_power_menu_title">Power menu</string>
 
-
-        <!-- Interface >> General -->
+    <!-- Interface >> General -->
     <string name="pref_assist_wake_toggle_title">Assist button wake</string>
     <string name="pref_assist_wake_toggle_summary">Assist button presses wake device</string>
     <string name="pref_app_switch_wake_toggle_title">App switch button wake</string>
@@ -98,14 +69,14 @@
     <string name="pref_interface_fancy_ui_summary">Transparent status bar and other resource intensive chrome</string>
     <string name="pref_interface_fancy_ui_reboot_message">Must reload system resources</string>
 
-        <!-- Interface >> Rotation -->
+    <!-- Interface >> Rotation -->
 
     <string name="pref_rotation_0_title">0 degrees</string>
     <string name="pref_rotation_90_title">90 degrees</string>
     <string name="pref_rotation_180_title">180 degrees</string>
     <string name="pref_rotation_270_title">270 degrees</string>
 
-        <!-- Interface >> Power Menu -->
+    <!-- Interface >> Power Menu -->
 
     <string name="pref_power_menu_hide_screenshot_title">Hide screenshot option</string>
     <string name="pref_power_menu_hide_sound_title">Hide sound options</string>
@@ -113,13 +84,11 @@
     <string name="pref_power_menu_hide_reboot_menu_title">Hide reboot menu</string>
     <string name="pref_power_menu_screenshot_delay_title">Set screenshot delay</string>
 
-        <!-- Statusbar -->
+    <!-- Statusbar -->
 
-        <!-- Statusbar >> General -->
+    <!-- Statusbar >> General -->
     <string name="pref_statusbar_icons_title">Statusbar Icons</string>
     <string name="pref_statusbar_icons_summary">Settings to control statusbar icons</string>
-    <string name="pref_statusbar_sixbar_signal_title">Use 6bar signal icons</string>
-    <string name="pref_statusbar_sixbar_signal_summary">Cell signal strength with greater precision</string>
     <string name="pref_statusbar_batt_style_title">Battery style</string>
     <string name="pref_statusbar_batt_style_summary">Choose a battery icon style</string>
     <string name="pref_statusbar_batt_style_stock">Stock</string>
@@ -133,23 +102,20 @@
     <string name="pref_statusbar_quick_pulldown_title">Quick QS Pulldown</string>
     <string name="pref_statusbar_quick_pulldown_summary">Expand Quick Settings in a single swipe</string>
 
-        <!-- System -->
-
-        <!-- System >> Network -->
+    <!-- System >> Network -->
     <string name="system_network_title">Network</string>
     <string name="pref_system_hostname_title">Device Hostname</string>
     <string name="pref_system_sshd_title">Enable sshd</string>
     <string name="pref_system_sshd_summary">Allow remote connections over ssh</string>
 
-        <!-- System >> App Disabler -->
+    <!-- System >> App Disabler -->
     <string name="system_disable_apps_title">Disable system apps</string>
     <string name="system_disable_apps_notice"><b><i>Notice:</i></b> These are a list of apps that we have white listed and should not cause issues when disabled. This <b><i>does not</i></b> remove them, it only disables the packages and can be re-enabled when necessary.</string>
     <string name="system_disable_apps_dialog_message">An alternate replacement is needed. In order to disable this app and keep critical functionality, install a replacement and try again</string>
 
-        <!-- Performance -->
-    <string name="performance_processor_title">Processor</string>
+    <!-- Performance -->
 
-        <!-- Performance >> General -->
+    <!-- Performance >> General -->
     <string name="perf_profile_title">Battery mode</string>
     <string name="pref_zram_title">zRam</string>
     <string name="pref_zram_summary">Compress memory for increased virtual capacity</string>
@@ -157,7 +123,8 @@
     <string name="pref_ksm_title">Kernel samepage merging</string>
     <string name="pref_ksm_summary">Ksm reduces physical memory requirements and improves performance</string>
 
-        <!-- Performance >> Processor -->
+    <!-- Performance >> Processor -->
+    <string name="performance_processor_title">Processor</string>
     <string name="pref_cpu_cur_freq_title">Current CPU frequency</string>
     <string name="pref_cpu_governors_title">CPU governor</string>
     <string name="pref_cpu_governors_summary">%S</string>
@@ -170,15 +137,10 @@
     <string name="pref_cpu_io_sched_title">I/O scheduler</string>
     <string name="pref_cpu_io_sched_summary">%S</string>
 
-        <!-- GalleryPickerPreference -->
-    <string name="item_count">%1$d/%2$d</string>
-
-        <!-- Superuser -->
-
-    <string name="superuser_settings_title">Settings</string>
-    <string name="superuser_security_title">Security</string>
+    <!-- Superuser -->
 
     <!-- Superuser >> Security -->
+    <string name="superuser_security_title">Security</string>
     <string name="pref_superuser_superuser_access_title">Superuser access</string>
     <string name="pref_superuser_superuser_access_summary_on">Apps are allowed to access Superuser</string>
     <string name="pref_superuser_superuser_access_summary_off">Apps are not allowed to access Superuser</string>
@@ -216,6 +178,7 @@
 
     <!-- Superuser >> Settings -->
 
+    <string name="superuser_settings_title">Settings</string>
     <string name="pref_superuser_logging_title">Logging</string>
     <string name="pref_superuser_logging_summary">Enable or disable all Superuser request logging</string>
 
@@ -265,29 +228,27 @@
     <string name="request">Superuser Request</string>
     <string name="no_apps">There are currently no Superuser app policies.</string>
 
-        <!-- Bugreport -->
+    <!-- Bugreport -->
+
     <string name="bugreport_message">Choose which buffer(s) you would like to fetch.\nOnce finished, upload and grab url to give to your maintainer!</string>
     <string name="bugreport_generated_log_url">Generated log url:</string>
     <string name="bugreport_toast_ready">Ready to upload</string>
     <string name="bugreport_toast_supply_option">Error: Please supply a logging option</string>
     <string name="bugreport_toast_url_copied">Copied url to clipboard</string>
     <string name="bugreport_toast_please_wait">Please wait while we fetch the logs</string>
-        <!-- Buttonbar -->
     <string name="bugreport_fetch_button">Fetch logs</string>
     <string name="bugreport_fetching_button">Fetching...</string>
     <string name="bugreport_upload_button">Upload logs</string>
     <string name="bugreport_uploading_button">Uploading...</string>
-        <!-- Checkboxes -->
+
     <string name="log_options">Log options</string>
     <string name="general_logcat">General logcat</string>
     <string name="radio_logcat">Radio logcat</string>
     <string name="dmesg_log">Dmesg</string>
     <string name="last_kmsg">Last_kmsg</string>
-        <!-- Menu -->
     <string name="copy_url">Copy URL</string>
     <string name="open_url">Open URL</string>
     <string name="log_url_label">Log URL</string>
-        <!-- Upload Service -->
     <string name="logcat_toast_start">Uploading Logcat</string>
     <string name="logcat_toast_upload_failed">Uploading logcat failed</string>
     <string name="logcat_post_author">EVLogcat Uploader</string>
@@ -295,6 +256,7 @@
     <string name="logcat_notification_title">Logcat Uploaded</string>
 
     <!-- Device Settings -->
+
     <string name="device_settings_title">Device Settings</string>
     <string name="device_touchscreen_title">Touchscreen</string>
     <string name="device_haptic_title">Haptic</string>

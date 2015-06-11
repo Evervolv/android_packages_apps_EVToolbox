@@ -166,7 +166,7 @@ public class SystemAppDisabler extends Fragment {
                                 dialog.setMessage(getContext().getString(
                                         R.string.system_disable_apps_dialog_message));
                                 dialog.setButton(DialogInterface.BUTTON_NEUTRAL,
-                                        getContext().getString(R.string.okay),
+                                        getContext().getString(com.android.internal.R.string.ok),
                                         new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
