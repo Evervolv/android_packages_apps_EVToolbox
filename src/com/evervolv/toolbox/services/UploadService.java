@@ -91,7 +91,7 @@ public class UploadService extends Service {
                         getResources().getString(R.string.logcat_post_author)));
                 valuePairList.add(new BasicNameValuePair("title",
                         String.format(getResources().getString(R.string.logcat_post_title),
-                                SystemProperties.get("ro.build.romversion"))));
+                                SystemProperties.get("ro.evervolv.version"))));
                 if (!plaintext) {
                     valuePairList.add(new BasicNameValuePair("lang", "logcat"));
                 }
