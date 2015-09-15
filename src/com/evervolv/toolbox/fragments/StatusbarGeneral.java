@@ -34,10 +34,12 @@ public class StatusbarGeneral extends PreferenceFragment implements
         Toolbox.DisabledListener {
 
     private static final String STATUSBAR_BATTERY_STYLE = "pref_statusbar_batt_style";
+    private static final String STATUSBAR_BATTERY_PERCENT = "pref_statusbar_batt_percent_style";
     private static final String STATUSBAR_CLOCK_AM_PM_STYLE = "pref_statusbar_clock_am_pm_style";
     private static final String STATUSBAR_QUICK_PULLDOWN = "pref_statusbar_quick_pulldown";
 
-    private static final int BATT_STYLE_DEFAULT = 1;
+    private static final int BATT_STYLE_DEFAULT = 0;
+    private static final int BATT_PERCENT_DEFAULT = 0;
     private static final int AM_PM_STYLE_DEFAULT = 2;
 
     private ContentResolver mCr;
@@ -45,6 +47,7 @@ public class StatusbarGeneral extends PreferenceFragment implements
 
     private SwitchPreference mQuickPulldown;
     private ListPreference mBattStyle;
+    private ListPreference mBattPercent;
     private ListPreference mClockAmPmStyle;
 
     @Override
@@ -61,6 +64,12 @@ public class StatusbarGeneral extends PreferenceFragment implements
         mBattStyle.setValue(Integer.toString(Settings.System.getInt(mCr,
                 Settings.System.STATUSBAR_BATT_STYLE, BATT_STYLE_DEFAULT)));
         mBattStyle.setOnPreferenceChangeListener(this);
+
+        /* Battery Percent */
+        mBattPercent = (ListPreference) mPrefSet.findPreference(STATUSBAR_BATTERY_PERCENT);
+        mBattPercent.setValue(Integer.toString(Settings.System.getInt(mCr,
+                Settings.System.STATUSBAR_SHOW_BATTERY_PERCENT, BATT_PERCENT_DEFAULT)));
+        mBattPercent.setOnPreferenceChangeListener(this);
 
         /* Clock AM/PM Style */
         mClockAmPmStyle = (ListPreference) mPrefSet.findPreference(STATUSBAR_CLOCK_AM_PM_STYLE);
@@ -91,6 +100,11 @@ public class StatusbarGeneral extends PreferenceFragment implements
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (preference == mBattStyle) {
             Settings.System.putInt(mCr, Settings.System.STATUSBAR_BATT_STYLE,
+                    Integer.valueOf((String) newValue));
+            return true;
+        }
+        if (preference == mBattPercent) {
+            Settings.System.putInt(mCr, Settings.System.STATUSBAR_SHOW_BATTERY_PERCENT,
                     Integer.valueOf((String) newValue));
             return true;
         }
