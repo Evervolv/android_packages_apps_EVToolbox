@@ -68,6 +68,8 @@
     <string name="pref_interface_fancy_ui_title">Force fancy ui elements</string>
     <string name="pref_interface_fancy_ui_summary">Transparent status bar and other resource intensive chrome</string>
     <string name="pref_interface_fancy_ui_reboot_message">Must reload system resources</string>
+    <string name="pref_interface_settings_switch_toggle_title">Toggle Setting Menu Switch</string>
+    <string name="pref_interface_settings_switch_toggle_summary">This will toggle displaying a switch inside the main Settings menu </string>
 
     <!-- Interface >> Rotation -->
 

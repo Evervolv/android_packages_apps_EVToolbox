@@ -55,6 +55,12 @@
         </SwitchPreference>
 
         <SwitchPreference
+            android:key="pref_interface_settings_switch_toggle"
+            android:title="@string/pref_interface_settings_switch_toggle_title"
+            android:summary="@string/pref_interface_settings_switch_toggle_summary">
+        </SwitchPreference>
+
+        <SwitchPreference
             android:key="pref_interface_fancy_ui"
             android:title="@string/pref_interface_fancy_ui_title"
             android:summary="@string/pref_interface_fancy_ui_summary"/>
