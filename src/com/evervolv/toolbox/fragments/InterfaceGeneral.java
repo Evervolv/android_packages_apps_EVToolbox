@@ -148,7 +148,7 @@ public class InterfaceGeneral extends PreferenceFragment implements
         /* Settings menu Switches */
         mSettingsSwitch = (SwitchPreference) mPrefSet.findPreference(SETTINGS_SWITCH_TOGGLE);
         mSettingsSwitch.setChecked(Settings.System.getInt(mCr,
-                Settings.System.SETTINGS_SWITCH, 1) == 1);
+                Settings.System.SETTINGS_SWITCH, 0) == 1);
 
         mFancyUi = (SwitchPreference) mPrefSet.findPreference(FANCY_UI);
         mFancyUi.setChecked(ActivityManager.isForcedHighEndGfx());
