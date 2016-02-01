@@ -31,8 +31,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:choiceMode="singleChoice"
-        android:divider="@android:color/transparent"
+        android:divider="@color/drawer_divider_color"
         android:dividerHeight="0dp"
-        android:background="@color/evtoolbox_drawer_light" />
+        android:background="@color/drawer_background_color" />
 
 </android.support.v4.widget.DrawerLayout>

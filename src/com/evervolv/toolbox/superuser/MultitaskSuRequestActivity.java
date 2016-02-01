@@ -27,6 +27,7 @@ import android.net.LocalSocketAddress.Namespace;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -49,7 +50,6 @@ import junit.framework.Assert;
 
 import java.io.DataInputStream;
 import java.io.File;
-import java.util.HashMap;
 
 public class MultitaskSuRequestActivity extends FragmentActivity {
     private static final String LOGTAG = "Superuser";
@@ -283,7 +283,7 @@ public class MultitaskSuRequestActivity extends FragmentActivity {
     private final static int SU_PROTOCOL_PARAM_MAX = 20;
     private final static int SU_PROTOCOL_NAME_MAX = 20;
     private final static int SU_PROTOCOL_VALUE_MAX_DEFAULT = 256;
-    private final static HashMap<String, Integer> SU_PROTOCOL_VALUE_MAX = new HashMap<String, Integer>() {
+    private final static ArrayMap<String, Integer> SU_PROTOCOL_VALUE_MAX = new ArrayMap<String, Integer>() {
         {
             put("command", 2048);
         }

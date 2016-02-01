@@ -1,6 +1,7 @@
 package com.evervolv.toolbox.superuser;
 
 import android.app.Activity;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SlidingPaneLayout;
@@ -21,14 +22,12 @@ public class SuperuserAppActivity extends Activity {
         setTitle(R.string.superuser_app_policies_title);
         getActionBar().setHomeButtonEnabled(true);
 
+        Resources res = this.getResources();
+
         mSlidingPaneLayout = (SlidingPaneLayout) findViewById(R.id.sliding_pane);
         mSlidingPaneLayout.setParallaxDistance(200);
         mSlidingPaneLayout.setShadowResource(R.drawable.sliding_pane_shadow);
-        /*
-         * TODO: I don't like the way it looks with a fade color
-         * unless we figure a way to make it look good, this is decent.
-         */
-        mSlidingPaneLayout.setSliderFadeColor(Color.parseColor("#00000000"));
+        mSlidingPaneLayout.setSliderFadeColor(res.getColor(R.color.superuser_slider_fade));
         mSlidingPaneLayout.setPanelSlideListener(new PanelSlideListener() {
             AppInfoFragment infoFrag = (AppInfoFragment) getFragmentManager()
                     .findFragmentById(R.id.info_pane);

@@ -31,17 +31,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
-            android:background="@color/evtoolbox_primary"
+            android:background="@color/pager_title_background"
             android:paddingBottom="4dp"
             android:paddingTop="4dp"
-            android:textColor="#fff" />
+            android:textColor="@color/pager_title_text_color" />
 
     </android.support.v4.view.ViewPager>
 
     <RelativeLayout android:id="@+id/bottom_action_bar"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
-        android:background="@drawable/ab_bottom_solid_inverse_holo"
+        android:background="@drawable/bottom_bar_solid"
         android:visibility="gone">
 
         <Switch android:id="@+id/boot_switch"
@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:textColor="?android:attr/textColorPrimaryInverse"
+            android:textColor="@color/bottom_action_bar_text_color"
             android:layout_toLeftOf="@+id/boot_switch" />
 
     </RelativeLayout>

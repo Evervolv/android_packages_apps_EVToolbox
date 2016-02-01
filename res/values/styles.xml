@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="Theme.EVToolbox" parent="android:Theme.Material.Light.DarkActionBar">
-        <item name="android:colorPrimary">@color/evtoolbox_primary</item>
-        <item name="android:colorPrimaryDark">@color/evtoolbox_primary_dark</item>
-        <item name="android:colorAccent">@color/evtoolbox_accent</item>
-        <item name="android:textColorPrimary">@color/evtoolbox_text_primary</item>
-        <item name="android:textColor">@color/evtoolbox_text_secondary</item>
+        <item name="android:colorPrimary">@color/themePrimary</item>
+        <item name="android:colorPrimaryDark">@color/themePrimaryDark</item>
+        <item name="android:colorAccent">@color/themeAccent</item>
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <item name="android:textColor">@color/textColor</item>
     </style>
 
     <style name="PinButton">
@@ -17,4 +18,5 @@
         <item name="android:paddingStart">4dip</item>
         <item name="android:paddingEnd">4dip</item>
     </style>
+
 </resources>

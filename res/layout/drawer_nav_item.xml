@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
         android:gravity="center"
-        android:textColor="@color/evtoolbox_text_secondary"
+        android:textColor="@color/drawer_nav_text_color"
         android:background="?android:attr/activatedBackgroundIndicator"
         android:minHeight="?android:attr/listPreferredItemHeightSmall"/>
 

@@ -22,7 +22,7 @@
             android:maxLines="1"
             android:padding="@dimen/section_padding"
             android:password="true"
-            android:textColor="@android:color/holo_blue_dark" />
+            android:textColor="@color/superuser_pin" />
 
         <FrameLayout
             android:layout_width="match_parent"

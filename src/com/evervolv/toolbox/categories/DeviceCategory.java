@@ -16,11 +16,11 @@
 
 package com.evervolv.toolbox.categories;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.util.ArrayMap;
 
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.Toolbox;
@@ -31,7 +31,7 @@ public class DeviceCategory extends CategoryFragment implements Toolbox.Disabled
 
     private static final String TAG ="DeviceCategory";
 
-    private static final HashMap<Integer, DeviceSettingFragment> mClassMap = new HashMap<Integer, DeviceSettingFragment>();
+    private static final ArrayMap<Integer, DeviceSettingFragment> mClassMap = new ArrayMap<Integer, DeviceSettingFragment>();
 
     /*
      * List of possible fragments
