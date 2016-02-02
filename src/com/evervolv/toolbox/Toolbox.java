@@ -193,27 +193,27 @@ public class Toolbox extends Activity {
                 break;
             case 1:
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.container, new PerformanceCategory()).commit();
+                        .replace(R.id.container, new StatusbarCategory()).commit();
                 break;
             case 2:
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.container, new StatusbarCategory()).commit();
+                        .replace(R.id.container, new SystemCategory()).commit();
                 break;
             case 3:
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.container, new SuperuserCategory()).commit();
+                        .replace(R.id.container, new PerformanceCategory()).commit();
                 break;
             case 4:
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.container, new SystemCategory()).commit();
+                        .replace(R.id.container, new SuperuserCategory()).commit();
                 break;
             case 5:
                 getFragmentManager().beginTransaction()
-                    .replace(R.id.container, new BugReport()).commit();
+                        .replace(R.id.container, new BugReport()).commit();
                 break;
             case 6:
                 getFragmentManager().beginTransaction()
-                .replace(R.id.container,new DeviceCategory()).commit();
+                        .replace(R.id.container,new DeviceCategory()).commit();
             break;
         }
     }

@@ -21,10 +21,10 @@
     <!-- These need to match order in Toolbox.java -->
     <string-array name="drawer_tabs" translatable="false">
         <item>@string/tab_title_interface</item>
-        <item>@string/tab_title_performance</item>
         <item>@string/tab_title_statusbar</item>
-        <item>@string/tab_title_superuser</item>
         <item>@string/tab_title_system</item>
+        <item>@string/tab_title_performance</item>
+        <item>@string/tab_title_superuser</item>
         <item>@string/tab_title_bugreport</item>
     </string-array>
 
