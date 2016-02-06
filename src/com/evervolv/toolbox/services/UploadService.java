@@ -127,7 +127,7 @@ public class UploadService extends Service {
 
     private void notifySuccess(String url) {
         Notification n = new Notification.Builder(this)
-                .setSmallIcon(R.drawable.ic_launcher_toolbox)
+                .setSmallIcon(R.mipmap.ic_toolbox)
                 .setTicker(getResources().getString(R.string.logcat_notification_title))
                 .setContentTitle(getResources().getString(R.string.logcat_notification_title))
                 .setContentText(url)

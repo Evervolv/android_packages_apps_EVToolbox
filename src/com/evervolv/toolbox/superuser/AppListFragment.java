@@ -157,7 +157,7 @@ public class AppListFragment extends Fragment {
             if (icon != null) {
                 holder.appIcon.setImageDrawable(icon);
             } else {
-                holder.appIcon.setImageResource(R.drawable.ic_launcher_toolbox);
+                holder.appIcon.setImageResource(R.mipmap.ic_toolbox);
             }
 
             return v;
