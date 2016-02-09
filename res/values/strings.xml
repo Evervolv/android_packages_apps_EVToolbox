@@ -29,8 +29,11 @@
     <string name="send">Send</string>
 
     <!-- Main app strings ( immediate tabs ) -->
+    <string name="wtf_message">WTF IS THIS SHIT?</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+    <string name="drawer_header_categories">Categories</string>
+    <string name="drawer_header_utils">Utilities</string>
     <string name="general_title">General</string>
     <string name="tab_title_statusbar">Statusbar</string>
     <string name="tab_title_interface">Interface</string>
@@ -38,6 +41,7 @@
     <string name="tab_title_superuser">Superuser</string>
     <string name="tab_title_system">System</string>
     <string name="tab_title_bugreport">Bug Report</string>
+    <string name="tab_title_settings">Settings</string>
 
     <!-- Interface -->
     <string name="interface_rotation_title">Rotation</string>
@@ -270,5 +274,9 @@
     <string name="device_settings_title">Device Settings</string>
     <string name="device_touchscreen_title">Touchscreen</string>
     <string name="device_haptic_title">Haptic</string>
+
+    <!-- Settings -->
+    <string name="pref_settings_toolbox_disable_title">Disable toolbox features</string>
+    <string name="pref_settings_toolbox_disable_summary">This will disable toolbox features.</string>
 
 </resources>

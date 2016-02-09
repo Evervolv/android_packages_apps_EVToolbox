@@ -23,8 +23,12 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,25 +37,21 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.ListView;
-import android.widget.Switch;
 
 import com.evervolv.toolbox.categories.*;
-import com.evervolv.toolbox.custom.DrawerLayoutAdapter;
-import com.evervolv.toolbox.fragments.BugReport;
+import com.evervolv.toolbox.utils.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Toolbox extends Activity {
+public class Toolbox extends AppCompatActivity {
 
     private Context mContext;
     private List<DisabledListener> mCallbacks = new ArrayList<DisabledListener>();
 
-    private DrawerLayout mDrawerLayout;
-    private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
-    private DrawerLayoutAdapter mDrawerAdapter;
+    private DrawerLayout mDrawerLayout;
+    private NavigationView mNavigationView;
 
     /**
      * Implemented by child preferences affected by DISABLE_TOOLBOX
@@ -65,157 +65,79 @@ public class Toolbox extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.toolbox);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         mContext = this;
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        mDrawerAdapter = new DrawerLayoutAdapter(mContext);
-
-        String[] navItems = getResources().getStringArray(R.array.drawer_tabs);
-        for (String title: navItems) {
-            /* Don't assign icons just yet for nav items
-             * there's a little bit more we need to do to make this
-             * a little cleaner and more efficient
-             */
-            mDrawerAdapter.addNavItem(title, -1);
-        }
-        if (DeviceCategory.areClassesPresent(mContext)) {
-            mDrawerAdapter.addNavItem("Device", -1);
-        }
-
-        mDrawerList.setAdapter(mDrawerAdapter);
-        mDrawerList.setOnItemClickListener(new ListView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                mDrawerLayout.closeDrawer(mDrawerList);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        navigateCategory(position);
-                    }
-                }, 200);
-            }
-        });
-
-        mDrawerToggle = new ActionBarDrawerToggle(
-                this,
-                mDrawerLayout,
-                R.string.drawer_open,
-                R.string.drawer_close
-                ) {
-            final CharSequence drawerTitle = getResources().getString(R.string.app_name);
-            CharSequence fragmentTitle;
-
-            public void onDrawerClosed(View view) {
-                if (fragmentTitle != null &&
-                        // Fragments set title so if it changed, don't replace
-                        getActionBar().getTitle().equals(drawerTitle)) {
-                    getActionBar().setTitle(fragmentTitle);
-                }
-                invalidateOptionsMenu();
-            }
-
-            public void onDrawerOpened(View drawerView) {
-                // Save old title in case we don't switch fragments
-                fragmentTitle = getActionBar().getTitle();
-                getActionBar().setTitle(drawerTitle);
-                invalidateOptionsMenu();
-            }
-        };
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+                toolbar, R.string.drawer_open, R.string.drawer_close);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
+        mDrawerToggle.syncState();
 
-        final ActionBar bar = getActionBar();
-        bar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE, ActionBar.DISPLAY_SHOW_TITLE);
-        bar.setTitle(R.string.app_name);
-        bar.setDisplayHomeAsUpEnabled(true);
-        bar.setHomeButtonEnabled(true);
-        bar.setElevation(0);
+        mNavigationView = (NavigationView) findViewById(R.id.nav_view);
+        mNavigationView.setNavigationItemSelectedListener(mNavigationItemSelectedListener);
 
         if (savedInstanceState == null) {
             // Default options
-            mDrawerLayout.openDrawer(mDrawerList);
-            navigateCategory(0);
+            mDrawerLayout.openDrawer(GravityCompat.START);
+            getFragmentManager().beginTransaction()
+                .replace(R.id.container, new InterfaceCategory()).commit();
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.toolbox_menu, menu);
-        MenuItem item = menu.findItem(R.id.menu_switch);
-
-        Switch toolboxSwitch = (Switch) item.getActionView();
-        toolboxSwitch.setChecked(isEnabled(mContext));
-        toolboxSwitch.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Settings.System.putInt(mContext.getContentResolver(),
-                        Settings.System.DISABLE_TOOLBOX, isChecked ? 0 : 1);
-                // Inform children of state change
-                for (DisabledListener cb: mCallbacks) {
-                    cb.onToolboxDisabled(isChecked);
-                    DeviceCategory.restoreSettings(mContext);
-                }
+    private NavigationView.OnNavigationItemSelectedListener mNavigationItemSelectedListener
+            = new NavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(MenuItem item) {
+            if (handleNavigationItemSelected(item)) {
+                mDrawerLayout.closeDrawers();
+                return true;
             }
-        });
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        mDrawerToggle.syncState();
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        mDrawerToggle.onConfigurationChanged(newConfig);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
+            return false;
         }
-        return super.onOptionsItemSelected(item);
+    };
+
+    @Override
+    public void onBackPressed() {
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 
+    private boolean handleNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
 
-    // TODO clean this up
-    private void navigateCategory(int position) {
-        Log.d("Toolbox", "Selected item=" + position);
-        switch (position) {
-            case 0:
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.container, new InterfaceCategory()).commit();
-                break;
-            case 1:
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.container, new StatusbarCategory()).commit();
-                break;
-            case 2:
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.container, new SystemCategory()).commit();
-                break;
-            case 3:
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.container, new PerformanceCategory()).commit();
-                break;
-            case 4:
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.container, new SuperuserCategory()).commit();
-                break;
-            case 5:
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.container, new BugReport()).commit();
-                break;
-            case 6:
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.container,new DeviceCategory()).commit();
-            break;
+        if (id == R.id.nav_interface) {
+            getFragmentManager().beginTransaction()
+                .replace(R.id.container, new InterfaceCategory()).commit();
+        } else if (id == R.id.nav_statusbar) {
+            getFragmentManager().beginTransaction()
+                .replace(R.id.container, new StatusbarCategory()).commit();
+        } else if (id == R.id.nav_system) {
+            getFragmentManager().beginTransaction()
+                .replace(R.id.container, new SystemCategory()).commit();
+        } else if (id == R.id.nav_performance) {
+            getFragmentManager().beginTransaction()
+                .replace(R.id.container, new PerformanceCategory()).commit();
+        } else if (id == R.id.nav_superuser) {
+            getFragmentManager().beginTransaction()
+                .replace(R.id.container, new Superuser()).commit();
+        } else if (id == R.id.nav_bugreport) {
+            getFragmentManager().beginTransaction()
+                .replace(R.id.container, new BugReport()).commit();
+        } else if (id == R.id.nav_settings) {
+            getFragmentManager().beginTransaction()
+                .replace(R.id.container, new ToolboxSettings()).commit();
         }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerLayout.closeDrawer(GravityCompat.START);
+        return true;
     }
 
     /**
@@ -233,11 +155,20 @@ public class Toolbox extends Activity {
     }
 
     /**
+     * Inform children of state change
+     */
+    public void updateListeners(boolean isChecked) {
+        for (DisabledListener cb: mCallbacks) {
+            cb.onToolboxDisabled(isChecked);
+            DeviceCategory.restoreSettings(mContext);
+        }
+    }
+
+    /**
      * Checks if toolbox is enabled
      */
     public static boolean isEnabled(Context context) {
         return Settings.System.getInt(context.getContentResolver(),
                 Settings.System.DISABLE_TOOLBOX, 0) != 1;
     }
-
 }

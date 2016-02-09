@@ -103,8 +103,7 @@
                     <ImageButton
                         android:id="@+id/pd"
                         style="@style/PinButton"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/ic_delete" />
+                        android:src="@drawable/ic_backspace" />
 
                 </LinearLayout>
 

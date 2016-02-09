@@ -16,6 +16,7 @@
 package com.evervolv.toolbox.categories;
 
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.fragments.SystemNetwork;
@@ -39,6 +40,7 @@ public class SystemCategory extends CategoryFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        getActivity().getActionBar().setTitle(getResources().getString(R.string.tab_title_system));
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(
+                getResources().getString(R.string.tab_title_system));
     }
 }

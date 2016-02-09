@@ -3,10 +3,12 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE_TAGS := optional
 
-appcompat_dir := ../../../$(SUPPORT_LIBRARY_ROOT)/v7/appcompat/res
-res_dir := res $(appcompat_dir)
+LOCAL_RESOURCE_DIR := \
+        $(LOCAL_PATH)/res \
+        frameworks/support/v7/appcompat/res \
+        frameworks/support/v7/recyclerview/res \
+        frameworks/support/design/res
 
-LOCAL_RESOURCE_DIR := $(addprefix $(LOCAL_PATH)/, $(res_dir))
 LOCAL_SRC_FILES := $(call all-java-files-under, src/)
 
 ifneq ($(BOARD_DEVICE_SETTINGS),)
@@ -15,14 +17,18 @@ ifneq ($(BOARD_DEVICE_SETTINGS),)
 endif
 
 LOCAL_STATIC_JAVA_LIBRARIES := \
+    android-support-design \
     android-support-v13 \
     android-support-v7-appcompat \
+    android-support-v7-recyclerview \
     android-support-v4 \
     org.apache.http.legacy
 
 LOCAL_AAPT_FLAGS := \
     --auto-add-overlay \
-    --extra-packages android.support.v7.appcompat
+    --extra-packages android.support.v7.appcompat \
+    --extra-packages android.support.v7.recyclerview \
+    --extra-packages android.support.design
 
 LOCAL_PACKAGE_NAME := EVToolbox
 LOCAL_CERTIFICATE := platform

@@ -24,6 +24,11 @@
                 android:summaryOn="@string/pref_superuser_superuser_access_summary_on"
                 android:summaryOff="@string/pref_superuser_superuser_access_summary_off" />
 
+        <SwitchPreference
+                android:key="pref_superuser_logging"
+                android:title="@string/pref_superuser_logging_title"
+                android:summary="@string/pref_superuser_logging_summary" />
+
         <ListPreference
                 android:key="pref_superuser_auto_response"
                 android:title="@string/pref_superuser_auto_response_title"
@@ -53,5 +58,12 @@
                 android:dialogTitle="@string/pref_superuser_request_timeout_title"
                 android:entries="@array/pref_superuser_request_timeout_entries"
                 android:entryValues="@array/pref_superuser_request_timeout_entryvalues" />
+
+        <ListPreference
+                android:key="pref_superuser_notifications"
+                android:title="@string/pref_superuser_notifications_title"
+                android:dialogTitle="@string/pref_superuser_notifications_title"
+                android:entries="@array/pref_superuser_notifications_entries"
+                android:entryValues="@array/pref_superuser_notifications_entryvalues" />
 
 </PreferenceScreen>

@@ -6,12 +6,13 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v4.widget.SlidingPaneLayout.PanelSlideListener;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.evervolv.toolbox.R;
 
-public class SuperuserAppActivity extends Activity {
+public class SuperuserAppActivity extends AppCompatActivity {
 
     private SlidingPaneLayout mSlidingPaneLayout;
     
@@ -19,8 +20,6 @@ public class SuperuserAppActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.superuser_app_list_activity);
-        setTitle(R.string.superuser_app_policies_title);
-        getActionBar().setHomeButtonEnabled(true);
 
         Resources res = this.getResources();
 

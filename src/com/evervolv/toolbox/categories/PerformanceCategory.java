@@ -19,6 +19,7 @@ package com.evervolv.toolbox.categories;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,6 +75,7 @@ public class PerformanceCategory extends CategoryFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        getActivity().getActionBar().setTitle(getResources().getString(R.string.tab_title_performance));
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(
+                getResources().getString(R.string.tab_title_performance));
     }
 }

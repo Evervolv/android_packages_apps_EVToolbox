@@ -1,2 +1,7 @@
 -keep public class com.evervolv.toolbox.fragments.*
 -keep public class com.evervolv.toolbox.custom.*
+
+-keep class android.support.v4.* { *; }
+-keep class android.support.v4.*.* { *; }
+-keep class android.support.v7.* { *; }
+-keep class android.support.v7.*.* { *; }

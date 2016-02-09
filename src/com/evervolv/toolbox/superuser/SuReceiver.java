@@ -28,7 +28,7 @@ import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.superuser.db.LogEntry;
 import com.evervolv.toolbox.superuser.db.SuperuserDatabaseHelper;
 import com.evervolv.toolbox.superuser.db.UidPolicy;
-import com.evervolv.toolbox.superuser.util.Settings;
+import com.evervolv.toolbox.superuser.SuperuserUtils;
 
 public class SuReceiver extends BroadcastReceiver {
 
@@ -77,8 +77,8 @@ public class SuReceiver extends BroadcastReceiver {
         if (u != null && !u.notification)
             return;
 
-        switch (Settings.getNotificationType(context)) {
-        case Settings.NOTIFICATION_TYPE_NOTIFICATION:
+        switch (SuperuserUtils.getNotificationType(context)) {
+        case SuperuserUtils.NOTIFICATION_TYPE_NOTIFICATION:
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
             builder.setTicker(toast)
             .setAutoCancel(true)
@@ -90,7 +90,7 @@ public class SuReceiver extends BroadcastReceiver {
             NotificationManager nm = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
             nm.notify(NOTIFICATION_ID, builder.getNotification());
             break;
-        case Settings.NOTIFICATION_TYPE_TOAST:
+        case SuperuserUtils.NOTIFICATION_TYPE_TOAST:
             Toast.makeText(context, toast, Toast.LENGTH_SHORT).show();
             break;
         }

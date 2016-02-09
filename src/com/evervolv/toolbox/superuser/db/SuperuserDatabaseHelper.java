@@ -23,7 +23,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.text.TextUtils;
 
-import com.evervolv.toolbox.superuser.util.Settings;
+import com.evervolv.toolbox.superuser.SuperuserUtils;
 
 import java.util.ArrayList;
 
@@ -164,7 +164,7 @@ public class SuperuserDatabaseHelper extends SQLiteOpenHelper {
         if (u != null && !u.logging)
             return u;
 
-        if (!Settings.getLogging(context))
+        if (!SuperuserUtils.getLogging(context))
             return u;
 
         SQLiteDatabase superuser = new SuperuserDatabaseHelper(context).getWritableDatabase();

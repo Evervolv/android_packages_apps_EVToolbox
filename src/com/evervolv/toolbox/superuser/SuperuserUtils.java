@@ -1,4 +1,4 @@
-package com.evervolv.toolbox.superuser.util;
+package com.evervolv.toolbox.superuser;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -22,14 +22,12 @@ import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.security.MessageDigest;
 
-public class Settings {
-
+public class SuperuserUtils {
     private static final String KEY_TIMEOUT = "timeout";
     public static final String KEY_PIN = "pin";
     private static final String KEY_NOTIFICATION = "notification";
     private static final String KEY_AUTOMATIC_RESPONSE = "automatic_response";
     private static final String KEY_REQUIRE_PREMISSION = "require_permission";
-
 
     public static final int NOTIFICATION_TYPE_NONE = 0;
     public static final int NOTIFICATION_TYPE_TOAST = 1;
@@ -171,7 +169,7 @@ public class Settings {
     }
 
     public static final boolean isPinProtected(Context context) {
-        return Settings.getString(context, KEY_PIN) != null;
+        return SuperuserUtils.getString(context, KEY_PIN) != null;
     }
 
     private static String digest(String value) {
@@ -192,12 +190,12 @@ public class Settings {
     }
 
     public static void setPin(Context context, String pin) {
-        Settings.setString(context, KEY_PIN, digest(pin));
+        SuperuserUtils.setString(context, KEY_PIN, digest(pin));
     }
 
     public static boolean checkPin(Context context, String pin) {
         pin = digest(pin);
-        String hashed = Settings.getString(context, KEY_PIN);
+        String hashed = SuperuserUtils.getString(context, KEY_PIN);
         if (TextUtils.isEmpty(pin))
             return TextUtils.isEmpty(hashed);
         return pin.equals(hashed);

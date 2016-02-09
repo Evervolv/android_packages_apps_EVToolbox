@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ * Copyright (C) 2013 The Evervolv Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ -->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item android:title="@string/drawer_header_categories">
+            <menu>
+                <item android:id="@+id/nav_interface"
+                      android:icon="@drawable/ic_menu_interface"
+                      android:title="@string/tab_title_interface" />
+                <item android:id="@+id/nav_statusbar"
+                      android:icon="@drawable/ic_menu_statusbar"
+                      android:title="@string/tab_title_statusbar" />
+                <item android:id="@+id/nav_system"
+                      android:icon="@drawable/ic_menu_system"
+                      android:title="@string/tab_title_system" />
+                <item android:id="@+id/nav_performance"
+                      android:icon="@drawable/ic_menu_performance"
+                      android:title="@string/tab_title_performance" />
+            </menu>
+        </item>
+        <item android:title="@string/drawer_header_utils">
+            <menu>
+                <item android:id="@+id/nav_superuser"
+                      android:icon="@drawable/ic_menu_superuser"
+                      android:title="@string/tab_title_superuser" />
+                <item android:id="@+id/nav_bugreport"
+                      android:icon="@drawable/ic_menu_bugreport"
+                      android:title="@string/tab_title_bugreport" />
+                <item android:id="@+id/nav_settings"
+                      android:icon="@drawable/ic_menu_settings"
+                      android:title="@string/tab_title_settings" />
+            </menu>
+        </item>
+    </group>
+</menu>

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.evervolv.toolbox.fragments;
+package com.evervolv.toolbox.utils;
 
 import android.app.Fragment;
 import android.content.BroadcastReceiver;
@@ -26,6 +26,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemProperties;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
@@ -223,7 +224,8 @@ public class BugReport extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        getActivity().getActionBar().setTitle(getResources().getString(R.string.tab_title_bugreport));
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(
+                getResources().getString(R.string.tab_title_bugreport));
     }
 
     private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {

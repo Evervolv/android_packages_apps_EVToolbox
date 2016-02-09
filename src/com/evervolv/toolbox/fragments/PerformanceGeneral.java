@@ -18,7 +18,6 @@ package com.evervolv.toolbox.fragments;
 
 import android.app.Activity;
 import android.app.ActivityManager;
-import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -35,6 +34,7 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
 import com.evervolv.toolbox.R;

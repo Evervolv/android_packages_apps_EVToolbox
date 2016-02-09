@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!--
  * Copyright (C) 2013 The Evervolv Project
@@ -17,15 +17,11 @@
  -->
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-        <SwitchPreference
-                android:key="pref_superuser_logging"
-                android:title="@string/pref_superuser_logging_title"
-                android:summary="@string/pref_superuser_logging_summary" />
 
-        <ListPreference
-                android:key="pref_superuser_notifications"
-                android:title="@string/pref_superuser_notifications_title"
-                android:dialogTitle="@string/pref_superuser_notifications_title"
-                android:entries="@array/pref_superuser_notifications_entries"
-                android:entryValues="@array/pref_superuser_notifications_entryvalues" />
+        <SwitchPreference
+            android:key="pref_settings_toolbox_disable"
+            android:title="@string/pref_settings_toolbox_disable_title"
+            android:summary="@string/pref_settings_toolbox_disable_summary">
+        </SwitchPreference>
+
 </PreferenceScreen>

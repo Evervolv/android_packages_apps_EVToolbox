@@ -44,7 +44,7 @@ import android.widget.Toast;
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.superuser.db.SuDatabaseHelper;
 import com.evervolv.toolbox.superuser.db.UidPolicy;
-import com.evervolv.toolbox.superuser.util.Settings;
+import com.evervolv.toolbox.superuser.SuperuserUtils;
 
 import junit.framework.Assert;
 
@@ -224,7 +224,7 @@ public class MultitaskSuRequestActivity extends FragmentActivity {
         // this is so future su requests dont invoke ui
 
         // handle declared permission
-        if (Settings.getRequirePermission(MultitaskSuRequestActivity.this) && !superuserDeclared) {
+        if (SuperuserUtils.getRequirePermission(MultitaskSuRequestActivity.this) && !superuserDeclared) {
             Log.i(LOGTAG, "Automatically denying due to missing permission");
             mHandler.post(new Runnable() {
                 @Override
@@ -237,13 +237,13 @@ public class MultitaskSuRequestActivity extends FragmentActivity {
         }
 
         // automatic response
-        switch (Settings.getAutomaticResponse(MultitaskSuRequestActivity.this)) {
-        case Settings.AUTOMATIC_RESPONSE_ALLOW:
+        switch (SuperuserUtils.getAutomaticResponse(MultitaskSuRequestActivity.this)) {
+        case SuperuserUtils.AUTOMATIC_RESPONSE_ALLOW:
 //            // automatic response and pin can not be used together
-//            if (Settings.isPinProtected(MultitaskSuRequestActivity.this))
+//            if (SuperuserUtils.isPinProtected(MultitaskSuRequestActivity.this))
 //                break;
             // check if the permission must be granted 
-            if (Settings.getRequirePermission(MultitaskSuRequestActivity.this) && !granted)
+            if (SuperuserUtils.getRequirePermission(MultitaskSuRequestActivity.this) && !granted)
                 break;
             Log.i(LOGTAG, "Automatically allowing due to user preference");
             mHandler.post(new Runnable() {
@@ -254,7 +254,7 @@ public class MultitaskSuRequestActivity extends FragmentActivity {
                 }
             });
             return;
-        case Settings.AUTOMATIC_RESPONSE_DENY:
+        case SuperuserUtils.AUTOMATIC_RESPONSE_DENY:
             Log.i(LOGTAG, "Automatically denying due to user preference");
             mHandler.post(new Runnable() {
                 @Override
@@ -368,7 +368,7 @@ public class MultitaskSuRequestActivity extends FragmentActivity {
     LocalSocket mSocket;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //Settings.applyDarkThemeSetting(this, R.style.RequestThemeDark);
+        //SuperuserUtils.applyDarkThemeSetting(this, R.style.RequestThemeDark);
         super.onCreate(savedInstanceState);
 
         Intent intent = getIntent();
@@ -410,7 +410,7 @@ public class MultitaskSuRequestActivity extends FragmentActivity {
                 if (!mHandled)
                     handleAction(false, -1);
             }
-        }, Settings.getRequestTimeout(this) * 1000);
+        }, SuperuserUtils.getRequestTimeout(this) * 1000);
     }
     
     @Override
@@ -459,7 +459,7 @@ public class MultitaskSuRequestActivity extends FragmentActivity {
         mAllow.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!Settings.isPinProtected(MultitaskSuRequestActivity.this)) {
+                if (!SuperuserUtils.isPinProtected(MultitaskSuRequestActivity.this)) {
                     approve();
                    return;
                 }
@@ -472,7 +472,7 @@ public class MultitaskSuRequestActivity extends FragmentActivity {
                     @Override
                     public void onEnter(String password) {
                         super.onEnter(password);
-                        if (Settings.checkPin(MultitaskSuRequestActivity.this, password)) {
+                        if (SuperuserUtils.checkPin(MultitaskSuRequestActivity.this, password)) {
                             mAllow.setEnabled(false);
                             mDeny.setEnabled(false);
                             handleAction(true, until);

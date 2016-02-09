@@ -3,6 +3,7 @@ package com.evervolv.toolbox.superuser;
 import android.app.ListActivity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -25,7 +26,7 @@ public class SuperuserLogsActivity extends ListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActionBar().setHomeButtonEnabled(true);
+        setTitle(R.string.superuser_app_policies_logs_title);
         mContext = this;
         ArrayList<LogEntry> logs = SuperuserDatabaseHelper.getLogs(mContext);
         setListAdapter(new LogAdapter(mContext,
