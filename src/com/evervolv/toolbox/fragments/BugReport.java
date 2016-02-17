@@ -151,6 +151,8 @@ public class BugReport extends Fragment {
             @Override
             public void onClick(View view) {
                 boolean noneSelected = true;
+                boolean forcePlainText = false;
+
                 String serviceCall = Constants.DUMPLOGCAT_SERVICE
                         + Constants.DUMPLOGCAT_SERVICE_DEFAULT_ARGS
                         + mCtx.getFilesDir().getAbsolutePath() + "/"
@@ -159,6 +161,8 @@ public class BugReport extends Fragment {
                 if (mLogcat.isChecked()) {
                     noneSelected = false;
                     serviceCall += Constants.MAIN_BUFFER_ARG;
+                    //Force as plaintext for now
+                    forcePlainText = true;
                 }
                 if (mRadio.isChecked()) {
                     noneSelected = false;
@@ -171,6 +175,10 @@ public class BugReport extends Fragment {
                 if (mLastKmsg.isChecked()) {
                     noneSelected = false;
                     serviceCall += Constants.LAST_KMSG_ARG;
+                    forcePlainText = true;
+                }
+
+                if (forcePlainText) {
                     mPrefs.edit().putBoolean(PREF_PLAINTEXT, true).commit();
                 } else {
                     mPrefs.edit().putBoolean(PREF_PLAINTEXT, false).commit();
