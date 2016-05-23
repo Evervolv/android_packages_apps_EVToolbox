@@ -95,7 +95,6 @@
         <item>@string/pref_statusbar_batt_style_portrait</item>
         <item>@string/pref_statusbar_batt_style_landscape</item>
         <item>@string/pref_statusbar_batt_style_circle</item>
-        <item>@string/pref_statusbar_batt_style_dotted_circle</item>
         <item>@string/pref_statusbar_batt_style_text</item>
         <item>@string/pref_statusbar_batt_style_hidden</item>
     </string-array>
@@ -104,7 +103,6 @@
         <item>0</item>
         <item>5</item>
         <item>2</item>
-        <item>3</item>
         <item>6</item>
         <item>4</item>
     </string-array>
