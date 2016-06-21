@@ -115,6 +115,8 @@
     <string name="pref_statusbar_clock_am_pm_style_gone">Hidden</string>
     <string name="pref_statusbar_quick_pulldown_title">Quick QS Pulldown</string>
     <string name="pref_statusbar_quick_pulldown_summary">Expand Quick Settings in a single swipe</string>
+    <string name="pref_statusbar_custom_header_title">Time Contextual Header</string>
+    <string name="pref_statusbar_custom_header_summary">Enable notification panel header image</string>
 
     <!-- System >> Network -->
     <string name="system_network_title">Network</string>

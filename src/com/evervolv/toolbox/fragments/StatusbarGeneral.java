@@ -37,6 +37,7 @@ public class StatusbarGeneral extends PreferenceFragment implements
     private static final String STATUSBAR_BATTERY_PERCENT = "pref_statusbar_batt_percent_style";
     private static final String STATUSBAR_CLOCK_AM_PM_STYLE = "pref_statusbar_clock_am_pm_style";
     private static final String STATUSBAR_QUICK_PULLDOWN = "pref_statusbar_quick_pulldown";
+    private static final String STATUSBAR_CUSTOM_HEADER = "pref_statusbar_custom_header";
 
     private static final int BATT_STYLE_DEFAULT = 0;
     private static final int BATT_PERCENT_DEFAULT = 0;
@@ -46,6 +47,7 @@ public class StatusbarGeneral extends PreferenceFragment implements
     private PreferenceScreen mPrefSet;
 
     private SwitchPreference mQuickPulldown;
+    private SwitchPreference mCustomHeader;
     private ListPreference mBattStyle;
     private ListPreference mBattPercent;
     private ListPreference mClockAmPmStyle;
@@ -81,6 +83,12 @@ public class StatusbarGeneral extends PreferenceFragment implements
         mQuickPulldown = (SwitchPreference) mPrefSet.findPreference(STATUSBAR_QUICK_PULLDOWN);
         mQuickPulldown.setChecked(Settings.System.getInt(mCr,
                 Settings.System.STATUS_BAR_QUICK_QS_PULLDOWN, 1) == 1);
+
+        /* Contextual header */
+        mCustomHeader = (SwitchPreference) mPrefSet.findPreference(STATUSBAR_CUSTOM_HEADER);
+        mCustomHeader.setChecked((Settings.System.getInt(mCr,
+                Settings.System.STATUS_BAR_CUSTOM_HEADER, 1) == 1));
+        mCustomHeader.setOnPreferenceChangeListener(this);
     }
 
     @Override
@@ -111,6 +119,11 @@ public class StatusbarGeneral extends PreferenceFragment implements
         if (preference == mClockAmPmStyle) {
             Settings.System.putInt(mCr, Settings.System.STATUSBAR_CLOCK_AM_PM_STYLE,
                     Integer.valueOf((String) newValue));
+            return true;
+        }
+        if (preference == mCustomHeader) {
+            Settings.System.putInt(mCr, Settings.System.STATUS_BAR_CUSTOM_HEADER,
+                    (Boolean) newValue ? 1 : 0);
             return true;
         }
         return false;
