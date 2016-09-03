@@ -79,4 +79,14 @@
           android:fragment="com.evervolv.toolbox.applications.ExpandedDesktopSettings"
           evervolv:xmlRes="@xml/expanded_desktop_prefs" />
 
+    <part android:key="battery_lights"
+          android:title="@string/battery_light_title"
+          android:fragment="com.evervolv.toolbox.notificationlight.BatteryLightSettings"
+          evervolv:xmlRes="@xml/battery_light_settings" />
+
+    <part android:key="notification_lights"
+          android:title="@string/notification_light_title"
+          android:fragment="com.evervolv.toolbox.notificationlight.NotificationLightSettings"
+          evervolv:xmlRes="@xml/notification_light_settings" />
+
 </parts-catalog>
