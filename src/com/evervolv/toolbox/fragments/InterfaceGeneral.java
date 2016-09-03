@@ -44,8 +44,8 @@ public class InterfaceGeneral extends PreferenceFragment implements
 
     private static final String DENSITY_PICKER_PREF = "pref_interface_density_picker";
     private static final String LOCKSCREEN_MUSIC_CTRL_VOLBTN = "pref_lockscreen_music_controls_volbtn";
-    private static final String FANCY_UI = "pref_interface_fancy_ui";
-    private static final String SETTINGS_SWITCH_TOGGLE = "pref_interface_settings_switch_toggle";
+    //private static final String FANCY_UI = "pref_interface_fancy_ui";
+    //private static final String SETTINGS_SWITCH_TOGGLE = "pref_interface_settings_switch_toggle";
 
     private static final String ASSIST_WAKE_TOGGLE = "pref_assist_wake_toggle";
     private static final String APP_SWITCH_WAKE_TOGGLE = "pref_app_switch_wake_toggle";
@@ -145,18 +145,6 @@ public class InterfaceGeneral extends PreferenceFragment implements
         mMusicCtrlVolBtn.setChecked(Settings.System.getInt(mCr,
                 Settings.System.LOCKSCREEN_MUSIC_CONTROLS_VOLBTN, 1) == 1);
 
-        /* Settings menu Switches */
-        mSettingsSwitch = (SwitchPreference) mPrefSet.findPreference(SETTINGS_SWITCH_TOGGLE);
-        mSettingsSwitch.setChecked(Settings.System.getInt(mCr,
-                Settings.System.SETTINGS_SWITCH, 0) == 1);
-
-        mFancyUi = (SwitchPreference) mPrefSet.findPreference(FANCY_UI);
-        mFancyUi.setChecked(ActivityManager.isForcedHighEndGfx());
-        // This only affects low mem devices
-        if (!ActivityManager.isLowRamDeviceStatic()) {
-            mPrefSet.removePreference(mFancyUi);
-        }
-
         /* Density picker */
         int currentDensity = SystemProperties.getInt("persist.sys.fake_density", 0);
         if (currentDensity == 0) {
@@ -226,18 +214,6 @@ public class InterfaceGeneral extends PreferenceFragment implements
             Settings.System.putInt(mCr, Settings.System.LOCKSCREEN_MUSIC_CONTROLS_VOLBTN,
                     value ? 1 : 0);
             return true;
-        } else if (preference == mSettingsSwitch) {
-            value = mSettingsSwitch.isChecked();
-            Settings.System.putInt(mCr, Settings.System.SETTINGS_SWITCH,
-                    value ? 1 : 0);
-            return true;
-        } else if (preference == mFancyUi) {
-            if (mFancyUi.isChecked()) {
-                SystemProperties.set("persist.sys.force_highendgfx", "true");
-            } else {
-                SystemProperties.set("persist.sys.force_highendgfx", "false");
-            }
-            requestReboot(R.string.pref_interface_fancy_ui_reboot_message);
         }
         return false;
     }
