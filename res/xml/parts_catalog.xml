@@ -78,4 +78,9 @@
           android:fragment="com.evervolv.toolbox.notificationlight.NotificationLightSettings"
           evervolv:xmlRes="@xml/notification_light_settings" />
 
+    <part android:key="livedisplay"
+          android:title="@*evervolv.platform:string/live_display_title"
+          android:fragment="com.evervolv.toolbox.livedisplay.LiveDisplay"
+          evervolv:xmlRes="@xml/livedisplay" />
+
 </parts-catalog>
