@@ -138,4 +138,11 @@
     <string name="navigation_bar_category">Navigation bar</string>
     <string name="navigation_bar_title">Buttons and layout</string>
 
+    <!-- Status bar -->
+    <string name="status_bar_title">Status bar</string>
+
+    <!-- Status bar - icon blacklist -->
+    <string name="status_bar_icons_title">Status bar icons</string>
+    <string name="status_bar_icons_summary">Control which status bar icons are shown</string>
+
 </resources>
