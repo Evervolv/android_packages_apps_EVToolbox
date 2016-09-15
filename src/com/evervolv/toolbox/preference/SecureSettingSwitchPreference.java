@@ -18,10 +18,10 @@ package com.evervolv.toolbox.preference;
 
 import android.content.Context;
 import android.provider.Settings;
-import android.support.v14.preference.SwitchPreference;
 import android.util.AttributeSet;
 
-public class SecureSettingSwitchPreference extends SwitchPreference {
+public class SecureSettingSwitchPreference extends SelfRemovingSwitchPreference {
+
     public SecureSettingSwitchPreference(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
@@ -31,7 +31,7 @@ public class SecureSettingSwitchPreference extends SwitchPreference {
     }
 
     public SecureSettingSwitchPreference(Context context) {
-        super(context, null);
+        super(context);
     }
 
     @Override

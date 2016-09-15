@@ -18,10 +18,10 @@ package com.evervolv.toolbox.preference;
 
 import android.content.Context;
 import android.provider.Settings;
-import android.support.v7.preference.ListPreference;
 import android.util.AttributeSet;
 
-public class SystemSettingListPreference extends ListPreference {
+public class SystemSettingListPreference extends SelfRemovingListPreference {
+
     public SystemSettingListPreference(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
