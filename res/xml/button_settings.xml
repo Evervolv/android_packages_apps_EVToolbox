@@ -44,6 +44,18 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:key="power_key"
+        android:title="@string/power_key_title" >
+
+        <evervolv.preference.EVSecureSettingSwitchPreference
+            android:key="advanced_reboot"
+            android:title="@string/advanced_reboot_title"
+            android:summary="@string/advanced_reboot_summary"
+            android:defaultValue="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:key="home_key"
         android:title="@string/home_key_title" >
 

@@ -86,6 +86,7 @@ public class ButtonSettings extends SettingsPreferenceFragment
     private static final String KEY_SWAP_CAPACITIVE_KEYS = "swap_capacitive_keys";
 
     private static final String CATEGORY_CAPACITIVE = "capacitive_keys";
+    private static final String CATEGORY_POWER = "power_key";
     private static final String CATEGORY_HOME = "home_key";
     private static final String CATEGORY_BACK = "back_key";
     private static final String CATEGORY_MENU = "menu_key";
@@ -132,6 +133,7 @@ public class ButtonSettings extends SettingsPreferenceFragment
         final int deviceWakeKeys = res.getInteger(
                 com.evervolv.platform.internal.R.integer.config_deviceHardwareWakeKeys);
 
+        final boolean hasPowerKey = DeviceUtils.hasPowerKey();
         final boolean hasHomeKey = DeviceUtils.hasHomeKey(getActivity());
         final boolean hasBackKey = DeviceUtils.hasBackKey(getActivity());
         final boolean hasMenuKey = DeviceUtils.hasMenuKey(getActivity());
@@ -153,6 +155,8 @@ public class ButtonSettings extends SettingsPreferenceFragment
 
         final PreferenceGroup capacitiveCategory =
                 (PreferenceCategory) prefScreen.findPreference(CATEGORY_CAPACITIVE);
+        final PreferenceCategory powerCategory =
+                (PreferenceCategory) prefScreen.findPreference(CATEGORY_POWER);
         final PreferenceGroup homeCategory =
                 (PreferenceCategory) prefScreen.findPreference(CATEGORY_HOME);
         final PreferenceGroup backCategory =
@@ -207,6 +211,10 @@ public class ButtonSettings extends SettingsPreferenceFragment
 
         if (capacitiveCategory.getPreferenceCount() == 0) {
             prefScreen.removePreference(capacitiveCategory);
+        }
+
+        if (!hasPowerKey || powerCategory.getPreferenceCount() == 0) {
+            prefScreen.removePreference(powerCategory);
         }
 
         if (hasHomeKey) {
