@@ -18,11 +18,12 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <SwitchPreference
-                android:key="pref_superuser_superuser_access"
-                android:title="@string/pref_superuser_superuser_access_title"
-                android:summaryOn="@string/pref_superuser_superuser_access_summary_on"
-                android:summaryOff="@string/pref_superuser_superuser_access_summary_off" />
+        <ListPreference
+            android:key="pref_superuser_access"
+            android:title="@string/pref_superuser_access_title"
+            android:entries="@array/pref_superuser_access_entries"
+            android:entryValues="@array/pref_superuser_access_entryvalues">
+        </ListPreference>
 
         <SwitchPreference
                 android:key="pref_superuser_logging"

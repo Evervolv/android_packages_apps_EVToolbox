@@ -17,6 +17,7 @@ package com.evervolv.toolbox.utils;
 
 import android.content.ContentResolver;
 import android.os.Bundle;
+import android.os.SystemProperties;
 import android.preference.SwitchPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;

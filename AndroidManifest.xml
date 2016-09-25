@@ -46,7 +46,8 @@
         android:icon="@mipmap/ic_toolbox"
         android:label="@string/app_name"
         android:hardwareAccelerated="true"
-        android:theme="@style/Theme.EVToolbox">
+        android:theme="@style/Theme.EVToolbox"
+        android:directBootAware="true">
 
         <activity
             android:name=".Toolbox"

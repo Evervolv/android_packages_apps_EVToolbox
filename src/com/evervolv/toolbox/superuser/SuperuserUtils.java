@@ -320,14 +320,16 @@ public class SuperuserUtils {
     }
 
     public static boolean getSuperuserAccess() {
-        int val = SystemProperties.getInt("persist.sys.root_access", SUPERUSER_ACCESS_APPS_AND_ADB);
+        int val = SystemProperties.getInt("persist.sys.root_access", SUPERUSER_ACCESS_DISABLED);
         switch (val) {
             case SUPERUSER_ACCESS_DISABLED:
                 return false;
+            case SUPERUSER_ACCESS_APPS_ONLY:
+            case SUPERUSER_ACCESS_ADB_ONLY:
             case SUPERUSER_ACCESS_APPS_AND_ADB:
                 return true;
             default:
-                return true;
+                return false;
         }
     }
 

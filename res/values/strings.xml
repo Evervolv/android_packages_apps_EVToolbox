@@ -156,10 +156,14 @@
     <!-- Superuser -->
 
     <!-- Superuser >> Security -->
+
     <string name="superuser_security_title">Security</string>
-    <string name="pref_superuser_superuser_access_title">Superuser access</string>
-    <string name="pref_superuser_superuser_access_summary_on">Apps are allowed to access Superuser</string>
-    <string name="pref_superuser_superuser_access_summary_off">Apps are not allowed to access Superuser</string>
+
+    <string name="pref_superuser_access_title">Superuser access</string>
+    <string name="pref_superuser_access_disabled">Disabled</string>
+    <string name="pref_superuser_access_apps_only">Apps only</string>
+    <string name="pref_superuser_access_adb_only">ADB only</string>
+    <string name="pref_superuser_access_apps_adb">Apps and ADB</string>
 
     <string name="pref_superuser_auto_response_title">Automatic response</string>
     <string name="pref_superuser_auto_response_prompt_summary">Set to prompt</string>

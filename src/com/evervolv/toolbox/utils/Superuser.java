@@ -4,6 +4,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemProperties;
+import android.provider.Settings;
 import android.preference.SwitchPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -29,23 +31,25 @@ import com.evervolv.toolbox.superuser.SuperuserLogsActivity;
 public class Superuser extends PreferenceFragment implements
         OnPreferenceChangeListener {
 
+    private static final String PREF_SUPERUSER_ACCESS = "pref_superuser_access";
+    private static final String PREF_SUPERUSER_ACCESS_PROPERTY = "persist.sys.root_access";
     private static final String PREF_SUPERUSER_AUTO_RESPONSE = "pref_superuser_auto_response";
     private static final String PREF_SUPERUSER_MULTIUSER_POLICY = "pref_superuser_multiuser_policy";
-    private static final String PREF_SUPERUSER_SUPERUSER_ACCESS = "pref_superuser_superuser_access";
     private static final String PREF_SUPERUSER_DECLARED_PERMISSION = "pref_superuser_declared_permission";
     private static final String PREF_SUPERUSER_PIN_ENTRY = "pref_superuser_pin_entry";
     private static final String PREF_SUPERUSER_REQUEST_TIMEOUT = "pref_superuser_request_timeout";
     private static final String PREF_SUPERUSER_LOGGING = "pref_superuser_logging";
     private static final String PREF_SUPERUSER_NOTIFICATIONS = "pref_superuser_notifications";
 
+
     private PreferenceScreen mPrefSet;
     private Context mContext;
 
+    private ListPreference mSuperuserAccess;
     private ListPreference mAutoResponse;
     private ListPreference mMultiuserPolicy;
     private ListPreference mRequestTimeout;
     private ListPreference mNotifications;
-    private SwitchPreference mSuperuserAccess;
     private SwitchPreference mSuperuserPermission;
     private SwitchPreference mLogging;
     private PinEntryPreference mPin;
@@ -59,9 +63,9 @@ public class Superuser extends PreferenceFragment implements
         mContext = getActivity();
         mPrefSet = getPreferenceScreen();
 
-        mSuperuserAccess = (SwitchPreference) mPrefSet.findPreference(
-                PREF_SUPERUSER_SUPERUSER_ACCESS);
-        mSuperuserAccess.setChecked(SuperuserUtils.getSuperuserAccess());
+        /* Superuser Access */
+        mSuperuserAccess = (ListPreference) mPrefSet.findPreference(PREF_SUPERUSER_ACCESS);
+        mSuperuserAccess.setOnPreferenceChangeListener(this);
 
         mLogging = (SwitchPreference) mPrefSet.findPreference(
                 PREF_SUPERUSER_LOGGING);
@@ -111,6 +115,7 @@ public class Superuser extends PreferenceFragment implements
         super.onActivityCreated(savedInstanceState);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(
                 getResources().getString(R.string.tab_title_superuser));
+        updateSuperuserAccessOptions();
     }
 
     @Override
@@ -137,13 +142,7 @@ public class Superuser extends PreferenceFragment implements
 
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-        if (preference == mSuperuserAccess) {
-            int val = mSuperuserAccess.isChecked() ?
-                    SuperuserUtils.SUPERUSER_ACCESS_APPS_AND_ADB :
-                    SuperuserUtils.SUPERUSER_ACCESS_DISABLED;
-            SuperuserUtils.setSuperuserAccess(val);
-            return true;
-        } else if (preference == mLogging) {
+        if (preference == mLogging) {
             SuperuserUtils.setLogging(mContext, mLogging.isChecked());
             return true;
         } else if (preference == mSuperuserPermission) {
@@ -185,7 +184,10 @@ public class Superuser extends PreferenceFragment implements
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        if (preference == mAutoResponse) {
+        if (preference == mSuperuserAccess) {
+            writeSuperuserAccessOptions(Integer.valueOf((String) newValue));
+            return true;
+        } else if (preference == mAutoResponse) {
             int response = Integer.valueOf((String) newValue);
             setAutoResponseSummary(response);
             SuperuserUtils.setAutomaticResponse(mContext, response);
@@ -216,6 +218,40 @@ public class Superuser extends PreferenceFragment implements
             return true;
         }
         return false;
+    }
+
+   private void updateSuperuserAccessOptions() {
+        String value = SystemProperties.get(PREF_SUPERUSER_ACCESS_PROPERTY, "0");
+        mSuperuserAccess.setValue(value);
+        mSuperuserAccess.setSummary(getResources()
+                .getStringArray(R.array.pref_superuser_access_entries)[Integer.valueOf(value)]);
+    }
+
+    private void writeSuperuserAccessOptions(Object newValue) {
+        String oldValue = SystemProperties.get(PREF_SUPERUSER_ACCESS_PROPERTY, "0");
+        SystemProperties.set(PREF_SUPERUSER_ACCESS_PROPERTY, newValue.toString());
+        if (Integer.valueOf(newValue.toString()) < 2 && !oldValue.equals(newValue)
+                && "1".equals(SystemProperties.get("service.adb.root", "0"))) {
+            SystemProperties.set("service.adb.root", "0");
+            Settings.Secure.putInt(getActivity().getContentResolver(),
+                    Settings.Secure.ADB_ENABLED, 0);
+            Settings.Secure.putInt(getActivity().getContentResolver(),
+                    Settings.Secure.ADB_ENABLED, 1);
+        }
+        updateSuperuserAccessOptions();
+    }
+
+    private void resetSuperuserAccessOptions() {
+        String oldValue = SystemProperties.get(PREF_SUPERUSER_ACCESS_PROPERTY, "0");
+        SystemProperties.set(PREF_SUPERUSER_ACCESS_PROPERTY, "0");
+        if (!oldValue.equals("0") && "1".equals(SystemProperties.get("service.adb.root", "0"))) {
+            SystemProperties.set("service.adb.root", "0");
+            Settings.Secure.putInt(getActivity().getContentResolver(),
+                    Settings.Secure.ADB_ENABLED, 0);
+            Settings.Secure.putInt(getActivity().getContentResolver(),
+                    Settings.Secure.ADB_ENABLED, 1);
+        }
+        updateSuperuserAccessOptions();
     }
 
     private void setNotificationTypeSummary(int type) {
