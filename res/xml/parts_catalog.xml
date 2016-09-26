@@ -45,4 +45,9 @@
           android:fragment="com.evervolv.toolbox.applications.LongScreenSettings"
           evervolv:xmlRes="@xml/long_screen_prefs" />
 
+    <part android:key="rotation"
+          android:title="@string/display_rotation_title"
+          android:fragment="com.evervolv.toolbox.display.RotationSettings"
+          evervolv:xmlRes="@xml/display_rotation" />
+
 </parts-catalog>
