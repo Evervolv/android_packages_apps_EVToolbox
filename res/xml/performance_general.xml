@@ -18,23 +18,23 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ListPreference
-            android:key="pref_perf_profile"
+        <ListPreference android:key="pref_perf_profile"
             android:dialogTitle="@string/perf_profile_title"
             android:title="@string/perf_profile_title"
-            android:persistent="false" />
+            android:persistent="false">
+        </ListPreference>
 
-    <ListPreference
-            android:key="pref_zram_size"
+        <ListPreference android:key="pref_zram_size"
             android:dialogTitle="@string/pref_zram_title"
             android:title="@string/pref_zram_title"
             android:summary="@string/pref_zram_summary"
             android:entries="@array/pref_zram_size_entries"
-            android:entryValues="@array/pref_zram_size_values" />
+            android:entryValues="@array/pref_zram_size_values">
+        </ListPreference>
 
-    <SwitchPreference
-            android:key="pref_ksm"
+        <SwitchPreference android:key="pref_ksm"
             android:title="@string/pref_ksm_title"
-            android:summary="@string/pref_ksm_summary" />
+            android:summary="@string/pref_ksm_summary">
+        </SwitchPreference>
 
 </PreferenceScreen>

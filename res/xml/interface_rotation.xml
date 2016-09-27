@@ -18,16 +18,20 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <SwitchPreference android:key="pref_rotation_0"
-        android:title="@string/pref_rotation_0_title" />
+        <SwitchPreference android:key="pref_rotation_0"
+            android:title="@string/pref_rotation_0_title">
+        </SwitchPreference>
 
-    <SwitchPreference android:key="pref_rotation_90"
-        android:title="@string/pref_rotation_90_title" />
+        <SwitchPreference android:key="pref_rotation_90"
+            android:title="@string/pref_rotation_90_title">
+        </SwitchPreference>
 
-    <SwitchPreference android:key="pref_rotation_180"
-        android:title="@string/pref_rotation_180_title" />
+        <SwitchPreference android:key="pref_rotation_180"
+            android:title="@string/pref_rotation_180_title">
+        </SwitchPreference>
 
-    <SwitchPreference android:key="pref_rotation_270"
-        android:title="@string/pref_rotation_270_title" />
+        <SwitchPreference android:key="pref_rotation_270"
+            android:title="@string/pref_rotation_270_title">
+        </SwitchPreference>
 
 </PreferenceScreen>

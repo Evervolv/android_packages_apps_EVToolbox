@@ -18,53 +18,53 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <ListPreference
-            android:key="pref_superuser_access"
+        <ListPreference android:key="pref_superuser_access"
             android:title="@string/pref_superuser_access_title"
             android:entries="@array/pref_superuser_access_entries"
             android:entryValues="@array/pref_superuser_access_entryvalues">
         </ListPreference>
 
-        <SwitchPreference
-                android:key="pref_superuser_logging"
-                android:title="@string/pref_superuser_logging_title"
-                android:summary="@string/pref_superuser_logging_summary" />
+        <SwitchPreference android:key="pref_superuser_logging"
+            android:title="@string/pref_superuser_logging_title"
+            android:summary="@string/pref_superuser_logging_summary">
+        </SwitchPreference>
 
-        <ListPreference
-                android:key="pref_superuser_auto_response"
-                android:title="@string/pref_superuser_auto_response_title"
-                android:dialogTitle="@string/pref_superuser_auto_response_title"
-                android:entries="@array/pref_superuser_auto_response_entries"
-                android:entryValues="@array/pref_superuser_auto_response_entryvalues" />
+        <ListPreference android:key="pref_superuser_auto_response"
+            android:title="@string/pref_superuser_auto_response_title"
+            android:dialogTitle="@string/pref_superuser_auto_response_title"
+            android:entries="@array/pref_superuser_auto_response_entries"
+            android:entryValues="@array/pref_superuser_auto_response_entryvalues">
+        </ListPreference>
 
-        <ListPreference
-                android:key="pref_superuser_multiuser_policy"
-                android:title="@string/pref_superuser_multiuser_policy_title"
-                android:dialogTitle="@string/pref_superuser_multiuser_policy_title"
-                android:entries="@array/pref_superuser_multiuser_policy_entries"
-                android:entryValues="@array/pref_superuser_multiuser_policy_entryvalues" />
+        <ListPreference android:key="pref_superuser_multiuser_policy"
+            android:title="@string/pref_superuser_multiuser_policy_title"
+            android:dialogTitle="@string/pref_superuser_multiuser_policy_title"
+            android:entries="@array/pref_superuser_multiuser_policy_entries"
+            android:entryValues="@array/pref_superuser_multiuser_policy_entryvalues">
+        </ListPreference>
 
-        <SwitchPreference
-                android:key="pref_superuser_declared_permission"
-                android:title="@string/pref_superuser_declared_permission_title"
-                android:summary="@string/pref_superuser_declared_permission_summary" />
+        <SwitchPreference android:key="pref_superuser_declared_permission"
+            android:title="@string/pref_superuser_declared_permission_title"
+            android:summary="@string/pref_superuser_declared_permission_summary">
+        </SwitchPreference>
 
         <com.evervolv.toolbox.custom.PinEntryPreference
-                android:key="pref_superuser_pin_entry"
-                android:title="@string/pref_superuser_pin_entry_title"/>
+            android:key="pref_superuser_pin_entry"
+            android:title="@string/pref_superuser_pin_entry_title">
+        </com.evervolv.toolbox.custom.PinEntryPreference>
 
-        <ListPreference
-                android:key="pref_superuser_request_timeout"
-                android:title="@string/pref_superuser_request_timeout_title"
-                android:dialogTitle="@string/pref_superuser_request_timeout_title"
-                android:entries="@array/pref_superuser_request_timeout_entries"
-                android:entryValues="@array/pref_superuser_request_timeout_entryvalues" />
+        <ListPreference android:key="pref_superuser_request_timeout"
+            android:title="@string/pref_superuser_request_timeout_title"
+            android:dialogTitle="@string/pref_superuser_request_timeout_title"
+            android:entries="@array/pref_superuser_request_timeout_entries"
+            android:entryValues="@array/pref_superuser_request_timeout_entryvalues">
+        </ListPreference>
 
-        <ListPreference
-                android:key="pref_superuser_notifications"
-                android:title="@string/pref_superuser_notifications_title"
-                android:dialogTitle="@string/pref_superuser_notifications_title"
-                android:entries="@array/pref_superuser_notifications_entries"
-                android:entryValues="@array/pref_superuser_notifications_entryvalues" />
+        <ListPreference android:key="pref_superuser_notifications"
+            android:title="@string/pref_superuser_notifications_title"
+            android:dialogTitle="@string/pref_superuser_notifications_title"
+            android:entries="@array/pref_superuser_notifications_entries"
+            android:entryValues="@array/pref_superuser_notifications_entryvalues">
+        </ListPreference>
 
 </PreferenceScreen>

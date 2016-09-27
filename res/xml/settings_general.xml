@@ -18,8 +18,7 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <SwitchPreference
-            android:key="pref_settings_toolbox_disable"
+        <SwitchPreference android:key="pref_settings_toolbox_disable"
             android:title="@string/pref_settings_toolbox_disable_title"
             android:summary="@string/pref_settings_toolbox_disable_summary">
         </SwitchPreference>
