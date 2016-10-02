@@ -20,6 +20,43 @@
     android:title="@string/performance_settings_title" >
 
     <PreferenceCategory
+        android:key="power_save_category"
+        android:title="@string/power_save_category_title">
+
+        <android.support.v14.preference.SwitchPreference
+            android:key="power_save"
+            android:title="@string/power_save_title"
+            android:summary="@string/power_save_summary"
+            android:persistent="false" />
+
+        <ListPreference
+            android:key="auto_power_save"
+            android:title="@string/auto_power_save_title"
+            android:persistent="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="perf_profile_category"
+        android:title="@string/perf_profile_category_title">
+
+        <com.evervolv.toolbox.preference.SeekBarPreference
+            android:key="perf_seekbar"
+            android:title="@string/perf_profile_title"
+            android:max="4"
+            android:defaultValue="1"
+            android:persistent="false"
+            android:layout="@layout/preference_slider" />
+
+        <com.evervolv.toolbox.preference.SecureSettingSwitchPreference
+            android:key="app_perf_profiles_enabled"
+            android:title="@string/app_perf_profiles_title"
+            android:summary="@string/app_perf_profiles_summary"
+            android:defaultValue="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:key="perf_advanced_category"
         android:title="@string/perf_advanced_category_title">
 

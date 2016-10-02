@@ -35,4 +35,9 @@
     <color name="navigation_drawer_background">@*android:color/white</color>
     <color name="navigation_drawer_icon_color">@color/themeAccent</color>
 
+    <!-- Performance profiles -->
+    <color name="perf_hot">#ffd10015</color>
+    <color name="perf_default">#ff692d55</color>
+    <color name="perf_cold">#ff005994</color>
+
 </resources>
