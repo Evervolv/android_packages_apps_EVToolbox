@@ -53,13 +53,12 @@ import com.android.settingslib.widget.LayoutPreference;
 import com.evervolv.toolbox.widget.CustomDialogPreference;
 import com.evervolv.toolbox.widget.DialogCreatable;
 import com.evervolv.toolbox.widget.HighlightablePreferenceGroupAdapter;
+import com.evervolv.toolbox.widget.SettingsHelper;
 
 import com.google.android.material.appbar.AppBarLayout;
 
 import java.util.Arrays;
 import java.util.UUID;
-
-import evervolv.preference.SettingsHelper;
 
 /**
  * Base class for Settings fragments, with some helper functions and dialog management.

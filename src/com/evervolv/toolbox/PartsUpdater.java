@@ -21,11 +21,11 @@ import android.util.Log;
 
 import com.evervolv.internal.parts.PartInfo;
 import com.evervolv.internal.parts.PartsList;
+import com.evervolv.toolbox.widget.SettingsHelper;
 
 import java.lang.reflect.Field;
 
 import evervolv.preference.RemotePreferenceUpdater;
-import evervolv.preference.SettingsHelper;
 
 import static evervolv.preference.RemotePreference.EXTRA_KEY;
 import static evervolv.preference.RemotePreference.EXTRA_SUMMARY;

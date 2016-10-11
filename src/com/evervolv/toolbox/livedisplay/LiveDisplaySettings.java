@@ -39,6 +39,7 @@ import com.evervolv.toolbox.search.BaseSearchIndexProvider;
 import com.evervolv.toolbox.search.SearchIndexableRaw;
 import com.evervolv.toolbox.search.Searchable;
 import com.evervolv.toolbox.utils.ResourceUtils;
+import com.evervolv.toolbox.widget.SettingsHelper;
 
 import java.util.Collections;
 import java.util.List;
@@ -48,7 +49,6 @@ import evervolv.hardware.DisplayMode;
 import evervolv.hardware.LiveDisplayConfig;
 import evervolv.hardware.HardwareManager;
 import evervolv.hardware.LiveDisplayManager;
-import evervolv.preference.SettingsHelper;
 import evervolv.provider.EVSettings;
 
 import static evervolv.hardware.LiveDisplayManager.FEATURE_CABC;
