@@ -114,7 +114,7 @@ public class PerfProfileSettings extends SettingsPreferenceFragment
             mPerfSeekBar.setOnPreferenceChangeListener(this);
             updatePerfSettings();
 
-            addTrigger(EVSettings.Secure.getUriFor(EVSettings.Secure.PERFORMANCE_PROFILE));
+            watch(EVSettings.Secure.getUriFor(EVSettings.Secure.PERFORMANCE_PROFILE));
         }
 
         mAutoPowerSavePref.setEntries(R.array.auto_power_save_entries);
@@ -247,8 +247,8 @@ public class PerfProfileSettings extends SettingsPreferenceFragment
     }
 
     @Override
-    public void onRefresh(Context context, Uri uri) {
-        super.onRefresh(context, uri);
+    public void onSettingsChanged(Uri contentUri) {
+        super.onSettingsChanged(contentUri);
         updatePerfSettings();
     }
 
