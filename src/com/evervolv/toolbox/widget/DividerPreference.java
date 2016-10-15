@@ -36,7 +36,6 @@ public class DividerPreference extends Preference {
         if (a.hasValue(R.styleable.DividerPreference_allowDividerBelow)) {
             mAllowBelow = a.getBoolean(R.styleable.DividerPreference_allowDividerBelow, false);
         }
-        a.recycle();
     }
 
     public DividerPreference(Context context) {
