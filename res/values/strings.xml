@@ -118,6 +118,8 @@
     <string name="pref_statusbar_custom_header_title">Time Contextual Header</string>
     <string name="pref_statusbar_custom_header_summary">Enable notification panel header image</string>
     <string name="pref_status_bar_charge_color_title">Set statusbar battery icon color when charging</string>
+    <string name="pref_status_bar_battery_style_tile_title">Custom battery tile style</string>
+    <string name="pref_status_bar_battery_style_tile_summary">Allow to set the same icon style chosen for the statusbar battery</string>
 
     <!-- System >> Network -->
     <string name="system_network_title">Network</string>

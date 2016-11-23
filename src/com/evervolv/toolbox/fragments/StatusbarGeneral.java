@@ -38,6 +38,7 @@ public class StatusbarGeneral extends PreferenceFragment implements
 
     private static final String STATUSBAR_BATTERY_STYLE = "pref_statusbar_batt_style";
     private static final String STATUSBAR_BATTERY_PERCENT = "pref_statusbar_batt_percent_style";
+    private static final String STATUSBAR_BATTERY_STYLE_TILE = "pref_status_bar_battery_style_tile";
     private static final String STATUSBAR_CHARGE_COLOR = "pref_status_bar_charge_color";
     private static final String STATUSBAR_CLOCK_AM_PM_STYLE = "pref_statusbar_clock_am_pm_style";
     private static final String STATUSBAR_QUICK_PULLDOWN = "pref_statusbar_quick_pulldown";
@@ -51,6 +52,7 @@ public class StatusbarGeneral extends PreferenceFragment implements
 
     private ColorPickerPreference mChargeColor;
     private SwitchPreference mQuickPulldown;
+    private SwitchPreference mQsBatteryTitle;
     private ListPreference mBattStyle;
     private ListPreference mBattPercent;
     private ListPreference mClockAmPmStyle;
@@ -75,6 +77,10 @@ public class StatusbarGeneral extends PreferenceFragment implements
         mBattPercent.setValue(Integer.toString(Settings.System.getInt(mCr,
                 Settings.Secure.STATUS_BAR_SHOW_BATTERY_PERCENT, BATT_PERCENT_DEFAULT)));
         mBattPercent.setOnPreferenceChangeListener(this);
+
+        mQsBatteryTitle = (SwitchPreference) findPreference(STATUSBAR_BATTERY_STYLE_TILE);
+        mQsBatteryTitle.setChecked((Settings.Secure.getInt(mCr,
+                Settings.Secure.STATUS_BAR_BATTERY_STYLE_TILE, 1) == 1));
 
         mChargeColor = (ColorPickerPreference) findPreference(STATUSBAR_CHARGE_COLOR);
         mChargeColor.setNewPreviewColor(Settings.Secure.getInt(mCr,
@@ -139,6 +145,11 @@ public class StatusbarGeneral extends PreferenceFragment implements
             Settings.System.putInt(mCr, Settings.System.STATUS_BAR_QUICK_QS_PULLDOWN,
                     value ? 1 : 0);
             return true;
+        }
+        if  (preference == mQsBatteryTitle) {
+            value = mQsBatteryTitle.isChecked();
+            Settings.Secure.putInt(mCr, Settings.Secure.STATUS_BAR_BATTERY_STYLE_TILE,
+                    value ? 1 : 0);
         }
         return false;
     }

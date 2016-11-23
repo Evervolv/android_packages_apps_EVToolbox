@@ -34,6 +34,12 @@
             android:entryValues="@array/statusbar_batt_percent_entryvalues" >
         </ListPreference>
 
+        <SwitchPreference android:key="pref_status_bar_battery_style_tile"
+            android:title="@string/pref_status_bar_battery_style_tile_title"
+            android:summary="@string/pref_status_bar_battery_style_tile_summary"
+            android:defaultValue="true" >
+        </SwitchPreference>
+
         <net.margaritov.preference.colorpicker.ColorPickerPreference
             android:key="pref_status_bar_charge_color"
             android:title="@string/pref_status_bar_charge_color_title"
