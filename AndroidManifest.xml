@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.evervolv.toolbox"
     android:sharedUserId="android.uid.system"
-    android:versionCode="201"
-    android:versionName="2.1"
+    android:versionCode="202"
+    android:versionName="2.2"
     coreApp="true"
     >
 
@@ -18,29 +18,6 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.REBOOT" />
     <uses-permission android:name="android.permission.INTERNET"/>
-
-    <permission
-            android:name="android.permission.REQUEST_SUPERUSER"
-            android:protectionLevel="signature" />
-    <permission
-            android:name="android.permission.REPORT_SUPERUSER"
-            android:protectionLevel="signature" />
-
-    <permission-group
-            android:name="android.permission-group.SUPERUSER"
-            android:description="@string/superuser_description_more"
-            android:icon="@drawable/ic_action_permission"
-            android:label="@string/superuser"
-            android:priority="10000" />
-
-    <permission
-            android:name="android.permission.ACCESS_SUPERUSER"
-            android:description="@string/superuser_description_more"
-            android:icon="@drawable/ic_action_permission"
-            android:label="@string/superuser_description"
-            android:logo="@drawable/ic_action_permission"
-            android:permissionGroup="android.permission-group.SUPERUSER"
-            android:protectionLevel="dangerous" />
 
     <application
         android:icon="@mipmap/ic_toolbox"
@@ -61,19 +38,6 @@
                     android:value="com.android.settings.category.evervolv" />
         </activity>
 
-        <activity
-            android:name=".superuser.SuperuserAppActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:excludeFromRecents="true"
-            android:parentActivityName=".Toolbox">
-        </activity>
-
-        <activity
-            android:name=".superuser.SuperuserLogsActivity"
-            android:excludeFromRecents="true"
-            android:parentActivityName=".Toolbox">
-        </activity>
-
         <receiver android:name=".receivers.BootReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -85,61 +49,6 @@
                  android:process=":UploadService">
         </service>
 
-        <!--Superuser-->
-        <!-- Only system/su can open this activity -->
-        <!-- This activity will then call the MultitaskSuRequestActivity to create a new task stack -->
-        <activity
-                android:name=".superuser.RequestActivity"
-                android:configChanges="keyboardHidden|orientation|screenSize"
-                android:label="@string/superuser"
-                android:launchMode="singleTask"
-                android:excludeFromRecents="true"
-                android:permission="android.permission.REQUEST_SUPERUSER"
-                android:process=":superuser"
-                />
-        <!-- Only system/su can open this activity -->
-        <!-- This is activity is started in multiuser mode when the user invoking su -->
-        <!-- is not the device owner (user id 0). -->
-        <activity
-                android:name=".superuser.NotifyActivity"
-                android:configChanges="keyboardHidden|orientation|screenSize"
-                android:label="@string/superuser"
-                android:launchMode="singleTask"
-                android:excludeFromRecents="true"
-                android:permission="android.permission.REQUEST_SUPERUSER"
-                android:process=":superuser"
-                />
-
-        <!-- Multiple instances of this activity can be running for multiple su requests -->
-        <activity
-                android:name=".superuser.MultitaskSuRequestActivity"
-                android:configChanges="keyboardHidden|orientation|screenSize"
-                android:excludeFromRecents="true"
-                android:exported="false"
-                android:label="@string/request"
-                android:process=":superuser"
-                />
-
-        <receiver
-                android:name=".superuser.SuReceiver"
-                android:permission="android.permission.REPORT_SUPERUSER" />
-
-        <receiver
-                android:name=".superuser.PackageChangeReceiver" >
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_ADDED" />
-                <data android:scheme="package" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <data android:scheme="package" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_REMOVED" />
-                <data android:scheme="package" />
-            </intent-filter>
-        </receiver>
-        <!--/Superuser-->
-
     </application>
+
 </manifest>

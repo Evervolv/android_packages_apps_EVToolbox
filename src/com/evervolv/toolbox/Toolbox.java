@@ -124,9 +124,6 @@ public class Toolbox extends AppCompatActivity {
         } else if (id == R.id.nav_performance) {
             getFragmentManager().beginTransaction()
                 .replace(R.id.container, new PerformanceCategory()).commit();
-        } else if (id == R.id.nav_superuser) {
-            getFragmentManager().beginTransaction()
-                .replace(R.id.container, new Superuser()).commit();
         } else if (id == R.id.nav_bugreport) {
             getFragmentManager().beginTransaction()
                 .replace(R.id.container, new BugReport()).commit();

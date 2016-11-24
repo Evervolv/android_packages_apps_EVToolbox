@@ -25,7 +25,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -39,8 +41,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.evervolv.toolbox.R;
-import com.evervolv.toolbox.misc.CMDProcessor;
-import com.evervolv.toolbox.superuser.Helper;
+import com.evervolv.toolbox.custom.ImageCache;
 
 public class SystemAppDisabler extends Fragment {
 
@@ -115,6 +116,21 @@ public class SystemAppDisabler extends Fragment {
             return mAppList.size();
         }
 
+        private static Drawable loadPackageIcon(Context context, String pn) {
+            try {
+                PackageManager pm = context.getPackageManager();
+                PackageInfo pi = context.getPackageManager().getPackageInfo(pn, PackageManager.GET_PERMISSIONS);
+                Drawable ret = ImageCache.getInstance().get(pn);
+                if (ret != null)
+                    return ret;
+                ImageCache.getInstance().put(pn, ret = pi.applicationInfo.loadIcon(pm));
+                return ret;
+            }
+                catch (Exception ex) {
+            }
+            return null;
+        }
+
         @Override
         public View getView(final int position, final View convertView,
                 final ViewGroup parent) {
@@ -140,15 +156,11 @@ public class SystemAppDisabler extends Fragment {
             final PackageManager pm = getContext().getPackageManager();
             holder.appName.setText(app.name);
             holder.appPkg.setText(app.pkg);
-            holder.appIcon.setImageDrawable(Helper.loadPackageIcon(mContext, app.pkg));
+            holder.appIcon.setImageDrawable(loadPackageIcon(mContext, app.pkg));
             holder.appAction.setChecked(!app.enabled);
             holder.appAction.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    final CMDProcessor cmd = new CMDProcessor();
-                    /* HACK: This is horrible, there has to be another way to trigger
-                     * the listview/adapter to update the list/ui.
-                     */
                     CheckBox disabled = (CheckBox) v.findViewById(R.id.app_action);
                     if (app.enabled) {
                         if (!app.intent.isEmpty()) {

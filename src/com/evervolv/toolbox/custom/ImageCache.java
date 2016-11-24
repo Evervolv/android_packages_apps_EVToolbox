@@ -1,7 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<!--
- * Copyright (C) 2013 The Evervolv Project
+/*
+ * Copyright (C) 2013 Koushik Dutta (@koush)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,11 +12,20 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- -->
+ */
 
-<shape xmlns:android="http://schemas.android.com/apk/res/android" >
-    <gradient
-        android:endColor="#000000"
-        android:startColor="#FFFFFF" />
-    <size android:width="5.0dp" android:height="0.5dp" />
-</shape>
+package com.evervolv.toolbox.custom;
+
+import android.graphics.drawable.Drawable;
+
+public final class ImageCache extends SoftReferenceHashTable<String, Drawable> {
+
+    private static ImageCache mInstance = new ImageCache();
+
+    public static ImageCache getInstance() {
+        return mInstance;
+    }
+
+    private ImageCache() {
+    }
+}

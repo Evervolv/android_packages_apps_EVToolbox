@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.evervolv.toolbox.superuser.util;
+package com.evervolv.toolbox.custom;
 
 import java.lang.ref.SoftReference;
 import java.util.Hashtable;

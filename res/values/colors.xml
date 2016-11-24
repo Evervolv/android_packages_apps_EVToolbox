@@ -44,9 +44,4 @@
     <!-- Navigation drawer -->
     <color name="navigation_drawer_background">@color/evtoolbox_drawer_light</color>
 
-    <!-- Superuser -->
-    <color name="superuser_slider_fade">@*android:color/black</color>
-    <color name="superuser_pin">@android:color/holo_blue_dark</color>
-    <color name="developer_warning">@android:color/holo_red_dark</color>
-
 </resources>

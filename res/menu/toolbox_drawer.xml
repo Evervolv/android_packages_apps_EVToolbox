@@ -36,9 +36,6 @@
         </item>
         <item android:title="@string/drawer_header_utils">
             <menu>
-                <item android:id="@+id/nav_superuser"
-                      android:icon="@drawable/ic_menu_superuser"
-                      android:title="@string/tab_title_superuser" />
                 <item android:id="@+id/nav_bugreport"
                       android:icon="@drawable/ic_menu_bugreport"
                       android:title="@string/tab_title_bugreport" />
