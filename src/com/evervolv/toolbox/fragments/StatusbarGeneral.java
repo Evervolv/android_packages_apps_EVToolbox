@@ -17,6 +17,7 @@
 package com.evervolv.toolbox.fragments;
 
 import android.content.ContentResolver;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.SwitchPreference;
 import android.preference.ListPreference;
@@ -29,19 +30,29 @@ import android.provider.Settings;
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.Toolbox;
 
+import net.margaritov.preference.colorpicker.ColorPickerPreference;
+
 public class StatusbarGeneral extends PreferenceFragment implements
         OnPreferenceChangeListener,
         Toolbox.DisabledListener {
 
+    private static final String STATUSBAR_BATTERY_STYLE = "pref_statusbar_batt_style";
+    private static final String STATUSBAR_BATTERY_PERCENT = "pref_statusbar_batt_percent_style";
+    private static final String STATUSBAR_CHARGE_COLOR = "pref_status_bar_charge_color";
     private static final String STATUSBAR_CLOCK_AM_PM_STYLE = "pref_statusbar_clock_am_pm_style";
     private static final String STATUSBAR_QUICK_PULLDOWN = "pref_statusbar_quick_pulldown";
 
+    private static final int BATT_STYLE_DEFAULT = 0;
+    private static final int BATT_PERCENT_DEFAULT = 0;
     private static final int AM_PM_STYLE_DEFAULT = 2;
 
     private ContentResolver mCr;
     private PreferenceScreen mPrefSet;
 
+    private ColorPickerPreference mChargeColor;
     private SwitchPreference mQuickPulldown;
+    private ListPreference mBattStyle;
+    private ListPreference mBattPercent;
     private ListPreference mClockAmPmStyle;
 
     @Override
@@ -52,6 +63,23 @@ public class StatusbarGeneral extends PreferenceFragment implements
         mPrefSet = getPreferenceScreen();
 
         mCr = getActivity().getContentResolver();
+
+        /* Battery Icon Style */
+        mBattStyle = (ListPreference) mPrefSet.findPreference(STATUSBAR_BATTERY_STYLE);
+        mBattStyle.setValue(Integer.toString(Settings.System.getInt(mCr,
+                Settings.Secure.STATUS_BAR_BATTERY_STYLE, BATT_STYLE_DEFAULT)));
+        mBattStyle.setOnPreferenceChangeListener(this);
+
+        /* Battery Percent */
+        mBattPercent = (ListPreference) mPrefSet.findPreference(STATUSBAR_BATTERY_PERCENT);
+        mBattPercent.setValue(Integer.toString(Settings.System.getInt(mCr,
+                Settings.Secure.STATUS_BAR_SHOW_BATTERY_PERCENT, BATT_PERCENT_DEFAULT)));
+        mBattPercent.setOnPreferenceChangeListener(this);
+
+        mChargeColor = (ColorPickerPreference) findPreference(STATUSBAR_CHARGE_COLOR);
+        mChargeColor.setNewPreviewColor(Settings.Secure.getInt(mCr,
+                Settings.Secure.STATUS_BAR_CHARGE_COLOR, Color.WHITE));
+        mChargeColor.setOnPreferenceChangeListener(this);
 
         /* Clock AM/PM Style */
         mClockAmPmStyle = (ListPreference) mPrefSet.findPreference(STATUSBAR_CLOCK_AM_PM_STYLE);
@@ -80,9 +108,24 @@ public class StatusbarGeneral extends PreferenceFragment implements
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
+        if (preference == mBattStyle) {
+            Settings.Secure.putInt(mCr, Settings.Secure.STATUS_BAR_BATTERY_STYLE,
+                    Integer.valueOf((String) newValue));
+            return true;
+        }
+        if (preference == mBattPercent) {
+            Settings.Secure.putInt(mCr, Settings.Secure.STATUS_BAR_SHOW_BATTERY_PERCENT,
+                    Integer.valueOf((String) newValue));
+            return true;
+        }
         if (preference == mClockAmPmStyle) {
             Settings.System.putInt(mCr, Settings.System.STATUSBAR_CLOCK_AM_PM_STYLE,
                     Integer.valueOf((String) newValue));
+            return true;
+        }
+        if (preference.equals(mChargeColor)) {
+            Settings.Secure.putInt(mCr, Settings.Secure.STATUS_BAR_CHARGE_COLOR,
+                    ((Integer) newValue).intValue());
             return true;
         }
         return false;

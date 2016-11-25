@@ -117,6 +117,7 @@
     <string name="pref_statusbar_quick_pulldown_summary">Expand Quick Settings in a single swipe</string>
     <string name="pref_statusbar_custom_header_title">Time Contextual Header</string>
     <string name="pref_statusbar_custom_header_summary">Enable notification panel header image</string>
+    <string name="pref_status_bar_charge_color_title">Set statusbar battery icon color when charging</string>
 
     <!-- System >> Network -->
     <string name="system_network_title">Network</string>
