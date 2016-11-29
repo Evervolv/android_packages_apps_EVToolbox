@@ -23,7 +23,8 @@
             android:summary="@string/pref_statusbar_batt_style_summary"
             android:dialogTitle="@string/pref_statusbar_batt_style_title"
             android:entries="@array/statusbar_batt_style_entries"
-            android:entryValues="@array/statusbar_batt_style_entryvalues" >
+            android:entryValues="@array/statusbar_batt_style_entryvalues"
+            android:defaultValue="0">
         </ListPreference>
 
         <ListPreference android:key="pref_statusbar_batt_percent_style"
@@ -40,12 +41,28 @@
             android:defaultValue="true" >
         </SwitchPreference>
 
+        <SwitchPreference android:key="pref_status_bar_battery_charge_text"
+            android:title="@string/pref_status_bar_battery_charge_text_title"
+            android:summaryOff="@string/pref_status_bar_battery_charge_text_summary_off"
+            android:summaryOn="@string/pref_status_bar_battery_charge_text_summary_on"
+            android:defaultValue="false" >
+        </SwitchPreference>
+
         <net.margaritov.preference.colorpicker.ColorPickerPreference
             android:key="pref_status_bar_charge_color"
             android:title="@string/pref_status_bar_charge_color_title"
             android:persistent="false"
             android:defaultValue="0xffffff" >
         </net.margaritov.preference.colorpicker.ColorPickerPreference>
+
+        <ListPreference android:key="pref_status_bar_battery_text_symbol"
+            android:title="@string/pref_status_bar_battery_text_symbol_title"
+            android:summary="%s"
+            android:dialogTitle="@string/pref_status_bar_battery_text_symbol_dialog"
+            android:entries="@array/pref_status_bar_battery_text_symbol_entries"
+            android:entryValues="@array/pref_status_bar_battery_text_symbol_entryvalues"
+            android:defaultValue="0">
+        </ListPreference>
 
         <ListPreference android:key="pref_statusbar_clock_am_pm_style"
             android:title="@string/pref_statusbar_clock_am_pm_style_title"

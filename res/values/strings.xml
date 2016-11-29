@@ -123,6 +123,14 @@
     <string name="pref_status_bar_charge_color_title">Set statusbar battery icon color when charging</string>
     <string name="pref_status_bar_battery_style_tile_title">Custom battery tile style</string>
     <string name="pref_status_bar_battery_style_tile_summary">Allow to set the same icon style chosen for the statusbar battery</string>
+    <string name="pref_status_bar_battery_charge_text_title">Statusbar battery charging percent</string>
+    <string name="pref_status_bar_battery_charge_text_summary_on">Show the battery percentage outside the icon while charging</string>
+    <string name="pref_status_bar_battery_charge_text_summary_off">Show the battery percentage inside the icon while charging</string>
+    <string name="pref_status_bar_battery_text_symbol_title">Charging symbol near percentage text</string>
+    <string name="pref_status_bar_battery_text_symbol_dialog">Available charging symbols</string>
+    <string name="pref_status_bar_battery_text_symbol_default">Disabled</string>
+    <string name="pref_status_bar_battery_text_symbol_flash">Flash</string>
+    <string name="pref_status_bar_battery_text_symbol_tilde">Tilde</string>
 
     <!-- System >> Network -->
     <string name="system_network_title">Network</string>
