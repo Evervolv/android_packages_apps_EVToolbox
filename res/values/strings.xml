@@ -278,12 +278,6 @@
     <string name="logcat_post_title">Logcat: %1$s</string>
     <string name="logcat_notification_title">Logcat Uploaded</string>
 
-    <!-- Device Settings -->
-
-    <string name="device_settings_title">Device Settings</string>
-    <string name="device_touchscreen_title">Touchscreen</string>
-    <string name="device_haptic_title">Haptic</string>
-
     <!-- Settings -->
     <string name="pref_settings_toolbox_disable_title">Disable toolbox features</string>
     <string name="pref_settings_toolbox_disable_summary">This will disable toolbox features.</string>

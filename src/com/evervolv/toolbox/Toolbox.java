@@ -160,7 +160,6 @@ public class Toolbox extends AppCompatActivity {
     public void updateListeners(boolean isChecked) {
         for (DisabledListener cb: mCallbacks) {
             cb.onToolboxDisabled(isChecked);
-            DeviceCategory.restoreSettings(mContext);
         }
     }
 

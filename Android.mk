@@ -11,11 +11,6 @@ LOCAL_RESOURCE_DIR := \
 
 LOCAL_SRC_FILES := $(call all-java-files-under, src/)
 
-ifneq ($(BOARD_DEVICE_SETTINGS),)
-    LOCAL_RESOURCE_DIR += $(BOARD_DEVICE_SETTINGS)/res
-    LOCAL_SRC_FILES += $(call all-java-files-under, ../../../$(BOARD_DEVICE_SETTINGS)/src)
-endif
-
 LOCAL_STATIC_JAVA_LIBRARIES := \
     android-support-design \
     android-support-v13 \

@@ -28,7 +28,6 @@ import android.util.Log;
 
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.Toolbox;
-import com.evervolv.toolbox.categories.DeviceCategory;
 import com.evervolv.toolbox.fragments.PerformanceGeneral;
 import com.evervolv.toolbox.fragments.PerformanceProcessor;
 import com.evervolv.toolbox.fragments.SystemNetwork;
@@ -92,7 +91,6 @@ public class BootReceiver extends BroadcastReceiver {
                 maybeEnableSshd(ctx);
             }
 
-            DeviceCategory.restoreSettings(ctx);
         }
 
     }
