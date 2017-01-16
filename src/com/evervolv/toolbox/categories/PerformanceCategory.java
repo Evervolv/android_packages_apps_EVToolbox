@@ -65,7 +65,7 @@ public class PerformanceCategory extends CategoryFragment {
             public void onCheckedChanged(CompoundButton buttonView,
                                          boolean isChecked) {
                 prefs.edit().putBoolean(PerformanceProcessor.SOB_PREF,
-                        isChecked).commit();
+                        isChecked).apply();
             }
         });
         mBottomActionBar.setVisibility(View.VISIBLE);

@@ -75,7 +75,7 @@ public class BugReport extends Fragment {
             if (action != null) {
                 if (action.equals(Constants.ACTION_DUMPLOGCAT_FINISHED)) {
                     mPrefs.edit().putString(PREF_LOGCAT_FILE,
-                            intent.getStringExtra(Constants.EXTRA_LOGCAT)).commit();
+                            intent.getStringExtra(Constants.EXTRA_LOGCAT)).apply();
                     Toast.makeText(mCtx, R.string.bugreport_toast_ready, Toast.LENGTH_SHORT).show();
                     mUploadButton.setEnabled(true);
                     mFetchButton.setEnabled(true);
@@ -85,8 +85,8 @@ public class BugReport extends Fragment {
                     String url = intent.getStringExtra(Constants.EXTRA_URL);
                     if (url != null) {
                         mPasteUrl.setText(url);
-                        mPrefs.edit().putString(PREF_LOGCAT_FILE, null).commit();
-                        mPrefs.edit().putBoolean(PREF_PLAINTEXT, false).commit();
+                        mPrefs.edit().putString(PREF_LOGCAT_FILE, null).apply();
+                        mPrefs.edit().putBoolean(PREF_PLAINTEXT, false).apply();
                         mUploadButton.setEnabled(false);
                         mUploadButton.setText(R.string.bugreport_upload_button);
                         mFetchButton.setEnabled(true);
@@ -180,9 +180,9 @@ public class BugReport extends Fragment {
                 }
 
                 if (forcePlainText) {
-                    mPrefs.edit().putBoolean(PREF_PLAINTEXT, true).commit();
+                    mPrefs.edit().putBoolean(PREF_PLAINTEXT, true).apply();
                 } else {
-                    mPrefs.edit().putBoolean(PREF_PLAINTEXT, false).commit();
+                    mPrefs.edit().putBoolean(PREF_PLAINTEXT, false).apply();
                 }
 
                 if (noneSelected) {
