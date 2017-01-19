@@ -41,7 +41,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.evervolv.toolbox.R;
-import com.evervolv.toolbox.custom.ImageCache;
+import com.evervolv.toolbox.utils.ImageCache;
 
 public class SystemAppDisabler extends Fragment {
 

@@ -1,4 +1,4 @@
-package com.evervolv.toolbox.misc;
+package com.evervolv.toolbox.utils;
 
 public class Constants {
     public static final String APP_NAME = "EVToolbox";

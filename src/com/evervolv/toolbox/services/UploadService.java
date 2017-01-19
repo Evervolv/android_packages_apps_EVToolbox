@@ -31,7 +31,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.evervolv.toolbox.R;
-import com.evervolv.toolbox.misc.Constants;
+import com.evervolv.toolbox.utils.Constants;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -49,7 +49,7 @@ import java.util.List;
 
 public class UploadService extends Service {
 
-    private static final String TAG = "Toolbox";
+    private static final String TAG = "UploadService";
 
     @Override
     public IBinder onBind(Intent intent) {

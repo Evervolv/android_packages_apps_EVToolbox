@@ -27,13 +27,11 @@ import android.provider.Settings;
 
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.Toolbox;
-import com.evervolv.toolbox.custom.NumberPickerPreference;
+import com.evervolv.toolbox.preference.NumberPickerPreference;
 
 public class InterfacePowerMenu extends PreferenceFragment implements
         OnPreferenceChangeListener,
         Toolbox.DisabledListener {
-
-    private static final String TAG = "EVToolbox";
 
     private static final String PREF_HIDE_SCREENSHOT        =    "pref_power_menu_hide_screenshot";
     private static final String PREF_HIDE_SOUND             =    "pref_power_menu_hide_sound";

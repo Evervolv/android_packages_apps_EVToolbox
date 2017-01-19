@@ -39,12 +39,12 @@ import android.util.Log;
 
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.Toolbox;
-import com.evervolv.toolbox.misc.FileUtil;
+import com.evervolv.toolbox.utils.FileUtil;
 
 public class PerformanceGeneral extends PreferenceFragment implements
         OnPreferenceChangeListener,
         Toolbox.DisabledListener {
-    private static final String TAG = "EVToolbox";
+    private static final String TAG = "PerformanceGeneral";
 
     public static final String KSM_RUN_FILE = "/sys/kernel/mm/ksm/run";
     public static final String KSM_PREF = "pref_ksm";

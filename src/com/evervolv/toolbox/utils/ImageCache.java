@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.evervolv.toolbox.custom;
+package com.evervolv.toolbox.utils;
 
 import android.graphics.drawable.Drawable;
 

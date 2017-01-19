@@ -1,4 +1,4 @@
-package com.evervolv.toolbox.custom;
+package com.evervolv.toolbox.preference;
 
 import android.content.Context;
 import android.os.SystemProperties;

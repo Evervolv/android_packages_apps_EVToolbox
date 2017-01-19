@@ -32,14 +32,16 @@ import android.util.Log;
 
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.Toolbox;
-import com.evervolv.toolbox.misc.Constants;
-import com.evervolv.toolbox.misc.FileUtil;
+import com.evervolv.toolbox.utils.Constants;
+import com.evervolv.toolbox.utils.FileUtil;
 
 import java.lang.Runtime;
 
 public class PerformanceProcessor extends PreferenceFragment implements
         OnPreferenceChangeListener,
         Toolbox.DisabledListener {
+
+    private static final String TAG = "PerformanceProcessor";
 
     public static final String CPU_ONLINE = "/sys/devices/system/cpu/cpu0/online";
     public static final String FREQ_CUR_PREF = "pref_cpu_freq_cur";
@@ -60,8 +62,6 @@ public class PerformanceProcessor extends PreferenceFragment implements
     public static final String SOB_PREF = "pref_cpu_set_on_boot";
 
     public static boolean freqCapFilesInitialized = false;
-
-    private static final String TAG = "EVToolbox";
 
     private static final int UI_UPDATE_DELAY = 500;
 

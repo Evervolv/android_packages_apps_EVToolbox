@@ -35,9 +35,9 @@
             android:title="@string/pref_power_menu_hide_reboot_menu_title">
         </SwitchPreference>
 
-        <com.evervolv.toolbox.custom.NumberPickerPreference android:key="pref_power_menu_screenshot_delay"
+        <com.evervolv.toolbox.preference.NumberPickerPreference android:key="pref_power_menu_screenshot_delay"
             android:title="@string/pref_power_menu_screenshot_delay_title"
             android:dependency="pref_power_menu_hide_screenshot">
-        </com.evervolv.toolbox.custom.NumberPickerPreference>
+        </com.evervolv.toolbox.preference.NumberPickerPreference>
 
 </PreferenceScreen>

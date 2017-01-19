@@ -38,8 +38,12 @@ import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 
-import com.evervolv.toolbox.categories.*;
-import com.evervolv.toolbox.utils.*;
+import com.evervolv.toolbox.categories.InterfaceCategory;
+import com.evervolv.toolbox.categories.PerformanceCategory;
+import com.evervolv.toolbox.categories.StatusbarCategory;
+import com.evervolv.toolbox.categories.SystemCategory;
+import com.evervolv.toolbox.support.BugReport;
+import com.evervolv.toolbox.support.Preferences;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -129,7 +133,7 @@ public class Toolbox extends AppCompatActivity {
                 .replace(R.id.container, new BugReport()).commit();
         } else if (id == R.id.nav_settings) {
             getFragmentManager().beginTransaction()
-                .replace(R.id.container, new ToolboxSettings()).commit();
+                .replace(R.id.container, new Preferences()).commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.evervolv.toolbox.utils;
+package com.evervolv.toolbox.support;
 
 import android.app.Fragment;
 import android.content.BroadcastReceiver;
@@ -42,12 +42,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.evervolv.toolbox.R;
-import com.evervolv.toolbox.misc.Constants;
 import com.evervolv.toolbox.services.UploadService;
+import com.evervolv.toolbox.utils.Constants;
 
 public class BugReport extends Fragment {
 
-    private static final String TAG = "EVToolbox";
+    private static final String TAG = "BugReport";
 
     private static final String PREF_LOGCAT_FILE = "logcat_filename_pref";
     private static final String PREF_PLAINTEXT = "logcat_upload_plaintext";

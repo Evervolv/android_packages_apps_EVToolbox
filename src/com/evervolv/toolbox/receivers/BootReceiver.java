@@ -31,14 +31,14 @@ import com.evervolv.toolbox.Toolbox;
 import com.evervolv.toolbox.fragments.PerformanceGeneral;
 import com.evervolv.toolbox.fragments.PerformanceProcessor;
 import com.evervolv.toolbox.fragments.SystemNetwork;
-import com.evervolv.toolbox.misc.FileUtil;
+import com.evervolv.toolbox.utils.FileUtil;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class BootReceiver extends BroadcastReceiver {
 
-    private static final String TAG = "EVToolbox";
+    private static final String TAG = "BootReceiver";
 
     private static final String CPU_SETTINGS_PROP = "sys.cpufreq.restored";
     private static final String IOSCHED_SETTINGS_PROP = "sys.iosched.restored";

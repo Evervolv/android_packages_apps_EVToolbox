@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.evervolv.toolbox.utils;
+package com.evervolv.toolbox.support;
 
 import android.content.ContentResolver;
 import android.os.Bundle;
@@ -29,9 +29,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.Toolbox;
 
-public class ToolboxSettings extends PreferenceFragment {
-
-    private static final String TAG = "EVToolbox";
+public class Preferences extends PreferenceFragment {
 
     private static final String PREF_TOOLBOX_DISABLE = "pref_settings_toolbox_disable";
 

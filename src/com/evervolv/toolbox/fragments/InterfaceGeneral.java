@@ -34,13 +34,11 @@ import android.util.DisplayMetrics;
 
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.Toolbox;
-import com.evervolv.toolbox.custom.NumberPickerPreference;
+import com.evervolv.toolbox.preference.NumberPickerPreference;
 
 public class InterfaceGeneral extends PreferenceFragment implements
         OnPreferenceChangeListener,
         Toolbox.DisabledListener {
-
-    private static final String TAG = "EVToolbox";
 
     private static final String DENSITY_PICKER_PREF = "pref_interface_density_picker";
     private static final String LOCKSCREEN_MUSIC_CTRL_VOLBTN = "pref_lockscreen_music_controls_volbtn";

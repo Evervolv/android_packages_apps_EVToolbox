@@ -18,7 +18,7 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <com.evervolv.toolbox.custom.HostnamePreference
+        <com.evervolv.toolbox.preference.HostnamePreference
             android:key="pref_system_hostname"
             android:title="@string/pref_system_hostname_title"
             android:dialogTitle="@string/pref_system_hostname_title"
@@ -28,7 +28,7 @@
             android:imeOptions="actionDone"
             android:inputType="textNoSuggestions"
             android:persistent="false">
-        </com.evervolv.toolbox.custom.HostnamePreference>
+        </com.evervolv.toolbox.preference.HostnamePreference>
 
         <SwitchPreference
             android:key="pref_system_sshd"

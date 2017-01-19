@@ -1,4 +1,4 @@
-package com.evervolv.toolbox.misc;
+package com.evervolv.toolbox.utils;
 
 import android.util.Log;
 
@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class FileUtil {
 
-    private static final String TAG = "EVToolbox";
+    private static final String TAG = "FileUtil";
 
     public static boolean fileExists(String filename) {
         return new File(filename).exists();
