@@ -20,11 +20,14 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import com.evervolv.toolbox.gestures.TouchscreenGestureSettings;
+
 public class BootReceiver extends BroadcastReceiver {
 
     private static final String TAG = "BootReceiver";
 
     @Override
     public void onReceive(Context ctx, Intent intent) {
+        TouchscreenGestureSettings.restoreTouchscreenGestureStates(ctx);
     }
 }

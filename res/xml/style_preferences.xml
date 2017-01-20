@@ -17,30 +17,28 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <evervolv.preference.EVSystemSettingListPreference
-        android:defaultValue="0"
-        android:entries="@array/style_entries"
-        android:entryValues="@array/style_values"
         android:key="berry_global_style"
-        android:summary="%s"
         android:icon="@drawable/ic_style_auto"
-        android:title="@string/style_global_title" />
+        android:title="@string/style_global_title"
+        android:summary="%s"
+        android:entries="@array/style_entries"
+        android:entryValues="@array/style_values" />
 
     <Preference
         android:key="style_accent"
         android:title="@string/style_accent_title" />
 
     <evervolv.preference.EVSystemSettingListPreference
-        android:defaultValue="com.evervolv.overlay.dark"
-        android:entries="@array/dark_overlay_entries"
-        android:entryValues="@array/dark_overlay_values"
         android:key="berry_dark_overlay"
+        android:title="@string/style_dark_overlay_title"
         android:summary="%s"
-        android:title="@string/style_dark_overlay_title" />
+        android:entries="@array/dark_overlay_entries"
+        android:entryValues="@array/dark_overlay_values" />
 
     <Preference
         android:key="style_automagic"
         android:icon="@drawable/ic_automagic"
-        android:summary="@string/style_automagic_description"
-        android:title="@string/style_automagic_title" />
+        android:title="@string/style_automagic_title"
+        android:summary="@string/style_automagic_description" />
 
 </PreferenceScreen>

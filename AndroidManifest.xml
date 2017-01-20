@@ -42,6 +42,7 @@
 
     <protected-broadcast android:name="com.evervolv.toolbox.PART_CHANGED" />
     <protected-broadcast android:name="com.evervolv.toolbox.REFRESH_PART" />
+    <protected-broadcast android:name="com.evervolv.toolbox.gestures.UPDATE_SETTINGS" />
 
     <application android:label="@string/toolbox_title"
             android:icon="@mipmap/ic_launcher"
@@ -80,6 +81,8 @@
                 android:name="com.android.settings.summary"
                 android:value="@string/summary_empty" />
         </activity-alias>
+
+        <activity android:name=".gestures.KeyHandler" />
 
         <!-- Style settings (Display category) -->
         <activity-alias
