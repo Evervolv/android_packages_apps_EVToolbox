@@ -43,7 +43,6 @@ public class BootReceiver extends BroadcastReceiver {
     private static final String CPU_SETTINGS_PROP = "sys.cpufreq.restored";
     private static final String IOSCHED_SETTINGS_PROP = "sys.iosched.restored";
     private static final String KSM_SETTINGS_PROP = "sys.ksm.restored";
-    private static final String ZRAM_SETTINGS_PROP = "sys.zram.restored";
     private static final String SSHD_SETTINGS_PROP = "sys.sshd.restored";
 
     private static final String ENCRYPTED_STATE = "1";
@@ -81,10 +80,6 @@ public class BootReceiver extends BroadcastReceiver {
                 } else {
                     SystemProperties.set(KSM_SETTINGS_PROP, "false");
                 }
-            }
-
-            if (!SystemProperties.getBoolean(ZRAM_SETTINGS_PROP, false)) {
-                maybeEnableZram(ctx);
             }
 
             if (!SystemProperties.getBoolean(SSHD_SETTINGS_PROP, false)) {
@@ -177,18 +172,6 @@ public class BootReceiver extends BroadcastReceiver {
 
         FileUtil.fileWriteOneLine(PerformanceGeneral.KSM_RUN_FILE, ksm ? "1" : "0");
         Log.d(TAG, "KSM settings restored.");
-    }
-
-    private void maybeEnableZram(Context ctx) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
-
-        if (PerformanceGeneral.isZramAvailable()
-                && Integer.valueOf(prefs.getString(PerformanceGeneral.ZRAM_PREF, "0")) > 0
-                && FileUtil.fileExists(PerformanceGeneral.ZRAM_FSTAB_FILENAME)) {
-            SystemProperties.set(ZRAM_SETTINGS_PROP, "true");
-        } else {
-            SystemProperties.set(ZRAM_SETTINGS_PROP, "false");
-        }
     }
 
     private void maybeEnableSshd(Context ctx) {

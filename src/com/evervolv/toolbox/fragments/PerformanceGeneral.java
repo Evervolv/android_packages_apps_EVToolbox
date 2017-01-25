@@ -51,15 +51,9 @@ public class PerformanceGeneral extends PreferenceFragment implements
     public static final String KSM_PREF_DISABLED = "0";
     public static final String KSM_PREF_ENABLED = "1";
 
-    public static final String ZRAM_PREF = "pref_zram_size";
-    public static final String ZRAM_FSTAB_FILENAME = "/data/system/fstab.zram";
-    private static final String ZRAM_FSTAB_ENTRY =
-            "/dev/block/zram0 none swap defaults zramsize=";
-
     public static final String KEY_PERF_PROFILE = "pref_perf_profile";
 
     private SwitchPreference mKSMPref;
-    private ListPreference mzRAM;
     private PreferenceScreen mPrefSet;
 
     private PowerManager mPowerManager;
@@ -121,16 +115,6 @@ public class PerformanceGeneral extends PreferenceFragment implements
         } else {
             mPrefSet.removePreference(mKSMPref);
         }
-
-        /* Zram */
-
-        mzRAM = (ListPreference) mPrefSet.findPreference(ZRAM_PREF);
-        if (isZramAvailable()) {
-            mzRAM.setOnPreferenceChangeListener(this);
-        } else {
-            mPrefSet.removePreference(mzRAM);
-        }
-
     }
 
     @Override
@@ -181,60 +165,9 @@ public class PerformanceGeneral extends PreferenceFragment implements
                 mPowerManager.setPowerProfile(String.valueOf(newValue));
                 updatePerformanceSummary();
                 return true;
-            } else if (preference == mzRAM) {
-                String percent = (String) newValue;
-                if (!"0".equals(percent)) {
-                    FileUtil.fileWriteOneLine(ZRAM_FSTAB_FILENAME,
-                            ZRAM_FSTAB_ENTRY + getZramBytes(percent) + "\n");
-                    new AlertDialog.Builder(getActivity())
-                        .setTitle(R.string.reboot_required)
-                        .setMessage(getString(R.string.pref_zram_reboot_text))
-                        .setPositiveButton(getString(R.string.reboot),
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                    PowerManager power = (PowerManager) getActivity()
-                                            .getSystemService(Context.POWER_SERVICE);
-                                    power.reboot("UI Change");
-                                }
-                            })
-                        .setNegativeButton(getString(R.string.later),
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            })
-                        .show();
-                } else {
-                    FileUtil.fileDelete(ZRAM_FSTAB_FILENAME);
-                }
-                return true;
             }
         }
         return false;
-    }
-
-    /**
-     * Check if swap support is available on the system
-     */
-    private static boolean isSwapAvailable() {
-        return FileUtil.fileExists("/proc/swaps");
-    }
-
-    public static boolean isZramAvailable() {
-        return isSwapAvailable() && FileUtil.fileExists("/sys/block/zram0/disksize");
-    }
-
-    private int getZramBytes(String percent) {
-        ActivityManager.MemoryInfo memoryInfo = new ActivityManager.MemoryInfo();
-        ActivityManager activityManager = (ActivityManager) getActivity().getSystemService(Activity.ACTIVITY_SERVICE);
-        activityManager.getMemoryInfo(memoryInfo);
-        long totalMem = memoryInfo.totalMem;
-        int zramBytes = (int) (totalMem * Long.valueOf(percent) / 100L);
-        Log.i(TAG, "totalMem=" + totalMem + " zramMem=" + zramBytes + " " + percent + "%");
-        return zramBytes;
     }
 
     private void updatePerformanceSummary() {
