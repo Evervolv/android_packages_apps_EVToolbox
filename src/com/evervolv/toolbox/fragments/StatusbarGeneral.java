@@ -43,7 +43,6 @@ public class StatusbarGeneral extends PreferenceFragment implements
     private static final String STATUSBAR_BATTERY_CHARGE_TEXT = "pref_status_bar_battery_charge_text";
     private static final String STATUSBAR_BATTERY_TEXT_SYMBOL = "pref_status_bar_battery_text_symbol";
     private static final String STATUSBAR_CLOCK_AM_PM_STYLE = "pref_statusbar_clock_am_pm_style";
-    private static final String STATUSBAR_QUICK_PULLDOWN = "pref_statusbar_quick_pulldown";
 
     private static final int BATT_STYLE_DEFAULT = 0;
     private static final int BATT_PERCENT_DEFAULT = 0;
@@ -53,7 +52,6 @@ public class StatusbarGeneral extends PreferenceFragment implements
     private PreferenceScreen mPrefSet;
 
     private ColorPickerPreference mChargeColor;
-    private SwitchPreference mQuickPulldown;
     private SwitchPreference mQsBatteryTitle;
     private SwitchPreference mForceChargeText;
     private ListPreference mBattStyle;
@@ -114,11 +112,6 @@ public class StatusbarGeneral extends PreferenceFragment implements
                 Settings.System.STATUSBAR_CLOCK_AM_PM_STYLE, AM_PM_STYLE_DEFAULT)));
         mClockAmPmStyle.setOnPreferenceChangeListener(this);
 
-        /* Quick Pulldown */
-        mQuickPulldown = (SwitchPreference) mPrefSet.findPreference(STATUSBAR_QUICK_PULLDOWN);
-        mQuickPulldown.setChecked(Settings.System.getInt(mCr,
-                Settings.System.STATUS_BAR_QUICK_QS_PULLDOWN, 1) == 1);
-
         enableStatusBarBatteryDependents();
     }
 
@@ -174,12 +167,6 @@ public class StatusbarGeneral extends PreferenceFragment implements
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         boolean value;
-        if (preference == mQuickPulldown) {
-            value = mQuickPulldown.isChecked();
-            Settings.System.putInt(mCr, Settings.System.STATUS_BAR_QUICK_QS_PULLDOWN,
-                    value ? 1 : 0);
-            return true;
-        }
         if  (preference == mQsBatteryTitle) {
             value = mQsBatteryTitle.isChecked();
             Settings.Secure.putInt(mCr, Settings.Secure.STATUS_BAR_BATTERY_STYLE_TILE,

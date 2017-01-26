@@ -21,6 +21,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.fragments.StatusbarGeneral;
+import com.evervolv.toolbox.fragments.StatusbarQuickSettings;
 
 public class StatusbarCategory extends CategoryFragment {
 
@@ -33,6 +34,7 @@ public class StatusbarCategory extends CategoryFragment {
         super.onCreate(savedInstanceState);
         mCategoryAdapter.setPageTitles(getResources().getStringArray(R.array.statusbar_nav));
         mCategoryAdapter.addFragment(new StatusbarGeneral());
+        mCategoryAdapter.addFragment(new StatusbarQuickSettings());
     }
 
     @Override

@@ -72,10 +72,4 @@
             android:entryValues="@array/statusbar_clock_am_pm_style_entryvalues">
         </ListPreference>
 
-        <SwitchPreference
-            android:key="pref_statusbar_quick_pulldown"
-            android:title="@string/pref_statusbar_quick_pulldown_title"
-            android:summary="@string/pref_statusbar_quick_pulldown_summary">
-        </SwitchPreference>
-
 </PreferenceScreen>
