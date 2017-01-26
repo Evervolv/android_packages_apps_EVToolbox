@@ -30,7 +30,6 @@ import android.widget.TextView;
 
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.fragments.PerformanceGeneral;
-import com.evervolv.toolbox.fragments.PerformanceProcessor;
 
 public class PerformanceCategory extends CategoryFragment {
 
@@ -45,7 +44,6 @@ public class PerformanceCategory extends CategoryFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mCategoryAdapter.setPageTitles(getResources().getStringArray(R.array.performance_nav));
-        mCategoryAdapter.addFragment(new PerformanceProcessor());
         mCategoryAdapter.addFragment(new PerformanceGeneral());
     }
 
@@ -59,12 +57,12 @@ public class PerformanceCategory extends CategoryFragment {
                 .getDefaultSharedPreferences(getActivity().getApplicationContext());
 
         Switch bootSwitch = (Switch) v.findViewById(R.id.boot_switch);
-        bootSwitch.setChecked(prefs.getBoolean(PerformanceProcessor.SOB_PREF, false));
+        bootSwitch.setChecked(prefs.getBoolean(PerformanceGeneral.SOB_PREF, false));
         bootSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView,
                                          boolean isChecked) {
-                prefs.edit().putBoolean(PerformanceProcessor.SOB_PREF,
+                prefs.edit().putBoolean(PerformanceGeneral.SOB_PREF,
                         isChecked).apply();
             }
         });

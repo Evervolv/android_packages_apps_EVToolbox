@@ -38,7 +38,6 @@
     </string-array>
 
     <string-array name="performance_nav" translatable="false">
-        <item>@string/performance_processor_title</item>
         <item>@string/general_title</item>
     </string-array>
 

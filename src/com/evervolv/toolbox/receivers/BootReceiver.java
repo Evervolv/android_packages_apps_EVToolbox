@@ -29,7 +29,6 @@ import android.util.Log;
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.Toolbox;
 import com.evervolv.toolbox.fragments.PerformanceGeneral;
-import com.evervolv.toolbox.fragments.PerformanceProcessor;
 import com.evervolv.toolbox.fragments.SystemNetwork;
 import com.evervolv.toolbox.utils.FileUtil;
 
@@ -92,25 +91,25 @@ public class BootReceiver extends BroadcastReceiver {
 
     private void initFreqCapFiles(Context ctx)
     {
-        if (PerformanceProcessor.freqCapFilesInitialized) return;
-        PerformanceProcessor.FREQ_MAX_FILE = ctx.getResources().getString(R.string.pref_max_cpu_freq_file);
-        PerformanceProcessor.FREQ_MIN_FILE = ctx.getResources().getString(R.string.pref_min_cpu_freq_file);
-        PerformanceProcessor.freqCapFilesInitialized = true;
+        if (PerformanceGeneral.freqCapFilesInitialized) return;
+        PerformanceGeneral.FREQ_MAX_FILE = ctx.getResources().getString(R.string.pref_max_cpu_freq_file);
+        PerformanceGeneral.FREQ_MIN_FILE = ctx.getResources().getString(R.string.pref_min_cpu_freq_file);
+        PerformanceGeneral.freqCapFilesInitialized = true;
     }
 
     private void configureCPU(Context ctx) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
 
-        if (prefs.getBoolean(PerformanceProcessor.SOB_PREF, false) == false) {
+        if (prefs.getBoolean(PerformanceGeneral.SOB_PREF, false) == false) {
             Log.i(TAG, "CPU restore disabled by user preference.");
             return;
         }
 
-        String governor = prefs.getString(PerformanceProcessor.GOV_PREF, null);
-        String minFrequency = prefs.getString(PerformanceProcessor.FREQ_MIN_PREF, null);
-        String maxFrequency = prefs.getString(PerformanceProcessor.FREQ_MAX_PREF, null);
-        String availableFrequenciesLine = FileUtil.fileReadOneLine(PerformanceProcessor.FREQ_LIST_FILE);
-        String availableGovernorsLine = FileUtil.fileReadOneLine(PerformanceProcessor.GOV_LIST_FILE);
+        String governor = prefs.getString(PerformanceGeneral.GOV_PREF, null);
+        String minFrequency = prefs.getString(PerformanceGeneral.FREQ_MIN_PREF, null);
+        String maxFrequency = prefs.getString(PerformanceGeneral.FREQ_MAX_PREF, null);
+        String availableFrequenciesLine = FileUtil.fileReadOneLine(PerformanceGeneral.FREQ_LIST_FILE);
+        String availableGovernorsLine = FileUtil.fileReadOneLine(PerformanceGeneral.GOV_LIST_FILE);
         boolean noSettings = ((availableGovernorsLine == null) || (governor == null)) &&
                              ((availableFrequenciesLine == null) || ((minFrequency == null) && (maxFrequency == null)));
         List<String> frequencies = null;
@@ -127,13 +126,13 @@ public class BootReceiver extends BroadcastReceiver {
                 frequencies = Arrays.asList(availableFrequenciesLine.split(" "));
             }
             if (maxFrequency != null && frequencies != null && frequencies.contains(maxFrequency)) {
-                FileUtil.fileWriteOneLine(PerformanceProcessor.FREQ_MAX_FILE, maxFrequency);
+                FileUtil.fileWriteOneLine(PerformanceGeneral.FREQ_MAX_FILE, maxFrequency);
             }
             if (minFrequency != null && frequencies != null && frequencies.contains(minFrequency)) {
-                FileUtil.fileWriteOneLine(PerformanceProcessor.FREQ_MIN_FILE, minFrequency);
+                FileUtil.fileWriteOneLine(PerformanceGeneral.FREQ_MIN_FILE, minFrequency);
             }
             if (governor != null && governors != null && governors.contains(governor)) {
-                FileUtil.fileWriteOneLine(PerformanceProcessor.GOV_FILE, governor);
+                FileUtil.fileWriteOneLine(PerformanceGeneral.GOV_FILE, governor);
             }
             Log.d(TAG, "CPU settings restored.");
         }
@@ -142,13 +141,13 @@ public class BootReceiver extends BroadcastReceiver {
     private void configureIOSched(Context ctx) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
 
-        if (prefs.getBoolean(PerformanceProcessor.SOB_PREF, false) == false) {
+        if (prefs.getBoolean(PerformanceGeneral.SOB_PREF, false) == false) {
             Log.i(TAG, "IOSched restore disabled by user preference.");
             return;
         }
 
-        String ioscheduler = prefs.getString(PerformanceProcessor.IOSCHED_PREF, null);
-        String availableIOSchedulersLine = FileUtil.fileReadOneLine(PerformanceProcessor.IOSCHED_LIST_FILE);
+        String ioscheduler = prefs.getString(PerformanceGeneral.IOSCHED_PREF, null);
+        String availableIOSchedulersLine = FileUtil.fileReadOneLine(PerformanceGeneral.IOSCHED_LIST_FILE);
         boolean noSettings = ((availableIOSchedulersLine == null) || (ioscheduler == null));
         List<String> ioschedulers = null;
 
@@ -159,7 +158,7 @@ public class BootReceiver extends BroadcastReceiver {
                 ioschedulers = Arrays.asList(availableIOSchedulersLine.replace("[", "").replace("]", "").split(" "));
             }
             if (ioscheduler != null && ioschedulers != null && ioschedulers.contains(ioscheduler)) {
-                FileUtil.fileWriteOneLine(PerformanceProcessor.IOSCHED_LIST_FILE, ioscheduler);
+                FileUtil.fileWriteOneLine(PerformanceGeneral.IOSCHED_LIST_FILE, ioscheduler);
             }
             Log.d(TAG, "I/O scheduler settings restored.");
         }
