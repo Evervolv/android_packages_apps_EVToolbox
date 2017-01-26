@@ -41,7 +41,7 @@
     <string name="tab_title_statusbar">Statusbar</string>
     <string name="tab_title_interface">Interface</string>
     <string name="tab_title_performance">Performance</string>
-    <string name="tab_title_superuser">Superuser</string>
+    <string name="tab_title_hardware">Hardware</string>
     <string name="tab_title_system">System</string>
     <string name="tab_title_bugreport">Bug Report</string>
     <string name="tab_title_settings">Settings</string>
@@ -49,34 +49,6 @@
     <!-- Interface -->
     <string name="interface_rotation_title">Rotation</string>
     <string name="interface_power_menu_title">Power menu</string>
-
-    <!-- Interface >> General -->
-    <string name="pref_assist_wake_toggle_title">Assist button wake</string>
-    <string name="pref_assist_wake_toggle_summary">Assist button presses wake device</string>
-    <string name="pref_app_switch_wake_toggle_title">App switch button wake</string>
-    <string name="pref_app_switch_wake_toggle_summary">App switch button presses wake device</string>
-    <string name="pref_back_wake_toggle_title">Back button wake</string>
-    <string name="pref_back_wake_toggle_summary">Back button presses wake device</string>
-    <string name="pref_home_wake_toggle_title">Home button wake</string>
-    <string name="pref_home_wake_toggle_summary">Home button presses wake device</string>
-    <string name="pref_menu_wake_toggle_title">Menu button wake</string>
-    <string name="pref_menu_wake_toggle_summary">Menu button presses wake device</string>
-    <string name="pref_volume_wake_toggle_title">Volume button wake</string>
-    <string name="pref_volume_wake_toggle_summary">Volume button presses wake device</string>
-    <string name="pref_lockscreen_music_controls_volbtn_title">Volume music control</string>
-    <string name="pref_lockscreen_music_controls_volbtn_summary">Long press up to skip; down for previous</string>
-    <string name="pref_interface_category_tabletdpi">Tablet &amp; DPI</string>
-    <string name="pref_interface_density_picker_title">Custom display density</string>
-    <string name="pref_interface_density_picker_summary">Current dpi: %1$d\nRecommended tablet dpi: %2$d\nDefault dpi: %3$d</string>
-    <string name="pref_interface_density_change_recommended_title">Density change recommended!</string>
-    <string name="pref_interface_density_change_recommended_text">A display density change is recommended for this device. Use the setting below.</string>
-    <string name="pref_interface_reboot_required_title">Reboot required!</string>
-    <string name="pref_interface_reboot_required_text">A reboot is required for this setting to apply.\n\nWARNING: Minimal support is given for DPI changing.</string>
-    <string name="pref_interface_fancy_ui_title">Force fancy ui elements</string>
-    <string name="pref_interface_fancy_ui_summary">Transparent status bar and other resource intensive chrome</string>
-    <string name="pref_interface_fancy_ui_reboot_message">Must reload system resources</string>
-    <string name="pref_interface_settings_switch_toggle_title">Toggle Setting Menu Switch</string>
-    <string name="pref_interface_settings_switch_toggle_summary">This will toggle displaying a switch inside the main Settings menu </string>
 
     <!-- Interface >> Rotation -->
 
@@ -190,6 +162,25 @@
     <string name="logcat_post_author">EVLogcat Uploader</string>
     <string name="logcat_post_title">Logcat: %1$s</string>
     <string name="logcat_notification_title">Logcat Uploaded</string>
+
+    <!-- Hardware -->
+
+    <!-- Hardware >> Buttons -->
+
+    <string name="pref_assist_wake_toggle_title">Assist button wake</string>
+    <string name="pref_assist_wake_toggle_summary">Assist button presses wake device</string>
+    <string name="pref_app_switch_wake_toggle_title">App switch button wake</string>
+    <string name="pref_app_switch_wake_toggle_summary">App switch button presses wake device</string>
+    <string name="pref_back_wake_toggle_title">Back button wake</string>
+    <string name="pref_back_wake_toggle_summary">Back button presses wake device</string>
+    <string name="pref_home_wake_toggle_title">Home button wake</string>
+    <string name="pref_home_wake_toggle_summary">Home button presses wake device</string>
+    <string name="pref_menu_wake_toggle_title">Menu button wake</string>
+    <string name="pref_menu_wake_toggle_summary">Menu button presses wake device</string>
+    <string name="pref_volume_wake_toggle_title">Volume button wake</string>
+    <string name="pref_volume_wake_toggle_summary">Volume button presses wake device</string>
+    <string name="pref_lockscreen_music_controls_volbtn_title">Volume music control</string>
+    <string name="pref_lockscreen_music_controls_volbtn_summary">Long press up to skip; down for previous</string>
 
     <!-- Settings -->
     <string name="pref_settings_toolbox_disable_title">Disable toolbox features</string>

@@ -25,7 +25,6 @@ import android.os.PowerManager;
 import android.os.SystemProperties;
 import android.preference.SwitchPreference;
 import android.preference.Preference;
-import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
@@ -34,26 +33,19 @@ import android.util.DisplayMetrics;
 
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.Toolbox;
-import com.evervolv.toolbox.preference.NumberPickerPreference;
 
-public class InterfaceGeneral extends PreferenceFragment implements
-        OnPreferenceChangeListener,
+public class HardwareButtons extends PreferenceFragment implements
         Toolbox.DisabledListener {
 
-    private static final String DENSITY_PICKER_PREF = "pref_interface_density_picker";
-    private static final String LOCKSCREEN_MUSIC_CTRL_VOLBTN = "pref_lockscreen_music_controls_volbtn";
-    //private static final String FANCY_UI = "pref_interface_fancy_ui";
-    //private static final String SETTINGS_SWITCH_TOGGLE = "pref_interface_settings_switch_toggle";
+    private static final String TAG = "EVToolbox";
 
+    private static final String LOCKSCREEN_MUSIC_CTRL_VOLBTN = "pref_lockscreen_music_controls_volbtn";
     private static final String ASSIST_WAKE_TOGGLE = "pref_assist_wake_toggle";
     private static final String APP_SWITCH_WAKE_TOGGLE = "pref_app_switch_wake_toggle";
     private static final String BACK_WAKE_TOGGLE = "pref_back_wake_toggle";
     private static final String HOME_WAKE_TOGGLE = "pref_home_wake_toggle";
     private static final String MENU_WAKE_TOGGLE = "pref_menu_wake_toggle";
     private static final String VOLUME_WAKE_TOGGLE = "pref_volume_wake_toggle";
-
-    private static final int MIN_DENSITY_VALUE = DisplayMetrics.DENSITY_LOW;
-    private static final int MAX_DENSITY_VALUE = DisplayMetrics.DENSITY_XXXHIGH; //4k
 
     private SwitchPreference mAssistWake;
     private SwitchPreference mAppSwitchWake;
@@ -62,20 +54,15 @@ public class InterfaceGeneral extends PreferenceFragment implements
     private SwitchPreference mMenuWake;
     private SwitchPreference mVolumeWake;
     private SwitchPreference mSettingsSwitch;
-
     private SwitchPreference mMusicCtrlVolBtn;
-    private SwitchPreference mFancyUi;
-    private NumberPickerPreference mDensityPicker;
+
     private ContentResolver mCr;
     private PreferenceScreen mPrefSet;
-
-    private int mRecommendedDpi;
-    private int mDefaultDpi;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.interface_general);
+        addPreferencesFromResource(R.xml.hardware_buttons);
 
         mPrefSet = getPreferenceScreen();
 
@@ -142,22 +129,6 @@ public class InterfaceGeneral extends PreferenceFragment implements
         mMusicCtrlVolBtn = (SwitchPreference) mPrefSet.findPreference(LOCKSCREEN_MUSIC_CTRL_VOLBTN);
         mMusicCtrlVolBtn.setChecked(Settings.System.getInt(mCr,
                 Settings.System.LOCKSCREEN_MUSIC_CONTROLS_VOLBTN, 1) == 1);
-
-        /* Density picker */
-        int currentDensity = SystemProperties.getInt("persist.sys.fake_density", 0);
-        if (currentDensity == 0) {
-            currentDensity = SystemProperties.getInt("ro.sf.lcd_density", DisplayMetrics.DENSITY_DEFAULT);
-        }
-        mRecommendedDpi = Integer.valueOf(getActivity().getString(R.string.config_recommendedTabletDpi));
-        mDefaultDpi = SystemProperties.getInt("ro.sf.lcd_density", DisplayMetrics.DENSITY_DEFAULT);
-        mDensityPicker = (NumberPickerPreference) mPrefSet.findPreference(DENSITY_PICKER_PREF);
-        mDensityPicker.setOnPreferenceChangeListener(this);
-        mDensityPicker.setSummary(String.format(getActivity().getString(
-                R.string.pref_interface_density_picker_summary,
-                currentDensity, mRecommendedDpi, mDefaultDpi)));
-        mDensityPicker.setMinValue(MIN_DENSITY_VALUE);
-        mDensityPicker.setMaxValue(MAX_DENSITY_VALUE);
-        mDensityPicker.setCurrentValue(currentDensity);
     }
 
     @Override
@@ -214,50 +185,6 @@ public class InterfaceGeneral extends PreferenceFragment implements
             return true;
         }
         return false;
-    }
-
-    @Override
-    public boolean onPreferenceChange(Preference preference, Object newValue) {
-        if (preference == mDensityPicker) {
-            int fakeDensity = (Integer) newValue;
-            int realDensity = SystemProperties.getInt("ro.sf.lcd_density", DisplayMetrics.DENSITY_DEFAULT);
-            if (fakeDensity != realDensity) {
-                // Use the new value
-                SystemProperties.set("persist.sys.fake_density", String.valueOf(fakeDensity));
-            } else {
-                // Set zero to use default
-                SystemProperties.set("persist.sys.fake_density", "0");
-            }
-            mDensityPicker.setSummary(String.format(getActivity().getString(
-                    R.string.pref_interface_density_picker_summary,
-                    fakeDensity, mRecommendedDpi, mDefaultDpi)));
-            requestReboot(R.string.pref_interface_reboot_required_text);
-        }
-        return false;
-    }
-
-    private void requestReboot(int messageId) {
-        new AlertDialog.Builder(getActivity())
-                .setTitle(R.string.reboot_required)
-                .setMessage(getString(messageId))
-                .setPositiveButton(getString(R.string.reboot),
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                                PowerManager power = (PowerManager) getActivity()
-                                        .getSystemService(Context.POWER_SERVICE);
-                                power.reboot("Toolbox");
-                            }
-                        })
-                .setNegativeButton(getString(R.string.later),
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
-                .show();
     }
 
     @Override

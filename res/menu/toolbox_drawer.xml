@@ -29,6 +29,9 @@
                 <item android:id="@+id/nav_system"
                       android:icon="@drawable/ic_menu_system"
                       android:title="@string/tab_title_system" />
+                <item android:id="@+id/nav_hardware"
+                      android:icon="@drawable/ic_menu_hardware"
+                      android:title="@string/tab_title_hardware" />
                 <item android:id="@+id/nav_performance"
                       android:icon="@drawable/ic_menu_performance"
                       android:title="@string/tab_title_performance" />

@@ -20,27 +20,25 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.evervolv.toolbox.R;
-import com.evervolv.toolbox.fragments.InterfacePowerMenu;
-import com.evervolv.toolbox.fragments.InterfaceRotation;
+import com.evervolv.toolbox.fragments.HardwareButtons;
 
-public class InterfaceCategory extends CategoryFragment {
+public class HardwareCategory extends CategoryFragment {
 
-    public InterfaceCategory() {
+    public HardwareCategory() {
         super();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mCategoryAdapter.setPageTitles(getResources().getStringArray(R.array.interface_nav));
-        mCategoryAdapter.addFragment(new InterfaceRotation());
-        mCategoryAdapter.addFragment(new InterfacePowerMenu());
+        mCategoryAdapter.setPageTitles(getResources().getStringArray(R.array.hardware_nav));
+        mCategoryAdapter.addFragment(new HardwareButtons());
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(
-                getResources().getString(R.string.tab_title_interface));
+                getResources().getString(R.string.tab_title_hardware));
     }
 }

@@ -38,6 +38,7 @@ import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 
+import com.evervolv.toolbox.categories.HardwareCategory;
 import com.evervolv.toolbox.categories.InterfaceCategory;
 import com.evervolv.toolbox.categories.PerformanceCategory;
 import com.evervolv.toolbox.categories.StatusbarCategory;
@@ -125,6 +126,9 @@ public class Toolbox extends AppCompatActivity {
         } else if (id == R.id.nav_system) {
             getFragmentManager().beginTransaction()
                 .replace(R.id.container, new SystemCategory()).commit();
+        } else if (id == R.id.nav_hardware) {
+            getFragmentManager().beginTransaction()
+                .replace(R.id.container, new HardwareCategory()).commit();
         } else if (id == R.id.nav_performance) {
             getFragmentManager().beginTransaction()
                 .replace(R.id.container, new PerformanceCategory()).commit();

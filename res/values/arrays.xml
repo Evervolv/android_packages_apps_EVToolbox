@@ -23,6 +23,7 @@
         <item>@string/tab_title_interface</item>
         <item>@string/tab_title_statusbar</item>
         <item>@string/tab_title_system</item>
+        <item>@string/tab_title_hardware</item>
         <item>@string/tab_title_performance</item>
         <item>@string/tab_title_bugreport</item>
     </string-array>
@@ -32,9 +33,12 @@
     </string-array>
 
     <string-array name="interface_nav" translatable="false">
-        <item>@string/general_title</item>
         <item>@string/interface_rotation_title</item>
         <item>@string/interface_power_menu_title</item>
+    </string-array>
+
+    <string-array name="hardware_nav" translatable="false">
+        <item>@string/general_title</item>
     </string-array>
 
     <string-array name="performance_nav" translatable="false">

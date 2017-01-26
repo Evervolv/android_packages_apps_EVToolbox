@@ -54,8 +54,4 @@
             android:summary="@string/pref_lockscreen_music_controls_volbtn_summary">
         </SwitchPreference>
 
-        <com.evervolv.toolbox.preference.NumberPickerPreference android:key="pref_interface_density_picker"
-            android:title="@string/pref_interface_density_picker_title">
-        </com.evervolv.toolbox.preference.NumberPickerPreference>
-
 </PreferenceScreen>
