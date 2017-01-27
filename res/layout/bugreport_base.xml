@@ -72,32 +72,17 @@
             android:layout_marginRight="8dp"
             android:layout_marginBottom="5dp"
             android:background="?android:attr/dividerHorizontal"/>
-
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="4dp"
-            android:layout_marginBottom="10dp">
-            <TableRow>
-        <CheckBox
-            android:id="@+id/checkbox_general"
-            android:layout_height="wrap_content"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:text="@string/general_logcat"/>
-        <CheckBox
-            android:id="@+id/checkbox_complete"
-            android:layout_height="wrap_content"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:text="@string/complete_log" />
-            </TableRow>
-            <TableRow>
-            </TableRow>
-
-        </TableLayout>
-
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginBottom="10dp">
+           <Spinner android:id="@+id/report_type_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:entries="@array/supported_bugreport_type"/>
+        </LinearLayout>
     </LinearLayout>
 
     <ProgressBar android:id="@+id/progress_bar"

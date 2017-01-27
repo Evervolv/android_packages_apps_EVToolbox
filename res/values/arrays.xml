@@ -51,6 +51,11 @@
         <item>@string/system_disable_apps_title</item>
     </string-array>
 
+    <string-array name="supported_bugreport_type" translatable="false">
+        <item>@string/general_logcat</item>
+        <item>@string/complete_log</item>
+    </string-array>
+
     <!-- list of apps that have been deemed safe to disable.
          For apps that we need to make sure there is an alternate replacement,
          add a trailing intent. This seems to be the best way.

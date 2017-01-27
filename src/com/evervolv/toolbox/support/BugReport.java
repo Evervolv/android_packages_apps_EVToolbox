@@ -35,9 +35,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,12 +54,13 @@ public class BugReport extends Fragment {
 
     private static final String PREF_LOGCAT_FILE = "logcat_filename_pref";
     private static final String PREF_PLAINTEXT = "logcat_upload_plaintext";
+    private static final String PREF_REPORT_TYPE = "report_type";
+
+    private static final int SYSTEM_LOG = 0;
+    private static final int ALL_LOG  = 1;
 
     private Context mCtx;
     private SharedPreferences mPrefs;
-
-    private CheckBox mLogcat;
-    private CheckBox mComplete;
 
     private TextView mPasteUrl;
     private ProgressBar mProgressBar;
@@ -65,6 +69,7 @@ public class BugReport extends Fragment {
     private Button mFetchButton;
 
     private ActionMode mActionMode = null;
+    private String mLogCommand;
 
     private BroadcastReceiver mFinishedReceiver = new BroadcastReceiver() {
         @Override
@@ -128,8 +133,30 @@ public class BugReport extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.bugreport, container, false);
-        mLogcat = (CheckBox) v.findViewById(R.id.checkbox_general);
-        mComplete = (CheckBox) v.findViewById(R.id.checkbox_complete);
+
+        Spinner mReportType = (Spinner) v.findViewById(R.id.report_type_spinner);
+        mReportType.setSelection(mPrefs.getInt(PREF_REPORT_TYPE, SYSTEM_LOG));
+        mReportType.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,
+                    int position, long id) {
+                switch (position) {
+                    case SYSTEM_LOG:
+                        mLogCommand = Constants.MAIN_BUFFER;
+                        // Force as plaintext for now
+                        mPrefs.edit().putBoolean(PREF_PLAINTEXT, true).apply();
+                        break;
+                    case ALL_LOG:
+                        mLogCommand = Constants.ALL_LOGS_PULLED;
+                        mPrefs.edit().putBoolean(PREF_PLAINTEXT, false).apply();
+                        break;
+                }
+                mPrefs.edit().putInt(PREF_REPORT_TYPE, position).apply();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) { }
+        });
+
         mProgressBar = (ProgressBar) v.findViewById(R.id.progress_bar);
         mProgressBar.setIndeterminate(true);
 
@@ -147,35 +174,7 @@ public class BugReport extends Fragment {
         mFetchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean noneSelected = true;
-                boolean forcePlainText = false;
-
-                String serviceCall = "";
-
-                if (mLogcat.isChecked()) {
-                    noneSelected = false;
-                    serviceCall = Constants.MAIN_BUFFER;
-                    //Force as plaintext for now
-                    forcePlainText = true;
-                }
-                if (mComplete.isChecked()) {
-                    noneSelected = false;
-                    serviceCall = Constants.ALL_LOGS_PULLED;
-                    forcePlainText = true;
-                }
-
-                if (forcePlainText) {
-                    mPrefs.edit().putBoolean(PREF_PLAINTEXT, true).apply();
-                } else {
-                    mPrefs.edit().putBoolean(PREF_PLAINTEXT, false).apply();
-                }
-
-                if (noneSelected) {
-                    Toast.makeText(mCtx, R.string.bugreport_toast_supply_option, Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                mProgressBar.setVisibility(View.VISIBLE);
+                String serviceCall = mLogCommand;
                 mFetchButton.setText(R.string.bugreport_fetching_button);
                 mFetchButton.setEnabled(false);
                 mUploadButton.setEnabled(false);
