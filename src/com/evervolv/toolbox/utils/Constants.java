@@ -13,8 +13,6 @@ public class Constants {
     public static final String DUMPLOGCAT_SERVICE = "dumplogcat:";
     public static final String DUMPLOGCAT_SERVICE_DEFAULT_ARGS = "-D -B -o ";
     public static final String LOGCAT_FILE_PREFIX = "logcat";
-    public static final String MAIN_BUFFER_ARG = " -m";
-    public static final String RADIO_BUFFER_ARG = " -r";
-    public static final String DMESG_ARG = " -d";
-    public static final String LAST_KMSG_ARG = " -k";
+    public static final String MAIN_BUFFER = "pull_logcat";
+    public static final String ALL_LOGS_PULLED = "pull_all";
 }

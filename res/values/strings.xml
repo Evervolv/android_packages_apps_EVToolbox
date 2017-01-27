@@ -152,9 +152,7 @@
 
     <string name="log_options">Log options</string>
     <string name="general_logcat">General logcat</string>
-    <string name="radio_logcat">Radio logcat</string>
-    <string name="dmesg_log">Dmesg</string>
-    <string name="last_kmsg">Last_kmsg</string>
+    <string name="complete_log">Complete Logs</string>
     <string name="copy_url">Copy URL</string>
     <string name="open_url">Open URL</string>
     <string name="log_url_label">Log URL</string>

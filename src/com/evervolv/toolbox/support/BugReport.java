@@ -56,9 +56,7 @@ public class BugReport extends Fragment {
     private SharedPreferences mPrefs;
 
     private CheckBox mLogcat;
-    private CheckBox mRadio;
-    private CheckBox mDmesg;
-    private CheckBox mLastKmsg;
+    private CheckBox mComplete;
 
     private TextView mPasteUrl;
     private ProgressBar mProgressBar;
@@ -131,9 +129,7 @@ public class BugReport extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.bugreport, container, false);
         mLogcat = (CheckBox) v.findViewById(R.id.checkbox_general);
-        mRadio = (CheckBox) v.findViewById(R.id.checkbox_radio);
-        mDmesg = (CheckBox) v.findViewById(R.id.checkbox_dmesg);
-        mLastKmsg = (CheckBox) v.findViewById(R.id.checkbox_last_kmsg);
+        mComplete = (CheckBox) v.findViewById(R.id.checkbox_complete);
         mProgressBar = (ProgressBar) v.findViewById(R.id.progress_bar);
         mProgressBar.setIndeterminate(true);
 
@@ -154,28 +150,17 @@ public class BugReport extends Fragment {
                 boolean noneSelected = true;
                 boolean forcePlainText = false;
 
-                String serviceCall = Constants.DUMPLOGCAT_SERVICE
-                        + Constants.DUMPLOGCAT_SERVICE_DEFAULT_ARGS
-                        + mCtx.getFilesDir().getAbsolutePath() + "/"
-                        + Constants.LOGCAT_FILE_PREFIX;
+                String serviceCall = "";
 
                 if (mLogcat.isChecked()) {
                     noneSelected = false;
-                    serviceCall += Constants.MAIN_BUFFER_ARG;
+                    serviceCall = Constants.MAIN_BUFFER;
                     //Force as plaintext for now
                     forcePlainText = true;
                 }
-                if (mRadio.isChecked()) {
+                if (mComplete.isChecked()) {
                     noneSelected = false;
-                    serviceCall += Constants.RADIO_BUFFER_ARG;
-                }
-                if (mDmesg.isChecked()) {
-                    noneSelected = false;
-                    serviceCall += Constants.DMESG_ARG;
-                }
-                if (mLastKmsg.isChecked()) {
-                    noneSelected = false;
-                    serviceCall += Constants.LAST_KMSG_ARG;
+                    serviceCall = Constants.ALL_LOGS_PULLED;
                     forcePlainText = true;
                 }
 
