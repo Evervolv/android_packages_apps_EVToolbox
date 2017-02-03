@@ -140,7 +140,7 @@
     <string name="battery_icon_portrait">Portrait</string>
     <string name="battery_icon_landscape">Landscape</string>
     <string name="battery_icon_circle">Circle</string>
-    <string name="battery_icon_dotted_circle">Dotted Circle</string>
+    <string name="battery_icon_solid_circle">Solid Circle</string>
     <string name="battery_icon_text">Text</string>
     <string name="battery_icon_hidden">Hidden</string>
     <string name="battery_icon_qs_tile_title">Show icon in Quick Settings</string>
