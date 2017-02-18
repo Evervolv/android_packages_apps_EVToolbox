@@ -29,9 +29,10 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.evervolv.toolbox.R;
+import com.evervolv.toolbox.ToolboxCategory;
 import com.evervolv.toolbox.fragments.PerformanceGeneral;
 
-public class PerformanceCategory extends CategoryFragment {
+public class PerformanceCategory extends ToolboxCategory {
 
     private RelativeLayout mBottomActionBar;
     private TextView mBottomBarText;

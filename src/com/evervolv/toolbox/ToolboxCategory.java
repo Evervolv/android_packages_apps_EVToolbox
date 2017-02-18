@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.evervolv.toolbox.categories;
+package com.evervolv.toolbox;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -28,12 +28,12 @@ import com.evervolv.toolbox.R;
 
 import java.util.ArrayList;
 
-public class CategoryFragment extends Fragment {
+public class ToolboxCategory extends Fragment {
 
     protected ViewPager mViewPager;
     protected CategoryAdapter mCategoryAdapter;
 
-    public CategoryFragment() {
+    public ToolboxCategory() {
         super();
     }
 

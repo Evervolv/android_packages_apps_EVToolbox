@@ -20,10 +20,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.evervolv.toolbox.R;
+import com.evervolv.toolbox.ToolboxCategory;
 import com.evervolv.toolbox.fragments.StatusbarGeneral;
 import com.evervolv.toolbox.fragments.StatusbarQuickSettings;
 
-public class StatusbarCategory extends CategoryFragment {
+public class StatusbarCategory extends ToolboxCategory {
 
     public StatusbarCategory() {
         super();

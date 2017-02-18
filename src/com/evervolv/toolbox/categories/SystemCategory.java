@@ -19,10 +19,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.evervolv.toolbox.R;
+import com.evervolv.toolbox.ToolboxCategory;
 import com.evervolv.toolbox.fragments.SystemNetwork;
 import com.evervolv.toolbox.fragments.SystemAppDisabler;
 
-public class SystemCategory extends CategoryFragment {
+public class SystemCategory extends ToolboxCategory {
 
     public SystemCategory() {
         super();

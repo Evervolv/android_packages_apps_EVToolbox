@@ -20,10 +20,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.evervolv.toolbox.R;
+import com.evervolv.toolbox.ToolboxCategory;
 import com.evervolv.toolbox.fragments.InterfacePowerMenu;
 import com.evervolv.toolbox.fragments.InterfaceRotation;
 
-public class InterfaceCategory extends CategoryFragment {
+public class InterfaceCategory extends ToolboxCategory {
 
     public InterfaceCategory() {
         super();

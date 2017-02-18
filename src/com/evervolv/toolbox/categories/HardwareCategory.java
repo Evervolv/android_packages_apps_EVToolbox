@@ -20,9 +20,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.evervolv.toolbox.R;
+import com.evervolv.toolbox.ToolboxCategory;
 import com.evervolv.toolbox.fragments.HardwareButtons;
 
-public class HardwareCategory extends CategoryFragment {
+public class HardwareCategory extends ToolboxCategory {
 
     public HardwareCategory() {
         super();
