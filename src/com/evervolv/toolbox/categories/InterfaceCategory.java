@@ -21,6 +21,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.ToolboxCategory;
+import com.evervolv.toolbox.fragments.InterfaceNavBar;
 import com.evervolv.toolbox.fragments.InterfacePowerMenu;
 import com.evervolv.toolbox.fragments.InterfaceRotation;
 
@@ -34,6 +35,7 @@ public class InterfaceCategory extends ToolboxCategory {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mCategoryAdapter.setPageTitles(getResources().getStringArray(R.array.interface_nav));
+        mCategoryAdapter.addFragment(new InterfaceNavBar());
         mCategoryAdapter.addFragment(new InterfaceRotation());
         mCategoryAdapter.addFragment(new InterfacePowerMenu());
     }

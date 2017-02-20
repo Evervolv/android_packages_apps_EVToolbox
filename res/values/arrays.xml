@@ -34,6 +34,7 @@
     </string-array>
 
     <string-array name="interface_nav" translatable="false">
+        <item>@string/interface_navbar_title</item>
         <item>@string/interface_rotation_title</item>
         <item>@string/interface_power_menu_title</item>
     </string-array>

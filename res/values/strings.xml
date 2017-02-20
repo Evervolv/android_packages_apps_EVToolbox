@@ -47,8 +47,14 @@
     <string name="tab_title_settings">Settings</string>
 
     <!-- Interface -->
+    <string name="interface_navbar_title">Navigation Bar</string>
     <string name="interface_rotation_title">Rotation</string>
     <string name="interface_power_menu_title">Power menu</string>
+
+    <!-- Interface >> Navigation Bar -->
+
+    <string name="pref_navbar_show_title">Show the navigation bar</string>
+    <string name="pref_navbar_animation_title">Use pixel animation</string>
 
     <!-- Interface >> Rotation -->
 
