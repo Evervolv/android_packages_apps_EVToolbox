@@ -37,6 +37,7 @@ import android.widget.Toast;
 
 import evervolv.graphics.drawable.StopMotionVectorDrawable;
 
+import com.evervolv.toolbox.PartsUpdater;
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.widget.SeekBarPreference;
 import com.evervolv.toolbox.SettingsPreferenceFragment;
@@ -47,6 +48,8 @@ import java.util.List;
 import evervolv.power.PerformanceManager;
 import evervolv.power.PerformanceProfile;
 import evervolv.provider.EVSettings;
+
+import static evervolv.power.PerformanceManager.PROFILE_POWER_SAVE;
 
 public class PerfProfileSettings extends SettingsPreferenceFragment
         implements Preference.OnPreferenceChangeListener {
@@ -182,7 +185,8 @@ public class PerfProfileSettings extends SettingsPreferenceFragment
             return;
         }
 
-        PerformanceProfile profile = mPerf.getActivePowerProfile();
+        PerformanceProfile profile = mPowerManager.isPowerSaveMode() ?
+                mPerf.getPowerProfile(PROFILE_POWER_SAVE) : mPerf.getActivePowerProfile();
         mPerfSeekBar.setProgress(mProfiles.indexOf(profile));
         mPerfSeekBar.setTitle(getResources().getString(
                 R.string.perf_profile_title, profile.getName()));
@@ -254,6 +258,9 @@ public class PerfProfileSettings extends SettingsPreferenceFragment
 
     private void updatePowerSaveValue() {
         mPowerSavePref.setChecked(mPowerManager.isPowerSaveMode());
+        updatePerfSettings();
+        // The profile was changed automatically without updating the preference
+        PartsUpdater.notifyChanged(getActivity(), getPreferenceScreen().getKey());
     }
 
     private void updateAutoPowerSaveValue() {
@@ -272,8 +279,12 @@ public class PerfProfileSettings extends SettingsPreferenceFragment
     public static final SummaryProvider SUMMARY_PROVIDER = new SummaryProvider() {
         @Override
         public String getSummary(Context context, String key) {
-            final PerformanceProfile profile =
-                    PerformanceManager.getInstance(context).getActivePowerProfile();
+            final PowerManager powerManager =
+                    (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+            final PerformanceManager perfManager = PerformanceManager.getInstance(context);
+            final PerformanceProfile profile = powerManager.isPowerSaveMode() ?
+                    perfManager.getPowerProfile(PROFILE_POWER_SAVE) :
+                    perfManager.getActivePowerProfile();
             String summary = context.getString(R.string.perf_profile_settings_summary);
             if (profile != null) {
                 summary += "\n\n" + context.getResources().getString(
