@@ -15,15 +15,10 @@
  */
 package com.evervolv.toolbox.support;
 
-import android.content.ContentResolver;
+import android.app.ActivityManager;
+import android.content.Context;
 import android.os.Bundle;
-import android.os.SystemProperties;
-import android.preference.SwitchPreference;
-import android.preference.ListPreference;
-import android.preference.Preference;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceScreen;
-import android.provider.Settings;
+import android.support.v14.preference.PreferenceFragment;
 import android.support.v7.app.AppCompatActivity;
 
 import com.evervolv.toolbox.R;
@@ -31,25 +26,14 @@ import com.evervolv.toolbox.Toolbox;
 
 public class Preferences extends PreferenceFragment {
 
-    private static final String PREF_TOOLBOX_DISABLE = "pref_settings_toolbox_disable";
-
-    private ContentResolver mCr;
-    private PreferenceScreen mPrefSet;
-    private SwitchPreference mToolboxDisabled;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.settings_general);
-
-        mPrefSet = getPreferenceScreen();
-
-        mCr = getActivity().getContentResolver();
-
-        /* Settings menu Switches */
-        mToolboxDisabled = (SwitchPreference) mPrefSet.findPreference(PREF_TOOLBOX_DISABLE);
-        mToolboxDisabled.setChecked(Settings.System.getInt(mCr,
-                Settings.System.DISABLE_TOOLBOX, 0) == 1);
     }
 
     @Override
@@ -57,21 +41,5 @@ public class Preferences extends PreferenceFragment {
         super.onActivityCreated(savedInstanceState);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(
                 getResources().getString(R.string.tab_title_settings));
-    }
-
-    @Override
-    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-        boolean value;
-
-        if (preference == mToolboxDisabled) {
-            value = mToolboxDisabled.isChecked();
-            Settings.System.putInt(mCr, Settings.System.DISABLE_TOOLBOX,
-                    value ? 1 : 0);
-            // Inform children of state change
-            ((Toolbox) getActivity()).updateListeners(value);
-            return true;
-        }
-
-        return false;
     }
 }

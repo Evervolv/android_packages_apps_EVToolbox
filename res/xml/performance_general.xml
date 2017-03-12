@@ -18,41 +18,40 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <ListPreference android:key="pref_perf_profile"
+        <ListPreference
+            android:key="pref_perf_profile"
             android:dialogTitle="@string/perf_profile_title"
             android:title="@string/perf_profile_title"
-            android:persistent="false">
-        </ListPreference>
+            android:persistent="false" />
 
-        <SwitchPreference android:key="pref_ksm"
+        <android.support.v14.preference.SwitchPreference
+            android:key="pref_ksm"
             android:title="@string/pref_ksm_title"
-            android:summary="@string/pref_ksm_summary">
-        </SwitchPreference>
+            android:summary="@string/pref_ksm_summary" />
 
-        <ListPreference android:key="pref_cpu_io_sched"
+        <ListPreference
+            android:key="pref_cpu_io_sched"
             android:dialogTitle="@string/pref_cpu_io_sched_title"
-            android:title="@string/pref_cpu_io_sched_title">
-        </ListPreference>
+            android:title="@string/pref_cpu_io_sched_title" />
 
-        <ListPreference android:key="pref_cpu_gov"
+        <ListPreference
+            android:key="pref_cpu_gov"
             android:dialogTitle="@string/pref_cpu_governors_title"
-            android:title="@string/pref_cpu_governors_title">
-        </ListPreference>
+            android:title="@string/pref_cpu_governors_title" />
 
-        <Preference android:key="pref_cpu_freq_cur"
-            style="?android:preferenceInformationStyle"
+        <Preference
+            android:key="pref_cpu_freq_cur"
             android:title="@string/pref_cpu_cur_freq_title"
-            android:selectable="false">
-        </Preference>
+            android:selectable="false" />
 
-        <ListPreference android:key="pref_cpu_freq_min"
+        <ListPreference
+            android:key="pref_cpu_freq_min"
             android:dialogTitle="@string/pref_cpu_min_freq_title"
-            android:title="@string/pref_cpu_min_freq_title">
-        </ListPreference>
+            android:title="@string/pref_cpu_min_freq_title" />
 
-        <ListPreference android:key="pref_cpu_freq_max"
+        <ListPreference
+            android:key="pref_cpu_freq_max"
             android:dialogTitle="@string/pref_cpu_max_freq_title"
-            android:title="@string/pref_cpu_max_freq_title">
-        </ListPreference>
+            android:title="@string/pref_cpu_max_freq_title" />
 
 </PreferenceScreen>

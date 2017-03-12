@@ -17,27 +17,14 @@
  -->
 
 <resources>
-    <!-- Whether or not to display the home button settings -->
-    <bool name="has_physical_buttons">false</bool>
-
     <!-- Hardware button wake settings ** NEEDS has_physical_buttons set to true **-->
     <bool name="has_app_switch_button">false</bool>
     <bool name="has_assist_button">false</bool>
     <bool name="has_back_button">false</bool>
-    <bool name="has_home_button">true</bool>
+    <bool name="has_home_button">false</bool>
     <bool name="has_menu_button">false</bool>
-    <bool name="has_trackball">false</bool>
-
-    <!-- Notification toolbox widges -->
-    <bool name="config_has_gps" translatable="false">true</bool>
-    <bool name="config_has_wimax" translatable="false">false</bool>
-    <bool name="config_has_bluetooth" translatable="false">true</bool>
-    <bool name="config_has_mobile_data" translatable="false">true</bool>
-    <bool name="config_has_mobile_radio" translatable="false">true</bool>
-    <bool name="config_disableOldLocks" translatable="false">false</bool>
 
     <!-- Processor -->
     <string name="pref_max_cpu_freq_file" translatable="false">/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq</string>
     <string name="pref_min_cpu_freq_file" translatable="false">/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq</string>
-
 </resources>

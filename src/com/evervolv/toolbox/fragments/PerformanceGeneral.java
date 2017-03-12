@@ -31,19 +31,18 @@ import android.os.Message;
 import android.os.PowerManager;
 import android.os.SystemProperties;
 import android.os.SystemService;
-import android.preference.SwitchPreference;
-import android.preference.ListPreference;
-import android.preference.Preference;
-import android.preference.Preference.OnPreferenceChangeListener;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceScreen;
 import android.provider.Settings;
+import android.support.v14.preference.PreferenceFragment;
+import android.support.v14.preference.SwitchPreference;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.preference.ListPreference;
+import android.support.v7.preference.Preference;
+import android.support.v7.preference.Preference.OnPreferenceChangeListener;
+import android.support.v7.preference.PreferenceScreen;
 import android.util.Log;
 
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.Toolbox;
-import com.evervolv.toolbox.fragments.PerformanceProcessor;
 import com.evervolv.toolbox.utils.FileUtil;
 
 import java.lang.Runtime;
@@ -53,24 +52,24 @@ public class PerformanceGeneral extends PreferenceFragment implements
         Toolbox.DisabledListener {
     private static final String TAG = "EVToolbox";
 
-    public static boolean freqCapFilesInitialized = PerformanceProcessor.freqCapFilesInitialized;
-    public static final String CPU_ONLINE = PerformanceProcessor.CPU_ONLINE;
-    public static final String SCALE_CUR_FILE = PerformanceProcessor.SCALE_CUR_FILE;
-    public static final String FREQINFO_CUR_FILE = PerformanceProcessor.FREQINFO_CUR_FILE;
-    public static final String GOV_LIST_FILE = PerformanceProcessor.GOV_LIST_FILE;
-    public static final String GOV_FILE = PerformanceProcessor.GOV_FILE;
-    public static final String FREQ_LIST_FILE = PerformanceProcessor.FREQ_LIST_FILE;
-    public static String FREQ_MAX_FILE = PerformanceProcessor.FREQ_MAX_FILE;
-    public static String FREQ_MIN_FILE = PerformanceProcessor.FREQ_MIN_FILE;
-    public static final String IOSCHED_LIST_FILE = PerformanceProcessor.IOSCHED_LIST_FILE;
+    public static boolean freqCapFilesInitialized = false;
+    public static final String CPU_ONLINE = "/sys/devices/system/cpu/cpu0/online";
+    public static final String SCALE_CUR_FILE = "/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq";
+    public static final String FREQINFO_CUR_FILE = "/sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_cur_freq";
+    public static final String GOV_LIST_FILE = "/sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors";
+    public static final String GOV_FILE = "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor";
+    public static final String FREQ_LIST_FILE = "/sys/devices/system/cpu/cpu0/cpufreq/scaling_available_frequencies";
+    public static String FREQ_MAX_FILE = null;
+    public static String FREQ_MIN_FILE = null;
+    public static final String IOSCHED_LIST_FILE = "/sys/block/mmcblk0/queue/scheduler";
 
-    private static String FREQ_CUR_FILE = PerformanceProcessor.SCALE_CUR_FILE;
-    public static final String IOSCHED_PREF = PerformanceProcessor.IOSCHED_PREF;
-    public static final String GOV_PREF = PerformanceProcessor.GOV_PREF;
-    public static final String FREQ_CUR_PREF = PerformanceProcessor.FREQ_CUR_PREF;
-    public static final String FREQ_MIN_PREF = PerformanceProcessor.FREQ_MIN_PREF;
-    public static final String FREQ_MAX_PREF = PerformanceProcessor.FREQ_MAX_PREF;
-    public static final String SOB_PREF = PerformanceProcessor.SOB_PREF;
+    private static String FREQ_CUR_FILE = SCALE_CUR_FILE;
+    public static final String IOSCHED_PREF = "pref_cpu_io_sched";
+    public static final String GOV_PREF = "pref_cpu_gov";
+    public static final String FREQ_CUR_PREF = "pref_cpu_freq_cur";
+    public static final String FREQ_MIN_PREF = "pref_cpu_freq_min";
+    public static final String FREQ_MAX_PREF = "pref_cpu_freq_max";
+    public static final String SOB_PREF = "pref_cpu_set_on_boot";
 
     public static final String KSM_RUN_FILE = "/sys/kernel/mm/ksm/run";
     public static final String KSM_PREF = "pref_ksm";
@@ -127,7 +126,10 @@ public class PerformanceGeneral extends PreferenceFragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
 
+    @Override
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         initFreqCapFiles();
 
         addPreferencesFromResource(R.xml.performance_general);
@@ -229,7 +231,6 @@ public class PerformanceGeneral extends PreferenceFragment implements
         }
     }
 
-    @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         if (preference == mKSMPref) {
             FileUtil.fileWriteOneLine(KSM_RUN_FILE, mKSMPref.isChecked() ? "1" : "0");
@@ -238,6 +239,7 @@ public class PerformanceGeneral extends PreferenceFragment implements
         return false;
     }
 
+    @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (newValue != null) {
             if (preference == mPerfProfilePref) {
@@ -248,17 +250,24 @@ public class PerformanceGeneral extends PreferenceFragment implements
             if (preference == mIOSchedulerPref) {
                 updateCpuTunables(IOSCHED_LIST_FILE, (String) newValue);
                 mIOSchedulerPref.setSummary(String.format(mIOSchedulerFormat, (String) newValue));
-            } else if (preference == mGovernorPref) {
+                return true;
+            }
+            if (preference == mGovernorPref) {
                 updateCpuTunables(GOV_FILE, (String) newValue);
                 mGovernorPref.setSummary(String.format(mGovernorFormat, (String) newValue));
-            } else if (preference == mMinFrequencyPref) {
+                return true;
+            }
+            if (preference == mMinFrequencyPref) {
                 updateCpuTunables(FREQ_MIN_FILE, (String) newValue);
                 mMinFrequencyPref.setSummary(String.format(mMinFrequencyFormat,
                         toMHz((String) newValue)));
-            } else if (preference == mMaxFrequencyPref) {
+                return true;
+            }
+            if (preference == mMaxFrequencyPref) {
                 updateCpuTunables(FREQ_MAX_FILE, (String) newValue);
                 mMaxFrequencyPref.setSummary(String.format(mMaxFrequencyFormat,
                         toMHz((String) newValue)));
+                return true;
             }
         }
         return false;

@@ -17,10 +17,10 @@ package com.evervolv.toolbox.fragments;
 
 import android.os.Bundle;
 import android.os.SystemProperties;
-import android.preference.SwitchPreference;
-import android.preference.Preference;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceScreen;
+import android.support.v14.preference.PreferenceFragment;
+import android.support.v14.preference.SwitchPreference;
+import android.support.v7.preference.Preference;
+import android.support.v7.preference.PreferenceScreen;
 
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.Toolbox;
@@ -28,26 +28,25 @@ import com.evervolv.toolbox.Toolbox;
 public class SystemNetwork extends PreferenceFragment implements
         Toolbox.DisabledListener  {
 
-    private static final String PREF_HOSTNAME = "pref_system_hostname";
     public static final String PREF_SSHD = "pref_system_sshd";
 
-    private PreferenceScreen mPrefSet;
     SwitchPreference mSshd;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.system_network);
-
-        mPrefSet = getPreferenceScreen();
-
-        mSshd = (SwitchPreference) findPreference(PREF_SSHD);
+        mSshd = (SwitchPreference) getPreferenceScreen().findPreference(PREF_SSHD);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        mPrefSet.setEnabled(Toolbox.isEnabled(getActivity()));
+        getPreferenceScreen().setEnabled(Toolbox.isEnabled(getActivity()));
         ((Toolbox) getActivity()).registerCallback(this);
     }
 
@@ -57,7 +56,6 @@ public class SystemNetwork extends PreferenceFragment implements
         ((Toolbox) getActivity()).unRegisterCallback(this);
     }
 
-    @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         if (preference == mSshd) {
             if (mSshd.isChecked()) {
@@ -72,6 +70,6 @@ public class SystemNetwork extends PreferenceFragment implements
 
     @Override
     public void onToolboxDisabled(boolean enabled) {
-        mPrefSet.setEnabled(enabled);
+        getPreferenceScreen().setEnabled(enabled);
     }
 }

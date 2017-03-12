@@ -18,11 +18,11 @@ package com.evervolv.toolbox.fragments;
 
 import android.content.ContentResolver;
 import android.os.Bundle;
-import android.preference.SwitchPreference;
-import android.preference.Preference;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceScreen;
 import android.provider.Settings;
+import android.support.v14.preference.PreferenceFragment;
+import android.support.v14.preference.SwitchPreference;
+import android.support.v7.preference.Preference;
+import android.support.v7.preference.PreferenceScreen;
 
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.Toolbox;
@@ -45,18 +45,16 @@ public class InterfaceRotation extends PreferenceFragment implements
     private SwitchPreference mRotation180Pref;
     private SwitchPreference mRotation270Pref;
 
-    private ContentResolver mCr;
-    private PreferenceScreen mPrefSet;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
 
+    @Override
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.interface_rotation);
 
-        mPrefSet = getPreferenceScreen();
-
-        mCr = getActivity().getContentResolver();
+        PreferenceScreen mPrefSet = getPreferenceScreen();
 
         mRotation0Pref = (SwitchPreference) mPrefSet.findPreference(ROTATION_0_PREF);
         mRotation90Pref = (SwitchPreference) mPrefSet.findPreference(ROTATION_90_PREF);
@@ -64,13 +62,12 @@ public class InterfaceRotation extends PreferenceFragment implements
         mRotation270Pref = (SwitchPreference) mPrefSet.findPreference(ROTATION_270_PREF);
 
         int defaultAngles = ROTATION_0 | ROTATION_90 | ROTATION_270;
-        // 180 is default enabled on tablets, disabled on phones
         if (getResources().getBoolean(com.android.internal.R.bool.config_allowAllRotations)) {
+            // 180 is default enabled on tablets, disabled on phones
             defaultAngles |= ROTATION_180;
         }
 
-
-        int angles = Settings.System.getInt(mCr,
+        int angles = Settings.System.getInt(getActivity().getContentResolver(),
                 Settings.System.ACCELEROMETER_ROTATION_ANGLES, defaultAngles);
         mRotation0Pref.setChecked((angles & ROTATION_0) != 0);
         mRotation90Pref.setChecked((angles & ROTATION_90) != 0);
@@ -81,7 +78,7 @@ public class InterfaceRotation extends PreferenceFragment implements
     @Override
     public void onStart() {
         super.onStart();
-        mPrefSet.setEnabled(Toolbox.isEnabled(getActivity()));
+        getPreferenceScreen().setEnabled(Toolbox.isEnabled(getActivity()));
         ((Toolbox) getActivity()).registerCallback(this);
     }
 
@@ -92,8 +89,6 @@ public class InterfaceRotation extends PreferenceFragment implements
     }
 
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-        boolean value;
-
         if (preference == mRotation0Pref ||
             preference == mRotation90Pref ||
             preference == mRotation180Pref ||
@@ -104,7 +99,7 @@ public class InterfaceRotation extends PreferenceFragment implements
             if (mRotation180Pref.isChecked()) angles |= ROTATION_180;
             if (mRotation270Pref.isChecked()) angles |= ROTATION_270;
 
-            Settings.System.putInt(mCr,
+            Settings.System.putInt(getActivity().getContentResolver(),
                      Settings.System.ACCELEROMETER_ROTATION_ANGLES, angles);
         }
 
@@ -113,7 +108,7 @@ public class InterfaceRotation extends PreferenceFragment implements
 
     @Override
     public void onToolboxDisabled(boolean enabled) {
-        mPrefSet.setEnabled(enabled);
+        getPreferenceScreen().setEnabled(enabled);
     }
 
 }

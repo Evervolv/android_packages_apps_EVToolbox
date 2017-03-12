@@ -18,16 +18,16 @@ package com.evervolv.toolbox.fragments;
 
 import android.content.ContentResolver;
 import android.os.Bundle;
-import android.preference.SwitchPreference;
-import android.preference.Preference;
-import android.preference.Preference.OnPreferenceChangeListener;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceScreen;
 import android.provider.Settings;
+import android.support.v14.preference.PreferenceFragment;
+import android.support.v14.preference.SwitchPreference;
+import android.support.v7.preference.Preference;
+import android.support.v7.preference.Preference.OnPreferenceChangeListener;
+import android.support.v7.preference.PreferenceScreen;
 
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.Toolbox;
-import com.evervolv.toolbox.preference.NumberPickerPreference;
+import com.evervolv.toolbox.preference.CustomSeekBarPreference;
 
 public class InterfacePowerMenu extends PreferenceFragment implements
         OnPreferenceChangeListener,
@@ -44,24 +44,25 @@ public class InterfacePowerMenu extends PreferenceFragment implements
     private static final int HIDE_SOUND = 4;
     private static final int HIDE_AIRPLANE = 8;
 
-    private static final int MIN_DELAY_VALUE = 1;
-    private static final int MAX_DELAY_VALUE = 30;
-
     private ContentResolver mCr;
-    private PreferenceScreen mPrefSet;
 
     private SwitchPreference mHideScreenshot;
     private SwitchPreference mHideSound;
     private SwitchPreference mHideAirplaneMode;
     private SwitchPreference mHideRebootMenu;
-    private NumberPickerPreference mScreenshotDelay;
+    private CustomSeekBarPreference mScreenshotDelay;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.interface_power_menu);
 
-        mPrefSet = getPreferenceScreen();
+        PreferenceScreen mPrefSet = getPreferenceScreen();
 
         mCr = getActivity().getContentResolver();
 
@@ -84,20 +85,17 @@ public class InterfacePowerMenu extends PreferenceFragment implements
                 PREF_HIDE_REBOOT_MENU);
         mHideRebootMenu.setChecked((hiddenOptions & HIDE_REBOOT) != 0);
 
-        mScreenshotDelay = (NumberPickerPreference) mPrefSet.findPreference(
-                PREF_SCREENSHOT_DELAY);
+        mScreenshotDelay = (CustomSeekBarPreference) mPrefSet.findPreference(PREF_SCREENSHOT_DELAY);
+        int screenshotDelay = Settings.System.getInt(mCr,
+                Settings.System.POWER_MENU_SCREENSHOT_DELAY, 1000);
+        mScreenshotDelay.setValue(screenshotDelay / 1);
         mScreenshotDelay.setOnPreferenceChangeListener(this);
-        mScreenshotDelay.setMinValue(MIN_DELAY_VALUE);
-        mScreenshotDelay.setMaxValue(MAX_DELAY_VALUE);
-        int ssDelay = Settings.System.getInt(mCr,
-                Settings.System.POWER_MENU_SCREENSHOT_DELAY, 1);
-        mScreenshotDelay.setCurrentValue(ssDelay);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        mPrefSet.setEnabled(Toolbox.isEnabled(getActivity()));
+        getPreferenceScreen().setEnabled(Toolbox.isEnabled(getActivity()));
         ((Toolbox) getActivity()).registerCallback(this);
     }
 
@@ -108,7 +106,6 @@ public class InterfacePowerMenu extends PreferenceFragment implements
     }
 
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-
         if (preference == mHideScreenshot ||
                 preference == mHideSound ||
                 preference == mHideAirplaneMode ||
@@ -120,16 +117,17 @@ public class InterfacePowerMenu extends PreferenceFragment implements
             if (mHideSound.isChecked()) options |= HIDE_SOUND;
             Settings.System.putInt(mCr, Settings.System.HIDDEN_POWER_MENU_OPTIONS,
                     options);
+            return true;
         }
-        return true;
+        return false;
     }
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (preference == mScreenshotDelay) {
-            int value = Integer.parseInt(newValue.toString());
-            Settings.System.putInt(mCr, Settings.System.POWER_MENU_SCREENSHOT_DELAY,
-                    value);
+            int value = (Integer) newValue;
+            Settings.System.putInt(mCr,
+                Settings.System.POWER_MENU_SCREENSHOT_DELAY, value * 1);
             return true;
         }
         return false;
@@ -137,7 +135,7 @@ public class InterfacePowerMenu extends PreferenceFragment implements
 
     @Override
     public void onToolboxDisabled(boolean enabled) {
-        mPrefSet.setEnabled(enabled);
+        getPreferenceScreen().setEnabled(enabled);
     }
 
 }

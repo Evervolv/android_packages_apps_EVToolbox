@@ -16,13 +16,10 @@
 
 package com.evervolv.toolbox.fragments;
 
-import android.content.ContentResolver;
+import android.app.ActivityManager;
+import android.content.Context;
 import android.os.Bundle;
-import android.preference.SwitchPreference;
-import android.preference.Preference;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceScreen;
-import android.provider.Settings;
+import android.support.v14.preference.PreferenceFragment;
 
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.Toolbox;
@@ -30,32 +27,20 @@ import com.evervolv.toolbox.Toolbox;
 public class StatusbarQuickSettings extends PreferenceFragment implements
         Toolbox.DisabledListener {
 
-    private static final String STATUSBAR_QUICK_PULLDOWN = "pref_statusbar_quick_pulldown";
-
-    private ContentResolver mCr;
-    private PreferenceScreen mPrefSet;
-
-    private SwitchPreference mQuickPulldown;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.statusbar_qs);
-
-        mPrefSet = getPreferenceScreen();
-
-        mCr = getActivity().getContentResolver();
-
-        /* Quick Pulldown */
-        mQuickPulldown = (SwitchPreference) mPrefSet.findPreference(STATUSBAR_QUICK_PULLDOWN);
-        mQuickPulldown.setChecked(Settings.System.getInt(mCr,
-                Settings.System.STATUS_BAR_QUICK_QS_PULLDOWN, 1) == 1);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        mPrefSet.setEnabled(Toolbox.isEnabled(getActivity()));
+        getPreferenceScreen().setEnabled(Toolbox.isEnabled(getActivity()));
         ((Toolbox) getActivity()).registerCallback(this);
     }
 
@@ -66,19 +51,7 @@ public class StatusbarQuickSettings extends PreferenceFragment implements
     }
 
     @Override
-    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-        if (preference == mQuickPulldown) {
-            boolean value = mQuickPulldown.isChecked();
-            Settings.System.putInt(mCr, Settings.System.STATUS_BAR_QUICK_QS_PULLDOWN,
-                    value ? 1 : 0);
-            return true;
-        }
-        return false;
-    }
-
-    @Override
     public void onToolboxDisabled(boolean enabled) {
-        mPrefSet.setEnabled(enabled);
+        getPreferenceScreen().setEnabled(enabled);
     }
-
 }

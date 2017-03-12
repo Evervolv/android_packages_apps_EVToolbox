@@ -18,9 +18,10 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <SwitchPreference android:key="pref_settings_toolbox_disable"
+        <com.evervolv.toolbox.preference.SystemSettingSwitchPreference
+            android:key="disable_toolbox"
             android:title="@string/pref_settings_toolbox_disable_title"
-            android:summary="@string/pref_settings_toolbox_disable_summary">
-        </SwitchPreference>
+            android:summary="@string/pref_settings_toolbox_disable_summary"
+            android:defaultValue="false" />
 
 </PreferenceScreen>

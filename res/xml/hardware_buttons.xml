@@ -16,42 +16,54 @@
  * limitations under the License.
  -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
-        <SwitchPreference android:key="pref_app_switch_wake_toggle"
+        <com.evervolv.toolbox.preference.SystemSettingSwitchPreference
+            android:key="app_switch_wake_screen"
             android:title="@string/pref_app_switch_wake_toggle_title"
-            android:summary="@string/pref_app_switch_wake_toggle_summary">
-        </SwitchPreference>
+            android:summary="@string/pref_app_switch_wake_toggle_summary"
+            android:defaultValue="false"
+            app:requiresConfig="@bool/has_app_switch_button" />
 
-        <SwitchPreference android:key="pref_assist_wake_toggle"
+        <com.evervolv.toolbox.preference.SystemSettingSwitchPreference
+            android:key="assist_wake_screen"
             android:title="@string/pref_assist_wake_toggle_title"
-            android:summary="@string/pref_assist_wake_toggle_summary">
-        </SwitchPreference>
+            android:summary="@string/pref_assist_wake_toggle_summary"
+            android:defaultValue="false"
+            app:requiresConfig="@bool/has_assist_button" />
 
-        <SwitchPreference android:key="pref_back_wake_toggle"
+        <com.evervolv.toolbox.preference.SystemSettingSwitchPreference
+            android:key="back_wake_screen"
             android:title="@string/pref_back_wake_toggle_title"
-            android:summary="@string/pref_back_wake_toggle_summary">
-        </SwitchPreference>
+            android:summary="@string/pref_back_wake_toggle_summary"
+            android:defaultValue="false"
+            app:requiresConfig="@bool/has_back_button" />
 
-        <SwitchPreference android:key="pref_home_wake_toggle"
+        <com.evervolv.toolbox.preference.SystemSettingSwitchPreference
+            android:key="home_wake_screen"
             android:title="@string/pref_home_wake_toggle_title"
-            android:summary="@string/pref_home_wake_toggle_summary">
-        </SwitchPreference>
+            android:summary="@string/pref_home_wake_toggle_summary"
+            android:defaultValue="false"
+            app:requiresConfig="@bool/has_home_button" />
 
-        <SwitchPreference android:key="pref_menu_wake_toggle"
+        <com.evervolv.toolbox.preference.SystemSettingSwitchPreference
+            android:key="menu_wake_screen"
             android:title="@string/pref_menu_wake_toggle_title"
-            android:summary="@string/pref_menu_wake_toggle_summary">
-        </SwitchPreference>
+            android:summary="@string/pref_menu_wake_toggle_summary"
+            android:defaultValue="false"
+            app:requiresConfig="@bool/has_menu_button" />
 
-        <SwitchPreference android:key="pref_volume_wake_toggle"
+        <com.evervolv.toolbox.preference.SystemSettingSwitchPreference
+            android:key="volume_wake_screen"
             android:title="@string/pref_volume_wake_toggle_title"
-            android:summary="@string/pref_volume_wake_toggle_summary">
-        </SwitchPreference>
+            android:summary="@string/pref_volume_wake_toggle_summary"
+            android:defaultValue="false" />
 
-        <SwitchPreference
-            android:key="pref_lockscreen_music_controls_volbtn"
+        <com.evervolv.toolbox.preference.SystemSettingSwitchPreference
+            android:key="lockscreen_music_controls_volbtn"
             android:title="@string/pref_lockscreen_music_controls_volbtn_title"
-            android:summary="@string/pref_lockscreen_music_controls_volbtn_summary">
-        </SwitchPreference>
+            android:summary="@string/pref_lockscreen_music_controls_volbtn_summary"
+            android:defaultValue="false" />
 
 </PreferenceScreen>

@@ -27,13 +27,11 @@
             android:selectAllOnFocus="true"
             android:imeOptions="actionDone"
             android:inputType="textNoSuggestions"
-            android:persistent="false">
-        </com.evervolv.toolbox.preference.HostnamePreference>
+            android:persistent="false" />
 
-        <SwitchPreference
+        <android.support.v14.preference.SwitchPreference
             android:key="pref_system_sshd"
             android:title="@string/pref_system_sshd_title"
-            android:summary="@string/pref_system_sshd_summary">
-        </SwitchPreference>
+            android:summary="@string/pref_system_sshd_summary" />
 
 </PreferenceScreen>

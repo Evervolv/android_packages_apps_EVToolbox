@@ -8,8 +8,10 @@
         <item name="colorPrimaryDark">@color/themePrimaryDark</item>
         <item name="colorAccent">@color/themeAccent</item>
         <item name="android:listDivider">@android:color/transparent</item>
+        <item name="preferenceTheme">@style/PreferenceTheme</item>
     </style>
 
+    <style name="PreferenceTheme" parent="@style/PreferenceThemeOverlay.v14.Material" />
     <style name="ThemeOverlay.EVToolbox.ActionBar" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="ThemeOverlay.EVToolbox" parent="ThemeOverlay.AppCompat.Light" />
 

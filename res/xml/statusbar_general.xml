@@ -18,58 +18,58 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <ListPreference android:key="pref_statusbar_batt_style"
+        <com.evervolv.toolbox.preference.SecureSettingListPreference
+            android:key="status_bar_battery_style"
             android:title="@string/pref_statusbar_batt_style_title"
             android:summary="@string/pref_statusbar_batt_style_summary"
             android:dialogTitle="@string/pref_statusbar_batt_style_title"
             android:entries="@array/statusbar_batt_style_entries"
             android:entryValues="@array/statusbar_batt_style_entryvalues"
-            android:defaultValue="0">
-        </ListPreference>
+            android:defaultValue="0" />
 
-        <ListPreference android:key="pref_statusbar_batt_percent_style"
+        <com.evervolv.toolbox.preference.SecureSettingListPreference
+            android:key="status_bar_show_battery_percent"
             android:title="@string/pref_statusbar_batt_percent_title"
             android:summary="@string/pref_statusbar_batt_percent_summary"
             android:dialogTitle="@string/pref_statusbar_batt_percent_title"
             android:entries="@array/statusbar_batt_percent_entries"
-            android:entryValues="@array/statusbar_batt_percent_entryvalues" >
-        </ListPreference>
+            android:entryValues="@array/statusbar_batt_percent_entryvalues" />
 
-        <SwitchPreference android:key="pref_status_bar_battery_style_tile"
+        <com.evervolv.toolbox.preference.SecureSettingSwitchPreference
+            android:key="status_bar_battery_style_tile"
             android:title="@string/pref_status_bar_battery_style_tile_title"
             android:summary="@string/pref_status_bar_battery_style_tile_summary"
-            android:defaultValue="true" >
-        </SwitchPreference>
+            android:defaultValue="true" />
 
-        <SwitchPreference android:key="pref_status_bar_battery_charge_text"
+        <com.evervolv.toolbox.preference.SecureSettingSwitchPreference
+            android:key="force_charge_battery_text"
             android:title="@string/pref_status_bar_battery_charge_text_title"
             android:summaryOff="@string/pref_status_bar_battery_charge_text_summary_off"
             android:summaryOn="@string/pref_status_bar_battery_charge_text_summary_on"
-            android:defaultValue="false" >
-        </SwitchPreference>
+            android:defaultValue="false" />
 
         <net.margaritov.preference.colorpicker.ColorPickerPreference
             android:key="pref_status_bar_charge_color"
             android:title="@string/pref_status_bar_charge_color_title"
             android:persistent="false"
-            android:defaultValue="0xffffff" >
-        </net.margaritov.preference.colorpicker.ColorPickerPreference>
+            android:defaultValue="0xffffff" />
 
-        <ListPreference android:key="pref_status_bar_battery_text_symbol"
+        <com.evervolv.toolbox.preference.SecureSettingListPreference
+            android:key="text_charging_symbol"
             android:title="@string/pref_status_bar_battery_text_symbol_title"
             android:summary="%s"
             android:dialogTitle="@string/pref_status_bar_battery_text_symbol_dialog"
             android:entries="@array/pref_status_bar_battery_text_symbol_entries"
             android:entryValues="@array/pref_status_bar_battery_text_symbol_entryvalues"
-            android:defaultValue="0">
-        </ListPreference>
+            android:defaultValue="0" />
 
-        <ListPreference android:key="pref_statusbar_clock_am_pm_style"
+        <com.evervolv.toolbox.preference.SystemSettingListPreference
+            android:key="statusbar_clock_am_pm_style"
             android:title="@string/pref_statusbar_clock_am_pm_style_title"
             android:summary="@string/pref_statusbar_clock_am_pm_style_summary"
             android:dialogTitle="@string/pref_statusbar_clock_am_pm_style_title"
             android:entries="@array/statusbar_clock_am_pm_style_entries"
-            android:entryValues="@array/statusbar_clock_am_pm_style_entryvalues">
-        </ListPreference>
+            android:entryValues="@array/statusbar_clock_am_pm_style_entryvalues"
+            android:defaultValue="2" />
 
 </PreferenceScreen>
