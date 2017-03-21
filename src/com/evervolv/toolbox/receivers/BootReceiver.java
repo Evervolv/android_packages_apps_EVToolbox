@@ -147,7 +147,8 @@ public class BootReceiver extends BroadcastReceiver {
         }
 
         String ioscheduler = prefs.getString(PerformanceGeneral.IOSCHED_PREF, null);
-        String availableIOSchedulersLine = FileUtil.fileReadOneLine(PerformanceGeneral.IOSCHED_LIST_FILE);
+        String availableIOSchedulersFile = PerformanceGeneral.findIoScheduler();
+        String availableIOSchedulersLine = FileUtil.fileReadOneLine(availableIOSchedulersFile);
         boolean noSettings = ((availableIOSchedulersLine == null) || (ioscheduler == null));
         List<String> ioschedulers = null;
 
@@ -158,7 +159,7 @@ public class BootReceiver extends BroadcastReceiver {
                 ioschedulers = Arrays.asList(availableIOSchedulersLine.replace("[", "").replace("]", "").split(" "));
             }
             if (ioscheduler != null && ioschedulers != null && ioschedulers.contains(ioscheduler)) {
-                FileUtil.fileWriteOneLine(PerformanceGeneral.IOSCHED_LIST_FILE, ioscheduler);
+                FileUtil.fileWriteOneLine(availableIOSchedulersFile, ioscheduler);
             }
             Log.d(TAG, "I/O scheduler settings restored.");
         }

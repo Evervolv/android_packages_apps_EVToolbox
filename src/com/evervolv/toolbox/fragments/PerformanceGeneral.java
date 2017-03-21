@@ -61,8 +61,6 @@ public class PerformanceGeneral extends PreferenceFragment implements
     public static final String FREQ_LIST_FILE = "/sys/devices/system/cpu/cpu0/cpufreq/scaling_available_frequencies";
     public static String FREQ_MAX_FILE = null;
     public static String FREQ_MIN_FILE = null;
-    public static final String IOSCHED_LIST_FILE = "/sys/block/mmcblk0/queue/scheduler";
-
     private static String FREQ_CUR_FILE = SCALE_CUR_FILE;
     public static final String IOSCHED_PREF = "pref_cpu_io_sched";
     public static final String GOV_PREF = "pref_cpu_gov";
@@ -105,6 +103,7 @@ public class PerformanceGeneral extends PreferenceFragment implements
     private HandlerThread mCpuInfoThread;
     private Handler mCpuInfoHandler;
     private CpuUiUpdate mCpuUiUpdate;
+    private static String mIoListFile;
 
     private class PerformanceProfileObserver extends ContentObserver {
         public PerformanceProfileObserver(Handler handler) {
@@ -165,6 +164,8 @@ public class PerformanceGeneral extends PreferenceFragment implements
             mPrefSet.removePreference(mKSMPref);
         }
 
+        mIoListFile = findIoScheduler();
+
         /* CPU Tunables */
         createCpuTuningPrefs();
     }
@@ -194,8 +195,8 @@ public class PerformanceGeneral extends PreferenceFragment implements
             mCpuInfoHandler.post(mUpdateCpuFreqValues);
         }
 
-        if (FileUtil.fileExists(IOSCHED_LIST_FILE) &&
-            (availableIOSchedulersLine = FileUtil.fileReadOneLine(IOSCHED_LIST_FILE)) != null) {
+        if (FileUtil.fileExists(mIoListFile) &&
+            (availableIOSchedulersLine = FileUtil.fileReadOneLine(mIoListFile)) != null) {
             bropen = availableIOSchedulersLine.indexOf("[");
             brclose = availableIOSchedulersLine.lastIndexOf("]");
             if (bropen >= 0 && brclose >= 0) {
@@ -248,7 +249,7 @@ public class PerformanceGeneral extends PreferenceFragment implements
                 return true;
             }
             if (preference == mIOSchedulerPref) {
-                updateCpuTunables(IOSCHED_LIST_FILE, (String) newValue);
+                updateCpuTunables(mIoListFile, (String) newValue);
                 mIOSchedulerPref.setSummary(String.format(mIOSchedulerFormat, (String) newValue));
                 return true;
             }
@@ -297,6 +298,21 @@ public class PerformanceGeneral extends PreferenceFragment implements
         updatePerformanceSummary();
     }
 
+    public static String findIoScheduler() {
+        String validChoices[] = {
+            "/sys/block/mmcblk0/queue/scheduler",
+            "/sys/block/sda/queue/scheduler",
+            "/sys/block/sde/queue/scheduler",
+            "/sys/block/dm-0/queue/scheduler"
+        };
+        for (String choice: validChoices) {
+            if (FileUtil.fileExists(choice)) {
+                return choice;
+            }
+        }
+        return null;
+    }
+
     private void createCpuTuningPrefs() {
         mIOSchedulerFormat = getString(R.string.pref_cpu_io_sched_summary);
         mGovernorFormat = getString(R.string.pref_cpu_governors_summary);
@@ -323,8 +339,8 @@ public class PerformanceGeneral extends PreferenceFragment implements
 
         /* I/O scheduler
         Some systems might not use I/O schedulers */
-        if (!FileUtil.fileExists(IOSCHED_LIST_FILE) ||
-            (availableIOSchedulersLine = FileUtil.fileReadOneLine(IOSCHED_LIST_FILE)) == null) {
+        if (!FileUtil.fileExists(mIoListFile) ||
+            (availableIOSchedulersLine = FileUtil.fileReadOneLine(mIoListFile)) == null) {
             mPrefSet.removePreference(mIOSchedulerPref);
         } else {
             availableIOSchedulers = availableIOSchedulersLine.replace("[", "").replace("]", "").split(" ");
