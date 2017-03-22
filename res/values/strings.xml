@@ -129,7 +129,7 @@
 
     <!-- Statusbar >> Battery -->
     <string name="battery_category_title">Battery</string>
-    <string name="battery_icon_title">Battery icon</string>
+    <string name="battery_icon_title">Battery icon style</string>
     <string name="battery_icon_summary">Change the battery icon in the statusbar</string>
     <string name="battery_icon_portrait">Portrait</string>
     <string name="battery_icon_landscape">Landscape</string>
@@ -137,8 +137,8 @@
     <string name="battery_icon_solid_circle">Solid Circle</string>
     <string name="battery_icon_text">Text</string>
     <string name="battery_icon_hidden">Hidden</string>
-    <string name="battery_icon_qs_tile_title">Show icon in Quick Settings</string>
-    <string name="battery_icon_qs_tile_summary">Update the battery icon in quick settings</string>
+    <string name="battery_tile_style_title">Battery tile style</string>
+    <string name="battery_tile_style_summary">Change the battery icon in quick settings</string>
     <string name="battery_icon_percent_title">Battery percent style</string>
     <string name="battery_icon_percent_summary">Choose how to display battery percentage</string>
     <string name="battery_icon_percent_hidden">Hidden</string>
