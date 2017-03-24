@@ -33,7 +33,8 @@
             android:summary="@string/pref_statusbar_batt_percent_summary"
             android:dialogTitle="@string/pref_statusbar_batt_percent_title"
             android:entries="@array/statusbar_batt_percent_entries"
-            android:entryValues="@array/statusbar_batt_percent_entryvalues" />
+            android:entryValues="@array/statusbar_batt_percent_entryvalues"
+            android:defaultValue="0" />
 
         <com.evervolv.toolbox.preference.SecureSettingSwitchPreference
             android:key="status_bar_battery_style_tile"
