@@ -20,27 +20,22 @@ import android.content.ContentResolver;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.support.v14.preference.PreferenceFragment;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.Preference.OnPreferenceChangeListener;
 
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.Toolbox;
+import com.evervolv.toolbox.ToolboxPreferenceFragment;
 
 import net.margaritov.preference.colorpicker.ColorPickerPreference;
 
-public class StatusbarGeneral extends PreferenceFragment implements
+public class StatusbarGeneral extends ToolboxPreferenceFragment implements
         OnPreferenceChangeListener,
         Toolbox.DisabledListener {
 
     private static final String STATUSBAR_CHARGE_COLOR = "pref_status_bar_charge_color";
 
     private ColorPickerPreference mChargeColor;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -54,19 +49,6 @@ public class StatusbarGeneral extends PreferenceFragment implements
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        getPreferenceScreen().setEnabled(Toolbox.isEnabled(getActivity()));
-        ((Toolbox) getActivity()).registerCallback(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        ((Toolbox) getActivity()).unRegisterCallback(this);
-    }
-
-    @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (preference == mChargeColor) {
             Settings.Secure.putInt(getActivity().getContentResolver(),
@@ -75,10 +57,4 @@ public class StatusbarGeneral extends PreferenceFragment implements
         }
         return false;
     }
-
-    @Override
-    public void onToolboxDisabled(boolean enabled) {
-        getPreferenceScreen().setEnabled(enabled);
-    }
-
 }

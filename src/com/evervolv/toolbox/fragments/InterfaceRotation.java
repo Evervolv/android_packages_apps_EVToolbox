@@ -19,15 +19,15 @@ package com.evervolv.toolbox.fragments;
 import android.content.ContentResolver;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.support.v14.preference.PreferenceFragment;
 import android.support.v14.preference.SwitchPreference;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceScreen;
 
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.Toolbox;
+import com.evervolv.toolbox.ToolboxPreferenceFragment;
 
-public class InterfaceRotation extends PreferenceFragment implements
+public class InterfaceRotation extends ToolboxPreferenceFragment implements
         Toolbox.DisabledListener {
 
     private static final String ROTATION_0_PREF = "pref_rotation_0";
@@ -44,11 +44,6 @@ public class InterfaceRotation extends PreferenceFragment implements
     private SwitchPreference mRotation90Pref;
     private SwitchPreference mRotation180Pref;
     private SwitchPreference mRotation270Pref;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -75,19 +70,6 @@ public class InterfaceRotation extends PreferenceFragment implements
         mRotation270Pref.setChecked((angles & ROTATION_270) != 0);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        getPreferenceScreen().setEnabled(Toolbox.isEnabled(getActivity()));
-        ((Toolbox) getActivity()).registerCallback(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        ((Toolbox) getActivity()).unRegisterCallback(this);
-    }
-
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         if (preference == mRotation0Pref ||
             preference == mRotation90Pref ||
@@ -105,10 +87,4 @@ public class InterfaceRotation extends PreferenceFragment implements
 
         return true;
     }
-
-    @Override
-    public void onToolboxDisabled(boolean enabled) {
-        getPreferenceScreen().setEnabled(enabled);
-    }
-
 }

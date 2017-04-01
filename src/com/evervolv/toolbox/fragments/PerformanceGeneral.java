@@ -32,7 +32,6 @@ import android.os.PowerManager;
 import android.os.SystemProperties;
 import android.os.SystemService;
 import android.provider.Settings;
-import android.support.v14.preference.PreferenceFragment;
 import android.support.v14.preference.SwitchPreference;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.preference.ListPreference;
@@ -43,11 +42,12 @@ import android.util.Log;
 
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.Toolbox;
+import com.evervolv.toolbox.ToolboxPreferenceFragment;
 import com.evervolv.toolbox.utils.FileUtil;
 
 import java.lang.Runtime;
 
-public class PerformanceGeneral extends PreferenceFragment implements
+public class PerformanceGeneral extends ToolboxPreferenceFragment implements
         OnPreferenceChangeListener,
         Toolbox.DisabledListener {
     private static final String TAG = "EVToolbox";
@@ -123,11 +123,6 @@ public class PerformanceGeneral extends PreferenceFragment implements
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         initFreqCapFiles();
 
@@ -171,13 +166,6 @@ public class PerformanceGeneral extends PreferenceFragment implements
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        mPrefSet.setEnabled(Toolbox.isEnabled(getActivity()));
-        ((Toolbox) getActivity()).registerCallback(this);
-    }
-
-    @Override
     public void onResume() {
         String availableIOSchedulersLine;
         int bropen, brclose;
@@ -216,12 +204,6 @@ public class PerformanceGeneral extends PreferenceFragment implements
         if (mCpuInfoHandler != null) {
             mCpuInfoHandler.removeCallbacks(mUpdateCpuFreqValues);
         }
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        ((Toolbox) getActivity()).unRegisterCallback(this);
     }
 
     @Override
@@ -563,10 +545,4 @@ public class PerformanceGeneral extends PreferenceFragment implements
         return new StringBuilder().append(Integer.valueOf(mhzString) / 1000).append(" MHz")
                 .toString();
     }
-
-    @Override
-    public void onToolboxDisabled(boolean enabled) {
-        mPrefSet.setEnabled(enabled);
-    }
-
 }

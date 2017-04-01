@@ -16,45 +16,16 @@
 
 package com.evervolv.toolbox.fragments;
 
-import android.app.ActivityManager;
-import android.content.Context;
 import android.os.Bundle;
-import android.support.v14.preference.PreferenceFragment;
-import android.support.v7.preference.PreferenceScreen;
 
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.Toolbox;
+import com.evervolv.toolbox.ToolboxPreferenceFragment;
 
-public class HardwareButtons extends PreferenceFragment implements
-        Toolbox.DisabledListener {
-
-    private static final String TAG = "EVToolbox";
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+public class HardwareButtons extends ToolboxPreferenceFragment {
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.hardware_buttons);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        getPreferenceScreen().setEnabled(Toolbox.isEnabled(getActivity()));
-        ((Toolbox) getActivity()).registerCallback(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        ((Toolbox) getActivity()).unRegisterCallback(this);
-    }
-
-    @Override
-    public void onToolboxDisabled(boolean enabled) {
-        getPreferenceScreen().setEnabled(enabled);
     }
 }

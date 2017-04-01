@@ -19,7 +19,6 @@ package com.evervolv.toolbox.fragments;
 import android.content.ContentResolver;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.support.v14.preference.PreferenceFragment;
 import android.support.v14.preference.SwitchPreference;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.Preference.OnPreferenceChangeListener;
@@ -27,17 +26,17 @@ import android.support.v7.preference.PreferenceScreen;
 
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.Toolbox;
+import com.evervolv.toolbox.ToolboxPreferenceFragment;
 import com.evervolv.toolbox.preference.CustomSeekBarPreference;
 
-public class InterfacePowerMenu extends PreferenceFragment implements
-        OnPreferenceChangeListener,
-        Toolbox.DisabledListener {
+public class InterfacePowerMenu extends ToolboxPreferenceFragment implements
+        OnPreferenceChangeListener {
 
-    private static final String PREF_HIDE_SCREENSHOT        =    "pref_power_menu_hide_screenshot";
-    private static final String PREF_HIDE_SOUND             =    "pref_power_menu_hide_sound";
-    private static final String PREF_HIDE_AIRPLANE_MODE     =    "pref_power_menu_hide_airplane_mode";
-    private static final String PREF_HIDE_REBOOT_MENU       =    "pref_power_menu_hide_reboot_menu";
-    private static final String PREF_SCREENSHOT_DELAY       =    "pref_power_menu_screenshot_delay";
+    private static final String PREF_HIDE_SCREENSHOT = "pref_power_menu_hide_screenshot";
+    private static final String PREF_HIDE_SOUND = "pref_power_menu_hide_sound";
+    private static final String PREF_HIDE_AIRPLANE_MODE = "pref_power_menu_hide_airplane_mode";
+    private static final String PREF_HIDE_REBOOT_MENU = "pref_power_menu_hide_reboot_menu";
+    private static final String PREF_SCREENSHOT_DELAY = "pref_power_menu_screenshot_delay";
 
     private static final int HIDE_REBOOT = 1;
     private static final int HIDE_SCREENSHOT = 2;
@@ -51,12 +50,6 @@ public class InterfacePowerMenu extends PreferenceFragment implements
     private SwitchPreference mHideAirplaneMode;
     private SwitchPreference mHideRebootMenu;
     private CustomSeekBarPreference mScreenshotDelay;
-
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -92,19 +85,6 @@ public class InterfacePowerMenu extends PreferenceFragment implements
         mScreenshotDelay.setOnPreferenceChangeListener(this);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        getPreferenceScreen().setEnabled(Toolbox.isEnabled(getActivity()));
-        ((Toolbox) getActivity()).registerCallback(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        ((Toolbox) getActivity()).unRegisterCallback(this);
-    }
-
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         if (preference == mHideScreenshot ||
                 preference == mHideSound ||
@@ -132,10 +112,4 @@ public class InterfacePowerMenu extends PreferenceFragment implements
         }
         return false;
     }
-
-    @Override
-    public void onToolboxDisabled(boolean enabled) {
-        getPreferenceScreen().setEnabled(enabled);
-    }
-
 }

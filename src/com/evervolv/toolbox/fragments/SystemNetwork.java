@@ -17,16 +17,15 @@ package com.evervolv.toolbox.fragments;
 
 import android.os.Bundle;
 import android.os.SystemProperties;
-import android.support.v14.preference.PreferenceFragment;
 import android.support.v14.preference.SwitchPreference;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceScreen;
 
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.Toolbox;
+import com.evervolv.toolbox.ToolboxPreferenceFragment;
 
-public class SystemNetwork extends PreferenceFragment implements
-        Toolbox.DisabledListener  {
+public class SystemNetwork extends ToolboxPreferenceFragment {
 
     public static final String PREF_SSHD = "pref_system_sshd";
 
@@ -43,19 +42,6 @@ public class SystemNetwork extends PreferenceFragment implements
         mSshd = (SwitchPreference) getPreferenceScreen().findPreference(PREF_SSHD);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        getPreferenceScreen().setEnabled(Toolbox.isEnabled(getActivity()));
-        ((Toolbox) getActivity()).registerCallback(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        ((Toolbox) getActivity()).unRegisterCallback(this);
-    }
-
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         if (preference == mSshd) {
             if (mSshd.isChecked()) {
@@ -66,10 +52,5 @@ public class SystemNetwork extends PreferenceFragment implements
             return true;
         }
         return false;
-    }
-
-    @Override
-    public void onToolboxDisabled(boolean enabled) {
-        getPreferenceScreen().setEnabled(enabled);
     }
 }
