@@ -107,13 +107,13 @@
         <item>2</item>
     </string-array>
 
-    <string-array name="pref_status_bar_battery_text_symbol_entries" translatable="false">
-        <item>@string/pref_status_bar_battery_text_symbol_default</item>
-        <item>@string/pref_status_bar_battery_text_symbol_flash</item>
-        <item>@string/pref_status_bar_battery_text_symbol_tilde</item>
+    <string-array name="pref_statusbar_batt_text_symbol_entries" translatable="false">
+        <item>@string/pref_statusbar_batt_text_symbol_default</item>
+        <item>@string/pref_statusbar_batt_text_symbol_flash</item>
+        <item>@string/pref_statusbar_batt_text_symbol_tilde</item>
     </string-array>
 
-    <string-array name="pref_status_bar_battery_text_symbol_entryvalues" translatable="false">
+    <string-array name="pref_statusbar_batt_text_symbol_entryvalues" translatable="false">
         <item>0</item>
         <item>1</item>
         <item>2</item>
