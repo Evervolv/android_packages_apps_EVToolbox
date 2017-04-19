@@ -35,15 +35,13 @@ public class HostnamePreference extends EditTextPreference {
     }
 
     public HostnamePreference(Context context, AttributeSet attrs) {
-        this(context, attrs, com.android.internal.R.attr.editTextPreferenceStyle);
-    }
-
-    public HostnamePreference(Context context) {
-        this(context, null);
+        super(context, attrs);
+        setSummary(getText());
     }
 
     @Override
     public void setText(String text) {
+        super.setText(text);
         if (text == null) {
             Log.e(TAG, "tried to set null hostname, request ignored");
             return;
