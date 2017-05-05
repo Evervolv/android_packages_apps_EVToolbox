@@ -31,6 +31,16 @@
     <string name="reboot_required">Reboot required</string>
     <string name="send">Send</string>
 
+    <!-- Color Picker -->
+    <string name="dialog_color_picker">Color Picker</string>
+    <string name="press_color_to_apply">Press on color below to apply</string>
+    <string name="arrow_right">→</string>
+    <string name="arrow_down">↓</string>
+    <string name="hex">Hex:</string>
+    <string name="hex_hint">#ff000000</string>
+    <string name="set">Set</string>
+    <string name="color_default">Default</string>
+
     <!-- Main app strings ( immediate tabs ) -->
     <string name="wtf_message">WTF IS THIS SHIT?</string>
     <string name="drawer_open">Open navigation drawer</string>
@@ -38,6 +48,8 @@
     <string name="drawer_header_categories">Categories</string>
     <string name="drawer_header_utils">Utilities</string>
     <string name="general_title">General</string>
+
+    <!-- Navigation drawer sections -->
     <string name="tab_title_statusbar">Statusbar</string>
     <string name="tab_title_interface">Interface</string>
     <string name="tab_title_performance">Performance</string>
@@ -46,37 +58,28 @@
     <string name="tab_title_bugreport">Bug Report</string>
     <string name="tab_title_settings">Settings</string>
 
-    <!-- Interface -->
-    <string name="interface_navbar_title">Navigation Bar</string>
-    <string name="interface_rotation_title">Rotation</string>
-    <string name="interface_power_menu_title">Power menu</string>
-
     <!-- Interface >> Navigation Bar -->
-
+    <string name="interface_navbar_title">Navigation Bar</string>
     <string name="pref_navbar_show_title">Show the navigation bar</string>
     <string name="pref_navbar_animation_title">Use pixel animation</string>
 
     <!-- Interface >> Rotation -->
-
+    <string name="interface_rotation_title">Rotation</string>
     <string name="pref_rotation_0_title">0 degrees</string>
     <string name="pref_rotation_90_title">90 degrees</string>
     <string name="pref_rotation_180_title">180 degrees</string>
     <string name="pref_rotation_270_title">270 degrees</string>
 
     <!-- Interface >> Power Menu -->
-
+    <string name="interface_power_menu_title">Power menu</string>
     <string name="pref_power_menu_hide_screenshot_title">Hide screenshot option</string>
     <string name="pref_power_menu_hide_sound_title">Hide sound options</string>
     <string name="pref_power_menu_hide_airplane_mode_title">Hide airplane mode</string>
     <string name="pref_power_menu_hide_reboot_menu_title">Hide reboot menu</string>
     <string name="pref_power_menu_screenshot_delay_title">Set screenshot delay</string>
 
-    <!-- Statusbar -->
-    <string name="statusbar_qs_title">Quick Settings</string>
-
     <!-- Statusbar >> General -->
-    <string name="pref_statusbar_icons_title">Statusbar Icons</string>
-    <string name="pref_statusbar_icons_summary">Settings to control statusbar icons</string>
+    <string name="statusbar_icons_title">Statusbar Icons</string>
     <string name="pref_statusbar_batt_style_title">Battery icon</string>
     <string name="pref_statusbar_batt_style_summary">Change the battery icon in the statusbar</string>
     <string name="pref_statusbar_batt_style_portrait">Portrait</string>
@@ -109,6 +112,7 @@
     <string name="pref_statusbar_batt_text_symbol_tilde">Tilde</string>
 
     <!-- Statusbar >> Quick Settings -->
+    <string name="statusbar_qs_title">Quick Settings</string>
     <string name="pref_statusbar_quick_pulldown_title">Quick Pulldown</string>
     <string name="pref_statusbar_quick_pulldown_summary">Expand Quick Settings in a single swipe</string>
 
@@ -124,13 +128,9 @@
     <string name="system_disable_apps_dialog_message">An alternate replacement is needed. In order to disable this app and keep critical functionality, install a replacement and try again</string>
 
     <!-- Performance -->
-
-    <!-- Performance >> General -->
-    <string name="perf_profile_title">Battery mode</string>
+    <string name="perf_profile_title">Performance profile</string>
     <string name="pref_ksm_title">Kernel samepage merging</string>
     <string name="pref_ksm_summary">Ksm reduces physical memory requirements and improves performance</string>
-
-    <!-- Performance >> Processor -->
     <string name="performance_processor_title">Processor</string>
     <string name="pref_cpu_cur_freq_title">Current CPU frequency</string>
     <string name="pref_cpu_governors_title">CPU governor</string>
@@ -145,7 +145,6 @@
     <string name="pref_cpu_io_sched_summary">%S</string>
 
     <!-- Bugreport -->
-
     <string name="bugreport_message">Choose which buffer(s) you would like to fetch.\nOnce finished, upload and grab url to give to your maintainer!</string>
     <string name="bugreport_generated_log_url">Generated log url:</string>
     <string name="bugreport_toast_ready">Ready to upload</string>
@@ -169,10 +168,7 @@
     <string name="logcat_post_title">Logcat: %1$s</string>
     <string name="logcat_notification_title">Logcat Uploaded</string>
 
-    <!-- Hardware -->
-
     <!-- Hardware >> Buttons -->
-
     <string name="pref_assist_wake_toggle_title">Assist button wake</string>
     <string name="pref_assist_wake_toggle_summary">Assist button presses wake device</string>
     <string name="pref_app_switch_wake_toggle_title">App switch button wake</string>
@@ -191,15 +187,5 @@
     <!-- Settings -->
     <string name="pref_settings_toolbox_disable_title">Disable toolbox features</string>
     <string name="pref_settings_toolbox_disable_summary">This will disable toolbox features.</string>
-
-    <!-- Color Picker -->
-    <string name="dialog_color_picker">Color Picker</string>
-    <string name="press_color_to_apply">Press on color below to apply</string>
-    <string name="arrow_right">→</string>
-    <string name="arrow_down">↓</string>
-    <string name="hex">Hex:</string>
-    <string name="hex_hint">#ff000000</string>
-    <string name="set">Set</string>
-    <string name="color_default">Default</string>
 
 </resources>

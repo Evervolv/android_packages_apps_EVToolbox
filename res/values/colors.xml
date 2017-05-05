@@ -17,21 +17,12 @@
  -->
 
 <resources>
-
-    <!-- DEPRECIATED: Legacy theme variables colors -->
-    <color name="evtoolbox_primary">#cf3d35</color>
-    <color name="evtoolbox_primary_dark">#9b2e28</color>
-    <color name="evtoolbox_accent">#32a929</color>
-    <color name="evtoolbox_text_primary">@*android:color/white</color>
-    <color name="evtoolbox_text_secondary">@*android:color/black</color>
-    <color name="evtoolbox_drawer_light">@*android:color/white</color>
-
-    <!-- New theme default variables -->
-    <color name="themePrimary">@color/evtoolbox_primary</color>
-    <color name="themePrimaryDark">@color/evtoolbox_primary_dark</color>
-    <color name="themeAccent">@color/evtoolbox_accent</color>
-    <color name="themeTextPrimary">@color/evtoolbox_text_primary</color>
-    <color name="themeText">@color/evtoolbox_text_secondary</color>
+    <!-- Main app -->
+    <color name="themePrimary">#cf3d35</color>
+    <color name="themePrimaryDark">#9b2e28</color>
+    <color name="themeAccent">#32a929</color>
+    <color name="themeTextPrimary">@*android:color/white</color>
+    <color name="themeText">@*android:color/black</color>
 
     <!-- Pager -->
     <color name="pager_title_background">@color/themePrimary</color>
@@ -42,6 +33,6 @@
     <color name="bottom_action_bar_text_color">@color/themeTextPrimary</color>
 
     <!-- Navigation drawer -->
-    <color name="navigation_drawer_background">@color/evtoolbox_drawer_light</color>
+    <color name="navigation_drawer_background">@*android:color/white</color>
 
 </resources>

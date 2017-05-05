@@ -59,8 +59,8 @@ public class PerformanceGeneral extends ToolboxPreferenceFragment implements
     public static final String GOV_LIST_FILE = "/sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors";
     public static final String GOV_FILE = "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor";
     public static final String FREQ_LIST_FILE = "/sys/devices/system/cpu/cpu0/cpufreq/scaling_available_frequencies";
-    public static String FREQ_MAX_FILE = null;
-    public static String FREQ_MIN_FILE = null;
+    public static String FREQ_MAX_FILE = "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq";
+    public static String FREQ_MIN_FILE = "/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq";
     private static String FREQ_CUR_FILE = SCALE_CUR_FILE;
     public static final String IOSCHED_PREF = "pref_cpu_io_sched";
     public static final String GOV_PREF = "pref_cpu_gov";
@@ -124,8 +124,6 @@ public class PerformanceGeneral extends ToolboxPreferenceFragment implements
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        initFreqCapFiles();
-
         addPreferencesFromResource(R.xml.performance_general);
 
         mPerfProfileEntries = getResources().getStringArray(
@@ -178,7 +176,6 @@ public class PerformanceGeneral extends ToolboxPreferenceFragment implements
                     Settings.Secure.PERFORMANCE_PROFILE), false, mPerformanceProfileObserver);
         }
 
-        initFreqCapFiles();
         if (mCpuInfoHandler != null) {
             mCpuInfoHandler.post(mUpdateCpuFreqValues);
         }
@@ -461,15 +458,7 @@ public class PerformanceGeneral extends ToolboxPreferenceFragment implements
         }
     };
 
-    private void initFreqCapFiles() {
-        if (freqCapFilesInitialized) return;
-        FREQ_MAX_FILE = getActivity().getResources().getString(R.string.pref_max_cpu_freq_file);
-        FREQ_MIN_FILE = getActivity().getResources().getString(R.string.pref_min_cpu_freq_file);
-        freqCapFilesInitialized = true;
-    }
-
     private void updateCpuTunables(String fname, String value) {
-        initFreqCapFiles();
         if (FileUtil.fileWriteOneLine(fname, value)) {
             final int nrcpus = Runtime.getRuntime().availableProcessors();
             if (nrcpus > 1) {

@@ -20,10 +20,14 @@
 
         <com.evervolv.toolbox.preference.SystemSettingSwitchPreference
             android:key="dev_force_show_navbar"
-            android:title="@string/pref_navbar_show_title" />
+            android:title="@string/pref_navbar_show_title"
+            android:defaultValue="false"
+            android:persistent="true" />
 
         <com.evervolv.toolbox.preference.SystemSettingSwitchPreference
             android:key="pixel_nav_animation"
-            android:title="@string/pref_navbar_animation_title" />
+            android:title="@string/pref_navbar_animation_title"
+            android:defaultValue="false"
+            android:persistent="true" />
 
 </PreferenceScreen>

@@ -24,6 +24,7 @@
             android:title="@string/pref_app_switch_wake_toggle_title"
             android:summary="@string/pref_app_switch_wake_toggle_summary"
             android:defaultValue="false"
+            android:persistent="true"
             app:requiresConfig="@bool/has_app_switch_button" />
 
         <com.evervolv.toolbox.preference.SystemSettingSwitchPreference
@@ -31,6 +32,7 @@
             android:title="@string/pref_assist_wake_toggle_title"
             android:summary="@string/pref_assist_wake_toggle_summary"
             android:defaultValue="false"
+            android:persistent="true"
             app:requiresConfig="@bool/has_assist_button" />
 
         <com.evervolv.toolbox.preference.SystemSettingSwitchPreference
@@ -38,6 +40,7 @@
             android:title="@string/pref_back_wake_toggle_title"
             android:summary="@string/pref_back_wake_toggle_summary"
             android:defaultValue="false"
+            android:persistent="true"
             app:requiresConfig="@bool/has_back_button" />
 
         <com.evervolv.toolbox.preference.SystemSettingSwitchPreference
@@ -45,6 +48,7 @@
             android:title="@string/pref_home_wake_toggle_title"
             android:summary="@string/pref_home_wake_toggle_summary"
             android:defaultValue="false"
+            android:persistent="true"
             app:requiresConfig="@bool/has_home_button" />
 
         <com.evervolv.toolbox.preference.SystemSettingSwitchPreference
@@ -52,18 +56,21 @@
             android:title="@string/pref_menu_wake_toggle_title"
             android:summary="@string/pref_menu_wake_toggle_summary"
             android:defaultValue="false"
+            android:persistent="true"
             app:requiresConfig="@bool/has_menu_button" />
 
         <com.evervolv.toolbox.preference.SystemSettingSwitchPreference
             android:key="volume_wake_screen"
             android:title="@string/pref_volume_wake_toggle_title"
             android:summary="@string/pref_volume_wake_toggle_summary"
-            android:defaultValue="false" />
+            android:defaultValue="false"
+            android:persistent="true" />
 
         <com.evervolv.toolbox.preference.SystemSettingSwitchPreference
             android:key="lockscreen_music_controls_volbtn"
             android:title="@string/pref_lockscreen_music_controls_volbtn_title"
             android:summary="@string/pref_lockscreen_music_controls_volbtn_summary"
-            android:defaultValue="false" />
+            android:defaultValue="false"
+            android:persistent="true" />
 
 </PreferenceScreen>

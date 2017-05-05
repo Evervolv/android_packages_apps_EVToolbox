@@ -22,6 +22,7 @@
             android:key="disable_toolbox"
             android:title="@string/pref_settings_toolbox_disable_title"
             android:summary="@string/pref_settings_toolbox_disable_summary"
-            android:defaultValue="false" />
+            android:defaultValue="false"
+            android:persistent="true" />
 
 </PreferenceScreen>

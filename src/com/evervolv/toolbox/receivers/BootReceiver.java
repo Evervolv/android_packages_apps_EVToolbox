@@ -89,14 +89,6 @@ public class BootReceiver extends BroadcastReceiver {
 
     }
 
-    private void initFreqCapFiles(Context ctx)
-    {
-        if (PerformanceGeneral.freqCapFilesInitialized) return;
-        PerformanceGeneral.FREQ_MAX_FILE = ctx.getResources().getString(R.string.pref_max_cpu_freq_file);
-        PerformanceGeneral.FREQ_MIN_FILE = ctx.getResources().getString(R.string.pref_min_cpu_freq_file);
-        PerformanceGeneral.freqCapFilesInitialized = true;
-    }
-
     private void configureCPU(Context ctx) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
 
@@ -118,7 +110,6 @@ public class BootReceiver extends BroadcastReceiver {
         if (noSettings) {
             Log.d(TAG, "No CPU settings saved. Nothing to restore.");
         } else {
-            initFreqCapFiles(ctx);
             if (availableGovernorsLine != null){
                 governors = Arrays.asList(availableGovernorsLine.split(" "));
             }

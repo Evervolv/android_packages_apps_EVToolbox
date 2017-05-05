@@ -29,7 +29,7 @@
     </string-array>
 
     <string-array name="statusbar_nav" translatable="false">
-        <item>@string/general_title</item>
+        <item>@string/statusbar_icons_title</item>
         <item>@string/statusbar_qs_title</item>
     </string-array>
 
