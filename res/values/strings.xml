@@ -154,7 +154,6 @@
     <string name="battery_icon_percent_hidden">Hidden</string>
     <string name="battery_icon_percent_inside">Inside</string>
     <string name="battery_icon_percent_outside">Outside</string>
-    <string name="battery_icon_color">Set the battery icon color</string>
     <string name="battery_show_charging_percent_title">Display percentage while charging</string>
     <string name="battery_show_charging_percent_summary">Show battery percent next to the icon while charging</string>
     <string name="battery_charging_symbol_title">Display a charging symbol</string>
