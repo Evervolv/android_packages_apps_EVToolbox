@@ -18,40 +18,6 @@
 
 <resources>
 
-    <!-- These need to match order in Toolbox.java -->
-    <string-array name="drawer_tabs" translatable="false">
-        <item>@string/tab_title_interface</item>
-        <item>@string/tab_title_statusbar</item>
-        <item>@string/tab_title_system</item>
-        <item>@string/tab_title_hardware</item>
-        <item>@string/tab_title_performance</item>
-        <item>@string/tab_title_bugreport</item>
-    </string-array>
-
-    <string-array name="statusbar_nav" translatable="false">
-        <item>@string/statusbar_icons_title</item>
-        <item>@string/statusbar_qs_title</item>
-    </string-array>
-
-    <string-array name="interface_nav" translatable="false">
-        <item>@string/interface_navbar_title</item>
-        <item>@string/interface_rotation_title</item>
-        <item>@string/interface_power_menu_title</item>
-    </string-array>
-
-    <string-array name="hardware_nav" translatable="false">
-        <item>@string/general_title</item>
-    </string-array>
-
-    <string-array name="performance_nav" translatable="false">
-        <item>@string/general_title</item>
-    </string-array>
-
-    <string-array name="system_nav" translatable="false">
-        <item>@string/system_network_title</item>
-        <item>@string/system_disable_apps_title</item>
-    </string-array>
-
     <string-array name="supported_bugreport_type" translatable="false">
         <item>@string/general_logcat</item>
         <item>@string/complete_log</item>
@@ -80,11 +46,11 @@
     </string-array>
 
     <string-array name="statusbar_batt_style_entries" translatable="false">
-        <item>@string/pref_statusbar_batt_style_portrait</item>
-        <item>@string/pref_statusbar_batt_style_landscape</item>
-        <item>@string/pref_statusbar_batt_style_circle</item>
-        <item>@string/pref_statusbar_batt_style_text</item>
-        <item>@string/pref_statusbar_batt_style_hidden</item>
+        <item>@string/battery_icon_portrait</item>
+        <item>@string/battery_icon_landscape</item>
+        <item>@string/battery_icon_circle</item>
+        <item>@string/battery_icon_text</item>
+        <item>@string/battery_icon_hidden</item>
     </string-array>
 
     <string-array name="statusbar_batt_style_entryvalues" translatable="false">
@@ -96,9 +62,9 @@
     </string-array>
 
     <string-array name="statusbar_batt_percent_entries" translatable="false">
-        <item>@string/pref_statusbar_batt_percent_hidden</item>
-        <item>@string/pref_statusbar_batt_percent_inside</item>
-        <item>@string/pref_statusbar_batt_percent_outside</item>
+        <item>@string/battery_icon_percent_hidden</item>
+        <item>@string/battery_icon_percent_inside</item>
+        <item>@string/battery_icon_percent_outside</item>
     </string-array>
 
     <string-array name="statusbar_batt_percent_entryvalues" translatable="false">
@@ -107,22 +73,22 @@
         <item>2</item>
     </string-array>
 
-    <string-array name="pref_statusbar_batt_text_symbol_entries" translatable="false">
-        <item>@string/pref_statusbar_batt_text_symbol_default</item>
-        <item>@string/pref_statusbar_batt_text_symbol_flash</item>
-        <item>@string/pref_statusbar_batt_text_symbol_tilde</item>
+    <string-array name="battery_charging_symbol_entries" translatable="false">
+        <item>@string/battery_charging_symbol_default</item>
+        <item>@string/battery_charging_symbol_flash</item>
+        <item>@string/battery_charging_symbol_tilde</item>
     </string-array>
 
-    <string-array name="pref_statusbar_batt_text_symbol_entryvalues" translatable="false">
+    <string-array name="battery_charging_symbol_entryvalues" translatable="false">
         <item>0</item>
         <item>1</item>
         <item>2</item>
     </string-array>
 
     <string-array name="statusbar_clock_am_pm_style_entries" translatable="false">
-        <item>@string/pref_statusbar_clock_am_pm_style_normal</item>
-        <item>@string/pref_statusbar_clock_am_pm_style_small</item>
-        <item>@string/pref_statusbar_clock_am_pm_style_gone</item>
+        <item>@string/clock_am_pm_style_normal</item>
+        <item>@string/clock_am_pm_style_small</item>
+        <item>@string/clock_am_pm_style_gone</item>
     </string-array>
 
     <string-array name="statusbar_clock_am_pm_style_entryvalues" translatable="false">

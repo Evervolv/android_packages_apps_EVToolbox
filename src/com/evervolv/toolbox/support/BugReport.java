@@ -45,7 +45,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.evervolv.toolbox.R;
-import com.evervolv.toolbox.services.UploadService;
 import com.evervolv.toolbox.utils.Constants;
 
 public class BugReport extends Fragment {
@@ -203,13 +202,6 @@ public class BugReport extends Fragment {
             mUploadButton.setEnabled(false);
         }
         return v;
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(
-                getResources().getString(R.string.tab_title_bugreport));
     }
 
     private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {

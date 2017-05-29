@@ -17,7 +17,8 @@
  -->
 
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:textSize="16sp"
-            android:text="@string/bugreport_message"/>
+            android:text="@string/bugreport_message" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -45,14 +46,14 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:textSize="16sp"
-                android:text="@string/bugreport_generated_log_url"/>
+                android:text="@string/bugreport_generated_log_url" />
 
             <TextView android:id="@+id/generated_log"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:gravity="center"
                 android:textSize="18sp"
-                android:background="?android:attr/selectableItemBackground"/>
+                android:background="?android:attr/selectableItemBackground" />
 
         </LinearLayout>
 
@@ -63,29 +64,32 @@
             android:layout_marginLeft="3dp"
             android:layout_marginBottom="5dp"
             android:textSize="20sp"
-            android:text="@string/log_options"/>
+            android:text="@string/log_options" />
 
-        <View android:id="@+id/bottom_horizontal_divider"
+        <View
+            android:id="@+id/bottom_horizontal_divider"
             android:layout_width="150dp"
             android:layout_height="1dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginBottom="5dp"
-            android:background="?android:attr/dividerHorizontal"/>
+            android:background="?android:attr/dividerHorizontal" />
         <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
-                android:layout_marginBottom="10dp">
-           <Spinner android:id="@+id/report_type_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginBottom="10dp">
+            <Spinner
+                android:id="@+id/report_type_spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:entries="@array/supported_bugreport_type"/>
+                android:entries="@array/supported_bugreport_type" />
         </LinearLayout>
     </LinearLayout>
 
-    <ProgressBar android:id="@+id/progress_bar"
+    <ProgressBar
+        android:id="@+id/progress_bar"
         android:layout_width="match_parent"
         android:layout_height="4dp"
         android:layout_marginLeft="8dp"
@@ -98,7 +102,7 @@
         android:layout_height="1dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:background="?android:attr/dividerHorizontal"/>
+        android:background="?android:attr/dividerHorizontal" />
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.evervolv.toolbox.fragments;
+package com.evervolv.toolbox.system;
 
 import android.os.Bundle;
 import android.os.SystemProperties;
@@ -25,20 +25,15 @@ import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.Toolbox;
 import com.evervolv.toolbox.ToolboxPreferenceFragment;
 
-public class SystemNetwork extends ToolboxPreferenceFragment {
+public class SystemPreferences extends ToolboxPreferenceFragment {
 
     public static final String PREF_SSHD = "pref_system_sshd";
 
-    SwitchPreference mSshd;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    private SwitchPreference mSshd;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        addPreferencesFromResource(R.xml.system_network);
+        addPreferencesFromResource(R.xml.system);
         mSshd = (SwitchPreference) getPreferenceScreen().findPreference(PREF_SSHD);
     }
 

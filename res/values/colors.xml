@@ -18,21 +18,21 @@
 
 <resources>
     <!-- Main app -->
-    <color name="themePrimary">#cf3d35</color>
-    <color name="themePrimaryDark">#9b2e28</color>
-    <color name="themeAccent">#32a929</color>
-    <color name="themeTextPrimary">@*android:color/white</color>
-    <color name="themeText">@*android:color/black</color>
+    <color name="themePrimary">@*android:color/primary_device_default_settings</color>
+    <color name="themePrimaryDark">@*android:color/primary_device_default_dark</color>
+    <color name="themeAccent">@*android:color/accent_device_default_light</color>
 
-    <!-- Pager -->
-    <color name="pager_title_background">@color/themePrimary</color>
-    <color name="pager_title_text_color">@color/themeTextPrimary</color>
+    <!-- Text color -->
+    <color name="text_color_light">@*android:color/primary_text_material_light</color>
+    <color name="text_color_dark">@*android:color/primary_text_default_material_dark</color>
 
     <!-- Bottom bar -->
     <color name="bottom_action_bar_color">@color/themeAccent</color>
-    <color name="bottom_action_bar_text_color">@color/themeTextPrimary</color>
+    <color name="bottom_action_bar_text_color">@color/text_color_dark</color>
 
     <!-- Navigation drawer -->
+    <color name="navigation_header_background">@color/themePrimary</color>
     <color name="navigation_drawer_background">@*android:color/white</color>
+    <color name="navigation_drawer_icon_color">@color/themeAccent</color>
 
 </resources>

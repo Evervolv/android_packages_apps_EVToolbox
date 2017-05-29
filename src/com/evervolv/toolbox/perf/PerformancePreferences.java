@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013-2017 The Evervolv Project
+ * Copyright (C) 2016 The CyanogenMod Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,18 +14,25 @@
  * limitations under the License.
  */
 
-package com.evervolv.toolbox.fragments;
+package com.evervolv.toolbox.perf;
 
+import android.app.ActivityManager;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.v14.preference.PreferenceFragment;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.preference.Preference;
+import android.support.v7.preference.Preference.OnPreferenceChangeListener;
+import android.support.v7.preference.PreferenceScreen;
 
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.Toolbox;
 import com.evervolv.toolbox.ToolboxPreferenceFragment;
 
-public class StatusbarQuickSettings extends ToolboxPreferenceFragment {
+public class PerformancePreferences extends ToolboxPreferenceFragment {
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        addPreferencesFromResource(R.xml.statusbar_qs);
+        addPreferencesFromResource(R.xml.performance);
     }
 }

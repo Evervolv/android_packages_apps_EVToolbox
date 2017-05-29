@@ -20,6 +20,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v14.preference.PreferenceFragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.preference.Preference;
+import android.support.v7.preference.PreferenceScreen;
 
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.Toolbox;
@@ -27,19 +29,7 @@ import com.evervolv.toolbox.Toolbox;
 public class Preferences extends PreferenceFragment {
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        addPreferencesFromResource(R.xml.settings_general);
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(
-                getResources().getString(R.string.tab_title_settings));
+        addPreferencesFromResource(R.xml.settings);
     }
 }

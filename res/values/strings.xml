@@ -31,6 +31,10 @@
     <string name="reboot_required">Reboot required</string>
     <string name="send">Send</string>
 
+    <!-- Navigation drawer -->
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+
     <!-- Color Picker -->
     <string name="dialog_color_picker">Color Picker</string>
     <string name="press_color_to_apply">Press on color below to apply</string>
@@ -41,110 +45,145 @@
     <string name="set">Set</string>
     <string name="color_default">Default</string>
 
-    <!-- Main app strings ( immediate tabs ) -->
-    <string name="wtf_message">WTF IS THIS SHIT?</string>
-    <string name="drawer_open">Open navigation drawer</string>
-    <string name="drawer_close">Close navigation drawer</string>
-    <string name="drawer_header_categories">Categories</string>
-    <string name="drawer_header_utils">Utilities</string>
-    <string name="general_title">General</string>
+    <!-- Hardware -->
+    <string name="hardware_settings_title">Hardware</string>
 
-    <!-- Navigation drawer sections -->
-    <string name="tab_title_statusbar">Statusbar</string>
-    <string name="tab_title_interface">Interface</string>
-    <string name="tab_title_performance">Performance</string>
-    <string name="tab_title_hardware">Hardware</string>
-    <string name="tab_title_system">System</string>
-    <string name="tab_title_bugreport">Bug Report</string>
-    <string name="tab_title_settings">Settings</string>
+    <!-- Hardware >> Buttons -->
+    <string name="wake_key_category_title">Wakeup key</string>
+    <string name="assist_wake_toggle_title">Assist button wake</string>
+    <string name="assist_wake_toggle_summary">Assist button presses wake device</string>
+    <string name="app_switch_wake_toggle_title">App switch button wake</string>
+    <string name="app_switch_wake_toggle_summary">App switch button presses wake device</string>
+    <string name="back_wake_toggle_title">Back button wake</string>
+    <string name="back_wake_toggle_summary">Back button presses wake device</string>
+    <string name="home_wake_toggle_title">Home button wake</string>
+    <string name="home_wake_toggle_summary">Home button presses wake device</string>
+    <string name="menu_wake_toggle_title">Menu button wake</string>
+    <string name="menu_wake_toggle_summary">Menu button presses wake device</string>
+    <string name="volume_wake_toggle_title">Volume button wake</string>
+    <string name="volume_wake_toggle_summary">Volume button presses wake device</string>
+    <string name="music_controls_category_title">Music controls</string>
+    <string name="lockscreen_music_controls_volbtn_title">Volume music control</string>
+    <string name="lockscreen_music_controls_volbtn_summary">Long press up to skip; down for previous</string>
+
+    <!-- Interface -->
+    <string name="interface_settings_title">Interface</string>
 
     <!-- Interface >> Navigation Bar -->
-    <string name="interface_navbar_title">Navigation Bar</string>
-    <string name="pref_navbar_show_title">Show the navigation bar</string>
-    <string name="pref_navbar_animation_title">Use pixel animation</string>
+    <string name="navigation_category_title">Navigation Bar</string>
+    <string name="navbar_show_title">Show the navigation bar</string>
+    <string name="navbar_animation_title">Use pixel animation</string>
 
     <!-- Interface >> Rotation -->
-    <string name="interface_rotation_title">Rotation</string>
-    <string name="pref_rotation_0_title">0 degrees</string>
-    <string name="pref_rotation_90_title">90 degrees</string>
-    <string name="pref_rotation_180_title">180 degrees</string>
-    <string name="pref_rotation_270_title">270 degrees</string>
+    <string name="rotation_category_title">Rotation</string>
+    <string name="rotation_0_title">0 degrees</string>
+    <string name="rotation_90_title">90 degrees</string>
+    <string name="rotation_180_title">180 degrees</string>
+    <string name="rotation_270_title">270 degrees</string>
 
     <!-- Interface >> Power Menu -->
-    <string name="interface_power_menu_title">Power menu</string>
-    <string name="pref_power_menu_hide_screenshot_title">Hide screenshot option</string>
-    <string name="pref_power_menu_hide_sound_title">Hide sound options</string>
-    <string name="pref_power_menu_hide_airplane_mode_title">Hide airplane mode</string>
-    <string name="pref_power_menu_hide_reboot_menu_title">Hide reboot menu</string>
-    <string name="pref_power_menu_screenshot_delay_title">Set screenshot delay</string>
+    <string name="power_menu_category_title">Power menu</string>
+    <string name="power_menu_hide_screenshot_title">Hide screenshot option</string>
+    <string name="power_menu_hide_sound_title">Hide sound options</string>
+    <string name="power_menu_hide_airplane_mode_title">Hide airplane mode</string>
+    <string name="power_menu_hide_reboot_menu_title">Hide reboot menu</string>
+    <string name="power_menu_screenshot_delay_title">Set screenshot delay</string>
 
-    <!-- Statusbar >> General -->
-    <string name="statusbar_icons_title">Statusbar Icons</string>
-    <string name="pref_statusbar_batt_style_title">Battery icon</string>
-    <string name="pref_statusbar_batt_style_summary">Change the battery icon in the statusbar</string>
-    <string name="pref_statusbar_batt_style_portrait">Portrait</string>
-    <string name="pref_statusbar_batt_style_landscape">Landscape</string>
-    <string name="pref_statusbar_batt_style_circle">Circle</string>
-    <string name="pref_statusbar_batt_style_dotted_circle">Dotted Circle</string>
-    <string name="pref_statusbar_batt_style_text">Text</string>
-    <string name="pref_statusbar_batt_style_hidden">Hidden</string>
-    <string name="pref_statusbar_batt_percent_title">Battery percent style</string>
-    <string name="pref_statusbar_batt_percent_summary">Choose how to display battery percentage</string>
-    <string name="pref_statusbar_batt_percent_hidden">Hidden</string>
-    <string name="pref_statusbar_batt_percent_inside">Inside</string>
-    <string name="pref_statusbar_batt_percent_outside">Outside</string>
-    <string name="pref_statusbar_clock_am_pm_style_title">Clock AM/PM style</string>
-    <string name="pref_statusbar_clock_am_pm_style_summary">Set the clock AM/PM style</string>
-    <string name="pref_statusbar_clock_am_pm_style_normal">Normal</string>
-    <string name="pref_statusbar_clock_am_pm_style_small">Small</string>
-    <string name="pref_statusbar_clock_am_pm_style_gone">Hidden</string>
-    <string name="pref_status_bar_charge_color_title">Set the battery icon color</string>
-    <string name="pref_statusbar_batt_style_tile_title">Sync the QS battery tile icon</string>
-    <string name="pref_statusbar_batt_style_tile_summary">Sync the tile icon to the current statusbar icon</string>
-    <string name="pref_statusbar_batt_charge_text_title">Show percentage while charging</string>
-    <string name="pref_statusbar_batt_charge_text_summary_on">Always show charging percent</string>
-    <string name="pref_statusbar_batt_charge_text_summary_off">Do not show charging percent</string>
-    <string name="pref_statusbar_batt_text_symbol_title">Display a charging symbol</string>
-    <string name="pref_statusbar_batt_text_symbol_summary">Choose a charging symbol to display next the percentage</string>
-    <string name="pref_statusbar_batt_text_symbol_dialog">Available charging symbols</string>
-    <string name="pref_statusbar_batt_text_symbol_default">Disabled</string>
-    <string name="pref_statusbar_batt_text_symbol_flash">Flash</string>
-    <string name="pref_statusbar_batt_text_symbol_tilde">Tilde</string>
+    <!-- Performance -->
+    <string name="performance_settings_title">Performance</string>
+    <string name="perf_advanced_settings_title">Advanced</string>
+
+    <!-- Performance >> Kernel -->
+    <string name="perf_advanced_category_title">Advanced</string>
+    <string name="perf_kernel_title">Kernel tuner</string>
+    <string name="perf_kernel_summary">Adjust some features found in the kernel</string>
+    <string name="memory_category_title">Memory</string>
+    <string name="ksm_title">Kernel samepage merging</string>
+    <string name="ksm_summary">Ksm reduces physical memory requirements and improves performance</string>
+    <string name="io_sched_title">I/O scheduler</string>
+    <string name="io_sched_summary">%S</string>
+
+    <string name="cpu_category_title">Cpu</string>
+    <string name="cpu_governors_title">CPU governor</string>
+    <string name="cpu_governors_summary">%S</string>
+    <string name="cpu_cur_freq_title">Current CPU frequency</string>
+    <string name="cpu_min_freq_title">Minimum CPU frequency</string>
+    <string name="cpu_min_freq_summary">%s</string>
+    <string name="cpu_max_freq_title">Maximum CPU frequency</string>
+    <string name="cpu_max_freq_summary">%s</string>
+    <string name="cpu_set_on_boot">Set on boot</string>
+    <string name="cpu_set_on_boot_summary">Restore the processor settings on boot</string>
+
+    <!-- Statusbar -->
+    <string name="statusbar_settings_title">Statusbar</string>
+
+    <!-- Statusbar >> Battery -->
+    <string name="battery_category_title">Battery</string>
+    <string name="battery_icon_title">Battery icon</string>
+    <string name="battery_icon_summary">Change the battery icon in the statusbar</string>
+    <string name="battery_icon_portrait">Portrait</string>
+    <string name="battery_icon_landscape">Landscape</string>
+    <string name="battery_icon_circle">Circle</string>
+    <string name="battery_icon_dotted_circle">Dotted Circle</string>
+    <string name="battery_icon_text">Text</string>
+    <string name="battery_icon_hidden">Hidden</string>
+    <string name="battery_icon_qs_tile_title">Show icon in Quick Settings</string>
+    <string name="battery_icon_qs_tile_summary">Update the battery icon in quick settings</string>
+    <string name="battery_icon_percent_title">Battery percent style</string>
+    <string name="battery_icon_percent_summary">Choose how to display battery percentage</string>
+    <string name="battery_icon_percent_hidden">Hidden</string>
+    <string name="battery_icon_percent_inside">Inside</string>
+    <string name="battery_icon_percent_outside">Outside</string>
+    <string name="battery_icon_color">Set the battery icon color</string>
+    <string name="battery_show_charging_percent_title">Display percentage while charging</string>
+    <string name="battery_show_charging_percent_summary">Show battery percent next to the icon while charging</string>
+    <string name="battery_charging_symbol_title">Display a charging symbol</string>
+    <string name="battery_charging_symbol_summary">Choose a charging symbol to display next the percentage</string>
+    <string name="battery_charging_symbol_dialog">Available charging symbols</string>
+    <string name="battery_charging_symbol_default">Disabled</string>
+    <string name="battery_charging_symbol_flash">Flash</string>
+    <string name="battery_charging_symbol_tilde">Tilde</string>
+
+    <!-- Statusbar >> Clock -->
+    <string name="clock_category_title">Clock</string>
+    <string name="clock_am_pm_style_title">AM/PM style</string>
+    <string name="clock_am_pm_style_summary">Set the AM/PM style</string>
+    <string name="clock_am_pm_style_normal">Normal</string>
+    <string name="clock_am_pm_style_small">Small</string>
+    <string name="clock_am_pm_style_gone">Hidden</string>
 
     <!-- Statusbar >> Quick Settings -->
-    <string name="statusbar_qs_title">Quick Settings</string>
-    <string name="pref_statusbar_quick_pulldown_title">Quick Pulldown</string>
-    <string name="pref_statusbar_quick_pulldown_summary">Expand Quick Settings in a single swipe</string>
+    <string name="quick_settings_category_title">Quick Settings</string>
+    <string name="qs_quick_pulldown_title">Quick Pulldown</string>
+    <string name="qs_quick_pulldown_summary">Expand Quick Settings in a single swipe</string>
+
+    <!-- System -->
+    <string name="system_settings_title">System</string>
 
     <!-- System >> Network -->
-    <string name="system_network_title">Network</string>
-    <string name="pref_system_hostname_title">Device Hostname</string>
-    <string name="pref_system_sshd_title">Enable sshd</string>
-    <string name="pref_system_sshd_summary">Allow remote connections over ssh</string>
+    <string name="networking_category_title">Network</string>
+    <string name="system_hostname_title">Device Hostname</string>
+    <string name="system_sshd_title">Enable sshd</string>
+    <string name="system_sshd_summary">Allow remote connections over ssh</string>
 
     <!-- System >> App Disabler -->
+    <string name="applications_category_title">Applications</string>
     <string name="system_disable_apps_title">Disable system apps</string>
+    <string name="system_disable_apps_summary">Show or hide apps from the system</string>
     <string name="system_disable_apps_notice"><b><i>Notice:</i></b> These are a list of apps that we have white listed and should not cause issues when disabled. This <b><i>does not</i></b> remove them, it only disables the packages and can be re-enabled when necessary.</string>
     <string name="system_disable_apps_dialog_message">An alternate replacement is needed. In order to disable this app and keep critical functionality, install a replacement and try again</string>
 
-    <!-- Performance -->
-    <string name="perf_profile_title">Performance profile</string>
-    <string name="pref_ksm_title">Kernel samepage merging</string>
-    <string name="pref_ksm_summary">Ksm reduces physical memory requirements and improves performance</string>
-    <string name="performance_processor_title">Processor</string>
-    <string name="pref_cpu_cur_freq_title">Current CPU frequency</string>
-    <string name="pref_cpu_governors_title">CPU governor</string>
-    <string name="pref_cpu_governors_summary">%S</string>
-    <string name="pref_cpu_min_freq_title">Minimum CPU frequency</string>
-    <string name="pref_cpu_min_freq_summary">%s</string>
-    <string name="pref_cpu_max_freq_title">Maximum CPU frequency</string>
-    <string name="pref_cpu_max_freq_summary">%s</string>
-    <string name="pref_cpu_set_on_boot">Set on boot</string>
-    <string name="pref_cpu_set_on_boot_summary">Restore the processor settings on boot</string>
-    <string name="pref_cpu_io_sched_title">I/O scheduler</string>
-    <string name="pref_cpu_io_sched_summary">%S</string>
+    <!-- Support -->
+    <string name="settings_title">Utilities</string>
 
-    <!-- Bugreport -->
+    <!-- Support >> Settings -->
+    <string name="settings_category_title">Settings</string>
+    <string name="settings_aosp_mode_title">AOSP Mode</string>
+    <string name="settings_aosp_mode_summary">This will disable all toolbox features</string>
+    <string name="settings_bugreport_title">Bug Report</string>
+    <string name="settings_bugreport_summary">Log and send reports to our dev team</string>
+
+    <!-- Support >> Bugreport -->
     <string name="bugreport_message">Choose which buffer(s) you would like to fetch.\nOnce finished, upload and grab url to give to your maintainer!</string>
     <string name="bugreport_generated_log_url">Generated log url:</string>
     <string name="bugreport_toast_ready">Ready to upload</string>
@@ -155,7 +194,6 @@
     <string name="bugreport_fetching_button">Fetching...</string>
     <string name="bugreport_upload_button">Upload logs</string>
     <string name="bugreport_uploading_button">Uploading...</string>
-
     <string name="log_options">Log options</string>
     <string name="general_logcat">General logcat</string>
     <string name="complete_log">Complete Logs</string>
@@ -167,25 +205,5 @@
     <string name="logcat_post_author">EVLogcat Uploader</string>
     <string name="logcat_post_title">Logcat: %1$s</string>
     <string name="logcat_notification_title">Logcat Uploaded</string>
-
-    <!-- Hardware >> Buttons -->
-    <string name="pref_assist_wake_toggle_title">Assist button wake</string>
-    <string name="pref_assist_wake_toggle_summary">Assist button presses wake device</string>
-    <string name="pref_app_switch_wake_toggle_title">App switch button wake</string>
-    <string name="pref_app_switch_wake_toggle_summary">App switch button presses wake device</string>
-    <string name="pref_back_wake_toggle_title">Back button wake</string>
-    <string name="pref_back_wake_toggle_summary">Back button presses wake device</string>
-    <string name="pref_home_wake_toggle_title">Home button wake</string>
-    <string name="pref_home_wake_toggle_summary">Home button presses wake device</string>
-    <string name="pref_menu_wake_toggle_title">Menu button wake</string>
-    <string name="pref_menu_wake_toggle_summary">Menu button presses wake device</string>
-    <string name="pref_volume_wake_toggle_title">Volume button wake</string>
-    <string name="pref_volume_wake_toggle_summary">Volume button presses wake device</string>
-    <string name="pref_lockscreen_music_controls_volbtn_title">Volume music control</string>
-    <string name="pref_lockscreen_music_controls_volbtn_summary">Long press up to skip; down for previous</string>
-
-    <!-- Settings -->
-    <string name="pref_settings_toolbox_disable_title">Disable toolbox features</string>
-    <string name="pref_settings_toolbox_disable_summary">This will disable toolbox features.</string>
 
 </resources>

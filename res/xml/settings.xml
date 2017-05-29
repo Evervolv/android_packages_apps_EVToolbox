@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!--
  * Copyright (C) 2013-2017 The Evervolv Project
@@ -16,13 +16,29 @@
  * limitations under the License.
  -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="settings"
+    android:title="@string/settings_title" >
+
+    <PreferenceCategory
+        android:key="settings_category"
+        android:title="@string/settings_category_title">
 
         <com.evervolv.toolbox.preference.SystemSettingSwitchPreference
-            android:key="status_bar_quick_qs_pulldown"
-            android:title="@string/pref_statusbar_quick_pulldown_title"
-            android:summary="@string/pref_statusbar_quick_pulldown_summary"
+            android:key="disable_toolbox"
+            android:title="@string/settings_aosp_mode_title"
+            android:summary="@string/settings_aosp_mode_summary"
             android:defaultValue="false"
             android:persistent="true" />
+
+        <Preference
+            android:key="bugreport"
+            android:title="@string/settings_bugreport_title"
+            android:summary="@string/settings_bugreport_summary">
+            <intent android:action="com.evervolv.toolbox.action.BUGREPORT" />
+        </Preference>
+
+    </PreferenceCategory>
 
 </PreferenceScreen>

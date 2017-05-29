@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.evervolv.toolbox.fragments;
+package com.evervolv.toolbox.system;
 
 import android.content.ContentResolver;
 import android.os.Bundle;
@@ -29,7 +29,7 @@ import com.evervolv.toolbox.Toolbox;
 import com.evervolv.toolbox.ToolboxPreferenceFragment;
 import com.evervolv.toolbox.preference.CustomSeekBarPreference;
 
-public class InterfacePowerMenu extends ToolboxPreferenceFragment implements
+public class InterfacePreferences extends ToolboxPreferenceFragment implements
         OnPreferenceChangeListener {
 
     private static final String PREF_HIDE_SCREENSHOT = "pref_power_menu_hide_screenshot";
@@ -38,10 +38,20 @@ public class InterfacePowerMenu extends ToolboxPreferenceFragment implements
     private static final String PREF_HIDE_REBOOT_MENU = "pref_power_menu_hide_reboot_menu";
     private static final String PREF_SCREENSHOT_DELAY = "pref_power_menu_screenshot_delay";
 
+    private static final String ROTATION_0_PREF = "pref_rotation_0";
+    private static final String ROTATION_90_PREF = "pref_rotation_90";
+    private static final String ROTATION_180_PREF = "pref_rotation_180";
+    private static final String ROTATION_270_PREF = "pref_rotation_270";
+
     private static final int HIDE_REBOOT = 1;
     private static final int HIDE_SCREENSHOT = 2;
     private static final int HIDE_SOUND = 4;
     private static final int HIDE_AIRPLANE = 8;
+
+    private static final int ROTATION_0 = 1;
+    private static final int ROTATION_90 = 2;
+    private static final int ROTATION_180 = 4;
+    private static final int ROTATION_270 = 8;
 
     private ContentResolver mCr;
 
@@ -51,9 +61,14 @@ public class InterfacePowerMenu extends ToolboxPreferenceFragment implements
     private SwitchPreference mHideRebootMenu;
     private CustomSeekBarPreference mScreenshotDelay;
 
+    private SwitchPreference mRotation0Pref;
+    private SwitchPreference mRotation90Pref;
+    private SwitchPreference mRotation180Pref;
+    private SwitchPreference mRotation270Pref;
+
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        addPreferencesFromResource(R.xml.interface_power_menu);
+        addPreferencesFromResource(R.xml.user_interface);
 
         PreferenceScreen mPrefSet = getPreferenceScreen();
 
@@ -83,13 +98,30 @@ public class InterfacePowerMenu extends ToolboxPreferenceFragment implements
                 Settings.System.POWER_MENU_SCREENSHOT_DELAY, 1000);
         mScreenshotDelay.setValue(screenshotDelay / 1);
         mScreenshotDelay.setOnPreferenceChangeListener(this);
+
+        mRotation0Pref = (SwitchPreference) mPrefSet.findPreference(ROTATION_0_PREF);
+        mRotation90Pref = (SwitchPreference) mPrefSet.findPreference(ROTATION_90_PREF);
+        mRotation180Pref = (SwitchPreference) mPrefSet.findPreference(ROTATION_180_PREF);
+        mRotation270Pref = (SwitchPreference) mPrefSet.findPreference(ROTATION_270_PREF);
+
+        int defaultAngles = ROTATION_0 | ROTATION_90 | ROTATION_270;
+        if (getResources().getBoolean(com.android.internal.R.bool.config_allowAllRotations)) {
+            // 180 is default enabled on tablets, disabled on phones
+            defaultAngles |= ROTATION_180;
+        }
+
+        int angles = Settings.System.getInt(getActivity().getContentResolver(),
+                Settings.System.ACCELEROMETER_ROTATION_ANGLES, defaultAngles);
+
+        mRotation0Pref.setChecked((angles & ROTATION_0) != 0);
+        mRotation90Pref.setChecked((angles & ROTATION_90) != 0);
+        mRotation180Pref.setChecked((angles & ROTATION_180) != 0);
+        mRotation270Pref.setChecked((angles & ROTATION_270) != 0);
     }
 
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-        if (preference == mHideScreenshot ||
-                preference == mHideSound ||
-                preference == mHideAirplaneMode ||
-                preference == mHideRebootMenu) {
+        if (preference == mHideScreenshot || preference == mHideSound ||
+                preference == mHideAirplaneMode || preference == mHideRebootMenu) {
             int options = 0;
             if (mHideScreenshot.isChecked()) options |= HIDE_SCREENSHOT;
             if (mHideAirplaneMode.isChecked()) options |= HIDE_AIRPLANE;
@@ -97,6 +129,18 @@ public class InterfacePowerMenu extends ToolboxPreferenceFragment implements
             if (mHideSound.isChecked()) options |= HIDE_SOUND;
             Settings.System.putInt(mCr, Settings.System.HIDDEN_POWER_MENU_OPTIONS,
                     options);
+            return true;
+        }
+        if (preference == mRotation0Pref || preference == mRotation90Pref ||
+                preference == mRotation180Pref || preference == mRotation270Pref) {
+            int angles = 0;
+            if (mRotation0Pref.isChecked()) angles |= ROTATION_0;
+            if (mRotation90Pref.isChecked()) angles |= ROTATION_90;
+            if (mRotation180Pref.isChecked()) angles |= ROTATION_180;
+            if (mRotation270Pref.isChecked()) angles |= ROTATION_270;
+
+            Settings.System.putInt(getActivity().getContentResolver(),
+                     Settings.System.ACCELEROMETER_ROTATION_ANGLES, angles);
             return true;
         }
         return false;

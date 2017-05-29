@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ * Copyright (C) 2013-2017 The Evervolv Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ -->
+
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:key="interface"
+    android:title="@string/interface_settings_title" >
+
+    <PreferenceCategory
+        android:key="rotation"
+        android:title="@string/rotation_category_title">
+
+        <android.support.v14.preference.SwitchPreference
+            android:key="pref_rotation_0"
+            android:title="@string/rotation_0_title" />
+
+        <android.support.v14.preference.SwitchPreference
+            android:key="pref_rotation_90"
+            android:title="@string/rotation_90_title" />
+
+        <android.support.v14.preference.SwitchPreference
+            android:key="pref_rotation_180"
+            android:title="@string/rotation_180_title" />
+
+        <android.support.v14.preference.SwitchPreference
+            android:key="pref_rotation_270"
+            android:title="@string/rotation_270_title" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="power_menu"
+        android:title="@string/power_menu_category_title">
+
+        <android.support.v14.preference.SwitchPreference
+            android:key="pref_power_menu_hide_screenshot"
+            android:title="@string/power_menu_hide_screenshot_title"
+            android:disableDependentsState="true" />
+
+        <android.support.v14.preference.SwitchPreference
+            android:key="pref_power_menu_hide_sound"
+            android:title="@string/power_menu_hide_sound_title" />
+
+        <android.support.v14.preference.SwitchPreference
+            android:key="pref_power_menu_hide_airplane_mode"
+            android:title="@string/power_menu_hide_airplane_mode_title" />
+
+        <android.support.v14.preference.SwitchPreference
+            android:key="pref_power_menu_hide_reboot_menu"
+            android:title="@string/power_menu_hide_reboot_menu_title" />
+
+        <com.evervolv.toolbox.preference.CustomSeekBarPreference
+            android:key="pref_power_menu_screenshot_delay"
+            android:title="@string/power_menu_screenshot_delay_title"
+            android:dependency="pref_power_menu_hide_screenshot"
+            android:persistent="false"
+            app:max="10000"
+            app:min="100"
+            app:interval="100"
+            app:units="ms" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="navigation"
+        android:title="@string/navigation_category_title">
+
+        <com.evervolv.toolbox.preference.SystemSettingSwitchPreference
+            android:key="dev_force_show_navbar"
+            android:title="@string/navbar_show_title"
+            android:defaultValue="false"
+            android:persistent="true" />
+
+        <com.evervolv.toolbox.preference.SystemSettingSwitchPreference
+            android:key="pixel_nav_animation"
+            android:title="@string/navbar_animation_title"
+            android:defaultValue="false"
+            android:persistent="true" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

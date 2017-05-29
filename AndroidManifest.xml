@@ -23,12 +23,12 @@
         android:icon="@mipmap/ic_toolbox"
         android:label="@string/app_name"
         android:hardwareAccelerated="true"
-        android:theme="@style/Theme.EVToolbox"
         android:directBootAware="true">
 
         <activity
             android:name=".Toolbox"
             android:icon="@drawable/ic_settings_toolbox"
+            android:theme="@style/Theme.EVToolbox"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="com.android.settings.action.EXTRA_SETTINGS" />
@@ -40,6 +40,45 @@
                 android:resource="@string/app_summary" />
         </activity>
 
+        <activity-alias android:name=".perf.KernelTuner"
+                  android:targetActivity=".Toolbox"
+                  android:icon="@drawable/ic_settings_toolbox"
+                  android:theme="@style/Theme.EVToolbox"
+                  android:label="@string/perf_kernel_title"
+                  android:process=":toolbox"
+                  android:exported="true">
+            <intent-filter>
+                <action android:name="com.evervolv.toolbox.action.KERNEL_TUNER" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias android:name=".support.BugReport"
+                  android:targetActivity=".Toolbox"
+                  android:icon="@drawable/ic_settings_toolbox"
+                  android:theme="@style/Theme.EVToolbox"
+                  android:label="@string/settings_bugreport_title"
+                  android:process=":toolbox"
+                  android:exported="true">
+            <intent-filter>
+                <action android:name="com.evervolv.toolbox.action.BUGREPORT" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias android:name=".system.ApplicationManager"
+                  android:targetActivity=".Toolbox"
+                  android:icon="@drawable/ic_settings_toolbox"
+                  android:theme="@style/Theme.EVToolbox"
+                  android:label="@string/system_disable_apps_title"
+                  android:process=":toolbox"
+                  android:exported="true">
+            <intent-filter>
+                <action android:name="com.evervolv.toolbox.action.APP_MANAGER" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity-alias>
+
         <receiver android:name=".receivers.BootReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -47,7 +86,7 @@
             </intent-filter>
         </receiver>
 
-        <service android:name=".services.UploadService"
+        <service android:name=".support.UploadService"
                  android:process=":UploadService">
         </service>
 

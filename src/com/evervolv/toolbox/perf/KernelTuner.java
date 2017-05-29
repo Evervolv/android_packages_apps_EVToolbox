@@ -14,23 +14,23 @@
  * limitations under the License.
  */
 
-package com.evervolv.toolbox.fragments;
+package com.evervolv.toolbox.perf;
 
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.database.ContentObserver;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
-import android.os.PowerManager;
 import android.os.SystemProperties;
 import android.os.SystemService;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v14.preference.SwitchPreference;
 import android.support.v7.app.AlertDialog;
@@ -38,6 +38,9 @@ import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.Preference.OnPreferenceChangeListener;
 import android.support.v7.preference.PreferenceScreen;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.util.Log;
 
 import com.evervolv.toolbox.R;
@@ -47,9 +50,8 @@ import com.evervolv.toolbox.utils.FileUtil;
 
 import java.lang.Runtime;
 
-public class PerformanceGeneral extends ToolboxPreferenceFragment implements
-        OnPreferenceChangeListener,
-        Toolbox.DisabledListener {
+public class KernelTuner extends ToolboxPreferenceFragment implements
+        OnPreferenceChangeListener, Toolbox.DisabledListener {
     private static final String TAG = "EVToolbox";
 
     public static boolean freqCapFilesInitialized = false;
@@ -80,13 +82,6 @@ public class PerformanceGeneral extends ToolboxPreferenceFragment implements
 
     private PreferenceScreen mPrefSet;
 
-    private PowerManager mPowerManager;
-    private ListPreference mPerfProfilePref;
-    private String[] mPerfProfileEntries;
-    private String[] mPerfProfileValues;
-    private String mPerfProfileDefaultEntry;
-    private PerformanceProfileObserver mPerformanceProfileObserver = null;
-
     private static final int UI_UPDATE_DELAY = 500;
 
     private Preference mCurFrequencyPref;
@@ -105,51 +100,19 @@ public class PerformanceGeneral extends ToolboxPreferenceFragment implements
     private CpuUiUpdate mCpuUiUpdate;
     private static String mIoListFile;
 
-    private class PerformanceProfileObserver extends ContentObserver {
-        public PerformanceProfileObserver(Handler handler) {
-            super(handler);
-        }
-
-        @Override
-        public void onChange(boolean selfChange, Uri uri) {
-            updatePerformanceValue();
-        }
-    }
-
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        mPowerManager = (PowerManager) getActivity().getSystemService(Context.POWER_SERVICE);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        addPreferencesFromResource(R.xml.performance_general);
-
-        mPerfProfileEntries = getResources().getStringArray(
-                com.android.internal.R.array.perf_profile_entries);
-
-        mPerfProfileValues = getResources().getStringArray(
-                com.android.internal.R.array.perf_profile_values);
+        addPreferencesFromResource(R.xml.perf_kernel);
 
         mPrefSet = getPreferenceScreen();
 
-        /* Power Profiles */
-        mPerfProfilePref = (ListPreference) mPrefSet.findPreference(KEY_PERF_PROFILE);
-        if (mPerfProfilePref != null && !mPowerManager.hasPowerProfiles()) {
-            mPrefSet.removePreference(mPerfProfilePref);
-            mPerfProfilePref = null;
-        } else if (mPerfProfilePref != null) {
-            mPerfProfilePref.setOrder(-1);
-            mPerfProfilePref.setEntries(mPerfProfileEntries);
-            mPerfProfilePref.setEntryValues(mPerfProfileValues);
-            updatePerformanceValue();
-            mPerfProfilePref.setOnPreferenceChangeListener(this);
-        }
-        mPerformanceProfileObserver = new PerformanceProfileObserver(new Handler());
-
         /* KSM */
-
         mKSMPref = (SwitchPreference) mPrefSet.findPreference(KSM_PREF);
         if (FileUtil.fileExists(KSM_RUN_FILE)) {
             mKSMPref.setChecked(KSM_PREF_ENABLED.equals(FileUtil.fileReadOneLine(KSM_RUN_FILE)));
@@ -164,17 +127,34 @@ public class PerformanceGeneral extends ToolboxPreferenceFragment implements
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.kernel_tuner_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_set_on_boot:
+                if (item.isChecked()) {
+                    item.setChecked(false);
+                } else {
+                    item.setChecked(true);
+                }
+                final SharedPreferences prefs = PreferenceManager
+                        .getDefaultSharedPreferences(getActivity().getApplicationContext());
+                prefs.edit().putBoolean(SOB_PREF, item.isChecked()).apply();
+                return true;
+        }
+        return false;
+    }
+
+    @Override
     public void onResume() {
         String availableIOSchedulersLine;
         int bropen, brclose;
         String currentIOScheduler;
         super.onResume();
-        if (mPerfProfilePref != null) {
-            updatePerformanceValue();
-            ContentResolver resolver = getActivity().getContentResolver();
-            resolver.registerContentObserver(Settings.Secure.getUriFor(
-                    Settings.Secure.PERFORMANCE_PROFILE), false, mPerformanceProfileObserver);
-        }
 
         if (mCpuInfoHandler != null) {
             mCpuInfoHandler.post(mUpdateCpuFreqValues);
@@ -194,10 +174,6 @@ public class PerformanceGeneral extends ToolboxPreferenceFragment implements
     @Override
     public void onPause() {
         super.onPause();
-        if (mPerfProfilePref != null) {
-            ContentResolver resolver = getActivity().getContentResolver();
-            resolver.unregisterContentObserver(mPerformanceProfileObserver);
-        }
         if (mCpuInfoHandler != null) {
             mCpuInfoHandler.removeCallbacks(mUpdateCpuFreqValues);
         }
@@ -222,11 +198,6 @@ public class PerformanceGeneral extends ToolboxPreferenceFragment implements
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (newValue != null) {
-            if (preference == mPerfProfilePref) {
-                mPowerManager.setPowerProfile(String.valueOf(newValue));
-                updatePerformanceSummary();
-                return true;
-            }
             if (preference == mIOSchedulerPref) {
                 updateCpuTunables(mIoListFile, (String) newValue);
                 mIOSchedulerPref.setSummary(String.format(mIOSchedulerFormat, (String) newValue));
@@ -253,30 +224,6 @@ public class PerformanceGeneral extends ToolboxPreferenceFragment implements
         return false;
     }
 
-    private void updatePerformanceSummary() {
-        String value = mPowerManager.getPowerProfile();
-        String summary = "";
-        int count = mPerfProfileValues.length;
-        for (int i = 0; i < count; i++) {
-            try {
-                if (mPerfProfileValues[i].equals(value)) {
-                    summary = mPerfProfileEntries[i];
-                }
-            } catch (IndexOutOfBoundsException ex) {
-                // Ignore
-            }
-        }
-        mPerfProfilePref.setSummary(String.format("%s", summary));
-    }
-
-    private void updatePerformanceValue() {
-        if (mPerfProfilePref == null) {
-            return;
-        }
-        mPerfProfilePref.setValue(mPowerManager.getPowerProfile());
-        updatePerformanceSummary();
-    }
-
     public static String findIoScheduler() {
         String validChoices[] = {
             "/sys/block/mmcblk0/queue/scheduler",
@@ -293,10 +240,10 @@ public class PerformanceGeneral extends ToolboxPreferenceFragment implements
     }
 
     private void createCpuTuningPrefs() {
-        mIOSchedulerFormat = getString(R.string.pref_cpu_io_sched_summary);
-        mGovernorFormat = getString(R.string.pref_cpu_governors_summary);
-        mMinFrequencyFormat = getString(R.string.pref_cpu_min_freq_summary);
-        mMaxFrequencyFormat = getString(R.string.pref_cpu_max_freq_summary);
+        mIOSchedulerFormat = getString(R.string.io_sched_summary);
+        mGovernorFormat = getString(R.string.cpu_governors_summary);
+        mMinFrequencyFormat = getString(R.string.cpu_min_freq_summary);
+        mMaxFrequencyFormat = getString(R.string.cpu_max_freq_summary);
 
         String[] availableIOSchedulers = new String[0];
         String availableIOSchedulersLine;

@@ -16,12 +16,19 @@
  * limitations under the License.
  -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="system_settings"
+    android:title="@string/system_settings_title" >
+
+    <PreferenceCategory
+        android:key="networking_category"
+        android:title="@string/networking_category_title">
 
         <com.evervolv.toolbox.preference.HostnamePreference
             android:key="pref_system_hostname"
-            android:title="@string/pref_system_hostname_title"
-            android:dialogTitle="@string/pref_system_hostname_title"
+            android:title="@string/system_hostname_title"
+            android:dialogTitle="@string/system_hostname_title"
             android:positiveButtonText="@string/apply"
             android:negativeButtonText="@string/cancel"
             android:selectAllOnFocus="true"
@@ -31,7 +38,22 @@
 
         <android.support.v14.preference.SwitchPreference
             android:key="pref_system_sshd"
-            android:title="@string/pref_system_sshd_title"
-            android:summary="@string/pref_system_sshd_summary" />
+            android:title="@string/system_sshd_title"
+            android:summary="@string/system_sshd_summary" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="applications_category"
+        android:title="@string/applications_category_title">
+
+        <Preference
+            android:key="pref_app_disabler"
+            android:title="@string/system_disable_apps_title"
+            android:summary="@string/system_disable_apps_summary">
+            <intent android:action="com.evervolv.toolbox.action.APP_MANAGER" />
+        </Preference>
+
+    </PreferenceCategory>
 
 </PreferenceScreen>

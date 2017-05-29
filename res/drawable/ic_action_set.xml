@@ -18,14 +18,14 @@
     android:height="32.000000dp"
     android:viewportWidth="96.000000"
     android:viewportHeight="96.000000"
-    android:tint="?android:attr/colorAccent">
+    android:tint="@color/themeAccent">
 
     <group
         android:translateY="96.000000"
         android:scaleX="0.100000"
         android:scaleY="-0.100000">
         <path
-            android:fillColor="#FFFFFFFF"
+            android:fillColor="#000"
             android:strokeWidth="1"
             android:pathData="M567 562 l-187 -187 -98 98 -98 97 -42 -43 -42 -43 139 -138 138 -138 232 227 c127
 125 231 230 230 234 0 3 -20 23 -43 43 l-42 37 -187 -187z" />

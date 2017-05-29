@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.evervolv.toolbox.fragments;
+package com.evervolv.toolbox.system;
 
 import android.content.ContentResolver;
 import android.graphics.Color;
@@ -29,28 +29,27 @@ import com.evervolv.toolbox.ToolboxPreferenceFragment;
 
 import net.margaritov.preference.colorpicker.ColorPickerPreference;
 
-public class StatusbarGeneral extends ToolboxPreferenceFragment implements
-        OnPreferenceChangeListener,
-        Toolbox.DisabledListener {
+public class StatusbarPreferences extends ToolboxPreferenceFragment implements
+        OnPreferenceChangeListener, Toolbox.DisabledListener {
 
-    private static final String STATUSBAR_CHARGE_COLOR = "pref_status_bar_charge_color";
+    private static final String PREF_BATTERY_ICON_COLOR = "pref_battery_icon_color";
 
-    private ColorPickerPreference mChargeColor;
+    private ColorPickerPreference mBatteryIconColor;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        addPreferencesFromResource(R.xml.statusbar_general);
+        addPreferencesFromResource(R.xml.statusbar);
 
-        mChargeColor = (ColorPickerPreference) findPreference(STATUSBAR_CHARGE_COLOR);
-        mChargeColor.setNewPreviewColor(Settings.Secure.getInt(
+        mBatteryIconColor = (ColorPickerPreference) findPreference(PREF_BATTERY_ICON_COLOR);
+        mBatteryIconColor.setNewPreviewColor(Settings.Secure.getInt(
                 getActivity().getContentResolver(),
                 Settings.Secure.STATUS_BAR_CHARGE_COLOR, Color.WHITE));
-        mChargeColor.setOnPreferenceChangeListener(this);
+        mBatteryIconColor.setOnPreferenceChangeListener(this);
     }
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        if (preference == mChargeColor) {
+        if (preference == mBatteryIconColor) {
             Settings.Secure.putInt(getActivity().getContentResolver(),
                     Settings.Secure.STATUS_BAR_CHARGE_COLOR, ((Integer) newValue).intValue());
             return true;

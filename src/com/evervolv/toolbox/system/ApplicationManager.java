@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.evervolv.toolbox.fragments;
+package com.evervolv.toolbox.system;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ import android.widget.TextView;
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.utils.ImageCache;
 
-public class SystemAppDisabler extends Fragment {
+public class ApplicationManager extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

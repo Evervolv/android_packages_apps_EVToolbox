@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 The Evervolv Project
+ * Copyright (C) 2013-2017 The Evervolv Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.evervolv.toolbox.fragments;
+package com.evervolv.toolbox.hardware;
 
 import android.os.Bundle;
 
@@ -22,10 +22,10 @@ import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.Toolbox;
 import com.evervolv.toolbox.ToolboxPreferenceFragment;
 
-public class InterfaceNavBar extends ToolboxPreferenceFragment {
+public class ButtonPreferences extends ToolboxPreferenceFragment {
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        addPreferencesFromResource(R.xml.interface_navbar);
+        addPreferencesFromResource(R.xml.hardware);
     }
 }

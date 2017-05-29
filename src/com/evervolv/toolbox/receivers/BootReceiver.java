@@ -28,8 +28,8 @@ import android.util.Log;
 
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.Toolbox;
-import com.evervolv.toolbox.fragments.PerformanceGeneral;
-import com.evervolv.toolbox.fragments.SystemNetwork;
+import com.evervolv.toolbox.perf.KernelTuner;
+import com.evervolv.toolbox.system.SystemPreferences;
 import com.evervolv.toolbox.utils.FileUtil;
 
 import java.util.Arrays;
@@ -72,7 +72,7 @@ public class BootReceiver extends BroadcastReceiver {
                 SystemProperties.set(IOSCHED_SETTINGS_PROP, "false");
             }
 
-            if (FileUtil.fileExists(PerformanceGeneral.KSM_RUN_FILE)) {
+            if (FileUtil.fileExists(KernelTuner.KSM_RUN_FILE)) {
                 if (!SystemProperties.getBoolean(KSM_SETTINGS_PROP, false)) {
                     SystemProperties.set(KSM_SETTINGS_PROP, "true");
                     configureKSM(ctx);
@@ -92,16 +92,16 @@ public class BootReceiver extends BroadcastReceiver {
     private void configureCPU(Context ctx) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
 
-        if (prefs.getBoolean(PerformanceGeneral.SOB_PREF, false) == false) {
+        if (prefs.getBoolean(KernelTuner.SOB_PREF, false) == false) {
             Log.i(TAG, "CPU restore disabled by user preference.");
             return;
         }
 
-        String governor = prefs.getString(PerformanceGeneral.GOV_PREF, null);
-        String minFrequency = prefs.getString(PerformanceGeneral.FREQ_MIN_PREF, null);
-        String maxFrequency = prefs.getString(PerformanceGeneral.FREQ_MAX_PREF, null);
-        String availableFrequenciesLine = FileUtil.fileReadOneLine(PerformanceGeneral.FREQ_LIST_FILE);
-        String availableGovernorsLine = FileUtil.fileReadOneLine(PerformanceGeneral.GOV_LIST_FILE);
+        String governor = prefs.getString(KernelTuner.GOV_PREF, null);
+        String minFrequency = prefs.getString(KernelTuner.FREQ_MIN_PREF, null);
+        String maxFrequency = prefs.getString(KernelTuner.FREQ_MAX_PREF, null);
+        String availableFrequenciesLine = FileUtil.fileReadOneLine(KernelTuner.FREQ_LIST_FILE);
+        String availableGovernorsLine = FileUtil.fileReadOneLine(KernelTuner.GOV_LIST_FILE);
         boolean noSettings = ((availableGovernorsLine == null) || (governor == null)) &&
                              ((availableFrequenciesLine == null) || ((minFrequency == null) && (maxFrequency == null)));
         List<String> frequencies = null;
@@ -117,13 +117,13 @@ public class BootReceiver extends BroadcastReceiver {
                 frequencies = Arrays.asList(availableFrequenciesLine.split(" "));
             }
             if (maxFrequency != null && frequencies != null && frequencies.contains(maxFrequency)) {
-                FileUtil.fileWriteOneLine(PerformanceGeneral.FREQ_MAX_FILE, maxFrequency);
+                FileUtil.fileWriteOneLine(KernelTuner.FREQ_MAX_FILE, maxFrequency);
             }
             if (minFrequency != null && frequencies != null && frequencies.contains(minFrequency)) {
-                FileUtil.fileWriteOneLine(PerformanceGeneral.FREQ_MIN_FILE, minFrequency);
+                FileUtil.fileWriteOneLine(KernelTuner.FREQ_MIN_FILE, minFrequency);
             }
             if (governor != null && governors != null && governors.contains(governor)) {
-                FileUtil.fileWriteOneLine(PerformanceGeneral.GOV_FILE, governor);
+                FileUtil.fileWriteOneLine(KernelTuner.GOV_FILE, governor);
             }
             Log.d(TAG, "CPU settings restored.");
         }
@@ -132,13 +132,13 @@ public class BootReceiver extends BroadcastReceiver {
     private void configureIOSched(Context ctx) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
 
-        if (prefs.getBoolean(PerformanceGeneral.SOB_PREF, false) == false) {
+        if (prefs.getBoolean(KernelTuner.SOB_PREF, false) == false) {
             Log.i(TAG, "IOSched restore disabled by user preference.");
             return;
         }
 
-        String ioscheduler = prefs.getString(PerformanceGeneral.IOSCHED_PREF, null);
-        String availableIOSchedulersFile = PerformanceGeneral.findIoScheduler();
+        String ioscheduler = prefs.getString(KernelTuner.IOSCHED_PREF, null);
+        String availableIOSchedulersFile = KernelTuner.findIoScheduler();
         String availableIOSchedulersLine = FileUtil.fileReadOneLine(availableIOSchedulersFile);
         boolean noSettings = ((availableIOSchedulersLine == null) || (ioscheduler == null));
         List<String> ioschedulers = null;
@@ -159,16 +159,16 @@ public class BootReceiver extends BroadcastReceiver {
     private void configureKSM(Context ctx) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
 
-        boolean ksm = prefs.getBoolean(PerformanceGeneral.KSM_PREF, ActivityManager.isLowRamDeviceStatic());
+        boolean ksm = prefs.getBoolean(KernelTuner.KSM_PREF, ActivityManager.isLowRamDeviceStatic());
 
-        FileUtil.fileWriteOneLine(PerformanceGeneral.KSM_RUN_FILE, ksm ? "1" : "0");
+        FileUtil.fileWriteOneLine(KernelTuner.KSM_RUN_FILE, ksm ? "1" : "0");
         Log.d(TAG, "KSM settings restored.");
     }
 
     private void maybeEnableSshd(Context ctx) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
 
-        if (prefs.getBoolean(SystemNetwork.PREF_SSHD, false)) {
+        if (prefs.getBoolean(SystemPreferences.PREF_SSHD, false)) {
             SystemProperties.set("ctl.start", "sshd");
             SystemProperties.set(SSHD_SETTINGS_PROP, "true");
         } else {

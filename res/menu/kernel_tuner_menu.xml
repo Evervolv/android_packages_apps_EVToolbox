@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 
 <!--
- * Copyright (C) 2013-2017 The Evervolv Project
+ * Copyright (C) 2013 The Evervolv Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,13 +16,9 @@
  * limitations under the License.
  -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-
-        <com.evervolv.toolbox.preference.SystemSettingSwitchPreference
-            android:key="disable_toolbox"
-            android:title="@string/pref_settings_toolbox_disable_title"
-            android:summary="@string/pref_settings_toolbox_disable_summary"
-            android:defaultValue="false"
-            android:persistent="true" />
-
-</PreferenceScreen>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menu_set_on_boot"
+          android:title="@string/cpu_set_on_boot"
+          android:showAsAction="never"
+          android:checkable="true" />
+</menu>
