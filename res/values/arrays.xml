@@ -31,18 +31,21 @@
          Example: com.android.launcher3:#Intent;action=android.intent.action.MAIN;android.intent.category.HOME;end -->
 
     <string-array name="disable_apps_whitelist" translatable="false">
-        <item>com.android.launcher3:#Intent;action=android.intent.action.MAIN;category=android.intent.category.HOME;end</item>
-        <item>com.android.camera2:#Intent;action=android.media.action.IMAGE_CAPTURE;end</item>
-        <item>com.android.mms</item>
-        <item>com.android.messaging</item>
-        <item>com.android.inputmethod.latin</item>
-        <item>com.android.music</item>
         <item>com.android.browser</item>
-        <item>org.chromium.chrome</item>
         <item>com.android.calendar</item>
-        <item>com.android.email</item>
+        <item>com.android.camera2:#Intent;action=android.media.action.IMAGE_CAPTURE;end</item>
         <item>com.android.deskclock</item>
+        <item>com.android.email</item>
+        <item>com.android.inputmethod.latin</item>
+        <item>com.android.launcher3:#Intent;action=android.intent.action.MAIN;category=android.intent.category.HOME;end</item>
+        <item>com.android.messaging</item>
+        <item>com.android.mms</item>
+        <item>com.android.music</item>
+        <item>com.cyanogenmod.eleven</item>
         <item>net.cactii.flash2</item>
+        <item>org.cyanogenmod.audiofx</item>
+        <item>org.chromium.chrome</item>
+        <item>org.lineageos.jelly</item>
     </string-array>
 
     <string-array name="statusbar_batt_style_entries" translatable="false">
