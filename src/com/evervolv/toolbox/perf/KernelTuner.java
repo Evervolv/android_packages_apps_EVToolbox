@@ -100,6 +100,8 @@ public class KernelTuner extends ToolboxPreferenceFragment implements
     private CpuUiUpdate mCpuUiUpdate;
     private static String mIoListFile;
 
+    private SharedPreferences mSharedPreferences;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,6 +111,9 @@ public class KernelTuner extends ToolboxPreferenceFragment implements
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.perf_kernel);
+
+        mSharedPreferences = PreferenceManager
+                        .getDefaultSharedPreferences(getActivity().getApplicationContext());
 
         mPrefSet = getPreferenceScreen();
 
@@ -141,9 +146,7 @@ public class KernelTuner extends ToolboxPreferenceFragment implements
                 } else {
                     item.setChecked(true);
                 }
-                final SharedPreferences prefs = PreferenceManager
-                        .getDefaultSharedPreferences(getActivity().getApplicationContext());
-                prefs.edit().putBoolean(SOB_PREF, item.isChecked()).apply();
+                mSharedPreferences.edit().putBoolean(SOB_PREF, item.isChecked()).apply();
                 return true;
         }
         return false;

@@ -49,59 +49,58 @@ public class BootReceiver extends BroadcastReceiver {
 
     private static final String ENCRYPTED_STATE = "1";
 
+    private SharedPreferences mSharedPreferences;
+
     @Override
     public void onReceive(Context ctx, Intent intent) {
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(ctx);
+
         if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)
                 && !ENCRYPTED_STATE.equals(SystemProperties.get("vold.decrypt"))) {
+
+            // Skip restore if the toolbox has been disabled
             if (!Toolbox.isEnabled(ctx)) {
                 return;
             }
 
-            final PowerManager pm = (PowerManager)ctx.getSystemService(Context.POWER_SERVICE);
-            final PerformanceManager perf = PerformanceManager.getInstance(ctx);
-            final SortedSet<PerformanceProfile> profiles = perf.getPowerProfiles();
+            // Check if the user has selected to set values on boot
+            if (mSharedPreferences.getBoolean(KernelTuner.SOB_PREF, false) == true) {
+                final PowerManager pm = (PowerManager)ctx.getSystemService(Context.POWER_SERVICE);
+                final PerformanceManager perf = PerformanceManager.getInstance(ctx);
+                final SortedSet<PerformanceProfile> profiles = perf.getPowerProfiles();
 
-            if (profiles.size() == 0) {
-                if (SystemProperties.getBoolean(CPU_SETTINGS_PROP, false) == false) {
-                    SystemProperties.set(CPU_SETTINGS_PROP, "true");
-                    configureCPU(ctx);
+                // Skip cpu restore if performance profiles are present
+                if (profiles.size() == 0) {
+                    // CPU preferences
+                    restoreCpuPrefs(mSharedPreferences);
                 } else {
-                    SystemProperties.set(CPU_SETTINGS_PROP, "false");
+                    Log.i(TAG, "Performance profile active, skipping CPU restore");
                 }
-            }
 
-            if (SystemProperties.getBoolean(IOSCHED_SETTINGS_PROP, false) == false) {
-                SystemProperties.set(IOSCHED_SETTINGS_PROP, "true");
-                configureIOSched(ctx);
+                // IO Sched preferences
+                restoreSchedPrefs(mSharedPreferences);
+
+                // KSM
+                if (FileUtil.fileExists(KernelTuner.KSM_RUN_FILE)) {
+                    boolean enabled = mSharedPreferences.getBoolean(KernelTuner.KSM_PREF, false);
+                    FileUtil.fileWriteOneLine(KernelTuner.KSM_RUN_FILE, enabled ? "1" : "0");
+                } else {
+                    Log.i(TAG, "KSM file is not found, skipping restore");
+                }
             } else {
-                SystemProperties.set(IOSCHED_SETTINGS_PROP, "false");
+                Log.i(TAG, "Restore disabled by user preference.");
+                return;
             }
 
-            if (FileUtil.fileExists(KernelTuner.KSM_RUN_FILE)) {
-                if (!SystemProperties.getBoolean(KSM_SETTINGS_PROP, false)) {
-                    SystemProperties.set(KSM_SETTINGS_PROP, "true");
-                    configureKSM(ctx);
-                } else {
-                    SystemProperties.set(KSM_SETTINGS_PROP, "false");
-                }
+            // SSH Daemon
+            if (mSharedPreferences.getBoolean(SystemPreferences.PREF_SSHD, false)) {
+                SystemProperties.set("ctl.start", "sshd");
             }
-
-            if (!SystemProperties.getBoolean(SSHD_SETTINGS_PROP, false)) {
-                maybeEnableSshd(ctx);
-            }
-
         }
 
     }
 
-    private void configureCPU(Context ctx) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
-
-        if (prefs.getBoolean(KernelTuner.SOB_PREF, false) == false) {
-            Log.i(TAG, "CPU restore disabled by user preference.");
-            return;
-        }
-
+    private void restoreCpuPrefs(SharedPreferences prefs) {
         String governor = prefs.getString(KernelTuner.GOV_PREF, null);
         String minFrequency = prefs.getString(KernelTuner.FREQ_MIN_PREF, null);
         String maxFrequency = prefs.getString(KernelTuner.FREQ_MAX_PREF, null);
@@ -134,14 +133,7 @@ public class BootReceiver extends BroadcastReceiver {
         }
     }
 
-    private void configureIOSched(Context ctx) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
-
-        if (prefs.getBoolean(KernelTuner.SOB_PREF, false) == false) {
-            Log.i(TAG, "IOSched restore disabled by user preference.");
-            return;
-        }
-
+    private void restoreSchedPrefs(SharedPreferences prefs) {
         String ioscheduler = prefs.getString(KernelTuner.IOSCHED_PREF, null);
         String availableIOSchedulersFile = KernelTuner.findIoScheduler();
         String availableIOSchedulersLine = FileUtil.fileReadOneLine(availableIOSchedulersFile);
@@ -160,25 +152,4 @@ public class BootReceiver extends BroadcastReceiver {
             Log.d(TAG, "I/O scheduler settings restored.");
         }
     }
-
-    private void configureKSM(Context ctx) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
-
-        boolean ksm = prefs.getBoolean(KernelTuner.KSM_PREF, ActivityManager.isLowRamDeviceStatic());
-
-        FileUtil.fileWriteOneLine(KernelTuner.KSM_RUN_FILE, ksm ? "1" : "0");
-        Log.d(TAG, "KSM settings restored.");
-    }
-
-    private void maybeEnableSshd(Context ctx) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
-
-        if (prefs.getBoolean(SystemPreferences.PREF_SSHD, false)) {
-            SystemProperties.set("ctl.start", "sshd");
-            SystemProperties.set(SSHD_SETTINGS_PROP, "true");
-        } else {
-            SystemProperties.set(SSHD_SETTINGS_PROP, "false");
-        }
-    }
-
 }
