@@ -21,6 +21,11 @@
     android:key="perf_kernel_settings"
     android:title="@string/perf_advanced_settings_title" >
 
+    <android.support.v14.preference.SwitchPreference
+        android:key="pref_cpu_set_on_boot"
+        android:title="@string/cpu_set_on_boot"
+        android:summary="@string/cpu_set_on_boot_summary" />
+
     <PreferenceCategory
         android:key="memory_category"
         android:title="@string/memory_category_title">

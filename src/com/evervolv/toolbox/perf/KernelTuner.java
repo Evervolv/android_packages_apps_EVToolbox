@@ -102,10 +102,11 @@ public class KernelTuner extends ToolboxPreferenceFragment implements
 
     private SharedPreferences mSharedPreferences;
 
+    private SwitchPreference mSetOnBootPref;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
     }
 
     @Override
@@ -113,9 +114,14 @@ public class KernelTuner extends ToolboxPreferenceFragment implements
         addPreferencesFromResource(R.xml.perf_kernel);
 
         mSharedPreferences = PreferenceManager
-                        .getDefaultSharedPreferences(getActivity().getApplicationContext());
+                .getDefaultSharedPreferences(getActivity().getApplicationContext());
 
         mPrefSet = getPreferenceScreen();
+
+        /* Set on boot */
+        mSetOnBootPref = (SwitchPreference) mPrefSet.findPreference(SOB_PREF);
+        boolean mSetOnBootEnabled = mSharedPreferences.getBoolean(SOB_PREF, false);
+        mSetOnBootPref.setChecked(mSetOnBootEnabled);
 
         /* KSM */
         mKSMPref = (SwitchPreference) mPrefSet.findPreference(KSM_PREF);
@@ -129,27 +135,6 @@ public class KernelTuner extends ToolboxPreferenceFragment implements
 
         /* CPU Tunables */
         createCpuTuningPrefs();
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.kernel_tuner_menu, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_set_on_boot:
-                if (item.isChecked()) {
-                    item.setChecked(false);
-                } else {
-                    item.setChecked(true);
-                }
-                mSharedPreferences.edit().putBoolean(SOB_PREF, item.isChecked()).apply();
-                return true;
-        }
-        return false;
     }
 
     @Override
@@ -193,6 +178,10 @@ public class KernelTuner extends ToolboxPreferenceFragment implements
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         if (preference == mKSMPref) {
             FileUtil.fileWriteOneLine(KSM_RUN_FILE, mKSMPref.isChecked() ? "1" : "0");
+            return true;
+        }
+        if (preference == mSetOnBootPref) {
+            mSharedPreferences.edit().putBoolean(SOB_PREF, mSetOnBootPref.isChecked()).apply();
             return true;
         }
         return false;
