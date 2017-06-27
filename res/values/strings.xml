@@ -152,6 +152,9 @@
     <string name="battery_charging_symbol_default">Disabled</string>
     <string name="battery_charging_symbol_flash">Flash</string>
     <string name="battery_charging_symbol_tilde">Tilde</string>
+    <string name="battery_pulse_charging_title">Pulse battery icon when charging</string>
+    <string name="battery_pulse_charging_summary_off">Only solid battery style will have pulsing icon</string>
+    <string name="battery_pulse_charging_summary_on">All battery styles will show pulsing animation</string>
 
     <!-- Statusbar >> Clock -->
     <string name="clock_category_title">Clock</string>

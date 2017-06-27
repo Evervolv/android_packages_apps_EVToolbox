@@ -81,6 +81,13 @@
             android:defaultValue="0"
             android:persistent="true" />
 
+        <org.cyanogenmod.support.preference.SecureSettingSwitchPreference
+            android:key="status_bar_pulse_charging_battery"
+            android:title="@string/battery_pulse_charging_title"
+            android:summaryOn="@string/battery_pulse_charging_summary_on"
+            android:summaryOff="@string/battery_pulse_charging_summary_off"
+            android:defaultValue="false" />
+
     </PreferenceCategory>
 
     <PreferenceCategory
