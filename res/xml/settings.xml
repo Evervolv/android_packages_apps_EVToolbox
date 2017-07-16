@@ -25,7 +25,7 @@
         android:key="settings_category"
         android:title="@string/settings_category_title">
 
-        <com.evervolv.toolbox.preference.SystemSettingSwitchPreference
+        <org.cyanogenmod.support.preference.SystemSettingSwitchPreference
             android:key="disable_toolbox"
             android:title="@string/settings_aosp_mode_title"
             android:summary="@string/settings_aosp_mode_summary"

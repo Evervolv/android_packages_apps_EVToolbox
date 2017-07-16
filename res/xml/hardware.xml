@@ -26,7 +26,7 @@
         android:key="wake_key_category"
         android:title="@string/wake_key_category_title">
 
-        <com.evervolv.toolbox.preference.SystemSettingSwitchPreference
+        <org.cyanogenmod.support.preference.SystemSettingSwitchPreference
             android:key="app_switch_wake_screen"
             android:title="@string/app_switch_wake_toggle_title"
             android:summary="@string/app_switch_wake_toggle_summary"
@@ -34,7 +34,7 @@
             android:persistent="true"
             app:requiresConfig="@bool/has_app_switch_button" />
 
-        <com.evervolv.toolbox.preference.SystemSettingSwitchPreference
+        <org.cyanogenmod.support.preference.SystemSettingSwitchPreference
             android:key="assist_wake_screen"
             android:title="@string/assist_wake_toggle_title"
             android:summary="@string/assist_wake_toggle_summary"
@@ -42,7 +42,7 @@
             android:persistent="true"
             app:requiresConfig="@bool/has_assist_button" />
 
-        <com.evervolv.toolbox.preference.SystemSettingSwitchPreference
+        <org.cyanogenmod.support.preference.SystemSettingSwitchPreference
             android:key="back_wake_screen"
             android:title="@string/back_wake_toggle_title"
             android:summary="@string/back_wake_toggle_summary"
@@ -50,7 +50,7 @@
             android:persistent="true"
             app:requiresConfig="@bool/has_back_button" />
 
-        <com.evervolv.toolbox.preference.SystemSettingSwitchPreference
+        <org.cyanogenmod.support.preference.SystemSettingSwitchPreference
             android:key="home_wake_screen"
             android:title="@string/home_wake_toggle_title"
             android:summary="@string/home_wake_toggle_summary"
@@ -58,7 +58,7 @@
             android:persistent="true"
             app:requiresConfig="@bool/has_home_button" />
 
-        <com.evervolv.toolbox.preference.SystemSettingSwitchPreference
+        <org.cyanogenmod.support.preference.SystemSettingSwitchPreference
             android:key="menu_wake_screen"
             android:title="@string/menu_wake_toggle_title"
             android:summary="@string/menu_wake_toggle_summary"
@@ -66,7 +66,7 @@
             android:persistent="true"
             app:requiresConfig="@bool/has_menu_button" />
 
-        <com.evervolv.toolbox.preference.SystemSettingSwitchPreference
+        <org.cyanogenmod.support.preference.SystemSettingSwitchPreference
             android:key="volume_wake_screen"
             android:title="@string/volume_wake_toggle_title"
             android:summary="@string/volume_wake_toggle_summary"
@@ -79,7 +79,7 @@
         android:key="music_controls_category"
         android:title="@string/music_controls_category_title">
 
-        <com.evervolv.toolbox.preference.SystemSettingSwitchPreference
+        <org.cyanogenmod.support.preference.SystemSettingSwitchPreference
             android:key="lockscreen_music_controls_volbtn"
             android:title="@string/lockscreen_music_controls_volbtn_title"
             android:summary="@string/lockscreen_music_controls_volbtn_summary"

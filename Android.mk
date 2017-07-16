@@ -9,7 +9,8 @@ LOCAL_RESOURCE_DIR := \
     frameworks/support/v14/preference/res \
     frameworks/support/v7/appcompat/res \
     frameworks/support/v7/recyclerview/res \
-    frameworks/support/design/res
+    frameworks/support/design/res \
+    vendor/cm/support/preference/res
 
 LOCAL_SRC_FILES := $(call all-java-files-under, src/)
 
@@ -21,7 +22,8 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
     android-support-v7-appcompat \
     android-support-v13 \
     android-support-v14-preference \
-    org.apache.http.legacy
+    org.apache.http.legacy \
+    cm-support-preference
 
 LOCAL_AAPT_FLAGS := \
     --auto-add-overlay \
@@ -29,7 +31,8 @@ LOCAL_AAPT_FLAGS := \
     --extra-packages android.support.v7.preference \
     --extra-packages android.support.v14.preference \
     --extra-packages android.support.v7.appcompat \
-    --extra-packages android.support.design
+    --extra-packages android.support.design \
+    --extra-packages org.cyanogenmod.support.preference
 
 LOCAL_PACKAGE_NAME := EVToolbox
 LOCAL_CERTIFICATE := platform

@@ -81,13 +81,13 @@
         android:key="navigation"
         android:title="@string/navigation_category_title">
 
-        <com.evervolv.toolbox.preference.SystemSettingSwitchPreference
+        <org.cyanogenmod.support.preference.SystemSettingSwitchPreference
             android:key="dev_force_show_navbar"
             android:title="@string/navbar_show_title"
             android:defaultValue="false"
             android:persistent="true" />
 
-        <com.evervolv.toolbox.preference.SystemSettingSwitchPreference
+        <org.cyanogenmod.support.preference.SystemSettingSwitchPreference
             android:key="pixel_nav_animation"
             android:title="@string/navbar_animation_title"
             android:defaultValue="false"
