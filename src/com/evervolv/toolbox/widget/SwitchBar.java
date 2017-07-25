@@ -59,8 +59,7 @@ public class SwitchBar extends LinearLayout implements CompoundButton.OnCheckedC
     private int mStateOnLabel = R.string.on;
     private int mStateOffLabel = R.string.off;
 
-    private ArrayList<OnSwitchChangeListener> mSwitchChangeListeners =
-            new ArrayList<OnSwitchChangeListener>();
+    private final ArrayList<OnSwitchChangeListener> mSwitchChangeListeners = new ArrayList<>();
 
     private static int[] MARGIN_ATTRIBUTES = {
             R.attr.switchBarMarginStart, R.attr.switchBarMarginEnd};
