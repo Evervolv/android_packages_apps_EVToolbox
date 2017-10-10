@@ -35,7 +35,7 @@ import android.support.v7.preference.Preference;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Toast;
 
-import evervolv.graphics.drawable.StopMotionVectorDrawable;
+import com.evervolv.internal.graphics.drawable.StopMotionVectorDrawable;
 
 import com.evervolv.toolbox.PartsUpdater;
 import com.evervolv.toolbox.R;
