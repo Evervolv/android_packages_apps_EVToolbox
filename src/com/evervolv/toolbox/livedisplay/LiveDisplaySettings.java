@@ -57,7 +57,7 @@ import static evervolv.hardware.LiveDisplayManager.FEATURE_PICTURE_ADJUSTMENT;
 import static evervolv.hardware.LiveDisplayManager.MODE_OFF;
 import static evervolv.hardware.LiveDisplayManager.MODE_OUTDOOR;
 
-public class LiveDisplay extends SettingsPreferenceFragment implements Searchable,
+public class LiveDisplaySettings extends SettingsPreferenceFragment implements Searchable,
         Preference.OnPreferenceChangeListener, SettingsHelper.OnSettingsChangeListener {
 
     private static final String TAG = "LiveDisplay";
