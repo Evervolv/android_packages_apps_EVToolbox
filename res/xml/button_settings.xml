@@ -15,6 +15,7 @@
 -->
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+               xmlns:evervolv="http://schemas.android.com/apk/res/evervolv.platform"
         android:key="button_settings"
         android:title="@string/button_settings_title">
 
@@ -124,11 +125,16 @@
 
     </PreferenceCategory>
 
-    <Preference
-        android:key="extra_keys"
-        android:title="@string/extra_keys_title"
-        android:summary="@string/extra_keys_summary" >
-        <intent android:action="org.lineageos.settings.device.ADDITIONAL_BUTTONS_SETTINGS" />
-    </Preference>
+    <PreferenceCategory
+        android:key="extras_category"
+        android:title="@string/extras_title" >
+         <evervolv.preference.RemotePreference
+            android:key="additional_buttons"
+            android:title="@string/additional_buttons_title"
+            evervolv:requiresAction="org.lineageos.settings.device.ADDITIONAL_BUTTONS_SETTINGS">
+            <intent
+                android:action="org.lineageos.settings.device.ADDITIONAL_BUTTONS_SETTINGS" />
+        </evervolv.preference.RemotePreference>
+     </PreferenceCategory>
 
 </PreferenceScreen>
