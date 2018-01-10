@@ -20,6 +20,8 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.ColorInt;
+import android.support.annotation.StringRes;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.TextAppearanceSpan;
@@ -35,6 +37,7 @@ import android.widget.TextView;
 import com.evervolv.toolbox.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SwitchBar extends LinearLayout implements CompoundButton.OnCheckedChangeListener,
         View.OnClickListener {
@@ -49,19 +52,27 @@ public class SwitchBar extends LinearLayout implements CompoundButton.OnCheckedC
         void onSwitchChanged(Switch switchView, boolean isChecked);
     }
 
+    private static final int[] XML_ATTRIBUTES = {
+            R.attr.switchBarMarginStart,
+            R.attr.switchBarMarginEnd,
+            R.attr.switchBarBackgroundColor,
+            R.attr.switchBarBackgroundActivatedColor};
+
+    private final List<OnSwitchChangeListener> mSwitchChangeListeners = new ArrayList<>();
     private final TextAppearanceSpan mSummarySpan;
 
     private ToggleSwitch mSwitch;
     private TextView mTextView;
     private String mLabel;
     private String mSummary;
+    @ColorInt
+    private int mBackgroundColor;
+    @ColorInt
+    private int mBackgroundActivatedColor;
+    @StringRes
     private int mOnTextId;
+    @StringRes
     private int mOffTextId;
-
-    private final ArrayList<OnSwitchChangeListener> mSwitchChangeListeners = new ArrayList<>();
-
-    private static int[] MARGIN_ATTRIBUTES = {
-            R.attr.switchBarMarginStart, R.attr.switchBarMarginEnd};
 
     public SwitchBar(Context context) {
         this(context, null);
@@ -80,31 +91,30 @@ public class SwitchBar extends LinearLayout implements CompoundButton.OnCheckedC
 
         LayoutInflater.from(context).inflate(R.layout.switch_bar, this);
 
-        final TypedArray a = context.obtainStyledAttributes(attrs, MARGIN_ATTRIBUTES);
+        final TypedArray a = context.obtainStyledAttributes(attrs, XML_ATTRIBUTES);
         int switchBarMarginStart = (int) a.getDimension(0, 0);
         int switchBarMarginEnd = (int) a.getDimension(1, 0);
+        mBackgroundColor = a.getColor(2, 0);
+        mBackgroundActivatedColor = a.getColor(3, 0);
         a.recycle();
 
-        mTextView = (TextView) findViewById(R.id.switch_text);
+        mTextView = findViewById(R.id.switch_text);
         mSummarySpan = new TextAppearanceSpan(mContext, R.style.TextAppearance_Small_SwitchBar);
         ViewGroup.MarginLayoutParams lp = (MarginLayoutParams) mTextView.getLayoutParams();
         lp.setMarginStart(switchBarMarginStart);
 
-        mSwitch = (ToggleSwitch) findViewById(R.id.switch_widget);
+        mSwitch = findViewById(R.id.switch_widget);
         // Prevent onSaveInstanceState() to be called as we are managing the state of the Switch
         // on our own
         mSwitch.setSaveEnabled(false);
         lp = (MarginLayoutParams) mSwitch.getLayoutParams();
         lp.setMarginEnd(switchBarMarginEnd);
+        setBackgroundColor(mBackgroundColor);
 
         setSwitchBarText(R.string.on, R.string.off);
 
-        addOnSwitchChangeListener(new OnSwitchChangeListener() {
-            @Override
-            public void onSwitchChanged(Switch switchView, boolean isChecked) {
-                setTextViewLabel(isChecked);
-            }
-        });
+        addOnSwitchChangeListener(
+                (switchView, isChecked) -> setTextViewLabelAndBackground(isChecked));
 
         setOnClickListener(this);
 
@@ -112,15 +122,16 @@ public class SwitchBar extends LinearLayout implements CompoundButton.OnCheckedC
         setVisibility(View.GONE);
     }
 
-    public void setTextViewLabel(boolean isChecked) {
+    public void setTextViewLabelAndBackground(boolean isChecked) {
         mLabel = getResources().getString(isChecked ? mOnTextId : mOffTextId);
+        setBackgroundColor(isChecked ? mBackgroundActivatedColor : mBackgroundColor);
         updateText();
     }
 
     public void setSwitchBarText(int onText, int offText) {
         mOnTextId = onText;
         mOffTextId = offText;
-        setTextViewLabel(isChecked());
+        setTextViewLabelAndBackground(isChecked());
     }
 
     public void setSummary(String summary) {
@@ -141,12 +152,12 @@ public class SwitchBar extends LinearLayout implements CompoundButton.OnCheckedC
     }
 
     public void setChecked(boolean checked) {
-        setTextViewLabel(checked);
+        setTextViewLabelAndBackground(checked);
         mSwitch.setChecked(checked);
     }
 
     public void setCheckedInternal(boolean checked) {
-        setTextViewLabel(checked);
+        setTextViewLabelAndBackground(checked);
         mSwitch.setCheckedInternal(checked);
     }
 
@@ -227,8 +238,8 @@ public class SwitchBar extends LinearLayout implements CompoundButton.OnCheckedC
          */
         private SavedState(Parcel in) {
             super(in);
-            checked = (Boolean)in.readValue(null);
-            visible = (Boolean)in.readValue(null);
+            checked = (Boolean) in.readValue(null);
+            visible = (Boolean) in.readValue(null);
         }
 
         @Override
@@ -275,7 +286,7 @@ public class SwitchBar extends LinearLayout implements CompoundButton.OnCheckedC
         super.onRestoreInstanceState(ss.getSuperState());
 
         mSwitch.setCheckedInternal(ss.checked);
-        setTextViewLabel(ss.checked);
+        setTextViewLabelAndBackground(ss.checked);
         setVisibility(ss.visible ? View.VISIBLE : View.GONE);
         mSwitch.setOnCheckedChangeListener(ss.visible ? this : null);
 
