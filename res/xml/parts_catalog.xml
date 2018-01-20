@@ -50,4 +50,10 @@
           android:fragment="com.evervolv.toolbox.display.RotationSettings"
           evervolv:xmlRes="@xml/display_rotation" />
 
+    <part android:key="style"
+          android:title="@string/style_title"
+          android:summary="@string/style_summary"
+          android:fragment="com.evervolv.toolbox.style.StylePreferences"
+          evervolv:xmlRes="@xml/style_preferences" />
+
 </parts-catalog>

@@ -38,6 +38,7 @@
     <uses-permission android:name="android.permission.READ_SEARCH_INDEXABLES" />
 
     <uses-permission android:name="evervolv.permission.MANAGE_REMOTE_PREFERENCES" />
+    <uses-permission android:name="evervolv.permission.CHANGE_STYLE" />
 
     <protected-broadcast android:name="com.evervolv.toolbox.PART_CHANGED" />
     <protected-broadcast android:name="com.evervolv.toolbox.REFRESH_PART" />
@@ -78,6 +79,24 @@
             <meta-data
                 android:name="com.android.settings.summary"
                 android:value="@string/summary_empty" />
+        </activity-alias>
+
+        <!-- Style settings (Display category) -->
+        <activity-alias
+            android:name=".style.StylePreferences"
+            android:label="@string/style_title"
+            android:targetActivity="PartsActivity">
+            <intent-filter android:priority="-3">
+                <action android:name="com.evervolv.toolbox.action.SETTINGS" />
+                <action android:name="com.evervolv.toolbox.STYLE_SETTINGS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <meta-data
+                android:name="com.android.settings.category"
+                android:value="com.android.settings.category.ia.display" />
+            <meta-data
+                android:name="com.android.settings.summary"
+                android:resource="@string/style_summary" />
         </activity-alias>
 
         <receiver android:name=".BootReceiver" android:enabled="true">
