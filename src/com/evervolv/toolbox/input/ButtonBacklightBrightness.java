@@ -49,7 +49,7 @@ public class ButtonBacklightBrightness extends CustomDialogPreferenceExt impleme
 
     public static final String KEY_BUTTON_BACKLIGHT = "pre_navbar_button_backlight";
 
-    private BrightnessControl mButtonBrightness;
+    private ButtonBrightnessControl mButtonBrightness;
     private BrightnessControl mActiveControl;
 
     private ViewGroup mTimeoutContainer;
@@ -75,8 +75,10 @@ public class ButtonBacklightBrightness extends CustomDialogPreferenceExt impleme
             float defaultBrightness = context.getResources().getFloat(
                     com.evervolv.platform.internal.R.dimen.config_buttonBrightnessSettingDefaultFloat);
 
-            mButtonBrightness = new BrightnessControl(
-                    EVSettings.System.BUTTON_BRIGHTNESS, isSingleValue, defaultBrightness);
+            mButtonBrightness = new ButtonBrightnessControl(
+                    EVSettings.System.BUTTON_BRIGHTNESS,
+                    EVSettings.System.BUTTON_BACKLIGHT_ONLY_WHEN_PRESSED,
+                    isSingleValue, defaultBrightness);
             mActiveControl = mButtonBrightness;
         }
 
@@ -401,6 +403,41 @@ public class ButtonBacklightBrightness extends CustomDialogPreferenceExt impleme
                 mValue.setText(String.format("%d%%", brightness));
             }
             updateTimeoutEnabledState();
+        }
+    }
+
+    private class ButtonBrightnessControl extends BrightnessControl {
+        private String mOnlyWhenPressedSetting;
+        private CheckBox mOnlyWhenPressedCheckBox;
+
+        public ButtonBrightnessControl(String brightnessSetting, String onlyWhenPressedSetting,
+                boolean singleValue, float defaultBrightness) {
+            super(brightnessSetting, singleValue, defaultBrightness);
+            mOnlyWhenPressedSetting = onlyWhenPressedSetting;
+        }
+
+        @Override
+        public void init(ViewGroup container) {
+            super.init(container);
+
+            mOnlyWhenPressedCheckBox =
+                    (CheckBox) container.findViewById(R.id.backlight_only_when_pressed_switch);
+            mOnlyWhenPressedCheckBox.setChecked(isOnlyWhenPressedEnabled());
+            mOnlyWhenPressedCheckBox.setOnCheckedChangeListener(this);
+        }
+
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            super.onCheckedChanged(buttonView, isChecked);
+            setOnlyWhenPressedEnabled(mOnlyWhenPressedCheckBox.isChecked());
+        }
+
+        public boolean isOnlyWhenPressedEnabled() {
+            return EVSettings.System.getInt(mResolver, mOnlyWhenPressedSetting, 0) == 1;
+        }
+
+        public void setOnlyWhenPressedEnabled(boolean enabled) {
+            EVSettings.System.putInt(mResolver, mOnlyWhenPressedSetting, enabled ? 1 : 0);
         }
     }
 }

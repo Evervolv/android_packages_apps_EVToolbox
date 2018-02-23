@@ -258,6 +258,7 @@
     <!-- Key backlight -->
     <string name="button_backlight_title">Backlight</string>
     <string name="button_backlight_enabled">Illuminate buttons</string>
+    <string name="button_backlight_only_when_pressed_title">Illuminate buttons only when pressed</string>
     <string name="button_backlight_seekbar_title">Button brightness</string>
     <string name="backlight_timeout_title">Illumination timeout</string>
     <string name="backlight_timeout_unlimited">Don\'t turn off</string>
