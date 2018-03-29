@@ -18,6 +18,7 @@ package com.evervolv.toolbox.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Rect;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.ColorInt;
@@ -27,6 +28,7 @@ import android.text.TextUtils;
 import android.text.style.TextAppearanceSpan;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.TouchDelegate;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
@@ -39,8 +41,7 @@ import com.evervolv.toolbox.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SwitchBar extends LinearLayout implements CompoundButton.OnCheckedChangeListener,
-        View.OnClickListener {
+public class SwitchBar extends LinearLayout implements CompoundButton.OnCheckedChangeListener {
 
     public static interface OnSwitchChangeListener {
         /**
@@ -116,8 +117,6 @@ public class SwitchBar extends LinearLayout implements CompoundButton.OnCheckedC
         addOnSwitchChangeListener(
                 (switchView, isChecked) -> setTextViewLabelAndBackground(isChecked));
 
-        setOnClickListener(this);
-
         // Default is hide
         setVisibility(View.GONE);
     }
@@ -179,6 +178,9 @@ public class SwitchBar extends LinearLayout implements CompoundButton.OnCheckedC
         if (!isShowing()) {
             setVisibility(View.VISIBLE);
             mSwitch.setOnCheckedChangeListener(this);
+            // Make the entire bar work as a switch
+            post(() -> setTouchDelegate(
+                    new TouchDelegate(new Rect(0, 0, getWidth(), getHeight()), mSwitch)));
         }
     }
 
@@ -194,9 +196,10 @@ public class SwitchBar extends LinearLayout implements CompoundButton.OnCheckedC
     }
 
     @Override
-    public void onClick(View v) {
-        final boolean isChecked = !mSwitch.isChecked();
-        setChecked(isChecked);
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        if ((w > 0) && (h > 0)) {
+            setTouchDelegate(new TouchDelegate(new Rect(0, 0, w, h), mSwitch));
+        }
     }
 
     public void propagateChecked(boolean isChecked) {
