@@ -29,6 +29,7 @@ import android.os.RemoteException;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.TypedValue;
+import android.view.IWindowManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -503,7 +504,8 @@ public class ExpandedDesktopSettings extends SettingsPreferenceFragment
             inflater = LayoutInflater.from(context);
 
             try {
-                hasNavigationBar = WindowManagerGlobal.getWindowManagerService().hasNavigationBar();
+                IWindowManager windowManager = WindowManagerGlobal.getWindowManagerService();
+                hasNavigationBar = windowManager.hasNavigationBar(context.getDisplayId());
             } catch (RemoteException e) {
                 // Do nothing
             }

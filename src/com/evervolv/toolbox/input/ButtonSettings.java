@@ -16,6 +16,8 @@
 
 package com.evervolv.toolbox.input;
 
+import static android.view.Display.DEFAULT_DISPLAY;
+
 import android.content.Context;
 import android.content.ContentResolver;
 import android.content.res.Resources;
@@ -181,24 +183,20 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
 
         final HardwareManager hardware = HardwareManager.getInstance(getActivity());
 
-        // Only visible on devices that does not have a navigation bar already,
-        // and don't even try unless the existing keys can be disabled
-        boolean needsNavigationBar = false;
-        if (hardware.isSupported(HardwareManager.FEATURE_KEY_DISABLE)) {
-            try {
-                IWindowManager wm = WindowManagerGlobal.getWindowManagerService();
-                needsNavigationBar = wm.needsNavigationBar();
-            } catch (RemoteException e) {
-            }
-
-            if (needsNavigationBar) {
-                prefScreen.removePreference(mDisableNavigationKeys);
-            } else {
-                // Remove keys that can be provided by the navbar
-                updateDisableNavkeysOption();
-                mNavigationPreferencesCat.setEnabled(mDisableNavigationKeys.isChecked());
-                updateDisableNavkeysCategories(mDisableNavigationKeys.isChecked());
-            }
+        // Only visible on devices that does not have a navigation bar already
+        boolean hasNavigationBar = true;
+        boolean supportsKeyDisabler = isKeyDisablerSupported(getActivity());
+        try {
+            IWindowManager windowManager = WindowManagerGlobal.getWindowManagerService();
+            hasNavigationBar = windowManager.hasNavigationBar(getActivity().getDisplayId());
+        } catch (RemoteException e) {
+            Log.e(TAG, "Error getting navigation bar status");
+        }
+        if (supportsKeyDisabler) {
+            // Remove keys that can be provided by the navbar
+            updateDisableNavkeysOption();
+            mNavigationPreferencesCat.setEnabled(mDisableNavigationKeys.isChecked());
+            updateDisableNavkeysCategories(mDisableNavigationKeys.isChecked());
         } else {
             prefScreen.removePreference(mDisableNavigationKeys);
         }
@@ -290,21 +288,10 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
             prefScreen.removePreference(volumeCategory);
         }
 
-        try {
-            // Only show the navigation bar category on devices that have a navigation bar
-            // unless we are forcing it
-            boolean forceNavbar = EVSettings.Global.getInt(getContentResolver(),
-                    EVSettings.Secure.DEV_FORCE_SHOW_NAVBAR, 0) == 1;
-            boolean hasNavBar = WindowManagerGlobal.getWindowManagerService().hasNavigationBar()
-                    || forceNavbar;
-
-            if (!hasNavBar && (needsNavigationBar ||
-                    !hardware.isSupported(HardwareManager.FEATURE_KEY_DISABLE))) {
-                    // Hide navigation bar category
-                    prefScreen.removePreference(mNavigationPreferencesCat);
-            }
-        } catch (RemoteException e) {
-            Log.e(TAG, "Error getting navigation bar status");
+        // Only show the navigation bar category on devices that have a navigation bar
+        // or support disabling the hardware keys
+        if (!hasNavigationBar && !supportsKeyDisabler) {
+            prefScreen.removePreference(mNavigationPreferencesCat);
         }
     }
 
@@ -411,9 +398,13 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
         }
     }
 
-    public static void restoreKeyDisabler(Context context) {
+    private static boolean isKeyDisablerSupported(Context context) {
         HardwareManager hardware = HardwareManager.getInstance(context);
-        if (!hardware.isSupported(HardwareManager.FEATURE_KEY_DISABLE)) {
+        return hardware.isSupported(HardwareManager.FEATURE_KEY_DISABLE);
+    }
+
+    public static void restoreKeyDisabler(Context context) {
+        if (!isKeyDisablerSupported(context)) {
             return;
         }
 

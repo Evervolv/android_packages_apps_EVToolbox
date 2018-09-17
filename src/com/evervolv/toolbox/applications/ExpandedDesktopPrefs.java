@@ -20,6 +20,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.provider.Settings;
+import android.view.IWindowManager;
 import android.view.WindowManagerGlobal;
 import android.view.WindowManagerPolicyControl;
 import androidx.preference.ListPreference;
@@ -56,7 +57,8 @@ public class ExpandedDesktopPrefs extends SettingsPreferenceFragment
 
         boolean hasNavigationBar = true;
         try {
-            hasNavigationBar = WindowManagerGlobal.getWindowManagerService().hasNavigationBar();
+            IWindowManager windowManager = WindowManagerGlobal.getWindowManagerService();
+            hasNavigationBar = windowManager.hasNavigationBar(getActivity().getDisplayId());
         } catch (RemoteException e) {
             // Do nothing
         }
