@@ -1,7 +1,14 @@
--keep public class com.evervolv.toolbox.fragments.*
--keep public class com.evervolv.toolbox.custom.*
+# Keep all Fragments in this package, which are used by reflection.
+-keep class com.evervolv.toolbox.*Fragment
+-keep class com.evervolv.toolbox.*Picker
+-keep class com.evervolv.toolbox.*Settings
 
--keep class android.support.v4.* { *; }
--keep class android.support.v4.*.* { *; }
--keep class android.support.v7.* { *; }
--keep class android.support.v7.*.* { *; }
+# Keep click responders
+-keepclassmembers class com.android.settings.inputmethod.UserDictionaryAddWordActivity {
+  *** onClick*(...);
+}
+
+-keep public class * extends android.support.v7.preference.* {
+    public <init>(android.content.Context, android.util.AttributeSet);
+}
+

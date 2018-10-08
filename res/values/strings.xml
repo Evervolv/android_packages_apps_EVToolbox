@@ -1,221 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
- * Copyright (C) 2013-2017 The Evervolv Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- -->
+	Copyright (C) 2015 The CyanogenMod Project
+	Copyright (C) 2017-2018 The LineageOS Project
 
+	Licensed under the Apache License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
+
+	http://www.apache.org/licenses/LICENSE-2.0
+
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
+-->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
-    <!-- App name, basic summary -->
-    <string name="app_name">Toolbox</string>
-    <string name="app_summary">Customize additional features</string>
+    <string name="toolbox_title">Evervolv Settings</string>
 
-    <!-- Generic Strings, multiple uses -->
-    <string name="apply">Apply</string>
+    <!-- Generic stuff used everywhere -->
+    <string name="loading">Loading\u2026</string>
+    <string name="dlg_ok">OK</string>
     <string name="cancel">Cancel</string>
-    <string name="flash">Flash</string>
-    <string name="later">Later</string>
-    <string name="reboot">Reboot</string>
-    <string name="reboot_required">Reboot required</string>
-    <string name="send">Send</string>
+    <string name="add">Add</string>
+    <string name="choose_app">Choose app</string>
+    <string name="reset">Reset</string>
+    <string name="advanced">Advanced</string>
+    <string name="settings">Settings</string>
+    <string name="name">Name</string>
+    <string name="back">Back</string>
+    <string name="finish">Finish</string>
+    <string name="next">Next</string>
+    <string name="on">On</string>
+    <string name="off">Off</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="search">Search</string>
+    <string name="disabled">Disabled</string>
+    <string name="enabled">Enabled</string>
 
-    <!-- Navigation drawer -->
-    <string name="drawer_open">Open navigation drawer</string>
-    <string name="drawer_close">Close navigation drawer</string>
-
-    <!-- Hardware -->
-    <string name="hardware_settings_title">Hardware</string>
-
-    <!-- Hardware >> Buttons -->
-    <string name="wake_key_category_title">Wakeup key</string>
-    <string name="assist_wake_toggle_title">Assist button wake</string>
-    <string name="assist_wake_toggle_summary">Assist button presses wake device</string>
-    <string name="app_switch_wake_toggle_title">App switch button wake</string>
-    <string name="app_switch_wake_toggle_summary">App switch button presses wake device</string>
-    <string name="back_wake_toggle_title">Back button wake</string>
-    <string name="back_wake_toggle_summary">Back button presses wake device</string>
-    <string name="home_wake_toggle_title">Home button wake</string>
-    <string name="home_wake_toggle_summary">Home button presses wake device</string>
-    <string name="menu_wake_toggle_title">Menu button wake</string>
-    <string name="menu_wake_toggle_summary">Menu button presses wake device</string>
-    <string name="volume_wake_toggle_title">Volume button wake</string>
-    <string name="volume_wake_toggle_summary">Volume button presses wake device</string>
-    <string name="music_controls_category_title">Music controls</string>
-    <string name="lockscreen_music_controls_volbtn_title">Volume music control</string>
-    <string name="lockscreen_music_controls_volbtn_summary">Long press up to skip; down for previous</string>
-
-    <!-- Interface -->
-    <string name="interface_settings_title">Interface</string>
-
-    <!-- Interface >> Navigation Bar -->
-    <string name="navigation_category_title">Navigation Bar</string>
-    <string name="navbar_show_title">Show the navigation bar</string>
-    <string name="navbar_animation_title">Use pixel animation</string>
-
-    <!-- Interface >> Rotation -->
-    <string name="rotation_category_title">Rotation</string>
-    <string name="rotation_0_title">0 degrees</string>
-    <string name="rotation_90_title">90 degrees</string>
-    <string name="rotation_180_title">180 degrees</string>
-    <string name="rotation_270_title">270 degrees</string>
-
-    <!-- Interface >> Power Menu -->
-    <string name="power_menu_category_title">Power menu</string>
-    <string name="power_menu_hide_screenshot_title">Hide screenshot option</string>
-    <string name="power_menu_hide_sound_title">Hide sound options</string>
-    <string name="power_menu_hide_airplane_mode_title">Hide airplane mode</string>
-    <string name="power_menu_hide_reboot_menu_title">Hide reboot menu</string>
-    <string name="power_menu_screenshot_delay_title">Set screenshot delay</string>
-
-    <!-- Performance -->
-    <string name="performance_settings_title">Performance</string>
-    <string name="perf_advanced_settings_title">Advanced</string>
-
-    <!-- Performance >> Kernel -->
-    <string name="perf_advanced_category_title">Advanced</string>
-    <string name="perf_kernel_title">Kernel tuner</string>
-    <string name="perf_kernel_summary">Adjust some features found in the kernel</string>
-    <string name="memory_category_title">Memory</string>
-    <string name="ksm_title">Kernel samepage merging</string>
-    <string name="ksm_summary">Ksm reduces physical memory requirements and improves performance</string>
-    <string name="io_sched_title">I/O scheduler</string>
-    <string name="io_sched_summary">%S</string>
-
-    <string name="cpu_category_title">Cpu</string>
-    <string name="cpu_governors_title">CPU governor</string>
-    <string name="cpu_governors_summary">%S</string>
-    <string name="cpu_cur_freq_title">Current CPU frequency</string>
-    <string name="cpu_min_freq_title">Minimum CPU frequency</string>
-    <string name="cpu_min_freq_summary">%s</string>
-    <string name="cpu_max_freq_title">Maximum CPU frequency</string>
-    <string name="cpu_max_freq_summary">%s</string>
-    <string name="cpu_set_on_boot">Set on boot</string>
-    <string name="cpu_set_on_boot_summary">Restore the processor settings on boot</string>
-
-    <!-- Performance >> Profiles -->
-    <string name="perf_profile_category_title">Performance Profiles</string>
-    <string name="perf_profile_settings_summary">Adjust power saving features and device performance</string>
-    <string name="perf_profile_overview_summary">Current profile: <xliff:g id="perf_profile_name">%1$s</xliff:g></string>
-    <string name="perf_profile_title">Performance profile: <xliff:g id="perf_profile_name">%1$s</xliff:g></string>
-    <string name="perf_profile_fail_toast">The performance profile is currently unavailable</string>
-    <string name="power_save_category_title">Battery saving</string>
-    <string name="power_save_title">Extreme power saver</string>
-    <string name="power_save_summary">Restrict device performance and background activity to save power</string>
-    <string name="auto_power_save_title">Automatic power saver</string>
-    <string name="auto_power_save_summary_on">Automatically enable power save mode at %s battery</string>
-    <string name="auto_power_save_summary_off">Do not enable power save mode automatically</string>
-    <string name="app_perf_profiles_title">Automatic optimization</string>
-    <string name="app_perf_profiles_summary">Automatically choose an appropriate performance profile for applications and usage patterns</string>
-    <string name="auto_power_save_never">Never</string>
-
-    <!-- Statusbar -->
-    <string name="statusbar_settings_title">Statusbar</string>
-
-    <!-- Statusbar >> Notification count -->
-    <string name="status_bar_notif_count_title">Show notification count</string>
-    <string name="status_bar_notif_count_summary">Display the number of pending notifications</string>
-
-    <!-- Statusbar >> Battery -->
-    <string name="battery_category_title">Battery</string>
-    <string name="battery_icon_title">Battery icon style</string>
-    <string name="battery_icon_summary">Change the battery icon in the statusbar</string>
-    <string name="battery_icon_portrait">Portrait</string>
-    <string name="battery_icon_landscape">Landscape</string>
-    <string name="battery_icon_circle">Circle</string>
-    <string name="battery_icon_solid_circle">Solid Circle</string>
-    <string name="battery_icon_text">Text</string>
-    <string name="battery_icon_hidden">Hidden</string>
-    <string name="battery_tile_style_title">Battery tile style</string>
-    <string name="battery_tile_style_summary">Change the battery icon in quick settings</string>
-    <string name="battery_icon_percent_title">Battery percent style</string>
-    <string name="battery_icon_percent_summary">Choose how to display battery percentage</string>
-    <string name="battery_icon_percent_hidden">Hidden</string>
-    <string name="battery_icon_percent_inside">Inside</string>
-    <string name="battery_icon_percent_outside">Outside</string>
-    <string name="battery_show_charging_percent_title">Display percentage while charging</string>
-    <string name="battery_show_charging_percent_summary">Show battery percent next to the icon while charging</string>
-    <string name="battery_charging_symbol_title">Display a charging symbol</string>
-    <string name="battery_charging_symbol_summary">Choose a charging symbol to display next the percentage</string>
-    <string name="battery_charging_symbol_dialog">Available charging symbols</string>
-    <string name="battery_charging_symbol_default">Disabled</string>
-    <string name="battery_charging_symbol_flash">Flash</string>
-    <string name="battery_charging_symbol_tilde">Tilde</string>
-    <string name="battery_pulse_charging_title">Pulse battery icon when charging</string>
-    <string name="battery_pulse_charging_summary_off">Only solid battery style will have pulsing icon</string>
-    <string name="battery_pulse_charging_summary_on">All battery styles will show pulsing animation</string>
-
-    <!-- Statusbar >> Clock -->
-    <string name="clock_category_title">Clock</string>
-    <string name="clock_am_pm_style_title">AM/PM style</string>
-    <string name="clock_am_pm_style_summary">Set the AM/PM style</string>
-    <string name="clock_am_pm_style_normal">Normal</string>
-    <string name="clock_am_pm_style_small">Small</string>
-    <string name="clock_am_pm_style_gone">Hidden</string>
-
-    <!-- Statusbar >> Quick Settings -->
-    <string name="quick_settings_category_title">Quick Settings</string>
-    <string name="qs_quick_pulldown_title">Quick Pulldown</string>
-    <string name="qs_quick_pulldown_summary">Expand Quick Settings in a single swipe</string>
-
-    <!-- System -->
-    <string name="system_settings_title">System</string>
-
-    <!-- System >> Network -->
-    <string name="networking_category_title">Network</string>
-    <string name="system_hostname_title">Device Hostname</string>
-    <string name="system_sshd_title">Enable sshd</string>
-    <string name="system_sshd_summary">Allow remote connections over ssh</string>
-
-    <!-- System >> App Disabler -->
-    <string name="applications_category_title">Applications</string>
-    <string name="system_disable_apps_title">Disable system apps</string>
-    <string name="system_disable_apps_summary">Show or hide apps from the system</string>
-    <string name="system_disable_apps_notice"><b><i>Notice:</i></b> These are a list of apps that we have white listed and should not cause issues when disabled. This <b><i>does not</i></b> remove them, it only disables the packages and can be re-enabled when necessary.</string>
-    <string name="system_disable_apps_dialog_message">An alternate replacement is needed. In order to disable this app and keep critical functionality, install a replacement and try again</string>
-
-    <!-- Support -->
-    <string name="settings_title">Utilities</string>
-
-    <!-- Support >> Settings -->
-    <string name="settings_category_title">Settings</string>
-    <string name="settings_aosp_mode_title">AOSP Mode</string>
-    <string name="settings_aosp_mode_summary">This will disable all toolbox features</string>
-    <string name="settings_bugreport_title">Bug Report</string>
-    <string name="settings_bugreport_summary">Log and send reports to our dev team</string>
-
-    <!-- Support >> Bugreport -->
-    <string name="bugreport_message">Choose which buffer(s) you would like to fetch.\nOnce finished, upload and grab url to give to your maintainer!</string>
-    <string name="bugreport_generated_log_url">Generated log url:</string>
-    <string name="bugreport_toast_ready">Ready to upload</string>
-    <string name="bugreport_toast_supply_option">Error: Please supply a logging option</string>
-    <string name="bugreport_toast_url_copied">Copied url to clipboard</string>
-    <string name="bugreport_toast_please_wait">Please wait while we fetch the logs</string>
-    <string name="bugreport_fetch_button">Fetch logs</string>
-    <string name="bugreport_fetching_button">Fetching...</string>
-    <string name="bugreport_upload_button">Upload logs</string>
-    <string name="bugreport_uploading_button">Uploading...</string>
-    <string name="log_options">Log options</string>
-    <string name="general_logcat">General logcat</string>
-    <string name="complete_log">Complete Logs</string>
-    <string name="copy_url">Copy URL</string>
-    <string name="open_url">Open URL</string>
-    <string name="log_url_label">Log URL</string>
-    <string name="logcat_toast_start">Uploading Logcat</string>
-    <string name="logcat_toast_upload_failed">Uploading logcat failed</string>
-    <string name="logcat_post_author">EVLogcat Uploader</string>
-    <string name="logcat_post_title">Logcat: %1$s</string>
-    <string name="logcat_notification_title">Logcat Uploaded</string>
-
+    <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
+    <string name="summary_empty" translatable="false"></string>
 </resources>

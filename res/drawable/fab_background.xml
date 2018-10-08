@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2008 The Android Open Source Project
+<!-- Copyright (C) 2015 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -13,17 +13,11 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-
-<resources>
-    <attr name="switchBarTheme" format="reference" />
-    <attr name="switchBarMarginStart" format="dimension" />
-    <attr name="switchBarMarginEnd" format="dimension" />
-    <attr name="switchBarBackgroundColor" format="color" />
-
-    <attr name="preferenceBackgroundColor" format="color" />
-
-    <declare-styleable name="DividerPreference">
-        <attr name="allowDividerAbove" format="boolean" />
-        <attr name="allowDividerBelow" format="boolean" />
-    </declare-styleable>
-</resources>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+        android:color="@color/fab_ripple">
+    <item>
+        <shape>
+            <solid android:color="@color/fab_shape" />
+        </shape>
+    </item>
+</ripple>

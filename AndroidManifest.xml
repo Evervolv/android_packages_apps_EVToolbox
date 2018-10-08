@@ -1,95 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+/**
+ * Copyright 2016, The CyanogenMod Project
+ * Copyright 2017-2018, The LineageOS Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+-->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:androidprv="http://schemas.android.com/apk/prv/res/android"
     package="com.evervolv.toolbox"
-    android:sharedUserId="android.uid.system"
-    android:versionCode="202"
-    android:versionName="2.2"
-    coreApp="true"
-    >
+    android:versionName="3.0"
+    android:versionCode="300"
+    android:sharedUserId="android.uid.system">
 
-    <uses-sdk android:minSdkVersion="23" android:targetSdkVersion="23" />
+    <uses-sdk android:minSdkVersion="24" />
 
+    <uses-permission android:name="android.permission.WRITE_MEDIA_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
-    <uses-permission android:name="android.permission.WRITE_MEDIA_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.HARDWARE_TEST" />
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+    <uses-permission android:name="android.permission.DEVICE_POWER" />
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
+    <uses-permission android:name="android.permission.BIND_DEVICE_ADMIN" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.REBOOT" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_SEARCH_INDEXABLES" />
 
-    <application
-        android:icon="@mipmap/ic_toolbox"
-        android:label="@string/app_name"
-        android:hardwareAccelerated="true"
-        android:directBootAware="true">
+    <uses-permission android:name="evervolv.permission.MANAGE_REMOTE_PREFERENCES" />
 
-        <activity
-            android:name=".Toolbox"
-            android:icon="@drawable/ic_settings_toolbox"
-            android:theme="@style/Theme.EVToolbox"
-            android:label="@string/app_name">
+    <protected-broadcast android:name="com.evervolv.toolbox.PART_CHANGED" />
+    <protected-broadcast android:name="com.evervolv.toolbox.REFRESH_PART" />
+
+    <application android:label="@string/toolbox_title"
+            android:icon="@mipmap/ic_launcher"
+            android:theme="@style/Theme.Settings"
+            android:hardwareAccelerated="true"
+            android:supportsRtl="true"
+            android:defaultToDeviceProtectedStorage="true"
+            android:directBootAware="true">
+
+        <activity android:name=".PartsActivity"
+                android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
-                <action android:name="com.android.settings.action.EXTRA_SETTINGS" />
+                <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-            <meta-data android:name="com.android.settings.category"
-                    android:value="com.android.settings.category.evervolv" />
-            <meta-data android:name="com.android.settings.summary"
-                android:resource="@string/app_summary" />
+            <meta-data
+                android:name="com.evervolv.settings.summary.receiver"
+                android:value="com.evervolv.toolbox.PartsUpdater" />
         </activity>
 
-        <activity-alias android:name=".perf.KernelTuner"
-                  android:targetActivity=".Toolbox"
-                  android:icon="@drawable/ic_settings_toolbox"
-                  android:theme="@style/Theme.EVToolbox"
-                  android:label="@string/perf_kernel_title"
-                  android:process=":toolbox"
-                  android:exported="true">
-            <intent-filter>
-                <action android:name="com.evervolv.toolbox.action.KERNEL_TUNER" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity-alias>
-
-        <activity-alias android:name=".support.BugReport"
-                  android:targetActivity=".Toolbox"
-                  android:icon="@drawable/ic_settings_toolbox"
-                  android:theme="@style/Theme.EVToolbox"
-                  android:label="@string/settings_bugreport_title"
-                  android:process=":toolbox"
-                  android:exported="true">
-            <intent-filter>
-                <action android:name="com.evervolv.toolbox.action.BUGREPORT" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity-alias>
-
-        <activity-alias android:name=".system.ApplicationManager"
-                  android:targetActivity=".Toolbox"
-                  android:icon="@drawable/ic_settings_toolbox"
-                  android:theme="@style/Theme.EVToolbox"
-                  android:label="@string/system_disable_apps_title"
-                  android:process=":toolbox"
-                  android:exported="true">
-            <intent-filter>
-                <action android:name="com.evervolv.toolbox.action.APP_MANAGER" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity-alias>
-
-        <receiver android:name=".receivers.BootReceiver">
-            <intent-filter>
+        <receiver android:name=".BootReceiver" android:enabled="true">
+            <intent-filter android:priority="2147483647">
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <category android:name="android.intent.category.HOME"/>
             </intent-filter>
         </receiver>
 
-        <service android:name=".support.UploadService"
-                 android:process=":UploadService">
-        </service>
+        <receiver android:name=".PartsUpdater" android:enabled="true">
+            <intent-filter>
+                <action android:name="evervolv.intent.action.UPDATE_PREFERENCE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+
+        <provider android:name=".search.PartsSearchIndexablesProvider"
+                  android:authorities="com.evervolv.toolbox"
+                  android:multiprocess="false"
+                  android:grantUriPermissions="true"
+                  android:permission="android.permission.READ_SEARCH_INDEXABLES"
+                  android:exported="true">
+            <intent-filter>
+                <action android:name="android.content.action.SEARCH_INDEXABLES_PROVIDER" />
+            </intent-filter>
+        </provider>
 
     </application>
-
 </manifest>
