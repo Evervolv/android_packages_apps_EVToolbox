@@ -15,6 +15,8 @@
  */
 package com.evervolv.toolbox.style;
 
+import static android.Manifest.permission.CHANGE_OVERLAY_PACKAGES;
+
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -45,17 +47,17 @@ import com.evervolv.toolbox.style.util.AccentAdapter;
 import com.evervolv.toolbox.style.util.AccentUtils;
 import com.evervolv.toolbox.style.util.UIUtils;
 
-import java.util.Arrays;
-import java.util.List;
-
 import evervolv.provider.EVSettings;
 import evervolv.style.StyleInterface;
 import evervolv.style.Suggestion;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class StylePreferences extends SettingsPreferenceFragment {
     private static final String TAG = "StylePreferences";
     private static final String CHANGE_STYLE_PERMISSION =
-            evervolv.platform.Manifest.permission.CHANGE_STYLE;
+            CHANGE_OVERLAY_PACKAGES;
     private static final int REQUEST_CHANGE_STYLE = 68;
 
     private Preference mStylePref;
