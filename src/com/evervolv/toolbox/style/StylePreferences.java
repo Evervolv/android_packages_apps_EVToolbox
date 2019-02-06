@@ -47,7 +47,6 @@ import com.evervolv.toolbox.style.util.AccentAdapter;
 import com.evervolv.toolbox.style.util.AccentUtils;
 import com.evervolv.toolbox.style.util.UIUtils;
 
-import evervolv.provider.EVSettings;
 import evervolv.style.StyleInterface;
 import evervolv.style.Suggestion;
 
@@ -81,18 +80,26 @@ public class StylePreferences extends SettingsPreferenceFragment {
 
         addPreferencesFromResource(R.xml.style_preferences);
 
-        mStylePref = findPreference("berry_global_style");
-        mStylePref.setOnPreferenceChangeListener(this::onStyleChange);
-        setupStylePref();
+        int style = mInterface.getGlobalStyle();
+        setStyleStatus(style);
 
+        mStylePref = findPreference("style_global");
+        mStylePref.setOnPreferenceChangeListener(this::onStyleChange);
+        setStyleIcon(style);
+
+        String accent = mInterface.getAccent();
         mAccents = AccentUtils.getAccents(getContext(), mStyleStatus);
         mAccentPref = findPreference("style_accent");
         mAccentPref.setOnPreferenceClickListener(this::onAccentClick);
-        setupAccentPref();
+        try {
+            updateAccentPref(AccentUtils.getAccent(getContext(), accent));
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e(TAG, accent + ": package not found.");
+        }
 
-        mDarkPref = findPreference("berry_dark_overlay");
+        mDarkPref = findPreference("style_dark_overlay");
         mDarkPref.setOnPreferenceChangeListener(this::onDarkChange);
-        setDarkStyleEnabled(mInterface.getGlobalStyle());
+        setDarkStyleEnabled(style);
 
         Preference automagic = findPreference("style_automagic");
         automagic.setOnPreferenceClickListener(p -> onAutomagicClick());
@@ -126,20 +133,7 @@ public class StylePreferences extends SettingsPreferenceFragment {
         return true;
     }
 
-    private void setupAccentPref() {
-        String currentAccent = EVSettings.System.getString(getContext().getContentResolver(),
-                EVSettings.System.BERRY_CURRENT_ACCENT);
-        try {
-            updateAccentPref(AccentUtils.getAccent(getContext(), currentAccent));
-        } catch (PackageManager.NameNotFoundException e) {
-            Log.e(TAG, currentAccent + ": package not found.");
-        }
-    }
-
     private void onAccentSelected(Accent accent) {
-        String previousAccent = EVSettings.System.getString(getContext().getContentResolver(),
-                EVSettings.System.BERRY_CURRENT_ACCENT);
-
         mInterface.setAccent(accent.getPackageName());
         updateAccentPref(accent);
     }
@@ -215,41 +209,6 @@ public class StylePreferences extends SettingsPreferenceFragment {
         }
     }
 
-    private void setupStylePref() {
-        int preference = EVSettings.System.getInt(getContext().getContentResolver(),
-                EVSettings.System.BERRY_GLOBAL_STYLE,
-                StyleInterface.STYLE_GLOBAL_AUTO_WALLPAPER);
-        String handlerPackage = EVSettings.System.getString(getContext().getContentResolver(),
-                EVSettings.System.BERRY_MANAGED_BY_APP);
-
-        setStyleStatus(preference);
-
-        if (TextUtils.isEmpty(handlerPackage) ||
-                getContext().getPackageName().equals(handlerPackage)) {
-            setStyleIcon(preference);
-        } else {
-            setupStylePrefForApp(handlerPackage);
-        }
-    }
-
-    private void setupStylePrefForApp(String packageName) {
-        try {
-            PackageManager pm = getContext().getPackageManager();
-            String name = pm.getApplicationLabel(pm.getApplicationInfo(packageName, 0)).toString();
-            Drawable icon = pm.getApplicationIcon(packageName);
-
-            mStylePref.setIcon(icon);
-            mStylePref.setSummary(getString(R.string.style_global_entry_app, name));
-        } catch (PackageManager.NameNotFoundException e) {
-            recoverStyleFromBadPackage();
-        }
-    }
-
-    private void recoverStyleFromBadPackage() {
-        // The package that was handling the styles is no longer available, reset to default
-        onStyleChange(mStylePref, StyleInterface.STYLE_GLOBAL_AUTO_WALLPAPER);
-    }
-
     private void applyStyle(Suggestion suggestion) {
         onStyleChange(mStylePref, suggestion.globalStyle);
         onAccentSelected(mAccents.get(suggestion.selectedAccent));
@@ -283,8 +242,8 @@ public class StylePreferences extends SettingsPreferenceFragment {
         new Handler().postDelayed(() -> mInterface.setGlobalStyle(value, mPackageName), 500);
 
         setStyleStatus(value);
-        setDarkStyleEnabled(value);
         setStyleIcon(value);
+        setDarkStyleEnabled(value);
 
         return true;
     }
@@ -314,8 +273,7 @@ public class StylePreferences extends SettingsPreferenceFragment {
     }
 
     private boolean checkAccentCompatibility(int value) {
-        String currentAccentPkg = EVSettings.System.getString(
-                getContext().getContentResolver(), EVSettings.System.BERRY_CURRENT_ACCENT);
+        String currentAccentPkg = mInterface.getAccent();
         StyleStatus supportedStatus;
         try {
             supportedStatus = AccentUtils.getAccent(getContext(), currentAccentPkg)
