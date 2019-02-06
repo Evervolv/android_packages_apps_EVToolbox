@@ -45,6 +45,7 @@ public class PowerMenuActions extends SettingsPreferenceFragment {
     private CheckBoxPreference mUsersPref;
     private CheckBoxPreference mBugReportPref;
     private CheckBoxPreference mLockDownPref;
+    private CheckBoxPreference mEmergencyPref;
 
     Context mContext;
     private ArrayList<String> mLocalUserConfig = new ArrayList<String>();
@@ -70,6 +71,8 @@ public class PowerMenuActions extends SettingsPreferenceFragment {
                 mBugReportPref = (CheckBoxPreference) findPreference(GLOBAL_ACTION_KEY_BUGREPORT);
             } else if (action.equals(GLOBAL_ACTION_KEY_LOCKDOWN)) {
                 mLockDownPref = (CheckBoxPreference) findPreference(GLOBAL_ACTION_KEY_LOCKDOWN);
+            } else if (action.equals(GLOBAL_ACTION_KEY_EMERGENCY)) {
+                mEmergencyPref = (CheckBoxPreference) findPreference(GLOBAL_ACTION_KEY_EMERGENCY);
             }
         }
 
@@ -139,6 +142,10 @@ public class PowerMenuActions extends SettingsPreferenceFragment {
             updateUserConfig(value, GLOBAL_ACTION_KEY_LOCKDOWN);
             Settings.Secure.putInt(getContentResolver(),
                     Settings.Secure.LOCKDOWN_IN_POWER_MENU, value ? 1 : 0);
+
+        } else if (preference == mBugReportPref) {
+            value = mEmergencyPref.isChecked();
+            updateUserConfig(value, GLOBAL_ACTION_KEY_EMERGENCY);
 
         } else {
             return super.onPreferenceTreeClick(preference);

@@ -95,6 +95,7 @@
     <string name="power_menu_bug_report_title">Bug report</string>
     <string name="power_menu_bug_report_disabled">Bug reporting is disabled in development settings</string>
     <string name="power_menu_lockdown_title">Lockdown</string>
+    <string name="power_menu_emergency_title">Emergency</string>
 
     <!-- Applications: Long screen -->
     <string name="long_screen_settings_title">Full screen apps</string>
