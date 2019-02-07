@@ -201,14 +201,8 @@ public class StylePreferences extends SettingsPreferenceFragment {
                 .show();
     }
 
-    private void setupStylePref() {
-        int preference = EVSettings.System.getInt(getContext().getContentResolver(),
-                EVSettings.System.BERRY_GLOBAL_STYLE,
-                StyleInterface.STYLE_GLOBAL_AUTO_WALLPAPER);
-        String handlerPackage = EVSettings.System.getString(getContext().getContentResolver(),
-                EVSettings.System.BERRY_MANAGED_BY_APP);
-
-        switch (preference) {
+    private void setStyleStatus(int value) {
+        switch (value) {
             case StyleInterface.STYLE_GLOBAL_LIGHT:
                 mStyleStatus = StyleStatus.LIGHT_ONLY;
                 break;
@@ -219,6 +213,16 @@ public class StylePreferences extends SettingsPreferenceFragment {
                 mStyleStatus = StyleStatus.DYNAMIC;
                 break;
         }
+    }
+
+    private void setupStylePref() {
+        int preference = EVSettings.System.getInt(getContext().getContentResolver(),
+                EVSettings.System.BERRY_GLOBAL_STYLE,
+                StyleInterface.STYLE_GLOBAL_AUTO_WALLPAPER);
+        String handlerPackage = EVSettings.System.getString(getContext().getContentResolver(),
+                EVSettings.System.BERRY_MANAGED_BY_APP);
+
+        setStyleStatus(preference);
 
         if (TextUtils.isEmpty(handlerPackage) ||
                 getContext().getPackageName().equals(handlerPackage)) {
@@ -278,6 +282,7 @@ public class StylePreferences extends SettingsPreferenceFragment {
         // selection dialog to be dismissed gracefully
         new Handler().postDelayed(() -> mInterface.setGlobalStyle(value, mPackageName), 500);
 
+        setStyleStatus(value);
         setDarkStyleEnabled(value);
         setStyleIcon(value);
 
