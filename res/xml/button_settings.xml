@@ -206,6 +206,11 @@
             android:title="@string/volume_panel_on_left_title"
             android:summary="@string/volume_panel_on_left_summary" />
 
+        <SwitchPreference
+            android:key="volume_panel_expandable"
+            android:title="@string/volume_panel_expandable_title"
+            android:summary="@string/volume_panel_expandable_summary" />
+
     </PreferenceCategory>
 
     <PreferenceCategory

@@ -59,6 +59,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
     private static final String KEY_APP_SWITCH_PRESS = "button_app_switch_press";
     private static final String KEY_APP_SWITCH_LONG_PRESS = "button_app_switch_long_press";
     private static final String KEY_VOLUME_PANEL_ON_LEFT = "volume_panel_on_left";
+    private static final String VOLUME_PANEL_EXPANDABLE = "volume_panel_expandable";
 
     private static final String DISABLE_NAV_KEYS = "disable_nav_keys";
 
@@ -81,6 +82,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
     private ListPreference mAppSwitchLongPressAction;
 
     private SwitchPreference mVolumePanelOnLeft;
+    private SwitchPreference mVolumePanelExpandable;
 
     private SwitchPreference mDisableNavigationKeys;
     private Handler mHandler;
@@ -281,6 +283,14 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
             if (mVolumePanelOnLeft != null) {
                 mVolumePanelOnLeft.setChecked(volumePanelOnLeft);
             }
+
+            final boolean volumePanelExpandable = EVSettings.Secure.getInt(
+                    getContentResolver(), EVSettings.Secure.VOLUME_PANEL_EXPANDABLE, 0) != 0;
+            mVolumePanelExpandable = (SwitchPreference)
+                    prefScreen.findPreference(VOLUME_PANEL_EXPANDABLE);
+            if (mVolumePanelExpandable != null) {
+                mVolumePanelExpandable.setChecked(volumePanelExpandable);
+            }
         } else {
             prefScreen.removePreference(volumeCategory);
         }
@@ -430,6 +440,10 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
         if (preference == mVolumePanelOnLeft) {
             EVSettings.Secure.putInt(getActivity().getContentResolver(),
                     EVSettings.Secure.VOLUME_PANEL_ON_LEFT, mVolumePanelOnLeft.isChecked() ? 1 : 0);
+            return true;
+        } else if (preference == mVolumePanelExpandable) {
+            EVSettings.Secure.putInt(getActivity().getContentResolver(),
+                    EVSettings.Secure.VOLUME_PANEL_EXPANDABLE, mVolumePanelExpandable.isChecked() ? 1 : 0);
             return true;
         } else if (preference == mDisableNavigationKeys) {
             mDisableNavigationKeys.setEnabled(false);
