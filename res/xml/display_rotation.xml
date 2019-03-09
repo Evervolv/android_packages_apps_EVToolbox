@@ -15,10 +15,9 @@
 -->
 
 <PreferenceScreen
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:evervolv="http://schemas.android.com/apk/res/evervolv.platform"
-        android:key="rotation"
-        android:title="@string/display_rotation_title">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="rotation"
+    android:title="@string/display_rotation_title">
 
     <SwitchPreference
         android:key="accelerometer"
