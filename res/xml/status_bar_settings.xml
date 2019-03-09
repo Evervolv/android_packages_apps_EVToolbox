@@ -64,7 +64,8 @@
             android:dialogTitle="@string/status_bar_battery_percentage_title"
             android:entries="@array/status_bar_battery_percentage_entries"
             android:entryValues="@array/status_bar_battery_percentage_values"
-            android:defaultValue="0" />
+            android:defaultValue="0"
+            evervolv:requiresConfig="@*android:bool/config_battery_percentage_setting_available" />
 
     </PreferenceCategory>
 
