@@ -151,8 +151,8 @@
 
     <string-array name="status_bar_battery_percentage_values" translatable="false">
         <item>0</item>
-        <item>1</item>
         <item>2</item>
+        <item>1</item>
     </string-array>
 
     <!-- Battery meter style -->
