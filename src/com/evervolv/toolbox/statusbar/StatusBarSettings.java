@@ -18,6 +18,8 @@ package com.evervolv.toolbox.statusbar;
 
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.v14.preference.SwitchPreference;
+import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceCategory;
 import android.support.v7.preference.PreferenceScreen;
@@ -26,8 +28,9 @@ import android.text.format.DateFormat;
 import android.text.TextUtils;
 import android.view.View;
 
-import evervolv.preference.EVSystemSettingListPreference;
+import evervolv.provider.EVSettings;
 
+import com.android.settingslib.graph.BatteryMeterDrawableBase;
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.SettingsPreferenceFragment;
 
@@ -35,21 +38,50 @@ public class StatusBarSettings extends SettingsPreferenceFragment
         implements OnPreferenceChangeListener {
 
     private static final String STATUS_BAR_QUICK_QS_PULLDOWN = "qs_quick_pulldown";
+    private static final String STATUS_BAR_LTE_ICON = "show_lte_fourgee";
+    private static final String STATUS_BAR_BATTERY_STYLE = "status_bar_battery_style";
+    private static final String SHOW_BATTERY_PERCENT = "status_bar_show_battery_percent";
 
     private static final int PULLDOWN_DIR_NONE = 0;
     private static final int PULLDOWN_DIR_RIGHT = 1;
     private static final int PULLDOWN_DIR_LEFT = 2;
 
-    private EVSystemSettingListPreference mQuickPulldown;
+    private ListPreference mQuickPulldown;
+    private ListPreference mBatteryStyleIcon;
+    private ListPreference mBatteryShowPercent;
+    private SwitchPreference mShowLteIcon;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.status_bar_settings);
 
-        mQuickPulldown = (EVSystemSettingListPreference) findPreference(STATUS_BAR_QUICK_QS_PULLDOWN);
+        int qsPullDown = EVSettings.System.getInt(getContext().getContentResolver(),
+                EVSettings.System.STATUS_BAR_QUICK_QS_PULLDOWN, 0);
+        mQuickPulldown = (ListPreference) findPreference(STATUS_BAR_QUICK_QS_PULLDOWN);
+        mQuickPulldown.setValue(String.valueOf(qsPullDown));
+        updateQuickPulldownSummary(qsPullDown);
         mQuickPulldown.setOnPreferenceChangeListener(this);
-        updateQuickPulldownSummary(mQuickPulldown.getIntValue(0));
+
+        int showLteIcon = Settings.System.getInt(getContext().getContentResolver(),
+                Settings.System.SHOW_LTE_FOURGEE, 0);
+        mShowLteIcon = (SwitchPreference) findPreference(STATUS_BAR_LTE_ICON);
+        mShowLteIcon.setChecked(showLteIcon == 1);
+        mShowLteIcon.setOnPreferenceChangeListener(this);
+
+        int batteryStyle = EVSettings.System.getInt(getContext().getContentResolver(),
+                EVSettings.System.STATUS_BAR_BATTERY_STYLE, 0);
+        mBatteryStyleIcon = (ListPreference) findPreference(STATUS_BAR_BATTERY_STYLE);
+        mBatteryStyleIcon.setValue(String.valueOf(batteryStyle));
+        mBatteryStyleIcon.setSummary(mBatteryStyleIcon.getEntry());
+        mBatteryStyleIcon.setOnPreferenceChangeListener(this);
+
+        int batteryPct = Settings.System.getInt(getContext().getContentResolver(),
+                Settings.System.SHOW_BATTERY_PERCENT, 0);
+        mBatteryShowPercent = (ListPreference) findPreference(SHOW_BATTERY_PERCENT);
+        mBatteryShowPercent.setValue(String.valueOf(batteryPct));
+        mBatteryShowPercent.setSummary(mBatteryShowPercent.getEntry());
+        mBatteryShowPercent.setOnPreferenceChangeListener(this);
     }
 
     @Override
@@ -65,11 +97,43 @@ public class StatusBarSettings extends SettingsPreferenceFragment
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        int value = Integer.parseInt((String) newValue);
         if (preference == mQuickPulldown) {
+            int value = Integer.parseInt((String) newValue);
+            EVSettings.System.putInt(getContext().getContentResolver(),
+                    EVSettings.System.STATUS_BAR_QUICK_QS_PULLDOWN, value);
             updateQuickPulldownSummary(value);
+            return true;
         }
-        return true;
+        if (preference == mShowLteIcon) {
+            boolean value = (Boolean) newValue;
+            Settings.System.putInt(getContext().getContentResolver(),
+                    Settings.System.SHOW_LTE_FOURGEE, value ? 1 : 0);
+            return true;
+        }
+        if (preference == mBatteryStyleIcon) {
+            int value = Integer.parseInt((String) newValue);
+            EVSettings.System.putInt(getContext().getContentResolver(),
+                    EVSettings.System.STATUS_BAR_BATTERY_STYLE, value);
+            int index = mBatteryStyleIcon.findIndexOfValue((String) newValue);
+            mBatteryStyleIcon.setSummary(mBatteryStyleIcon.getEntries()[index]);
+            enableStatusBarBatteryDependents(value);
+            return true;
+        }
+        if (preference == mBatteryShowPercent) {
+            int value = Integer.parseInt((String) newValue);
+            Settings.System.putInt(getContext().getContentResolver(),
+                    Settings.System.SHOW_BATTERY_PERCENT, value);
+            int index = mBatteryShowPercent.findIndexOfValue((String) newValue);
+            mBatteryShowPercent.setSummary(mBatteryShowPercent.getEntries()[index]);
+            return true;
+        }
+        return false;
+    }
+
+    private void enableStatusBarBatteryDependents(int iconStyle) {
+        mBatteryShowPercent.setEnabled(
+                iconStyle != BatteryMeterDrawableBase.BATTERY_STYLE_HIDDEN
+                && iconStyle != BatteryMeterDrawableBase.BATTERY_STYLE_TEXT);
     }
 
     private void updateQuickPulldownSummary(int value) {
