@@ -171,10 +171,6 @@
     <string name="status_bar_battery_percentage_text_inside">Inside the icon</string>
     <string name="status_bar_battery_percentage_text_next">Next to the icon</string>
 
-    <!-- Show LTE/4G switch -->
-    <string name="show_lte_fourgee_title">4G/LTE network icon</string>
-    <string name="show_lte_fourgee_summary">Display the 4G or LTE network icon when available in the statusbar</string>
-
     <!-- Gestures: Touchscreen gestures -->
     <string name="touchscreen_gesture_settings_title">Touchscreen gestures</string>
     <string name="touchscreen_gesture_settings_summary">Perform various touchscreen gestures for quick actions</string>
@@ -228,4 +224,5 @@
     <string name="auto_power_save_title">Automatic power saver</string>
     <string name="auto_power_save_summary_on">Automatically enable power save mode at %s battery</string>
     <string name="auto_power_save_summary_off">Do not enable power save mode automatically</string>
+
 </resources>

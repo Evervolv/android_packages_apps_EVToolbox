@@ -49,7 +49,6 @@ public class StatusBarSettings extends SettingsPreferenceFragment
     private ListPreference mQuickPulldown;
     private ListPreference mBatteryStyleIcon;
     private ListPreference mBatteryShowPercent;
-    private SwitchPreference mShowLteIcon;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,12 +61,6 @@ public class StatusBarSettings extends SettingsPreferenceFragment
         mQuickPulldown.setValue(String.valueOf(qsPullDown));
         updateQuickPulldownSummary(qsPullDown);
         mQuickPulldown.setOnPreferenceChangeListener(this);
-
-        int showLteIcon = Settings.System.getInt(getContext().getContentResolver(),
-                Settings.System.SHOW_LTE_FOURGEE, 0);
-        mShowLteIcon = (SwitchPreference) findPreference(STATUS_BAR_LTE_ICON);
-        mShowLteIcon.setChecked(showLteIcon == 1);
-        mShowLteIcon.setOnPreferenceChangeListener(this);
 
         int batteryStyle = EVSettings.System.getInt(getContext().getContentResolver(),
                 EVSettings.System.STATUS_BAR_BATTERY_STYLE, 0);
@@ -102,12 +95,6 @@ public class StatusBarSettings extends SettingsPreferenceFragment
             EVSettings.System.putInt(getContext().getContentResolver(),
                     EVSettings.System.STATUS_BAR_QUICK_QS_PULLDOWN, value);
             updateQuickPulldownSummary(value);
-            return true;
-        }
-        if (preference == mShowLteIcon) {
-            boolean value = (Boolean) newValue;
-            Settings.System.putInt(getContext().getContentResolver(),
-                    Settings.System.SHOW_LTE_FOURGEE, value ? 1 : 0);
             return true;
         }
         if (preference == mBatteryStyleIcon) {
