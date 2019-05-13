@@ -15,7 +15,7 @@
  */
 package com.evervolv.toolbox.style.models;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 public class Style {
     @NonNull
