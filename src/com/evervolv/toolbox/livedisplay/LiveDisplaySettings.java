@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2015 The CyanogenMod Project
- *               2017 The LineageOS Project
+ *               2017-2019 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package com.evervolv.toolbox.livedisplay;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.hardware.display.ColorDisplayManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -54,7 +55,10 @@ import static evervolv.hardware.LiveDisplayManager.FEATURE_COLOR_ADJUSTMENT;
 import static evervolv.hardware.LiveDisplayManager.FEATURE_COLOR_ENHANCEMENT;
 import static evervolv.hardware.LiveDisplayManager.FEATURE_DISPLAY_MODES;
 import static evervolv.hardware.LiveDisplayManager.FEATURE_PICTURE_ADJUSTMENT;
+import static evervolv.hardware.LiveDisplayManager.MODE_AUTO;
 import static evervolv.hardware.LiveDisplayManager.MODE_OFF;
+import static evervolv.hardware.LiveDisplayManager.MODE_DAY;
+import static evervolv.hardware.LiveDisplayManager.MODE_NIGHT;
 import static evervolv.hardware.LiveDisplayManager.MODE_OUTDOOR;
 
 public class LiveDisplaySettings extends SettingsPreferenceFragment implements Searchable,
@@ -118,6 +122,8 @@ public class LiveDisplaySettings extends SettingsPreferenceFragment implements S
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final Resources res = getResources();
+        final boolean isNightDisplayAvailable =
+                ColorDisplayManager.isNightDisplayAvailable(getContext());
 
         mHardware = HardwareManager.getInstance(getActivity());
         mLiveDisplayManager = LiveDisplayManager.getInstance(getActivity());
@@ -142,15 +148,31 @@ public class LiveDisplaySettings extends SettingsPreferenceFragment implements S
         mModeSummaries = res.getStringArray(
                 com.evervolv.platform.internal.R.array.live_display_summaries);
 
+        int[] removeIdx = null;
         // Remove outdoor mode from lists if there is no support
-        if (!mConfig.hasFeature(LiveDisplayManager.MODE_OUTDOOR)) {
-            int idx = ArrayUtils.indexOf(mModeValues, String.valueOf(MODE_OUTDOOR));
-            String[] entriesTemp = new String[mModeEntries.length - 1];
-            String[] valuesTemp = new String[mModeValues.length - 1];
-            String[] summariesTemp = new String[mModeSummaries.length - 1];
+        if (!mConfig.hasFeature(MODE_OUTDOOR)) {
+            removeIdx = ArrayUtils.appendInt(removeIdx,
+                    ArrayUtils.indexOf(mModeValues, String.valueOf(MODE_OUTDOOR)));
+        } else if (isNightDisplayAvailable) {
+            final int autoIdx = ArrayUtils.indexOf(mModeValues, String.valueOf(MODE_AUTO));
+            mModeSummaries[autoIdx] = res.getString(R.string.live_display_outdoor_mode_summary);
+        }
+
+        // Remove night display on HWC2
+        if (isNightDisplayAvailable) {
+            removeIdx = ArrayUtils.appendInt(removeIdx,
+                    ArrayUtils.indexOf(mModeValues, String.valueOf(MODE_DAY)));
+            removeIdx = ArrayUtils.appendInt(removeIdx,
+                    ArrayUtils.indexOf(mModeValues, String.valueOf(MODE_NIGHT)));
+        }
+
+        if (removeIdx != null) {
+            String[] entriesTemp = new String[mModeEntries.length - removeIdx.length];
+            String[] valuesTemp = new String[mModeValues.length - removeIdx.length];
+            String[] summariesTemp = new String[mModeSummaries.length - removeIdx.length];
             int j = 0;
             for (int i = 0; i < mModeEntries.length; i++) {
-                if (i == idx) {
+                if (ArrayUtils.contains(removeIdx, i)) {
                     continue;
                 }
                 entriesTemp[j] = mModeEntries[i];
@@ -168,6 +190,12 @@ public class LiveDisplaySettings extends SettingsPreferenceFragment implements S
         mLiveDisplay.setOnPreferenceChangeListener(this);
 
         mDisplayTemperature = (DisplayTemperature) findPreference(KEY_LIVE_DISPLAY_TEMPERATURE);
+        if (isNightDisplayAvailable) {
+            if (!mConfig.hasFeature(MODE_OUTDOOR)) {
+                liveDisplayPrefs.removePreference(mLiveDisplay);
+            }
+            liveDisplayPrefs.removePreference(mDisplayTemperature);
+        }
 
         mColorProfile = (ListPreference) findPreference(KEY_LIVE_DISPLAY_COLOR_PROFILE);
         if (liveDisplayPrefs != null && mColorProfile != null
@@ -180,7 +208,8 @@ public class LiveDisplaySettings extends SettingsPreferenceFragment implements S
 
         mOutdoorMode = (SwitchPreference) findPreference(KEY_LIVE_DISPLAY_AUTO_OUTDOOR_MODE);
         if (liveDisplayPrefs != null && mOutdoorMode != null
-                && !mConfig.hasFeature(MODE_OUTDOOR)) {
+                // MODE_AUTO implies automatic outdoor mode on HWC2
+                && (isNightDisplayAvailable || !mConfig.hasFeature(MODE_OUTDOOR))) {
             liveDisplayPrefs.removePreference(mOutdoorMode);
             mOutdoorMode = null;
         }
@@ -201,14 +230,14 @@ public class LiveDisplaySettings extends SettingsPreferenceFragment implements S
 
         mPictureAdjustment = (PictureAdjustment) findPreference(KEY_PICTURE_ADJUSTMENT);
         if (advancedPrefs != null && mPictureAdjustment != null &&
-                    !mConfig.hasFeature(LiveDisplayManager.FEATURE_PICTURE_ADJUSTMENT)) {
+                    !mConfig.hasFeature(FEATURE_PICTURE_ADJUSTMENT)) {
             advancedPrefs.removePreference(mPictureAdjustment);
             mPictureAdjustment = null;
         }
 
         mDisplayColor = (DisplayColor) findPreference(KEY_DISPLAY_COLOR);
         if (advancedPrefs != null && mDisplayColor != null &&
-                !mConfig.hasFeature(LiveDisplayManager.FEATURE_COLOR_ADJUSTMENT)) {
+                !mConfig.hasFeature(FEATURE_COLOR_ADJUSTMENT)) {
             advancedPrefs.removePreference(mDisplayColor);
             mDisplayColor = null;
         }
@@ -371,6 +400,12 @@ public class LiveDisplaySettings extends SettingsPreferenceFragment implements S
             }
             if (!config.hasFeature(FEATURE_PICTURE_ADJUSTMENT)) {
                 result.add(KEY_PICTURE_ADJUSTMENT);
+            }
+            if (ColorDisplayManager.isNightDisplayAvailable(context)) {
+                if (!config.hasFeature(MODE_OUTDOOR)) {
+                    result.add(KEY_LIVE_DISPLAY);
+                }
+                result.add(KEY_LIVE_DISPLAY_TEMPERATURE);
             }
             return result;
         }
