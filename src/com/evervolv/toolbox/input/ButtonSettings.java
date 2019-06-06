@@ -56,6 +56,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
     private static final String KEY_ASSIST_LONG_PRESS = "button_assist_long_press";
     private static final String KEY_APP_SWITCH_PRESS = "button_app_switch_press";
     private static final String KEY_APP_SWITCH_LONG_PRESS = "button_app_switch_long_press";
+    private static final String KEY_VOLUME_PANEL_ON_LEFT = "volume_panel_on_left";
 
     private static final String DISABLE_NAV_KEYS = "disable_nav_keys";
 
@@ -113,6 +114,8 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
     private ListPreference mAssistLongPressAction;
     private ListPreference mAppSwitchPressAction;
     private ListPreference mAppSwitchLongPressAction;
+
+    private SwitchPreference mVolumePanelOnLeft;
 
     private SwitchPreference mDisableNavigationKeys;
     private PreferenceCategory mNavigationPreferencesCat;
@@ -284,6 +287,14 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
             } else {
                 volumeCategory.removePreference(findPreference(EVSettings.System.VOLUME_WAKE_SCREEN));
             }
+
+            final boolean volumePanelOnLeft = EVSettings.Secure.getInt(
+                    getContentResolver(), EVSettings.Secure.VOLUME_PANEL_ON_LEFT, 0) != 0;
+            mVolumePanelOnLeft = (SwitchPreference)
+                    prefScreen.findPreference(KEY_VOLUME_PANEL_ON_LEFT);
+            if (mVolumePanelOnLeft != null) {
+                mVolumePanelOnLeft.setChecked(volumePanelOnLeft);
+            }
         } else {
             prefScreen.removePreference(volumeCategory);
         }
@@ -414,7 +425,11 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
 
     @Override
     public boolean onPreferenceTreeClick(Preference preference) {
-        if (preference == mDisableNavigationKeys) {
+        if (preference == mVolumePanelOnLeft) {
+            EVSettings.Secure.putInt(getActivity().getContentResolver(),
+                    EVSettings.Secure.VOLUME_PANEL_ON_LEFT, mVolumePanelOnLeft.isChecked() ? 1 : 0);
+            return true;
+        } else if (preference == mDisableNavigationKeys) {
             mDisableNavigationKeys.setEnabled(false);
             mNavigationPreferencesCat.setEnabled(false);
             writeDisableNavkeysOption(getActivity(), mDisableNavigationKeys.isChecked());

@@ -82,6 +82,10 @@
     <string name="volbtn_music_controls_title">Control playback</string>
     <string name="volbtn_music_controls_summary">Seek music tracks by long pressing the volume keys while the display is off</string>
 
+    <!-- Volume panel location -->
+    <string name="volume_panel_on_left_title">Show panel on left</string>
+    <string name="volume_panel_on_left_summary">Display volume panel on the left side of the screen</string>
+
     <!-- Device specific buttons -->
     <string name="extras_title">Extras</string>
     <string name="additional_buttons_title">Additional buttons</string>
