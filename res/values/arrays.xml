@@ -45,6 +45,7 @@
 
     <string-array name="style_entries" translatable="false">
         <item>@string/style_global_entry_automatic</item>
+        <item>@string/style_global_entry_time</item>
         <item>@string/style_global_entry_light</item>
         <item>@string/style_global_entry_dark</item>
     </string-array>
@@ -52,6 +53,7 @@
     <!-- Global style values -->
     <string-array name="style_values" translatable="false">
         <item>0</item> <!-- Based on wallpaper -->
+        <item>1</item> <!-- Based on LiveDisplay -->
         <item>2</item> <!-- Force light -->
         <item>3</item> <!-- Force dark -->
     </string-array>
