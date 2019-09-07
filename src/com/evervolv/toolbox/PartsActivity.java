@@ -23,6 +23,7 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.nfc.Tag;
 import android.os.Bundle;
+import androidx.fragment.app.FragmentActivity;
 import androidx.preference.PreferenceFragment;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceScreen;
@@ -32,13 +33,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import com.android.settingslib.drawer.SettingsDrawerActivity;
-
 import com.evervolv.toolbox.widget.SwitchBar;
 import com.evervolv.internal.parts.PartInfo;
 import com.evervolv.internal.parts.PartsList;
 
-public class PartsActivity extends SettingsDrawerActivity implements
+public class PartsActivity extends FragmentActivity implements
         PreferenceFragment.OnPreferenceStartFragmentCallback,
         PreferenceFragment.OnPreferenceStartScreenCallback {
 
