@@ -3,6 +3,15 @@
 -keep class com.evervolv.toolbox.*Picker
 -keep class com.evervolv.toolbox.*Settings
 
+-keep class com.evervolv.toolbox.gestures.*
+-keep class com.evervolv.toolbox.input.*
+-keep class com.evervolv.toolbox.power.*
+
+# Keep keyhandler constructor
+-keep public class * implements com.android.internal.os.DeviceKeyHandler {
+   public <init>(android.content.Context);
+}
+
 # Keep click responders
 -keepclassmembers class com.android.settings.inputmethod.UserDictionaryAddWordActivity {
   *** onClick*(...);
