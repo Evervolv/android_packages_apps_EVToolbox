@@ -155,23 +155,6 @@
     <string name="status_bar_system_icons_title">System icons</string>
     <string name="status_bar_system_icons_summary">Control which status bar icons are shown</string>
 
-    <!-- Status bar - Battery -->
-    <string name="status_bar_battery_title">Battery indicator</string>
-
-    <!-- Status bar - Battery meter style -->
-    <string name="status_bar_battery_style_title">Battery status style</string>
-    <string name="status_bar_battery_style_icon_portrait">Icon portrait</string>
-    <string name="status_bar_battery_style_circle">Circle</string>
-    <string name="status_bar_battery_style_dotted_circle">Dotted circle</string>
-    <string name="status_bar_battery_style_text">Text</string>
-    <string name="status_bar_battery_style_hidden">Hidden</string>
-
-    <!-- Status bar - Battery percentage -->
-    <string name="status_bar_battery_percentage_title">Battery percentage</string>
-    <string name="status_bar_battery_percentage_default">Hidden</string>
-    <string name="status_bar_battery_percentage_text_inside">Inside the icon</string>
-    <string name="status_bar_battery_percentage_text_next">Next to the icon</string>
-
     <!-- Gestures: Touchscreen gestures -->
     <string name="touchscreen_gesture_settings_title">Touchscreen gestures</string>
     <string name="touchscreen_gesture_settings_summary">Perform various touchscreen gestures for quick actions</string>
