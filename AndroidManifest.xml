@@ -88,27 +88,6 @@
 
         <activity android:name=".gestures.KeyHandler" />
 
-        <!-- Expanded Desktop settings (Display category) -->
-        <activity-alias
-            android:name=".applications.ExpandedDesktopSettings"
-            android:label="@string/expanded_desktop_settings_title"
-            android:targetActivity="PartsActivity">
-            <intent-filter>
-                <action android:name="com.android.settings.action.IA_SETTINGS" />
-                <action android:name="com.evervolv.toolbox.EXPANDED_DESKTOP_SETTINGS" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-            <meta-data
-                android:name="com.android.settings.order"
-                android:value="9" />
-            <meta-data
-                android:name="com.android.settings.category"
-                android:value="com.android.settings.category.ia.display" />
-            <meta-data
-                android:name="com.android.settings.summary"
-                android:resource="@string/expanded_desktop_settings_summary" />
-        </activity-alias>
-
         <!-- Status bar settings (System category) -->
         <activity-alias
             android:name=".statusbar.StatusBarSettings"

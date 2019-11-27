@@ -73,12 +73,6 @@
           android:fragment="com.evervolv.toolbox.power.PerfProfileSettings"
           evervolv:xmlRes="@xml/perf_profile_settings" />
 
-    <part android:key="expanded_desktop_settings"
-          android:title="@string/expanded_desktop_settings_title"
-          android:summary="@string/expanded_desktop_settings_summary"
-          android:fragment="com.evervolv.toolbox.applications.ExpandedDesktopSettings"
-          evervolv:xmlRes="@xml/expanded_desktop_prefs" />
-
     <part android:key="battery_lights"
           android:title="@string/battery_light_title"
           android:fragment="com.evervolv.toolbox.notificationlight.BatteryLightSettings"
