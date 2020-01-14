@@ -55,5 +55,8 @@
     <!-- Berry lite -->
     <dimen name="style_accent_preview">32dp</dimen>
     <dimen name="style_accent_icon">24dp</dimen>
+
+    <!-- Package list dialog -->
+    <dimen name="package_list_padding_top">16dp</dimen>
 </resources>
 
