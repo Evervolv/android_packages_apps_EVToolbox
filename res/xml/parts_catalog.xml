@@ -80,6 +80,7 @@
 
     <part android:key="livedisplay"
           android:title="@*evervolv.platform:string/live_display_title"
+          android:summary="@string/live_display_summary"
           android:fragment="com.evervolv.toolbox.livedisplay.LiveDisplaySettings"
           evervolv:xmlRes="@xml/livedisplay" />
 

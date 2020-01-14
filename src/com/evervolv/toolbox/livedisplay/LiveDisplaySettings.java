@@ -408,6 +408,12 @@ public class LiveDisplaySettings extends SettingsPreferenceFragment implements S
                 }
                 result.add(KEY_LIVE_DISPLAY_TEMPERATURE);
             }
+            if (!context.getResources().getBoolean(
+                    com.evervolv.platform.internal.R.bool.config_enableLiveDisplay)) {
+                result.add(KEY_LIVE_DISPLAY_TEMPERATURE);
+                result.add(KEY_LIVE_DISPLAY);
+            }
+
             return result;
         }
 
