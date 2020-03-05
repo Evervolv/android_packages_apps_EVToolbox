@@ -27,18 +27,6 @@
         android:defaultValue="false" />
 
     <PreferenceCategory
-        android:key="navigation_bar_category"
-        android:title="@string/navigation_bar_category" >
-
-        <PreferenceScreen
-            android:key="navigation_bar"
-            android:title="@string/navigation_bar_title">
-            <intent android:action="com.android.settings.action.NAV_BAR_TUNER" />
-        </PreferenceScreen>
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
         android:key="power_key"
         android:title="@string/power_key_title" >
 

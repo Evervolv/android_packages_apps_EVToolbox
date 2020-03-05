@@ -147,10 +147,6 @@
     <string name="style_dark_overlay_black">Black</string>
     <string name="style_permission_error">Storage access permission is needed to analyze your wallpaper, please grant it to use this feature</string>
 
-    <!-- Navigation Bar -->
-    <string name="navigation_bar_category">Navigation bar</string>
-    <string name="navigation_bar_title">Buttons and layout</string>
-
     <!-- Status bar -->
     <string name="status_bar_title">Status bar</string>
     <string name="status_bar_quick_qs_pulldown_title">Quick pulldown</string>
