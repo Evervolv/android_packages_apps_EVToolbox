@@ -142,6 +142,32 @@
         <item>25</item>
     </string-array>
 
+    <!-- Battery percent view -->
+    <string-array name="status_bar_battery_percentage_entries" translatable="false">
+        <item>@string/status_bar_battery_percentage_default</item>
+        <item>@string/status_bar_battery_percentage_text_inside</item>
+        <item>@string/status_bar_battery_percentage_text_next</item>
+    </string-array>
+
+    <string-array name="status_bar_battery_percentage_values" translatable="false">
+        <item>0</item>
+        <item>2</item>
+        <item>1</item>
+    </string-array>
+
+    <!-- Battery meter style -->
+    <string-array name="status_bar_battery_style_entries" translatable="false">
+        <item>@string/status_bar_battery_style_icon_portrait</item>
+        <item>@string/status_bar_battery_style_circle</item>
+        <item>@string/status_bar_battery_style_text</item>
+    </string-array>
+
+    <string-array name="status_bar_battery_style_values" translatable="false">
+        <item>0</item>
+        <item>2</item>
+        <item>5</item>
+    </string-array>
+
     <!-- Expanded desktop styles -->
     <string-array name="expanded_desktop_style_entries" translatable="false">
         <item>@string/expanded_desktop_style_hide_both</item>
