@@ -26,6 +26,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.RemoteException;
 import android.provider.Settings;
+import android.util.ArraySet;
 import androidx.preference.SwitchPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
@@ -41,27 +42,40 @@ import evervolv.provider.EVSettings;
 
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.SettingsPreferenceFragment;
+import com.evervolv.toolbox.search.BaseSearchIndexProvider;
+import com.evervolv.toolbox.search.Searchable;
 import com.evervolv.toolbox.utils.DeviceUtils;
 
 import java.util.List;
+import java.util.Set;
 
-public class ButtonSettings extends SettingsPreferenceFragment implements
-        Preference.OnPreferenceChangeListener {
+public class ButtonSettings extends SettingsPreferenceFragment
+        implements Preference.OnPreferenceChangeListener, Searchable {
     private static final String TAG = "ButtonSettings";
 
     private static final String KEY_BUTTON_BACKLIGHT = "button_backlight";
+    private static final String KEY_BACK_WAKE_SCREEN = "back_wake_screen";
+    private static final String KEY_CAMERA_LAUNCH = "camera_launch";
+    private static final String KEY_CAMERA_SLEEP_ON_RELEASE = "camera_sleep_on_release";
+    private static final String KEY_CAMERA_WAKE_SCREEN = "camera_wake_screen";
     private static final String KEY_HOME_LONG_PRESS = "button_home_long_press";
     private static final String KEY_HOME_DOUBLE_TAP = "button_home_double_tap";
+    private static final String KEY_HOME_WAKE_SCREEN = "home_wake_screen";
     private static final String KEY_MENU_PRESS = "button_menu_press";
     private static final String KEY_MENU_LONG_PRESS = "button_menu_long_press";
+    private static final String KEY_MENU_WAKE_SCREEN = "menu_wake_screen";
     private static final String KEY_ASSIST_PRESS = "button_assist_press";
     private static final String KEY_ASSIST_LONG_PRESS = "button_assist_long_press";
+    private static final String KEY_ASSIST_WAKE_SCREEN = "assist_wake_screen";
     private static final String KEY_APP_SWITCH_PRESS = "button_app_switch_press";
     private static final String KEY_APP_SWITCH_LONG_PRESS = "button_app_switch_long_press";
+    private static final String KEY_APP_SWITCH_WAKE_SCREEN = "app_switch_wake_screen";
     private static final String KEY_VOLUME_PANEL_ON_LEFT = "volume_panel_on_left";
-    private static final String VOLUME_PANEL_EXPANDABLE = "volume_panel_expandable";
+    private static final String KEY_VOLUME_MUSIC_CONTROLS = "volbtn_music_controls";
+    private static final String KEY_VOLUME_WAKE_SCREEN = "volume_wake_screen";
+    private static final String KEY_VOLUME_PANEL_EXPANDABLE = "volume_panel_expandable";
 
-    private static final String DISABLE_NAV_KEYS = "disable_nav_keys";
+    private static final String KEY_DISABLE_NAV_KEYS = "disable_nav_keys";
 
     private static final String CATEGORY_HOME = "home_key";
     private static final String CATEGORY_BACK = "back_key";
@@ -139,7 +153,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
         mHandler = new Handler();
 
         // Force Navigation bar related options
-        mDisableNavigationKeys = (SwitchPreference) findPreference(DISABLE_NAV_KEYS);
+        mDisableNavigationKeys = (SwitchPreference) findPreference(KEY_DISABLE_NAV_KEYS);
 
         Action defaultHomeLongPressAction = Action.fromIntSafe(res.getInteger(
                 com.android.internal.R.integer.config_longPressOnHomeBehavior));
@@ -173,7 +187,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
 
         if (hasHomeKey) {
             if (!showHomeWake) {
-                homeCategory.removePreference(findPreference(EVSettings.System.HOME_WAKE_SCREEN));
+                homeCategory.removePreference(findPreference(KEY_HOME_WAKE_SCREEN));
             }
             mHomeLongPressAction = initList(KEY_HOME_LONG_PRESS, homeLongPressAction);
             mHomeDoubleTapAction = initList(KEY_HOME_DOUBLE_TAP, homeDoubleTapAction);
@@ -187,7 +201,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
 
         if (hasMenuKey) {
             if (!showMenuWake) {
-                menuCategory.removePreference(findPreference(EVSettings.System.MENU_WAKE_SCREEN));
+                menuCategory.removePreference(findPreference(KEY_MENU_WAKE_SCREEN));
             }
 
             Action pressAction = Action.fromSettings(resolver,
@@ -204,7 +218,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
 
         if (hasAssistKey) {
             if (!showAssistWake) {
-                assistCategory.removePreference(findPreference(EVSettings.System.ASSIST_WAKE_SCREEN));
+                assistCategory.removePreference(findPreference(KEY_ASSIST_WAKE_SCREEN));
             }
 
             Action pressAction = Action.fromSettings(resolver,
@@ -220,8 +234,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
 
         if (hasAppSwitchKey) {
             if (!showAppSwitchWake) {
-                appSwitchCategory.removePreference(findPreference(
-                        EVSettings.System.APP_SWITCH_WAKE_SCREEN));
+                appSwitchCategory.removePreference(findPreference(KEY_APP_SWITCH_WAKE_SCREEN));
             }
 
             Action pressAction = Action.fromSettings(resolver,
@@ -236,10 +249,10 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
         }
 
         if (hasCameraKey) {
-            mCameraWakeScreen = (SwitchPreference) findPreference(EVSettings.System.CAMERA_WAKE_SCREEN);
+            mCameraWakeScreen = (SwitchPreference) findPreference(KEY_CAMERA_WAKE_SCREEN);
             mCameraSleepOnRelease =
-                    (SwitchPreference) findPreference(EVSettings.System.CAMERA_SLEEP_ON_RELEASE);
-            mCameraLaunch = (SwitchPreference) findPreference(EVSettings.System.CAMERA_LAUNCH);
+                    (SwitchPreference) findPreference(KEY_CAMERA_SLEEP_ON_RELEASE);
+            mCameraLaunch = (SwitchPreference) findPreference(KEY_CAMERA_LAUNCH);
 
             if (!showCameraWake) {
                 prefScreen.removePreference(mCameraWakeScreen);
@@ -254,16 +267,16 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
 
         if (hasVolumeKeys) {
             if (showVolumeWake) {
-                SwitchPreference volumeWakeScreen = (SwitchPreference) findPreference(EVSettings.System.VOLUME_WAKE_SCREEN);
+                SwitchPreference volumeWakeScreen = (SwitchPreference) findPreference(KEY_VOLUME_WAKE_SCREEN);
                 if (volumeWakeScreen != null) {
-                    SwitchPreference volumeMusicControls = (SwitchPreference) findPreference(EVSettings.System.VOLBTN_MUSIC_CONTROLS);
+                    SwitchPreference volumeMusicControls = (SwitchPreference) findPreference(KEY_VOLUME_MUSIC_CONTROLS);
                     if (volumeMusicControls != null) {
-                        volumeMusicControls.setDependency(EVSettings.System.VOLUME_WAKE_SCREEN);
+                        volumeMusicControls.setDependency(KEY_VOLUME_WAKE_SCREEN);
                         volumeWakeScreen.setDisableDependentsState(true);
                     }
                 }
             } else {
-                volumeCategory.removePreference(findPreference(EVSettings.System.VOLUME_WAKE_SCREEN));
+                volumeCategory.removePreference(findPreference(KEY_VOLUME_WAKE_SCREEN));
             }
 
             final boolean volumePanelOnLeft = EVSettings.Secure.getInt(
@@ -277,7 +290,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
             final boolean volumePanelExpandable = EVSettings.Secure.getInt(
                     getContentResolver(), EVSettings.Secure.VOLUME_PANEL_EXPANDABLE, 0) != 0;
             mVolumePanelExpandable = (SwitchPreference)
-                    prefScreen.findPreference(VOLUME_PANEL_EXPANDABLE);
+                    prefScreen.findPreference(KEY_VOLUME_PANEL_EXPANDABLE);
             if (mVolumePanelExpandable != null) {
                 mVolumePanelExpandable.setChecked(volumePanelExpandable);
             }
@@ -294,7 +307,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
         if (mCameraWakeScreen != null) {
             if (mCameraSleepOnRelease != null && !res.getBoolean(
                     com.evervolv.platform.internal.R.bool.config_singleStageCameraKey)) {
-                mCameraSleepOnRelease.setDependency(EVSettings.System.CAMERA_WAKE_SCREEN);
+                mCameraSleepOnRelease.setDependency(KEY_CAMERA_WAKE_SCREEN);
             }
         }
     }
@@ -451,4 +464,83 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
 
         return super.onPreferenceTreeClick(preference);
     }
+
+    public static final Searchable.SearchIndexProvider SEARCH_INDEX_DATA_PROVIDER =
+            new BaseSearchIndexProvider() {
+
+        @Override
+        public Set<String> getNonIndexableKeys(Context context) {
+            final Set<String> result = new ArraySet<String>();
+
+            if (!DeviceUtils.hasBackKey(context)
+                    || !DeviceUtils.canWakeUsingBackKey(context)) {
+                result.add(CATEGORY_BACK);
+                result.add(KEY_BACK_WAKE_SCREEN);
+            }
+
+            if (!DeviceUtils.hasHomeKey(context)) {
+                result.add(CATEGORY_HOME);
+                result.add(KEY_HOME_LONG_PRESS);
+                result.add(KEY_HOME_DOUBLE_TAP);
+                result.add(KEY_HOME_WAKE_SCREEN);
+            } else if (!DeviceUtils.canWakeUsingHomeKey(context)) {
+                result.add(KEY_HOME_WAKE_SCREEN);
+            }
+
+            if (!DeviceUtils.hasMenuKey(context)) {
+                result.add(CATEGORY_MENU);
+                result.add(KEY_MENU_PRESS);
+                result.add(KEY_MENU_LONG_PRESS);
+                result.add(KEY_MENU_WAKE_SCREEN);
+            } else if (!DeviceUtils.canWakeUsingMenuKey(context)) {
+                result.add(KEY_MENU_WAKE_SCREEN);
+            }
+
+            if (!DeviceUtils.hasAssistKey(context)) {
+                result.add(CATEGORY_ASSIST);
+                result.add(KEY_ASSIST_PRESS);
+                result.add(KEY_ASSIST_LONG_PRESS);
+                result.add(KEY_ASSIST_WAKE_SCREEN);
+            } else if (!DeviceUtils.canWakeUsingAssistKey(context)) {
+                result.add(KEY_ASSIST_WAKE_SCREEN);
+            }
+
+            if (!DeviceUtils.hasAppSwitchKey(context)) {
+                result.add(CATEGORY_APPSWITCH);
+                result.add(KEY_APP_SWITCH_PRESS);
+                result.add(KEY_APP_SWITCH_LONG_PRESS);
+                result.add(KEY_APP_SWITCH_WAKE_SCREEN);
+            } else if (!DeviceUtils.canWakeUsingAppSwitchKey(context)) {
+                result.add(KEY_APP_SWITCH_WAKE_SCREEN);
+            }
+
+            if (!DeviceUtils.hasCameraKey(context)) {
+                result.add(CATEGORY_CAMERA);
+                result.add(KEY_CAMERA_LAUNCH);
+                result.add(KEY_CAMERA_SLEEP_ON_RELEASE);
+                result.add(KEY_CAMERA_WAKE_SCREEN);
+            } else if (!DeviceUtils.canWakeUsingCameraKey(context)) {
+                result.add(KEY_CAMERA_WAKE_SCREEN);
+            }
+
+            if (!DeviceUtils.hasVolumeKeys(context)) {
+                result.add(CATEGORY_VOLUME);
+                result.add(KEY_VOLUME_MUSIC_CONTROLS);
+                result.add(KEY_VOLUME_PANEL_ON_LEFT);
+                result.add(KEY_VOLUME_WAKE_SCREEN);
+                result.add(KEY_VOLUME_PANEL_EXPANDABLE);
+            } else if (!DeviceUtils.canWakeUsingVolumeKeys(context)) {
+                result.add(KEY_VOLUME_WAKE_SCREEN);
+            }
+
+            if (!isKeyDisablerSupported(context)) {
+                result.add(KEY_DISABLE_NAV_KEYS);
+            }
+
+            if (!DeviceUtils.hasButtonBacklightSupport(context)) {
+                result.add(KEY_BUTTON_BACKLIGHT);
+            }
+            return result;
+        }
+    };
 }
