@@ -17,6 +17,7 @@
 package com.evervolv.toolbox.input;
 
 import static android.view.Display.DEFAULT_DISPLAY;
+import static com.evervolv.internal.util.DeviceKeysConstants.*;
 
 import android.content.Context;
 import android.content.ContentResolver;
@@ -33,14 +34,14 @@ import androidx.preference.PreferenceGroup;
 import androidx.preference.PreferenceScreen;
 import android.util.Log;
 import android.view.IWindowManager;
-import android.view.KeyCharacterMap;
-import android.view.KeyEvent;
 import android.view.WindowManagerGlobal;
 
 import evervolv.hardware.HardwareManager;
 import evervolv.provider.EVSettings;
+
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.SettingsPreferenceFragment;
+import com.evervolv.toolbox.utils.DeviceUtils;
 
 import java.util.List;
 
@@ -68,43 +69,6 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
     private static final String CATEGORY_APPSWITCH = "app_switch_key";
     private static final String CATEGORY_VOLUME = "volume_keys";
     private static final String CATEGORY_CAMERA = "camera_key";
-
-    // Available custom actions to perform on a key press.
-    // Must match values for KEY_HOME_LONG_PRESS_ACTION in:
-    // vendor/ev/sdk/core/java/evervolv/provider/EVSettings.java
-    private enum Action {
-        NOTHING,
-        MENU,
-        APP_SWITCH,
-        SEARCH,
-        VOICE_SEARCH,
-        IN_APP_SEARCH,
-        LAUNCH_CAMERA,
-        SLEEP,
-        LAST_APP,
-        SPLIT_SCREEN;
-
-        public static Action fromIntSafe(int id) {
-            if (id < NOTHING.ordinal() || id > Action.values().length) {
-                return NOTHING;
-            }
-            return Action.values()[id];
-        }
-
-        public static Action fromSettings(ContentResolver cr, String setting, Action def) {
-            return fromIntSafe(EVSettings.System.getInt(cr, setting, def.ordinal()));
-        }
-    }
-
-    // Masks for checking presence of hardware keys.
-    // Must match values in frameworks/base/core/res/res/values/config.xml
-    public static final int KEY_MASK_HOME = 0x01;
-    public static final int KEY_MASK_BACK = 0x02;
-    public static final int KEY_MASK_MENU = 0x04;
-    public static final int KEY_MASK_ASSIST = 0x08;
-    public static final int KEY_MASK_APP_SWITCH = 0x10;
-    public static final int KEY_MASK_CAMERA = 0x20;
-    public static final int KEY_MASK_VOLUME = 0x40;
 
     private ListPreference mHomeLongPressAction;
     private ListPreference mHomeDoubleTapAction;
@@ -139,22 +103,22 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
         final int deviceWakeKeys = res.getInteger(
                 com.evervolv.platform.internal.R.integer.config_deviceHardwareWakeKeys);
 
-        final boolean hasPowerKey = KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_POWER);
-        final boolean hasHomeKey = (deviceKeys & KEY_MASK_HOME) != 0;
-        final boolean hasBackKey = (deviceKeys & KEY_MASK_BACK) != 0;
-        final boolean hasMenuKey = (deviceKeys & KEY_MASK_MENU) != 0;
-        final boolean hasAssistKey = (deviceKeys & KEY_MASK_ASSIST) != 0;
-        final boolean hasAppSwitchKey = (deviceKeys & KEY_MASK_APP_SWITCH) != 0;
-        final boolean hasCameraKey = (deviceKeys & KEY_MASK_CAMERA) != 0;
-        final boolean hasVolumeKeys = (deviceKeys & KEY_MASK_VOLUME) != 0;
+        final boolean hasPowerKey = DeviceUtils.hasPowerKey();
+        final boolean hasHomeKey = DeviceUtils.hasHomeKey(getActivity());
+        final boolean hasBackKey = DeviceUtils.hasBackKey(getActivity());
+        final boolean hasMenuKey = DeviceUtils.hasMenuKey(getActivity());
+        final boolean hasAssistKey = DeviceUtils.hasAssistKey(getActivity());
+        final boolean hasAppSwitchKey = DeviceUtils.hasAppSwitchKey(getActivity());
+        final boolean hasCameraKey = DeviceUtils.hasCameraKey(getActivity());
+        final boolean hasVolumeKeys = DeviceUtils.hasVolumeKeys(getActivity());
 
-        final boolean showHomeWake = (deviceWakeKeys & KEY_MASK_HOME) != 0;
-        final boolean showBackWake = (deviceWakeKeys & KEY_MASK_BACK) != 0;
-        final boolean showMenuWake = (deviceWakeKeys & KEY_MASK_MENU) != 0;
-        final boolean showAssistWake = (deviceWakeKeys & KEY_MASK_ASSIST) != 0;
-        final boolean showAppSwitchWake = (deviceWakeKeys & KEY_MASK_APP_SWITCH) != 0;
-        final boolean showCameraWake = (deviceWakeKeys & KEY_MASK_CAMERA) != 0;
-        final boolean showVolumeWake = (deviceWakeKeys & KEY_MASK_VOLUME) != 0;
+        final boolean showHomeWake = DeviceUtils.canWakeUsingHomeKey(getActivity());
+        final boolean showBackWake = DeviceUtils.canWakeUsingBackKey(getActivity());
+        final boolean showMenuWake = DeviceUtils.canWakeUsingMenuKey(getActivity());
+        final boolean showAssistWake = DeviceUtils.canWakeUsingAssistKey(getActivity());
+        final boolean showAppSwitchWake = DeviceUtils.canWakeUsingAppSwitchKey(getActivity());
+        final boolean showCameraWake = DeviceUtils.canWakeUsingCameraKey(getActivity());
+        final boolean showVolumeWake = DeviceUtils.canWakeUsingVolumeKeys(getActivity());
 
         final PreferenceGroup powerCategory =
                 (PreferenceCategory) prefScreen.findPreference(CATEGORY_POWER);
