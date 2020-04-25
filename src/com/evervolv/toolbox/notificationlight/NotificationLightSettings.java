@@ -119,8 +119,8 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
         PreferenceScreen prefSet = getPreferenceScreen();
         Resources resources = getResources();
 
-        PreferenceGroup mAdvancedPrefs = (PreferenceGroup) prefSet.findPreference(ADVANCED_SECTION);
-        PreferenceGroup mGeneralPrefs = (PreferenceGroup) prefSet.findPreference(GENERAL_SECTION);
+        PreferenceGroup mAdvancedPrefs = prefSet.findPreference(ADVANCED_SECTION);
+        PreferenceGroup mGeneralPrefs = prefSet.findPreference(GENERAL_SECTION);
 
         // Get the system defined default notification color
         mDefaultColor = resources.getColor(
@@ -140,7 +140,7 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
         mEnabledPref = findPreference(NOTIFICATION_LIGHT_PULSE);
         mEnabledPref.setOnPreferenceChangeListener(this);
 
-        mDefaultPref = (ApplicationLightPreference) findPreference(DEFAULT_PREF);
+        mDefaultPref = findPreference(DEFAULT_PREF);
 
         mAutoGenerateColors = findPreference(NOTIFICATION_LIGHT_COLOR_AUTO);
 
@@ -167,11 +167,11 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
                 || (!mLedCanBlink && !mMultiColorLed)) {
             removePreference(PHONE_SECTION);
         } else {
-            mCallPref = (ApplicationLightPreference) findPreference(MISSED_CALL_PREF);
+            mCallPref = findPreference(MISSED_CALL_PREF);
             mCallPref.setOnPreferenceChangeListener(this);
             mCallPref.setDefaultValues(mDefaultColor, mDefaultLedOn, mDefaultLedOff);
 
-            mVoicemailPref = (ApplicationLightPreference) findPreference(VOICEMAIL_PREF);
+            mVoicemailPref = findPreference(VOICEMAIL_PREF);
             mVoicemailPref.setOnPreferenceChangeListener(this);
             mVoicemailPref.setDefaultValues(mDefaultColor, mDefaultLedOn, mDefaultLedOff);
         }
@@ -179,7 +179,7 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
         if (!mLedCanBlink && !mMultiColorLed) {
             removePreference(APPLICATION_SECTION);
         } else {
-            mApplicationPrefList = (PreferenceGroup) findPreference(APPLICATION_SECTION);
+            mApplicationPrefList = findPreference(APPLICATION_SECTION);
             mApplicationPrefList.setOrderingAsAdded(false);
 
             // Get launch-able applications
@@ -249,7 +249,7 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
         }
 
         if (mLedCanBlink || mMultiColorLed) {
-            mApplicationPrefList = (PreferenceGroup) findPreference(APPLICATION_SECTION);
+            mApplicationPrefList = findPreference(APPLICATION_SECTION);
             mApplicationPrefList.setOrderingAsAdded(false);
         }
     }

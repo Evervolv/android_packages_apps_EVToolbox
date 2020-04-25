@@ -138,24 +138,15 @@ public class ButtonSettings extends SettingsPreferenceFragment
         final boolean showCameraWake = DeviceUtils.canWakeUsingCameraKey(getActivity());
         final boolean showVolumeWake = DeviceUtils.canWakeUsingVolumeKeys(getActivity());
 
-        final PreferenceGroup capacitiveCategory =
-                (PreferenceCategory) prefScreen.findPreference(CATEGORY_CAPACITIVE);
-        final PreferenceCategory powerCategory =
-                (PreferenceCategory) prefScreen.findPreference(CATEGORY_POWER);
-        final PreferenceGroup homeCategory =
-                (PreferenceCategory) prefScreen.findPreference(CATEGORY_HOME);
-        final PreferenceGroup backCategory =
-                (PreferenceCategory) prefScreen.findPreference(CATEGORY_BACK);
-        final PreferenceGroup menuCategory =
-                (PreferenceCategory) prefScreen.findPreference(CATEGORY_MENU);
-        final PreferenceGroup assistCategory =
-                (PreferenceCategory) prefScreen.findPreference(CATEGORY_ASSIST);
-        final PreferenceGroup appSwitchCategory =
-                (PreferenceCategory) prefScreen.findPreference(CATEGORY_APPSWITCH);
-        final PreferenceGroup volumeCategory =
-                (PreferenceCategory) prefScreen.findPreference(CATEGORY_VOLUME);
-        final PreferenceGroup cameraCategory =
-                (PreferenceCategory) prefScreen.findPreference(CATEGORY_CAMERA);
+        final PreferenceGroup capacitiveCategory = prefScreen.findPreference(CATEGORY_CAPACITIVE);
+        final PreferenceCategory powerCategory = prefScreen.findPreference(CATEGORY_POWER);
+        final PreferenceGroup homeCategory = prefScreen.findPreference(CATEGORY_HOME);
+        final PreferenceGroup backCategory = prefScreen.findPreference(CATEGORY_BACK);
+        final PreferenceGroup menuCategory = prefScreen.findPreference(CATEGORY_MENU);
+        final PreferenceGroup assistCategory = prefScreen.findPreference(CATEGORY_ASSIST);
+        final PreferenceGroup appSwitchCategory = prefScreen.findPreference(CATEGORY_APPSWITCH);
+        final PreferenceGroup volumeCategory = prefScreen.findPreference(CATEGORY_VOLUME);
+        final PreferenceGroup cameraCategory = prefScreen.findPreference(CATEGORY_CAMERA);
 
         mHandler = new Handler(Looper.getMainLooper());
 
@@ -382,18 +373,12 @@ public class ButtonSettings extends SettingsPreferenceFragment
         final PreferenceScreen prefScreen = getPreferenceScreen();
 
         /* Disable hw-key options if they're disabled */
-        final PreferenceCategory homeCategory =
-                (PreferenceCategory) prefScreen.findPreference(CATEGORY_HOME);
-        final PreferenceCategory backCategory =
-                (PreferenceCategory) prefScreen.findPreference(CATEGORY_BACK);
-        final PreferenceCategory menuCategory =
-                (PreferenceCategory) prefScreen.findPreference(CATEGORY_MENU);
-        final PreferenceCategory assistCategory =
-                (PreferenceCategory) prefScreen.findPreference(CATEGORY_ASSIST);
-        final PreferenceCategory appSwitchCategory =
-                (PreferenceCategory) prefScreen.findPreference(CATEGORY_APPSWITCH);
-        final ButtonBacklightBrightness backlight =
-                (ButtonBacklightBrightness) prefScreen.findPreference(KEY_BUTTON_BACKLIGHT);
+        final PreferenceCategory homeCategory = prefScreen.findPreference(CATEGORY_HOME);
+        final PreferenceCategory backCategory = prefScreen.findPreference(CATEGORY_BACK);
+        final PreferenceCategory menuCategory = prefScreen.findPreference(CATEGORY_MENU);
+        final PreferenceCategory assistCategory = prefScreen.findPreference(CATEGORY_ASSIST);
+        final PreferenceCategory appSwitchCategory = prefScreen.findPreference(CATEGORY_APPSWITCH);
+        final ButtonBacklightBrightness backlight = prefScreen.findPreference(KEY_BUTTON_BACKLIGHT);
 
         /* Toggle backlight control depending on navbar state, force it to
            off if enabling */

@@ -43,10 +43,10 @@ public class RotationSettings extends SettingsPreferenceFragment {
 
         PreferenceScreen prefSet = getPreferenceScreen();
 
-        mRotation0Pref = (CheckBoxPreference) prefSet.findPreference(ROTATION_0_PREF);
-        mRotation90Pref = (CheckBoxPreference) prefSet.findPreference(ROTATION_90_PREF);
-        mRotation180Pref = (CheckBoxPreference) prefSet.findPreference(ROTATION_180_PREF);
-        mRotation270Pref = (CheckBoxPreference) prefSet.findPreference(ROTATION_270_PREF);
+        mRotation0Pref = prefSet.findPreference(ROTATION_0_PREF);
+        mRotation90Pref = prefSet.findPreference(ROTATION_90_PREF);
+        mRotation180Pref = prefSet.findPreference(ROTATION_180_PREF);
+        mRotation270Pref = prefSet.findPreference(ROTATION_270_PREF);
 
         int mode = Settings.System.getIntForUser(getContentResolver(),
                 Settings.System.ACCELEROMETER_ROTATION_ANGLES,

@@ -45,21 +45,21 @@ public class StatusBarSettings extends SettingsPreferenceFragment
 
         int qsPullDown = EVSettings.System.getInt(getContext().getContentResolver(),
                 EVSettings.System.STATUS_BAR_QUICK_QS_PULLDOWN, 0);
-        mQuickPulldown = (ListPreference) findPreference(STATUS_BAR_QUICK_QS_PULLDOWN);
+        mQuickPulldown = findPreference(STATUS_BAR_QUICK_QS_PULLDOWN);
         mQuickPulldown.setValue(String.valueOf(qsPullDown));
         updateQuickPulldownSummary(qsPullDown);
         mQuickPulldown.setOnPreferenceChangeListener(this);
 
         int batteryStyle = EVSettings.System.getInt(getContext().getContentResolver(),
                 EVSettings.System.STATUS_BAR_BATTERY_STYLE, 0);
-        mBatteryStyleIcon = (ListPreference) findPreference(STATUS_BAR_BATTERY_STYLE);
+        mBatteryStyleIcon = findPreference(STATUS_BAR_BATTERY_STYLE);
         mBatteryStyleIcon.setValue(String.valueOf(batteryStyle));
         mBatteryStyleIcon.setSummary(mBatteryStyleIcon.getEntry());
         mBatteryStyleIcon.setOnPreferenceChangeListener(this);
 
         boolean batteryShowPercent = Settings.System.getInt(getContext().getContentResolver(),
                 Settings.System.SHOW_BATTERY_PERCENT, 0) == 1;
-        mBatteryShowPercent = (SwitchPreferenceCompat) findPreference(STATUS_BAR_BATTERY_PERCENT);
+        mBatteryShowPercent = findPreference(STATUS_BAR_BATTERY_PERCENT);
         mBatteryShowPercent.setChecked(batteryShowPercent);
         mBatteryShowPercent.setEnabled(batteryStyle != 5 /* BATTERY_STYLE_TEXT */);
 
@@ -75,20 +75,17 @@ public class StatusBarSettings extends SettingsPreferenceFragment
     private void updateCategories() {
         final PreferenceScreen prefScreen = getPreferenceScreen();
 
-        final PreferenceGroup quickSettingsCategory =
-                (PreferenceCategory) prefScreen.findPreference(CATEGORY_QUICK_SETTINGS);
+        final PreferenceGroup quickSettingsCategory = prefScreen.findPreference(CATEGORY_QUICK_SETTINGS);
         if (quickSettingsCategory.getPreferenceCount() == 0) {
             prefScreen.removePreference(quickSettingsCategory);
         }
 
-        final PreferenceGroup iconsCategory =
-                (PreferenceCategory) prefScreen.findPreference(CATEGORY_ICONS);
+        final PreferenceGroup iconsCategory = prefScreen.findPreference(CATEGORY_ICONS);
         if (iconsCategory.getPreferenceCount() == 0) {
             prefScreen.removePreference(iconsCategory);
         }
 
-        final PreferenceGroup batteryCategory =
-                (PreferenceCategory) prefScreen.findPreference(CATEGORY_BATTERY);
+        final PreferenceGroup batteryCategory = prefScreen.findPreference(CATEGORY_BATTERY);
         if (batteryCategory.getPreferenceCount() == 0) {
             prefScreen.removePreference(batteryCategory);
         }
