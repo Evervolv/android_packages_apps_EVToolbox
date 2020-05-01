@@ -18,36 +18,30 @@
         android:key="livedisplay"
         android:title="@*evervolv.platform:string/live_display_title">
 
-    <PreferenceCategory
-        android:key="live_display_options"
-        android:title="@*evervolv.platform:string/live_display_title">
+    <!-- Color profile -->
+    <ListPreference
+            android:key="live_display_color_profile"
+            android:title="@string/live_display_color_profile_title"
+            android:persistent="false" />
 
-        <!-- Color profile -->
-        <ListPreference
-                android:key="live_display_color_profile"
-                android:title="@string/live_display_color_profile_title"
-                android:persistent="false" />
+    <ListPreference
+            android:key="live_display"
+            android:title="@string/live_display_mode"
+            android:persistent="false" />
 
-        <ListPreference
-                android:key="live_display"
-                android:title="@string/live_display_mode"
-                android:persistent="false" />
+    <!-- Manual temperature selection -->
+    <com.evervolv.toolbox.livedisplay.DisplayTemperature
+            android:key="live_display_color_temperature"
+            android:title="@string/live_display_color_temperature_title"
+            android:dialogTitle="@*evervolv.platform:string/live_display_title"
+            android:persistent="false" />
 
-        <!-- Manual temperature selection -->
-        <com.evervolv.toolbox.livedisplay.DisplayTemperature
-                android:key="live_display_color_temperature"
-                android:title="@string/live_display_color_temperature_title"
-                android:dialogTitle="@*evervolv.platform:string/live_display_title"
-                android:persistent="false" />
-
-        <!-- Outdoor mode / SRE -->
-        <evervolv.preference.EVSystemSettingSwitchPreference
-                android:key="display_auto_outdoor_mode"
-                android:title="@string/live_display_outdoor_mode_title"
-                android:summary="@string/live_display_outdoor_mode_summary"
-                android:defaultValue="@*evervolv.platform:bool/config_defaultAutoOutdoorMode" />
-
-    </PreferenceCategory>
+    <!-- Outdoor mode / SRE -->
+    <evervolv.preference.EVSystemSettingSwitchPreference
+            android:key="display_auto_outdoor_mode"
+            android:title="@string/live_display_outdoor_mode_title"
+            android:summary="@string/live_display_outdoor_mode_summary"
+            android:defaultValue="@*evervolv.platform:bool/config_defaultAutoOutdoorMode" />
 
     <PreferenceCategory
             android:key="advanced"
