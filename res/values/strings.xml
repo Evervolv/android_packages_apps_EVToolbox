@@ -76,7 +76,6 @@
     <string name="action_in_app_search">In-app search</string>
     <string name="action_launch_camera">Launch camera</string>
     <string name="action_sleep">Turn screen off</string>
-    <string name="action_last_app">Last app</string>
     <string name="action_split_screen">Split screen</string>
 
     <!-- Camera key actions -->

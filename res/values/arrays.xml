@@ -26,7 +26,6 @@
         <item>@string/action_in_app_search</item>
         <item>@string/action_launch_camera</item>
         <item>@string/action_sleep</item>
-        <item>@string/action_last_app</item>
         <item>@string/action_split_screen</item>
     </string-array>
 
@@ -40,7 +39,6 @@
         <item>6</item>
         <item>7</item>
         <item>8</item>
-        <item>9</item>
     </string-array>
 
     <string-array name="style_entries" translatable="false">
