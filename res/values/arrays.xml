@@ -102,6 +102,7 @@
         <item>@string/status_bar_battery_style_icon_portrait</item>
         <item>@string/status_bar_battery_style_circle</item>
         <item>@string/status_bar_battery_style_dotted_circle</item>
+        <item>@string/status_bar_battery_style_filled_circle</item>
         <item>@string/status_bar_battery_style_text</item>
     </string-array>
 
@@ -109,6 +110,7 @@
         <item>0</item>
         <item>2</item>
         <item>3</item>
+        <item>4</item>
         <item>5</item>
     </string-array>
 
