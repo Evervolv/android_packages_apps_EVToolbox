@@ -70,8 +70,8 @@ public class ButtonBacklightBrightness extends CustomDialogPreference<AlertDialo
             boolean isSingleValue = !context.getResources().getBoolean(
                     com.evervolv.platform.internal.R.bool.config_deviceHasVariableButtonBrightness);
 
-            int defaultBrightness = context.getResources().getInteger(
-                    com.evervolv.platform.internal.R.integer.config_buttonBrightnessSettingDefault);
+            float defaultBrightness = context.getResources().getFloat(
+                    com.evervolv.platform.internal.R.dimen.config_buttonBrightnessSettingDefaultFloat);
 
             mButtonBrightness = new BrightnessControl(
                     EVSettings.System.BUTTON_BRIGHTNESS, isSingleValue, defaultBrightness);
@@ -146,7 +146,7 @@ public class ButtonBacklightBrightness extends CustomDialogPreference<AlertDialo
         if (mButtonBrightness != null) {
             PreferenceManager.getDefaultSharedPreferences(getContext())
                     .edit()
-                    .putInt(KEY_BUTTON_BACKLIGHT, mButtonBrightness.getBrightness(false))
+                    .putFloat(KEY_BUTTON_BACKLIGHT, mButtonBrightness.getBrightness(false))
                     .apply();
         }
 
@@ -200,18 +200,18 @@ public class ButtonBacklightBrightness extends CustomDialogPreference<AlertDialo
                 || DeviceUtils.hasMenuKey(context)
                 || DeviceUtils.hasAssistKey(context)
                 || DeviceUtils.hasAppSwitchKey(context);
-        boolean hasBacklight = res.getInteger(
-                com.evervolv.platform.internal.R.integer.config_buttonBrightnessSettingDefault) > 0;
+        boolean hasBacklight = res.getFloat(
+                com.evervolv.platform.internal.R.dimen.config_buttonBrightnessSettingDefaultFloat) > 0.0f;
 
         return hasBacklightKey && hasBacklight;
     }
 
     public void updateSummary() {
         if (mButtonBrightness != null) {
-            int buttonBrightness = mButtonBrightness.getBrightness(true);
+            float buttonBrightness = mButtonBrightness.getBrightness(true);
             int timeout = getTimeout();
 
-            if (buttonBrightness == 0) {
+            if (buttonBrightness == 0.0f) {
                 setSummary(R.string.backlight_summary_disabled);
             } else if (timeout == 0) {
                 setSummary(R.string.backlight_timeout_unlimited);
@@ -246,19 +246,19 @@ public class ButtonBacklightBrightness extends CustomDialogPreference<AlertDialo
         Window window = getDialog().getWindow();
         LayoutParams params = window.getAttributes();
         if (mActiveControl != null) {
-            params.buttonBrightness = (float) mActiveControl.getBrightness(false) / 255.0f;
+            params.buttonBrightness = mActiveControl.getBrightness(false);
         } else {
-            params.buttonBrightness = -1;
+            params.buttonBrightness = -1.0f;
         }
         window.setAttributes(params);
     }
 
     private void updateTimeoutEnabledState() {
-        int buttonBrightness = mButtonBrightness != null
-                ? mButtonBrightness.getBrightness(false) : 0;
+        float buttonBrightness = mButtonBrightness != null
+                ? mButtonBrightness.getBrightness(false) : 0.0f;
         int count = mTimeoutContainer.getChildCount();
         for (int i = 0; i < count; i++) {
-            mTimeoutContainer.getChildAt(i).setEnabled(buttonBrightness != 0);
+            mTimeoutContainer.getChildAt(i).setEnabled(buttonBrightness != 0.0f);
         }
     }
 
@@ -287,7 +287,7 @@ public class ButtonBacklightBrightness extends CustomDialogPreference<AlertDialo
 
     private static class SavedState extends BaseSavedState {
         int timeout;
-        int button;
+        float button;
 
         public SavedState(Parcelable superState) {
             super(superState);
@@ -296,14 +296,14 @@ public class ButtonBacklightBrightness extends CustomDialogPreference<AlertDialo
         public SavedState(Parcel source) {
             super(source);
             timeout = source.readInt();
-            button = source.readInt();
+            button = source.readFloat();
         }
 
         @Override
         public void writeToParcel(Parcel dest, int flags) {
             super.writeToParcel(dest, flags);
             dest.writeInt(timeout);
-            dest.writeInt(button);
+            dest.writeFloat(button);
         }
 
         public static final Parcelable.Creator<SavedState> CREATOR =
@@ -323,53 +323,53 @@ public class ButtonBacklightBrightness extends CustomDialogPreference<AlertDialo
             SeekBar.OnSeekBarChangeListener, CheckBox.OnCheckedChangeListener {
         private String mSetting;
         private boolean mIsSingleValue;
-        private int mDefaultBrightness;
+        private float mDefaultBrightness;
         private CheckBox mCheckBox;
         private SeekBar mSeekBar;
         private TextView mValue;
 
-        public BrightnessControl(String setting, boolean singleValue, int defaultBrightness) {
+        public BrightnessControl(String setting, boolean singleValue, float defaultBrightness) {
             mSetting = setting;
             mIsSingleValue = singleValue;
             mDefaultBrightness = defaultBrightness;
         }
 
         public BrightnessControl(String setting, boolean singleValue) {
-            this(setting, singleValue, 255);
+            this(setting, singleValue, 1.0f);
         }
 
         public void init(ViewGroup container) {
-            int brightness = getBrightness(true);
+            float brightness = getBrightness(true);
 
             if (mIsSingleValue) {
                 container.findViewById(R.id.seekbar_container).setVisibility(View.GONE);
                 mCheckBox = (CheckBox) container.findViewById(R.id.backlight_switch);
-                mCheckBox.setChecked(brightness != 0);
+                mCheckBox.setChecked(brightness != 0.0f);
                 mCheckBox.setOnCheckedChangeListener(this);
             } else {
                 container.findViewById(R.id.checkbox_container).setVisibility(View.GONE);
                 mSeekBar = (SeekBar) container.findViewById(R.id.seekbar);
                 mValue = (TextView) container.findViewById(R.id.value);
 
-                mSeekBar.setMax(255);
-                mSeekBar.setProgress(brightness);
+                mSeekBar.setMax(100);
+                mSeekBar.setProgress((int)(brightness * 100.0f));
                 mSeekBar.setOnSeekBarChangeListener(this);
             }
 
-            handleBrightnessUpdate(brightness);
+            handleBrightnessUpdate((int)(brightness * 100.0f));
         }
 
-        public int getBrightness(boolean persisted) {
+        public float getBrightness(boolean persisted) {
             if (mCheckBox != null && !persisted) {
-                return mCheckBox.isChecked() ? mDefaultBrightness : 0;
+                return mCheckBox.isChecked() ? mDefaultBrightness : 0.0f;
             } else if (mSeekBar != null && !persisted) {
-                return mSeekBar.getProgress();
+                return mSeekBar.getProgress() / 100.0f;
             }
-            return EVSettings.System.getInt(mResolver, mSetting, mDefaultBrightness);
+            return EVSettings.System.getFloat(mResolver, mSetting, mDefaultBrightness);
         }
 
         public void applyBrightness() {
-            EVSettings.System.putInt(mResolver, mSetting, getBrightness(false));
+            EVSettings.System.getFloat(mResolver, mSetting, getBrightness(false));
         }
 
         /* Behaviors when it's a seekbar */
@@ -396,11 +396,11 @@ public class ButtonBacklightBrightness extends CustomDialogPreference<AlertDialo
             updateTimeoutEnabledState();
         }
 
-        public void setBrightness(int value) {
+        public void setBrightness(float value) {
             if (mIsSingleValue) {
-                mCheckBox.setChecked(value != 0);
+                mCheckBox.setChecked(value != 0.0f);
             } else {
-                mSeekBar.setProgress(value);
+                mSeekBar.setProgress((int)(value * 100.0f));
             }
         }
 
@@ -411,7 +411,7 @@ public class ButtonBacklightBrightness extends CustomDialogPreference<AlertDialo
         private void handleBrightnessUpdate(int brightness) {
             updateBrightnessPreview();
             if (mValue != null) {
-                mValue.setText(String.format("%d%%", (int)((brightness * 100) / 255)));
+                mValue.setText(String.format("%d%%", brightness));
             }
             updateTimeoutEnabledState();
         }
