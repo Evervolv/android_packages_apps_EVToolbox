@@ -103,4 +103,16 @@ public class DeviceUtils {
     public static boolean canWakeUsingVolumeKeys(Context context) {
         return (getDeviceWakeKeys(context) & KEY_MASK_VOLUME) != 0;
     }
+
+    /* returns whether the device supports button backlight adjusment or not. */
+    public static boolean hasButtonBacklightSupport(Context context) {
+        final boolean buttonBrightnessControlSupported = context.getResources().getInteger(
+                com.evervolv.platform.internal.R.integer
+                        .config_deviceSupportsButtonBrightnessControl) != 0;
+
+        // All hardware keys besides volume and camera can possibly have a backlight
+        return buttonBrightnessControlSupported
+                && (hasHomeKey(context) || hasBackKey(context) || hasMenuKey(context)
+                || hasAssistKey(context) || hasAppSwitchKey(context));
+    }
 }

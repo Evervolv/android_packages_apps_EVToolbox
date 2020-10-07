@@ -44,6 +44,7 @@ import evervolv.provider.EVSettings;
 
 public class ButtonBacklightBrightness extends CustomDialogPreference<AlertDialog> implements
         SeekBar.OnSeekBarChangeListener {
+    private static final int BUTTON_BRIGHTNESS_TOGGLE_MODE_ONLY = 1;
     private static final int DEFAULT_BUTTON_TIMEOUT = 5;
 
     public static final String KEY_BUTTON_BACKLIGHT = "pre_navbar_button_backlight";
@@ -66,9 +67,10 @@ public class ButtonBacklightBrightness extends CustomDialogPreference<AlertDialo
 
         setDialogLayoutResource(R.layout.button_backlight);
 
-        if (isButtonSupported(context)) {
-            boolean isSingleValue = !context.getResources().getBoolean(
-                    com.evervolv.platform.internal.R.bool.config_deviceHasVariableButtonBrightness);
+        if (DeviceUtils.hasButtonBacklightSupport(context)) {
+            final boolean isSingleValue = BUTTON_BRIGHTNESS_TOGGLE_MODE_ONLY ==
+                    context.getResources().getInteger(com.evervolv.platform.internal.R.integer
+                            .config_deviceSupportsButtonBrightnessControl);
 
             float defaultBrightness = context.getResources().getFloat(
                     com.evervolv.platform.internal.R.dimen.config_buttonBrightnessSettingDefaultFloat);
@@ -190,20 +192,6 @@ public class ButtonBacklightBrightness extends CustomDialogPreference<AlertDialo
         if (mButtonBrightness != null) {
             mButtonBrightness.setBrightness(myState.button);
         }
-    }
-
-    public static boolean isButtonSupported(Context context) {
-        final Resources res = context.getResources();
-        // All hardware keys besides volume and camera can possibly have a backlight
-        boolean hasBacklightKey = DeviceUtils.hasHomeKey(context)
-                || DeviceUtils.hasBackKey(context)
-                || DeviceUtils.hasMenuKey(context)
-                || DeviceUtils.hasAssistKey(context)
-                || DeviceUtils.hasAppSwitchKey(context);
-        boolean hasBacklight = res.getFloat(
-                com.evervolv.platform.internal.R.dimen.config_buttonBrightnessSettingDefaultFloat) > 0.0f;
-
-        return hasBacklightKey && hasBacklight;
     }
 
     public void updateSummary() {
