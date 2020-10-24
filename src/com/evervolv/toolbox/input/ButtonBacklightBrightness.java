@@ -68,10 +68,10 @@ public class ButtonBacklightBrightness extends CustomDialogPreference<AlertDialo
 
         if (isButtonSupported(context)) {
             boolean isSingleValue = !context.getResources().getBoolean(
-                    com.android.internal.R.bool.config_deviceHasVariableButtonBrightness);
+                    com.evervolv.platform.internal.R.bool.config_deviceHasVariableButtonBrightness);
 
             int defaultBrightness = context.getResources().getInteger(
-                    com.android.internal.R.integer.config_buttonBrightnessSettingDefault);
+                    com.evervolv.platform.internal.R.integer.config_buttonBrightnessSettingDefault);
 
             mButtonBrightness = new BrightnessControl(
                     EVSettings.System.BUTTON_BRIGHTNESS, isSingleValue, defaultBrightness);
@@ -201,7 +201,7 @@ public class ButtonBacklightBrightness extends CustomDialogPreference<AlertDialo
                 || DeviceUtils.hasAssistKey(context)
                 || DeviceUtils.hasAppSwitchKey(context);
         boolean hasBacklight = res.getInteger(
-                com.android.internal.R.integer.config_buttonBrightnessSettingDefault) > 0;
+                com.evervolv.platform.internal.R.integer.config_buttonBrightnessSettingDefault) > 0;
 
         return hasBacklightKey && hasBacklight;
     }
