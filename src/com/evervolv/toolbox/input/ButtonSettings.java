@@ -22,6 +22,7 @@ import static com.evervolv.internal.util.DeviceKeysConstants.*;
 import android.content.Context;
 import android.content.ContentResolver;
 import android.content.res.Resources;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.RemoteException;
@@ -31,6 +32,7 @@ import androidx.preference.SwitchPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceCategory;
+import androidx.preference.PreferenceManager;
 import androidx.preference.PreferenceGroup;
 import androidx.preference.PreferenceScreen;
 import android.util.Log;
@@ -77,6 +79,8 @@ public class ButtonSettings extends SettingsPreferenceFragment
 
     private static final String KEY_DISABLE_NAV_KEYS = "disable_nav_keys";
 
+    private static final String KEY_SWAP_CAPACITIVE_KEYS = "swap_capacitive_keys";
+
     private static final String CATEGORY_HOME = "home_key";
     private static final String CATEGORY_BACK = "back_key";
     private static final String CATEGORY_MENU = "menu_key";
@@ -104,9 +108,15 @@ public class ButtonSettings extends SettingsPreferenceFragment
     private SwitchPreference mCameraSleepOnRelease;
     private SwitchPreference mCameraLaunch;
 
+    private SwitchPreference mSwapCapacitiveKeys;
+
+    private HardwareManager mHardware;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mHardware = HardwareManager.getInstance(getActivity());
 
         addPreferencesFromResource(R.xml.button_settings);
 
@@ -181,6 +191,7 @@ public class ButtonSettings extends SettingsPreferenceFragment
             // Remove keys that can be provided by the navbar
             updateDisableNavkeysOption();
             updateDisableNavkeysCategories(mDisableNavigationKeys.isChecked());
+            mDisableNavigationKeys.setDisableDependentsState(true);
         } else {
             prefScreen.removePreference(mDisableNavigationKeys);
         }
@@ -296,6 +307,14 @@ public class ButtonSettings extends SettingsPreferenceFragment
             }
         } else {
             prefScreen.removePreference(volumeCategory);
+        }
+
+        mSwapCapacitiveKeys = findPreference(KEY_SWAP_CAPACITIVE_KEYS);
+        if (mSwapCapacitiveKeys != null && !isKeySwapperSupported(getActivity())) {
+            prefScreen.removePreference(mSwapCapacitiveKeys);
+        } else {
+            mSwapCapacitiveKeys.setOnPreferenceChangeListener(this);
+            mSwapCapacitiveKeys.setDependency(KEY_DISABLE_NAV_KEYS);
         }
 
         final ButtonBacklightBrightness backlight = findPreference(KEY_BUTTON_BACKLIGHT);
@@ -429,6 +448,11 @@ public class ButtonSettings extends SettingsPreferenceFragment
         return hardware.isSupported(HardwareManager.FEATURE_KEY_DISABLE);
     }
 
+    private static boolean isKeySwapperSupported(Context context) {
+        HardwareManager hardware = HardwareManager.getInstance(context);
+        return hardware.isSupported(HardwareManager.FEATURE_KEY_SWAP);
+    }
+
     public static void restoreKeyDisabler(Context context) {
         if (!isKeyDisablerSupported(context)) {
             return;
@@ -436,6 +460,18 @@ public class ButtonSettings extends SettingsPreferenceFragment
 
         writeDisableNavkeysOption(context, EVSettings.Secure.getInt(context.getContentResolver(),
                 EVSettings.Secure.DEV_FORCE_SHOW_NAVBAR, 0) != 0);
+    }
+
+    public static void restoreKeySwapper(Context context) {
+        if (!isKeySwapperSupported(context)) {
+            return;
+        }
+
+        final SharedPreferences preferences =
+                PreferenceManager.getDefaultSharedPreferences(context);
+        HardwareManager hardware = HardwareManager.getInstance(context);
+        hardware.set(HardwareManager.FEATURE_KEY_SWAP,
+                preferences.getBoolean(KEY_SWAP_CAPACITIVE_KEYS, false));
     }
 
     @Override
@@ -535,6 +571,10 @@ public class ButtonSettings extends SettingsPreferenceFragment
 
             if (!isKeyDisablerSupported(context)) {
                 result.add(KEY_DISABLE_NAV_KEYS);
+            }
+
+            if (!isKeySwapperSupported(context)) {
+                result.add(KEY_SWAP_CAPACITIVE_KEYS);
             }
 
             if (!DeviceUtils.hasButtonBacklightSupport(context)) {
