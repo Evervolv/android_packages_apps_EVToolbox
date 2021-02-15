@@ -63,7 +63,6 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
 
     private static final String DISABLE_NAV_KEYS = "disable_nav_keys";
 
-    private static final String CATEGORY_POWER = "power_key";
     private static final String CATEGORY_HOME = "home_key";
     private static final String CATEGORY_BACK = "back_key";
     private static final String CATEGORY_MENU = "menu_key";
@@ -106,7 +105,6 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
         final int deviceWakeKeys = res.getInteger(
                 com.evervolv.platform.internal.R.integer.config_deviceHardwareWakeKeys);
 
-        final boolean hasPowerKey = DeviceUtils.hasPowerKey();
         final boolean hasHomeKey = DeviceUtils.hasHomeKey(getActivity());
         final boolean hasBackKey = DeviceUtils.hasBackKey(getActivity());
         final boolean hasMenuKey = DeviceUtils.hasMenuKey(getActivity());
@@ -123,8 +121,6 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
         final boolean showCameraWake = DeviceUtils.canWakeUsingCameraKey(getActivity());
         final boolean showVolumeWake = DeviceUtils.canWakeUsingVolumeKeys(getActivity());
 
-        final PreferenceGroup powerCategory =
-                (PreferenceCategory) prefScreen.findPreference(CATEGORY_POWER);
         final PreferenceGroup homeCategory =
                 (PreferenceCategory) prefScreen.findPreference(CATEGORY_HOME);
         final PreferenceGroup backCategory =
@@ -173,12 +169,6 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
             updateDisableNavkeysCategories(mDisableNavigationKeys.isChecked());
         } else {
             prefScreen.removePreference(mDisableNavigationKeys);
-        }
-
-        boolean advancedReboot = EVSettings.Secure.getInt(
-                resolver, EVSettings.Secure.ADVANCED_REBOOT, 0) == 1;
-        if (!advancedReboot || !hasPowerKey) {
-            prefScreen.removePreference(powerCategory);
         }
 
         if (hasHomeKey) {

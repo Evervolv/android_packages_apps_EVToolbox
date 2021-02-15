@@ -34,11 +34,6 @@ public class DeviceUtils {
                 com.evervolv.platform.internal.R.integer.config_deviceHardwareWakeKeys);
     }
 
-    /* returns whether the device has power key or not. */
-    public static boolean hasPowerKey() {
-        return KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_POWER);
-    }
-
     /* returns whether the device has home key or not. */
     public static boolean hasHomeKey(Context context) {
         return (getDeviceKeys(context) & KEY_MASK_HOME) != 0;
