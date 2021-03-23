@@ -211,20 +211,6 @@
     <string name="touchscreen_gesture_action_volume_down">Lower media volume</string>
     <string name="touchscreen_gesture_action_volume_up">Raise media volume</string>
 
-    <!-- Power: Performance profiles -->
-    <string name="perf_profile_settings_title">Battery saver and performance</string>
-    <string name="perf_profile_settings_summary">Adjust power saving features and device performance</string>
-    <string name="perf_profile_overview_summary">Current profile: <xliff:g id="perf_profile_name">%1$s</xliff:g></string>
-    <string name="perf_profile_category_title">Device performance</string>
-    <string name="perf_profile_title">Performance profile: <xliff:g id="perf_profile_name">%1$s</xliff:g></string>
-    <string name="perf_profile_fail_toast">The performance profile is currently unavailable</string>
-    <string name="power_save_category_title">Battery saving</string>
-    <string name="power_save_title">Extreme power saver</string>
-    <string name="power_save_summary">Restrict device performance and background activity to save power</string>
-    <string name="auto_power_save_title">Automatic power saver</string>
-    <string name="auto_power_save_summary_on">Automatically enable power save mode at %s battery</string>
-    <string name="auto_power_save_summary_off">Do not enable power save mode automatically</string>
-
     <!-- Notification channels -->
     <string name="channel_light_settings_id" translatable="false">light_settings</string>
     <string name="channel_light_settings_name">Light settings preview</string>

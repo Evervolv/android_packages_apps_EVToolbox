@@ -62,12 +62,6 @@
           android:fragment="com.evervolv.toolbox.gestures.TouchscreenGestureSettings"
           evervolv:xmlRes="@xml/touchscreen_gesture_settings" />
 
-    <part android:key="perf_profile_settings"
-          android:title="@string/perf_profile_settings_title"
-          android:summary="@string/perf_profile_settings_summary"
-          android:fragment="com.evervolv.toolbox.power.PerfProfileSettings"
-          evervolv:xmlRes="@xml/perf_profile_settings" />
-
     <part android:key="battery_lights"
           android:title="@string/battery_light_title"
           android:fragment="com.evervolv.toolbox.notificationlight.BatteryLightSettings"
