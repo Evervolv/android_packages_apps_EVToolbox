@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     SPDX-FileCopyrightText: 2012 The CyanogenMod Project
+     SPDX-FileCopyrightText: 2016 The CyanogenMod Project
+     SPDX-FileCopyrightText: 2017-2018,2021 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
 
@@ -19,6 +20,11 @@
         <evervolv.preference.EVSystemSettingSwitchPreference
             android:key="battery_light_pulse"
             android:title="@string/battery_low_pulse_title"
+            android:dependency="battery_light_enabled" />
+
+        <evervolv.preference.EVSystemSettingSwitchPreference
+            android:key="battery_light_full_charge_disabled"
+            android:title="@string/battery_light_full_charge_disabled_title"
             android:dependency="battery_light_enabled" />
 
     </PreferenceCategory>

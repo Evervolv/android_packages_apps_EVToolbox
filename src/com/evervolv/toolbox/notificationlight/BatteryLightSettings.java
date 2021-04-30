@@ -45,17 +45,21 @@ public class BatteryLightSettings extends SettingsPreferenceFragment implements
     private static final String MEDIUM_COLOR_PREF = "medium_color";
     private static final String FULL_COLOR_PREF = "full_color";
     private static final String LIGHT_ENABLED_PREF = "battery_light_enabled";
+    private static final String LIGHT_FULL_CHARGE_DISABLED_PREF =
+            "battery_light_full_charge_disabled";
     private static final String PULSE_ENABLED_PREF = "battery_light_pulse";
     private static final String BRIGHTNESS_PREFERENCE = "battery_light_brightness_level";
     private static final String BRIGHTNESS_ZEN_PREFERENCE = "battery_light_brightness_level_zen";
 
     private static final boolean DEFAULT_LIGHT_ENABLED_PREF = true;
+    private static final boolean DEFAULT_LIGHT_FULL_CHARGE_DISABLED_PREF = true;
     private static final boolean DEFAULT_PULSE_ENABLED_PREF = true;
 
     private ApplicationLightPreference mLowColorPref;
     private ApplicationLightPreference mMediumColorPref;
     private ApplicationLightPreference mFullColorPref;
     private EVSystemSettingMainSwitchPreference mLightEnabledPref;
+    private EVSystemSettingSwitchPreference mLightFullChargeDisabledPref;
     private EVSystemSettingSwitchPreference mPulseEnabledPref;
     private BatteryBrightnessPreference mBatteryBrightnessPref;
     private BatteryBrightnessZenPreference mBatteryBrightnessZenPref;
@@ -93,6 +97,7 @@ public class BatteryLightSettings extends SettingsPreferenceFragment implements
         PreferenceGroup generalPrefs = (PreferenceGroup) prefSet.findPreference(GENERAL_SECTION);
 
         mLightEnabledPref = prefSet.findPreference(LIGHT_ENABLED_PREF);
+        mLightFullChargeDisabledPref = prefSet.findPreference(LIGHT_FULL_CHARGE_DISABLED_PREF);
         mPulseEnabledPref = prefSet.findPreference(PULSE_ENABLED_PREF);
         mBatteryBrightnessPref = prefSet.findPreference(BRIGHTNESS_PREFERENCE);
         mBatteryBrightnessZenPref = prefSet.findPreference(BRIGHTNESS_ZEN_PREFERENCE);
@@ -107,6 +112,7 @@ public class BatteryLightSettings extends SettingsPreferenceFragment implements
         mBatteryBrightness = mBatteryBrightnessPref.getBrightnessSetting();
 
         mLightEnabledPref.setDefaultValue(DEFAULT_LIGHT_ENABLED_PREF);
+        mLightFullChargeDisabledPref.setDefaultValue(DEFAULT_LIGHT_FULL_CHARGE_DISABLED_PREF);
         mPulseEnabledPref.setDefaultValue(DEFAULT_PULSE_ENABLED_PREF);
 
         if (!blinkingLed || segmentedBatteryLed) {
@@ -114,6 +120,7 @@ public class BatteryLightSettings extends SettingsPreferenceFragment implements
         }
 
         if (mMultiColorLed) {
+            generalPrefs.removePreference(mLightFullChargeDisabledPref);
             setHasOptionsMenu(true);
 
             // Low, Medium and full color preferences
@@ -255,9 +262,13 @@ public class BatteryLightSettings extends SettingsPreferenceFragment implements
     protected void resetToDefaults() {
         final Resources res = getResources();
         final boolean batteryLightEnabled = DEFAULT_LIGHT_ENABLED_PREF;
+        final boolean batteryLightFullChargeDisabled = DEFAULT_LIGHT_FULL_CHARGE_DISABLED_PREF;
         final boolean batteryLightPulseEnabled = DEFAULT_PULSE_ENABLED_PREF;
 
         if (mLightEnabledPref != null) mLightEnabledPref.setChecked(batteryLightEnabled);
+        if (mLightFullChargeDisabledPref != null) {
+            mLightFullChargeDisabledPref.setChecked(batteryLightFullChargeDisabled);
+        }
         if (mPulseEnabledPref != null) mPulseEnabledPref.setChecked(batteryLightPulseEnabled);
 
         resetColors();
