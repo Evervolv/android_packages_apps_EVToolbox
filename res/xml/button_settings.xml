@@ -39,18 +39,6 @@
         android:persistent="false" />
 
     <PreferenceCategory
-        android:key="power_key"
-        android:title="@string/power_key_title" >
-
-        <Preference
-            android:key="power_menu"
-            android:title="@string/power_menu_title"
-            android:summary="@string/power_menu_summary"
-            android:fragment="com.evervolv.toolbox.input.PowerMenuActions" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
         android:key="home_key"
         android:title="@string/home_key_title" >
 
