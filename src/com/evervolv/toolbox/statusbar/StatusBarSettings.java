@@ -28,6 +28,7 @@ import android.text.format.DateFormat;
 import android.text.TextUtils;
 import android.view.View;
 
+import evervolv.preference.SystemSettingSwitchPreference;
 import evervolv.provider.EVSettings;
 
 import com.android.settingslib.graph.BatteryMeterDrawableBase;
@@ -46,11 +47,9 @@ public class StatusBarSettings extends SettingsPreferenceFragment
     private static final int PULLDOWN_DIR_RIGHT = 1;
     private static final int PULLDOWN_DIR_LEFT = 2;
 
-    private static final int BATTERY_STYLE_TEXT = 5;
-
     private ListPreference mQuickPulldown;
     private ListPreference mBatteryStyleIcon;
-    private ListPreference mBatteryShowPercent;
+    private SystemSettingSwitchPreference mBatteryShowPercent;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,12 +70,8 @@ public class StatusBarSettings extends SettingsPreferenceFragment
         mBatteryStyleIcon.setSummary(mBatteryStyleIcon.getEntry());
         mBatteryStyleIcon.setOnPreferenceChangeListener(this);
 
-        int batteryPct = Settings.System.getInt(getContext().getContentResolver(),
-                Settings.System.SHOW_BATTERY_PERCENT, 0);
-        mBatteryShowPercent = (ListPreference) findPreference(SHOW_BATTERY_PERCENT);
-        mBatteryShowPercent.setValue(String.valueOf(batteryPct));
-        mBatteryShowPercent.setSummary(mBatteryShowPercent.getEntry());
-        mBatteryShowPercent.setOnPreferenceChangeListener(this);
+        mBatteryShowPercent = (SystemSettingSwitchPreference) findPreference(SHOW_BATTERY_PERCENT);
+        mBatteryShowPercent.setEnabled(batteryStyle != 5 /* BATTERY_STYLE_TEXT */);
     }
 
     @Override
@@ -105,15 +100,7 @@ public class StatusBarSettings extends SettingsPreferenceFragment
                     EVSettings.System.STATUS_BAR_BATTERY_STYLE, value);
             int index = mBatteryStyleIcon.findIndexOfValue((String) newValue);
             mBatteryStyleIcon.setSummary(mBatteryStyleIcon.getEntries()[index]);
-            mBatteryShowPercent.setEnabled(value != BATTERY_STYLE_TEXT);
-            return true;
-        }
-        if (preference == mBatteryShowPercent) {
-            int value = Integer.parseInt((String) newValue);
-            Settings.System.putInt(getContext().getContentResolver(),
-                    Settings.System.SHOW_BATTERY_PERCENT, value);
-            int index = mBatteryShowPercent.findIndexOfValue((String) newValue);
-            mBatteryShowPercent.setSummary(mBatteryShowPercent.getEntries()[index]);
+            mBatteryShowPercent.setEnabled(value != 5 /* BATTERY_STYLE_TEXT */);
             return true;
         }
         return false;
