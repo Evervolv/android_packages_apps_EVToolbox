@@ -84,4 +84,9 @@
           android:fragment="com.evervolv.toolbox.livedisplay.LiveDisplaySettings"
           evervolv:xmlRes="@xml/livedisplay" />
 
+    <part android:key="display_mode"
+          android:title="@string/live_display_color_profile_title"
+          android:fragment="com.evervolv.toolbox.livedisplay.DisplayModePickerFragment"
+          evervolv:xmlRes="@xml/display_mode_settings" />
+
 </parts-catalog>
