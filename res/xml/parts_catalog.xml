@@ -89,4 +89,9 @@
           android:fragment="com.evervolv.toolbox.livedisplay.DisplayModePickerFragment"
           evervolv:xmlRes="@xml/display_mode_settings" />
 
+    <part android:key="advanced_display"
+          android:title="@string/live_display_advanced_title"
+          android:fragment="com.evervolv.toolbox.livedisplay.AdvancedDisplaySettings"
+          evervolv:xmlRes="@xml/advanced_display" />
+
 </parts-catalog>

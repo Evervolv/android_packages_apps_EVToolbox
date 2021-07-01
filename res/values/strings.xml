@@ -339,6 +339,8 @@
     <string name="color_red_title">Red</string>
     <string name="color_green_title">Green</string>
     <string name="color_blue_title">Blue</string>
+    <string name="live_display_advanced_title">Advanced settings</string>
+    <string name="live_display_advanced_summary">Additional features to further enhance the display</string>
 
     <!-- LiveDisplay : Picture Adjustment -->
     <string name="picture_adjustment_title">Picture adjustment</string>

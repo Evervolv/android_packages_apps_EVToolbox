@@ -18,11 +18,6 @@
         android:key="livedisplay"
         android:title="@*evervolv.platform:string/live_display_title">
 
-    <!-- Color mode preview -->
-    <com.android.settingslib.widget.LayoutPreference
-        android:layout="@layout/color_mode_preview"
-        android:selectable="false" />
-
     <ListPreference
             android:key="live_display"
             android:title="@string/live_display_mode"
@@ -41,41 +36,5 @@
             android:title="@string/live_display_outdoor_mode_title"
             android:summary="@string/live_display_outdoor_mode_summary"
             android:defaultValue="@*evervolv.platform:bool/config_defaultAutoOutdoorMode" />
-
-    <PreferenceCategory
-            android:key="advanced"
-            android:title="@string/advanced">
-
-        <!-- RGB display color adjustments -->
-        <com.evervolv.toolbox.livedisplay.DisplayColor
-                android:key="color_calibration"
-                android:title="@string/color_calibration_title"
-                android:dialogTitle="@string/color_calibration_title"
-                android:summary="@string/color_calibration_summary"
-                android:persistent="false"/>
-
-        <!-- HSIC display color adjustments -->
-        <com.evervolv.toolbox.livedisplay.PictureAdjustment
-                android:key="picture_adjustment"
-                android:title="@string/picture_adjustment_title"
-                android:dialogTitle="@string/picture_adjustment_title"
-                android:summary="@string/picture_adjustment_summary"
-                android:persistent="false"/>
-
-        <!-- Adaptive backlight -->
-        <evervolv.preference.EVSystemSettingSwitchPreference
-                android:key="display_low_power"
-                android:title="@string/live_display_low_power_title"
-                android:summary="@string/live_display_low_power_summary"
-                android:defaultValue="@*evervolv.platform:bool/config_defaultCABC" />
-
-        <!-- Color enhancement -->
-        <evervolv.preference.EVSystemSettingSwitchPreference
-                android:key="display_color_enhance"
-                android:title="@string/live_display_enhance_color_title"
-                android:summary="@string/live_display_enhance_color_summary"
-                android:defaultValue="@*evervolv.platform:bool/config_defaultColorEnhancement" />
-
-    </PreferenceCategory>
 
 </PreferenceScreen>

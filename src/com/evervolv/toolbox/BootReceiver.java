@@ -18,13 +18,24 @@
 package com.evervolv.toolbox;
 
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.SharedPreferences;
 import androidx.preference.PreferenceManager;
 
 import com.evervolv.toolbox.gestures.TouchscreenGestureSettings;
 import com.evervolv.toolbox.input.ButtonSettings;
+import com.evervolv.toolbox.livedisplay.AdvancedDisplaySettings;
+
+import evervolv.hardware.LiveDisplayConfig;
+import evervolv.hardware.LiveDisplayManager;
+
+import static evervolv.hardware.LiveDisplayManager.FEATURE_CABC;
+import static evervolv.hardware.LiveDisplayManager.FEATURE_COLOR_ADJUSTMENT;
+import static evervolv.hardware.LiveDisplayManager.FEATURE_COLOR_ENHANCEMENT;
+import static evervolv.hardware.LiveDisplayManager.FEATURE_PICTURE_ADJUSTMENT;
 
 public class BootReceiver extends BroadcastReceiver {
 
@@ -41,6 +52,14 @@ public class BootReceiver extends BroadcastReceiver {
 
         ButtonSettings.restoreKeySwapper(ctx);
         TouchscreenGestureSettings.restoreTouchscreenGestureStates(ctx);
+
+        final boolean advancedDisplay = isAdvancedDisplaySupported(ctx);
+        if (!advancedDisplay) {
+            ctx.getPackageManager().setComponentEnabledSetting(
+                    new ComponentName(ctx, AdvancedDisplaySettings.class.getName()),
+                    PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                    PackageManager.DONT_KILL_APP);
+        }
     }
 
     private boolean hasRestoredTunable(Context context) {
@@ -51,5 +70,17 @@ public class BootReceiver extends BroadcastReceiver {
     private void setRestoredTunable(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         preferences.edit().putBoolean(ONE_TIME_TUNABLE_RESTORE, true).apply();
+    }
+
+    private boolean isAdvancedDisplaySupported(Context context) {
+        final boolean isAvailable = context.getResources().getBoolean(
+                com.evervolv.platform.internal.R.bool.config_enableLiveDisplay);
+        if (!isAvailable) {
+            return false;
+        }
+
+        final LiveDisplayConfig config = LiveDisplayManager.getInstance(context).getConfig();
+        return config.hasFeature(FEATURE_CABC) || config.hasFeature(FEATURE_COLOR_ENHANCEMENT) ||
+                config.hasFeature(FEATURE_PICTURE_ADJUSTMENT) || config.hasFeature(FEATURE_COLOR_ADJUSTMENT);
     }
 }
