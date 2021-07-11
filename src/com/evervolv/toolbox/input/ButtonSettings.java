@@ -72,10 +72,8 @@ public class ButtonSettings extends SettingsPreferenceFragment
     private static final String KEY_APP_SWITCH_PRESS = "button_app_switch_press";
     private static final String KEY_APP_SWITCH_LONG_PRESS = "button_app_switch_long_press";
     private static final String KEY_APP_SWITCH_WAKE_SCREEN = "app_switch_wake_screen";
-    private static final String KEY_VOLUME_PANEL_ON_LEFT = "volume_panel_on_left";
     private static final String KEY_VOLUME_MUSIC_CONTROLS = "volbtn_music_controls";
     private static final String KEY_VOLUME_WAKE_SCREEN = "volume_wake_screen";
-    private static final String KEY_VOLUME_PANEL_EXPANDABLE = "volume_panel_expandable";
 
     private static final String KEY_DISABLE_NAV_KEYS = "disable_nav_keys";
 
@@ -97,9 +95,6 @@ public class ButtonSettings extends SettingsPreferenceFragment
     private ListPreference mAssistLongPressAction;
     private ListPreference mAppSwitchPressAction;
     private ListPreference mAppSwitchLongPressAction;
-
-    private SwitchPreference mVolumePanelOnLeft;
-    private SwitchPreference mVolumePanelExpandable;
 
     private SwitchPreference mDisableNavigationKeys;
     private Handler mHandler;
@@ -289,22 +284,6 @@ public class ButtonSettings extends SettingsPreferenceFragment
             } else {
                 volumeCategory.removePreference(findPreference(KEY_VOLUME_WAKE_SCREEN));
             }
-
-            final boolean volumePanelOnLeft = EVSettings.Secure.getInt(
-                    getContentResolver(), EVSettings.Secure.VOLUME_PANEL_ON_LEFT, 0) != 0;
-            mVolumePanelOnLeft = (SwitchPreference)
-                    prefScreen.findPreference(KEY_VOLUME_PANEL_ON_LEFT);
-            if (mVolumePanelOnLeft != null) {
-                mVolumePanelOnLeft.setChecked(volumePanelOnLeft);
-            }
-
-            final boolean volumePanelExpandable = EVSettings.Secure.getInt(
-                    getContentResolver(), EVSettings.Secure.VOLUME_PANEL_EXPANDABLE, 0) != 0;
-            mVolumePanelExpandable = (SwitchPreference)
-                    prefScreen.findPreference(KEY_VOLUME_PANEL_EXPANDABLE);
-            if (mVolumePanelExpandable != null) {
-                mVolumePanelExpandable.setChecked(volumePanelExpandable);
-            }
         } else {
             prefScreen.removePreference(volumeCategory);
         }
@@ -476,15 +455,7 @@ public class ButtonSettings extends SettingsPreferenceFragment
 
     @Override
     public boolean onPreferenceTreeClick(Preference preference) {
-        if (preference == mVolumePanelOnLeft) {
-            EVSettings.Secure.putInt(getActivity().getContentResolver(),
-                    EVSettings.Secure.VOLUME_PANEL_ON_LEFT, mVolumePanelOnLeft.isChecked() ? 1 : 0);
-            return true;
-        } else if (preference == mVolumePanelExpandable) {
-            EVSettings.Secure.putInt(getActivity().getContentResolver(),
-                    EVSettings.Secure.VOLUME_PANEL_EXPANDABLE, mVolumePanelExpandable.isChecked() ? 1 : 0);
-            return true;
-        } else if (preference == mDisableNavigationKeys) {
+        if (preference == mDisableNavigationKeys) {
             mDisableNavigationKeys.setEnabled(false);
             writeDisableNavkeysOption(getActivity(), mDisableNavigationKeys.isChecked());
             updateDisableNavkeysOption();
@@ -562,9 +533,7 @@ public class ButtonSettings extends SettingsPreferenceFragment
             if (!DeviceUtils.hasVolumeKeys(context)) {
                 result.add(CATEGORY_VOLUME);
                 result.add(KEY_VOLUME_MUSIC_CONTROLS);
-                result.add(KEY_VOLUME_PANEL_ON_LEFT);
                 result.add(KEY_VOLUME_WAKE_SCREEN);
-                result.add(KEY_VOLUME_PANEL_EXPANDABLE);
             } else if (!DeviceUtils.canWakeUsingVolumeKeys(context)) {
                 result.add(KEY_VOLUME_WAKE_SCREEN);
             }
