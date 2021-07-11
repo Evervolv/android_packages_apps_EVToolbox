@@ -109,16 +109,15 @@
                 android:resource="@string/summary_empty" />
         </activity-alias>
 
-        <receiver android:name=".BootReceiver" android:enabled="true">
+        <receiver android:name=".BootReceiver">
             <intent-filter android:priority="2147483647">
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".PartsUpdater" android:enabled="true">
+        <receiver android:name=".PartsUpdater">
             <intent-filter>
                 <action android:name="evervolv.intent.action.UPDATE_PREFERENCE" />
-                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
 
