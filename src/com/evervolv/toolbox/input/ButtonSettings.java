@@ -364,6 +364,9 @@ public class ButtonSettings extends SettingsPreferenceFragment
             handleListChange(mAppSwitchLongPressAction, newValue,
                     EVSettings.System.KEY_APP_SWITCH_LONG_PRESS_ACTION);
             return true;
+        } else if (preference == mSwapCapacitiveKeys) {
+            mHardware.set(HardwareManager.FEATURE_KEY_SWAP, (Boolean) newValue);
+            return true;
         }
         return false;
     }
