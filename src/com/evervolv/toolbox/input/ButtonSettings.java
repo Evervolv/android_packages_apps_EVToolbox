@@ -40,6 +40,7 @@ import android.view.IWindowManager;
 import android.view.WindowManagerGlobal;
 
 import evervolv.hardware.HardwareManager;
+import evervolv.preference.RemotePreference;
 import evervolv.provider.EVSettings;
 
 import com.evervolv.toolbox.R;
@@ -74,6 +75,7 @@ public class ButtonSettings extends SettingsPreferenceFragment
     private static final String KEY_APP_SWITCH_WAKE_SCREEN = "app_switch_wake_screen";
     private static final String KEY_VOLUME_MUSIC_CONTROLS = "volbtn_music_controls";
     private static final String KEY_VOLUME_WAKE_SCREEN = "volume_wake_screen";
+    private static final String KEY_ADDITIONAL_BUTTONS = "additional_buttons";
 
     private static final String KEY_DISABLE_NAV_KEYS = "disable_nav_keys";
 
@@ -86,6 +88,7 @@ public class ButtonSettings extends SettingsPreferenceFragment
     private static final String CATEGORY_APPSWITCH = "app_switch_key";
     private static final String CATEGORY_VOLUME = "volume_keys";
     private static final String CATEGORY_CAMERA = "camera_key";
+    private static final String CATEGORY_EXTRAS = "extras_category";
 
     private ListPreference mHomeLongPressAction;
     private ListPreference mHomeDoubleTapAction;
@@ -154,6 +157,8 @@ public class ButtonSettings extends SettingsPreferenceFragment
                 (PreferenceCategory) prefScreen.findPreference(CATEGORY_VOLUME);
         final PreferenceGroup cameraCategory =
                 (PreferenceCategory) prefScreen.findPreference(CATEGORY_CAMERA);
+        final PreferenceGroup extrasCategory =
+                (PreferenceCategory) prefScreen.findPreference(CATEGORY_EXTRAS);
 
         mHandler = new Handler();
 
@@ -307,6 +312,11 @@ public class ButtonSettings extends SettingsPreferenceFragment
                     com.evervolv.platform.internal.R.bool.config_singleStageCameraKey)) {
                 mCameraSleepOnRelease.setDependency(KEY_CAMERA_WAKE_SCREEN);
             }
+        }
+
+        final RemotePreference additionalButtons = extrasCategory.findPreference(KEY_ADDITIONAL_BUTTONS);
+        if (!additionalButtons.isAvailable()) {
+            prefScreen.removePreference(extrasCategory);
         }
     }
 
