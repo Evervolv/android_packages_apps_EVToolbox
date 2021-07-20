@@ -35,7 +35,7 @@ import evervolv.hardware.DisplayMode;
 import evervolv.hardware.LiveDisplayManager;
 
 import com.android.settingslib.widget.LayoutPreference;
-import com.android.settingslib.widget.RadioButtonPreference;
+import com.android.settingslib.widget.SelectorWithWidgetPreference;
 import com.evervolv.internal.util.ResourceUtils;
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.SettingsPreferenceFragment;
@@ -45,7 +45,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class DisplayModePickerFragment extends SettingsPreferenceFragment implements
-        RadioButtonPreference.OnClickListener {
+        SelectorWithWidgetPreference.OnClickListener {
 
     private static final String COLOR_PROFILE_TITLE = "live_display_color_profile_%s_title";
     private static final String COLOR_PROFILE = "color_profile_";
@@ -88,7 +88,7 @@ public class DisplayModePickerFragment extends SettingsPreferenceFragment implem
         final DisplayMode[] modes = mLiveDisplay.getDisplayModes();
         if (modes != null && modes.length > 0) {
             for (int i = 0; i < modes.length; i++) {
-                RadioButtonPreference pref = new RadioButtonPreference(context);
+                SelectorWithWidgetPreference pref = new SelectorWithWidgetPreference(context);
                 bindPreference(pref, modes[i]);
                 screen.addPreference(pref);
             }
@@ -173,7 +173,7 @@ public class DisplayModePickerFragment extends SettingsPreferenceFragment implem
     }
 
     @Override
-    public void onRadioButtonClicked(RadioButtonPreference selected) {
+    public void onRadioButtonClicked(SelectorWithWidgetPreference selected) {
         final String selectedKey = selected.getKey();
         if (selectedKey.startsWith(COLOR_PROFILE)) {
             String modeId = selectedKey.replaceFirst(COLOR_PROFILE, "");
@@ -186,7 +186,7 @@ public class DisplayModePickerFragment extends SettingsPreferenceFragment implem
         }
     }
 
-    private RadioButtonPreference bindPreference(RadioButtonPreference pref, DisplayMode mode) {
+    private SelectorWithWidgetPreference bindPreference(SelectorWithWidgetPreference pref, DisplayMode mode) {
         final DisplayMode defaultMode = mLiveDisplay.getCurrentDisplayMode() != null
                     ? mLiveDisplay.getCurrentDisplayMode() : mLiveDisplay.getDefaultDisplayMode();
         pref.setTitle(ResourceUtils.getLocalizedString(
@@ -205,8 +205,8 @@ public class DisplayModePickerFragment extends SettingsPreferenceFragment implem
             final int count = screen.getPreferenceCount();
             for (int i = 0; i < count; i++) {
                 final Preference pref = screen.getPreference(i);
-                if (pref instanceof RadioButtonPreference) {
-                    final RadioButtonPreference radioPref = (RadioButtonPreference) pref;
+                if (pref instanceof SelectorWithWidgetPreference) {
+                    final SelectorWithWidgetPreference radioPref = (SelectorWithWidgetPreference) pref;
                     final boolean newCheckedState = TextUtils.equals(pref.getKey(), selectedKey);
                     if (radioPref.isChecked() != newCheckedState) {
                         radioPref.setChecked(TextUtils.equals(pref.getKey(), selectedKey));
@@ -221,8 +221,8 @@ public class DisplayModePickerFragment extends SettingsPreferenceFragment implem
         // If there is only 1 thing on screen, select it.
         if (screen != null && screen.getPreferenceCount() == 1) {
             final Preference onlyPref = screen.getPreference(0);
-            if (onlyPref instanceof RadioButtonPreference) {
-                ((RadioButtonPreference) onlyPref).setChecked(true);
+            if (onlyPref instanceof SelectorWithWidgetPreference) {
+                ((SelectorWithWidgetPreference) onlyPref).setChecked(true);
             }
         }
     }
