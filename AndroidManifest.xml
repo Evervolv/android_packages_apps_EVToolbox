@@ -84,7 +84,6 @@
         <activity-alias
             android:name=".input.ButtonSettings"
             android:label="@string/button_settings_title"
-            android:icon="@drawable/ic_settings_buttons"
             android:targetActivity="PartsActivity">
             <intent-filter>
                 <action android:name="com.android.settings.action.IA_SETTINGS" />
@@ -98,6 +97,12 @@
                 android:name="com.android.settings.category"
                 android:value="com.android.settings.category.ia.system" />
             <meta-data
+                android:name="com.android.settings.icon"
+                android:resource="@drawable/ic_settings_buttons" />
+            <meta-data
+                android:name="com.android.settings.icon_tintable"
+                android:value="true" />
+            <meta-data
                 android:name="com.android.settings.summary"
                 android:value="@string/summary_empty" />
         </activity-alias>
@@ -108,7 +113,6 @@
         <activity-alias
             android:name=".statusbar.StatusBarSettings"
             android:label="@string/status_bar_title"
-            android:icon="@drawable/ic_settings_statusbar"
             android:targetActivity="PartsActivity">
             <intent-filter>
                 <action android:name="com.android.settings.action.IA_SETTINGS" />
@@ -121,6 +125,12 @@
             <meta-data
                 android:name="com.android.settings.category"
                 android:value="com.android.settings.category.ia.system" />
+            <meta-data
+                android:name="com.android.settings.icon"
+                android:resource="@drawable/ic_settings_statusbar" />
+            <meta-data
+                android:name="com.android.settings.icon_tintable"
+                android:value="true" />
             <meta-data
                 android:name="com.android.settings.summary"
                 android:resource="@string/summary_empty" />
