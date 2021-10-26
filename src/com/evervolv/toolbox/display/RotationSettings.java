@@ -19,6 +19,7 @@ package com.evervolv.toolbox.display;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.UserHandle;
 import android.provider.Settings;
 import androidx.preference.SwitchPreference;
 import androidx.preference.CheckBoxPreference;
@@ -67,9 +68,9 @@ public class RotationSettings extends SettingsPreferenceFragment {
         mRotation180Pref = (CheckBoxPreference) prefSet.findPreference(ROTATION_180_PREF);
         mRotation270Pref = (CheckBoxPreference) prefSet.findPreference(ROTATION_270_PREF);
 
-        int mode = Settings.System.getInt(getContentResolver(),
+        int mode = Settings.System.getIntForUser(getContentResolver(),
                 Settings.System.ACCELEROMETER_ROTATION_ANGLES,
-                ROTATION_0_MODE | ROTATION_90_MODE | ROTATION_270_MODE);
+                ROTATION_0_MODE | ROTATION_90_MODE | ROTATION_270_MODE, UserHandle.USER_CURRENT);
 
         mRotation0Pref.setChecked((mode & ROTATION_0_MODE) != 0);
         mRotation90Pref.setChecked((mode & ROTATION_90_MODE) != 0);
@@ -130,8 +131,8 @@ public class RotationSettings extends SettingsPreferenceFragment {
                 mode |= ROTATION_0_MODE;
                 mRotation0Pref.setChecked(true);
             }
-            Settings.System.putInt(getActivity().getContentResolver(),
-                    Settings.System.ACCELEROMETER_ROTATION_ANGLES, mode);
+            Settings.System.putIntForUser(getActivity().getContentResolver(),
+                    Settings.System.ACCELEROMETER_ROTATION_ANGLES, mode, UserHandle.USER_CURRENT);
             return true;
         }
 
