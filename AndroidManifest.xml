@@ -53,6 +53,7 @@
             android:directBootAware="true">
 
         <activity android:name=".PartsActivity"
+                android:exported="true"
                 android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -67,6 +68,7 @@
         <activity-alias
             android:name=".livedisplay.AdvancedDisplaySettings"
             android:label="@string/live_display_advanced_title"
+            android:exported="true"
             android:targetActivity="PartsActivity">
             <intent-filter>
                 <action android:name="com.android.settings.action.IA_SETTINGS" />
@@ -84,6 +86,7 @@
         <activity-alias
             android:name=".input.ButtonSettings"
             android:label="@string/button_settings_title"
+            android:exported="true"
             android:targetActivity="PartsActivity">
             <intent-filter>
                 <action android:name="com.android.settings.action.IA_SETTINGS" />
@@ -113,6 +116,7 @@
         <activity-alias
             android:name=".statusbar.StatusBarSettings"
             android:label="@string/status_bar_title"
+            android:exported="true"
             android:targetActivity="PartsActivity">
             <intent-filter>
                 <action android:name="com.android.settings.action.IA_SETTINGS" />
@@ -136,13 +140,15 @@
                 android:resource="@string/summary_empty" />
         </activity-alias>
 
-        <receiver android:name=".BootReceiver">
+        <receiver android:name=".BootReceiver"
+            android:exported="true">
             <intent-filter android:priority="2147483647">
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".PartsUpdater">
+        <receiver android:name=".PartsUpdater"
+            android:exported="true">
             <intent-filter>
                 <action android:name="evervolv.intent.action.UPDATE_PREFERENCE" />
             </intent-filter>
