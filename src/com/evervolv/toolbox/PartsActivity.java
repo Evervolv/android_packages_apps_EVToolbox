@@ -17,16 +17,13 @@
 
 package com.evervolv.toolbox;
 
+import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.nfc.Tag;
 import android.os.Bundle;
-import androidx.fragment.app.FragmentActivity;
-import androidx.preference.PreferenceFragment;
-import androidx.preference.Preference;
-import androidx.preference.PreferenceScreen;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
@@ -34,11 +31,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import com.evervolv.toolbox.widget.SwitchBar;
+import androidx.fragment.app.FragmentActivity;
+import androidx.preference.PreferenceFragment;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceScreen;
+
+import com.android.settingslib.collapsingtoolbar.CollapsingToolbarBaseActivity;
+
+import com.android.settingslib.widget.MainSwitchBar;
+
 import com.evervolv.internal.parts.PartInfo;
 import com.evervolv.internal.parts.PartsList;
 
-public class PartsActivity extends FragmentActivity implements
+public class PartsActivity extends CollapsingToolbarBaseActivity implements
         PreferenceFragment.OnPreferenceStartFragmentCallback,
         PreferenceFragment.OnPreferenceStartScreenCallback {
 
@@ -112,7 +117,10 @@ public class PartsActivity extends FragmentActivity implements
 
         switchToFragment(fragmentClass, initialArgs, -1, mInitialTitle);
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        final ActionBar actionBar = getActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @Override
@@ -243,8 +251,8 @@ public class PartsActivity extends FragmentActivity implements
         findViewById(R.id.button_bar).setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
-    public SwitchBar getSwitchBar() {
-        return (SwitchBar) findViewById(R.id.switch_bar);
+    public MainSwitchBar getSwitchBar() {
+        return (MainSwitchBar) findViewById(R.id.main_switch_bar);
     }
 
     private void setTitleFromIntent(Intent intent, PartInfo part) {

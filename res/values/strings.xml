@@ -32,6 +32,7 @@
     <string name="back">Back</string>
     <string name="finish">Finish</string>
     <string name="next">Next</string>
+    <string name="previous">Previous</string>
     <string name="on">On</string>
     <string name="off">Off</string>
     <string name="yes">Yes</string>
@@ -46,6 +47,7 @@
 
     <!-- Hardware key -->
     <string name="button_settings_title">Buttons</string>
+    <string name="capacitive_keys_title">Hardware buttons</string>
 
     <!-- Navigation Bar -->
     <string name="disable_navkeys_title">On-screen navigation bar</string>
@@ -114,7 +116,7 @@
     <string name="long_screen_settings_no_apps">No apps</string>
 
     <!-- Display : Rotation  -->
-    <string name="accelerometer_title">Auto-rotate screen</string>
+    <string name="accelerometer_title">Use auto-rotation</string>
     <string name="display_rotation_title">Rotation settings</string>
     <string name="display_rotation_enabled">Auto-rotation is enabled</string>
     <string name="display_rotation_disabled">Auto-rotation is disabled</string>
@@ -127,6 +129,7 @@
 
     <!-- Status bar -->
     <string name="status_bar_title">Status bar</string>
+    <string name="status_bar_quick_settings_title">Quick settings</string>
     <string name="status_bar_quick_qs_pulldown_title">Quick pulldown</string>
     <string name="status_bar_quick_qs_pulldown_summary">%1$s edge of the status bar pulls down Quick Settings</string>
     <string name="status_bar_quick_qs_pulldown_summary_left">Left</string>
@@ -296,6 +299,8 @@
     <string name="backlight_summary_enabled">Enabled</string>
 
     <!-- LiveDisplay -->
+    <string name="live_display_color_category_title">Color</string>
+    <string name="live_display_advanced_category_title">Advanced</string>
     <string name="live_display_summary">Optimize your screen based on time of day and ambient conditions to improve readability and reduce eyestrain</string>
     <string name="live_display_mode">Display mode</string>
     <string name="live_display_color_temperature_title">Color temperature</string>
@@ -337,6 +342,7 @@
     <string name="color_red_title">Red</string>
     <string name="color_green_title">Green</string>
     <string name="color_blue_title">Blue</string>
+    <string name="live_display_color_profile_preview">Color preview</string>
 
     <!-- LiveDisplay : Picture Adjustment -->
     <string name="picture_adjustment_title">Picture adjustment</string>

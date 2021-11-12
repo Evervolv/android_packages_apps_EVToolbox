@@ -19,7 +19,7 @@
     android:key="rotation"
     android:title="@string/display_rotation_title">
 
-    <SwitchPreference
+    <com.android.settingslib.widget.MainSwitchPreference
         android:key="accelerometer"
         android:title="@string/accelerometer_title" />
 

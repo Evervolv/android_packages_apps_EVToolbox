@@ -15,8 +15,8 @@
      limitations under the License.
 -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ListPreference
         android:key="network_traffic_mode"

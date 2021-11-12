@@ -119,7 +119,7 @@ public class LiveDisplaySettings extends SettingsPreferenceFragment implements S
 
         addPreferencesFromResource(R.xml.livedisplay);
 
-        PreferenceScreen liveDisplayPrefs = findPreference(KEY_SCREEN_LIVE_DISPLAY);
+        PreferenceCategory liveDisplayPrefs = findPreference(KEY_SCREEN_LIVE_DISPLAY);
 
         PreferenceCategory advancedPrefs = findPreference(KEY_CATEGORY_ADVANCED);
 

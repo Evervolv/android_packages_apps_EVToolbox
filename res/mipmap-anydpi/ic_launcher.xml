@@ -14,7 +14,7 @@
      limitations under the License.
 -->
 <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
-    <background android:drawable="@*android:color/accent_device_default_light"/>
+    <background android:drawable="@color/icon_launcher_setting_color"/>
     <foreground android:drawable="@mipmap/ic_launcher_settings"/>
 </adaptive-icon>
 

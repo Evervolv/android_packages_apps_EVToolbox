@@ -17,7 +17,10 @@
 */
 -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:androidprv="http://schemas.android.com/apk/prv/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/container_material"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -27,42 +30,17 @@
     <FrameLayout android:id="@+id/pinned_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone" />
+        android:background="?android:attr/windowBackground"
+        android:elevation="1dp"
+        android:visibility="gone"/>
 
     <FrameLayout
         android:id="@android:id/list_container"
         android:layout_height="0px"
         android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:paddingStart="@dimen/settings_side_margin"
-        android:paddingEnd="@dimen/settings_side_margin">
-
-        <ListView android:id="@+id/backup_list"
-            style="@style/PreferenceFragmentListSinglePane"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingTop="@dimen/dashboard_padding_top"
-            android:paddingBottom="@dimen/dashboard_padding_bottom"
-            android:scrollbarStyle="@*android:integer/preference_fragment_scrollbarStyle"
-            android:clipToPadding="false"
-            android:drawSelectorOnTop="false"
-            android:elevation="@dimen/dashboard_category_elevation"
-            android:visibility="gone"
-            android:scrollbarAlwaysDrawVerticalTrack="true" />
+        android:layout_width="match_parent">
 
         <include layout="@layout/loading_container" />
-
-        <com.evervolv.toolbox.widget.FloatingActionButton
-            android:id="@+id/fab"
-            android:visibility="gone"
-            android:clickable="true"
-            android:layout_width="@dimen/fab_size"
-            android:layout_height="@dimen/fab_size"
-            android:layout_gravity="bottom|end"
-            android:layout_marginEnd="@dimen/fab_margin"
-            android:layout_marginBottom="@dimen/fab_margin"
-            android:elevation="@dimen/fab_elevation"
-            android:background="@drawable/fab_background" />
 
     </FrameLayout>
 
@@ -72,46 +50,44 @@
         android:padding="@*android:dimen/preference_fragment_padding_side"
         android:layout_gravity="center"
         android:gravity="center_vertical"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:visibility="gone" />
 
-    <RelativeLayout android:id="@+id/button_bar"
-        android:layout_height="wrap_content"
+    <LinearLayout
+        android:theme="@style/Theme.TabTheme"
+        android:id="@+id/tab_container"
+        android:clipToPadding="true"
+        android:clipChildren="true"
         android:layout_width="match_parent"
-        android:layout_weight="0"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
         android:visibility="gone">
 
-        <Button android:id="@+id/back_button"
-            android:layout_width="150dip"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dip"
-            android:layout_alignParentStart="true"
-            android:text="@*android:string/back_button_label"
-            />
+        <com.google.android.material.tabs.TabLayout
+            android:background="@android:color/transparent"
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layoutDirection="ltr"
+            app:tabMaxWidth="0dp"
+            app:tabGravity="fill"
+            app:tabMode="fixed"
+            app:tabIndicator="@drawable/tabs_indicator_background"
+            app:tabIndicatorColor="?androidprv:attr/colorAccentPrimaryVariant"
+            app:tabSelectedTextColor="@*android:color/accent_device_default"
+            app:tabTextAppearance="@style/TextAppearance.Tab"
+            app:tabTextColor="?android:attr/textColorSecondary"/>
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true">
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-            <Button android:id="@+id/skip_button"
-                android:layout_width="150dip"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dip"
-                android:text="@*android:string/skip_button_label"
-                android:visibility="gone"
-                />
-
-            <Button android:id="@+id/next_button"
-                android:layout_width="150dip"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dip"
-                android:text="@*android:string/next_button_label"
-                />
-
-        </LinearLayout>
-
-    </RelativeLayout>
+        </androidx.viewpager.widget.ViewPager>
+    </LinearLayout>
 
 </LinearLayout>
-

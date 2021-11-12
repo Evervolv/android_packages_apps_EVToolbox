@@ -46,7 +46,7 @@
 
     <application android:label="@string/toolbox_title"
             android:icon="@mipmap/ic_launcher"
-            android:theme="@style/Theme.Settings"
+            android:theme="@style/Theme.SubSettingsBase"
             android:hardwareAccelerated="true"
             android:supportsRtl="true"
             android:defaultToDeviceProtectedStorage="true"

@@ -22,6 +22,7 @@ import androidx.preference.SwitchPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceCategory;
+import androidx.preference.PreferenceGroup;
 import androidx.preference.PreferenceScreen;
 import androidx.preference.Preference.OnPreferenceChangeListener;
 import android.text.format.DateFormat;
@@ -39,13 +40,12 @@ public class StatusBarSettings extends SettingsPreferenceFragment
         implements OnPreferenceChangeListener {
 
     private static final String STATUS_BAR_QUICK_QS_PULLDOWN = "qs_quick_pulldown";
-    private static final String STATUS_BAR_LTE_ICON = "show_lte_fourgee";
     private static final String STATUS_BAR_BATTERY_STYLE = "status_bar_battery_style";
     private static final String SHOW_BATTERY_PERCENT = "status_bar_show_battery_percent";
 
-    private static final int PULLDOWN_DIR_NONE = 0;
-    private static final int PULLDOWN_DIR_RIGHT = 1;
-    private static final int PULLDOWN_DIR_LEFT = 2;
+    private static final String CATEGORY_BATTERY = "status_bar_battery";
+    private static final String CATEGORY_ICONS = "status_bar_icons";
+    private static final String CATEGORY_QUICK_SETTINGS = "status_bar_quick_settings";
 
     private ListPreference mQuickPulldown;
     private ListPreference mBatteryStyleIcon;
@@ -72,6 +72,30 @@ public class StatusBarSettings extends SettingsPreferenceFragment
 
         mBatteryShowPercent = (SystemSettingSwitchPreference) findPreference(SHOW_BATTERY_PERCENT);
         mBatteryShowPercent.setEnabled(batteryStyle != 5 /* BATTERY_STYLE_TEXT */);
+
+        updateCategories() ;
+    }
+
+    private void updateCategories() {
+        final PreferenceScreen prefScreen = getPreferenceScreen();
+
+        final PreferenceGroup quickSettingsCategory =
+                (PreferenceCategory) prefScreen.findPreference(CATEGORY_QUICK_SETTINGS);
+        if (quickSettingsCategory.getPreferenceCount() == 0) {
+            prefScreen.removePreference(quickSettingsCategory);
+        }
+
+        final PreferenceGroup iconsCategory =
+                (PreferenceCategory) prefScreen.findPreference(CATEGORY_ICONS);
+        if (iconsCategory.getPreferenceCount() == 0) {
+            prefScreen.removePreference(iconsCategory);
+        }
+
+        final PreferenceGroup batteryCategory =
+                (PreferenceCategory) prefScreen.findPreference(CATEGORY_BATTERY);
+        if (batteryCategory.getPreferenceCount() == 0) {
+            prefScreen.removePreference(batteryCategory);
+        }
     }
 
     @Override
@@ -108,20 +132,15 @@ public class StatusBarSettings extends SettingsPreferenceFragment
 
     private void updateQuickPulldownSummary(int value) {
         String summary="";
-        switch (value) {
-            case PULLDOWN_DIR_NONE:
-                summary = getResources().getString(
-                    R.string.status_bar_quick_qs_pulldown_off);
-                break;
-
-            case PULLDOWN_DIR_LEFT:
-            case PULLDOWN_DIR_RIGHT:
+        if (value == 0) {
+            summary = getResources().getString(
+                R.string.status_bar_quick_qs_pulldown_off);
+        } else {
                 summary = getResources().getString(
                     R.string.status_bar_quick_qs_pulldown_summary,
-                    getResources().getString(value == PULLDOWN_DIR_LEFT
+                    getResources().getString(value == 2
                         ? R.string.status_bar_quick_qs_pulldown_summary_left
                         : R.string.status_bar_quick_qs_pulldown_summary_right));
-                break;
         }
         mQuickPulldown.setSummary(summary);
     }

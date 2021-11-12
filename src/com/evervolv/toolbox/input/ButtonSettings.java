@@ -81,6 +81,7 @@ public class ButtonSettings extends SettingsPreferenceFragment
 
     private static final String KEY_SWAP_CAPACITIVE_KEYS = "swap_capacitive_keys";
 
+    private static final String CATEGORY_CAPACITIVE = "capacitive_keys";
     private static final String CATEGORY_HOME = "home_key";
     private static final String CATEGORY_BACK = "back_key";
     private static final String CATEGORY_MENU = "menu_key";
@@ -134,6 +135,9 @@ public class ButtonSettings extends SettingsPreferenceFragment
         final boolean hasAppSwitchKey = DeviceUtils.hasAppSwitchKey(getActivity());
         final boolean hasCameraKey = DeviceUtils.hasCameraKey(getActivity());
         final boolean hasVolumeKeys = DeviceUtils.hasVolumeKeys(getActivity());
+        final boolean hasKeyDisabler = isKeyDisablerSupported(getActivity());
+        final boolean hasKeySwapper = isKeySwapperSupported(getActivity());
+        final boolean hasButtonBacklight = DeviceUtils.hasButtonBacklightSupport(getActivity());
 
         final boolean showHomeWake = DeviceUtils.canWakeUsingHomeKey(getActivity());
         final boolean showBackWake = DeviceUtils.canWakeUsingBackKey(getActivity());
@@ -143,6 +147,8 @@ public class ButtonSettings extends SettingsPreferenceFragment
         final boolean showCameraWake = DeviceUtils.canWakeUsingCameraKey(getActivity());
         final boolean showVolumeWake = DeviceUtils.canWakeUsingVolumeKeys(getActivity());
 
+        final PreferenceGroup capacitiveCategory =
+                (PreferenceCategory) prefScreen.findPreference(CATEGORY_CAPACITIVE);
         final PreferenceGroup homeCategory =
                 (PreferenceCategory) prefScreen.findPreference(CATEGORY_HOME);
         final PreferenceGroup backCategory =
@@ -162,9 +168,6 @@ public class ButtonSettings extends SettingsPreferenceFragment
 
         mHandler = new Handler();
 
-        // Force Navigation bar related options
-        mDisableNavigationKeys = (SwitchPreference) findPreference(KEY_DISABLE_NAV_KEYS);
-
         Action defaultHomeLongPressAction = Action.fromIntSafe(res.getInteger(
                 com.android.internal.R.integer.config_longPressOnHomeBehavior));
         Action defaultHomeDoubleTapAction = Action.fromIntSafe(res.getInteger(
@@ -176,24 +179,30 @@ public class ButtonSettings extends SettingsPreferenceFragment
                 EVSettings.System.KEY_HOME_DOUBLE_TAP_ACTION,
                 defaultHomeDoubleTapAction);
 
-        final HardwareManager hardware = HardwareManager.getInstance(getActivity());
-
-        // Only visible on devices that does not have a navigation bar already
-        boolean hasNavigationBar = true;
-        boolean supportsKeyDisabler = isKeyDisablerSupported(getActivity());
-        try {
-            IWindowManager windowManager = WindowManagerGlobal.getWindowManagerService();
-            hasNavigationBar = windowManager.hasNavigationBar(getActivity().getDisplayId());
-        } catch (RemoteException e) {
-            Log.e(TAG, "Error getting navigation bar status");
-        }
-        if (supportsKeyDisabler) {
-            // Remove keys that can be provided by the navbar
+        mDisableNavigationKeys = (SwitchPreference) findPreference(KEY_DISABLE_NAV_KEYS);
+        if (mDisableNavigationKeys != null && !hasKeyDisabler) {
+            capacitiveCategory.removePreference(mDisableNavigationKeys);
+        } else {
             updateDisableNavkeysOption();
             updateDisableNavkeysCategories(mDisableNavigationKeys.isChecked());
             mDisableNavigationKeys.setDisableDependentsState(true);
+        }
+
+        mSwapCapacitiveKeys = findPreference(KEY_SWAP_CAPACITIVE_KEYS);
+        if (mSwapCapacitiveKeys != null && !hasKeySwapper) {
+            capacitiveCategory.removePreference(mSwapCapacitiveKeys);
         } else {
-            prefScreen.removePreference(mDisableNavigationKeys);
+            mSwapCapacitiveKeys.setOnPreferenceChangeListener(this);
+            mSwapCapacitiveKeys.setDependency(KEY_DISABLE_NAV_KEYS);
+        }
+
+        final ButtonBacklightBrightness backlight = findPreference(KEY_BUTTON_BACKLIGHT);
+        if (!hasButtonBacklight) {
+            capacitiveCategory.removePreference(backlight);
+        }
+
+        if (capacitiveCategory.getPreferenceCount() == 0) {
+            prefScreen.removePreference(capacitiveCategory);
         }
 
         if (hasHomeKey) {
@@ -272,6 +281,13 @@ public class ButtonSettings extends SettingsPreferenceFragment
             if (res.getBoolean(com.evervolv.platform.internal.R.bool.config_singleStageCameraKey)) {
                 prefScreen.removePreference(mCameraSleepOnRelease);
             }
+
+            if (mCameraWakeScreen != null) {
+                if (mCameraSleepOnRelease != null && !res.getBoolean(
+                        com.evervolv.platform.internal.R.bool.config_singleStageCameraKey)) {
+                    mCameraSleepOnRelease.setDependency(KEY_CAMERA_WAKE_SCREEN);
+                }
+            }
         } else {
             prefScreen.removePreference(cameraCategory);
         }
@@ -291,27 +307,6 @@ public class ButtonSettings extends SettingsPreferenceFragment
             }
         } else {
             prefScreen.removePreference(volumeCategory);
-        }
-
-        mSwapCapacitiveKeys = findPreference(KEY_SWAP_CAPACITIVE_KEYS);
-        if (mSwapCapacitiveKeys != null && !isKeySwapperSupported(getActivity())) {
-            prefScreen.removePreference(mSwapCapacitiveKeys);
-        } else {
-            mSwapCapacitiveKeys.setOnPreferenceChangeListener(this);
-            mSwapCapacitiveKeys.setDependency(KEY_DISABLE_NAV_KEYS);
-        }
-
-        final ButtonBacklightBrightness backlight = findPreference(KEY_BUTTON_BACKLIGHT);
-        if (!DeviceUtils.hasButtonBacklightSupport(getActivity())
-                /*&& !backlight.isKeyboardSupported(getActivity())*/) {
-            prefScreen.removePreference(backlight);
-        }
-
-        if (mCameraWakeScreen != null) {
-            if (mCameraSleepOnRelease != null && !res.getBoolean(
-                    com.evervolv.platform.internal.R.bool.config_singleStageCameraKey)) {
-                mCameraSleepOnRelease.setDependency(KEY_CAMERA_WAKE_SCREEN);
-            }
         }
 
         final RemotePreference additionalButtons = extrasCategory.findPreference(KEY_ADDITIONAL_BUTTONS);
