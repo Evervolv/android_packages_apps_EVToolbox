@@ -64,24 +64,6 @@
                 android:value="com.evervolv.toolbox.PartsUpdater" />
         </activity>
 
-        <!-- Advanced Display settings (Display category) -->
-        <activity-alias
-            android:name=".livedisplay.AdvancedDisplaySettings"
-            android:label="@string/live_display_advanced_title"
-            android:exported="true"
-            android:targetActivity="PartsActivity">
-            <intent-filter>
-                <action android:name="com.android.settings.action.IA_SETTINGS" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-            <meta-data
-                android:name="com.android.settings.category"
-                android:value="com.android.settings.category.ia.display" />
-            <meta-data
-                android:name="com.android.settings.summary"
-                android:resource="@string/live_display_advanced_summary" />
-        </activity-alias>
-
         <!-- Button settings (System category) -->
         <activity-alias
             android:name=".input.ButtonSettings"
