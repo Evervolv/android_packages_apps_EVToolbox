@@ -137,4 +137,15 @@ public class DisplayModePickerFragment extends SettingsPreferenceFragment implem
         }
     }
 
+    public static final SummaryProvider SUMMARY_PROVIDER = new SummaryProvider() {
+        @Override
+        public String getSummary(Context context, String key) {
+            final HardwareManager mgr = HardwareManager.getInstance(context);
+            final DisplayMode mode = mgr.getCurrentDisplayMode() != null
+                    ? mgr.getCurrentDisplayMode() : mgr.getDefaultDisplayMode();
+            return ResourceUtils.getLocalizedString(
+                    context.getResources(), mode.name, COLOR_PROFILE_TITLE);
+        }
+    };
+
 }
