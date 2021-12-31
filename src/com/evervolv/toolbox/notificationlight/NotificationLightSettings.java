@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2012 The CyanogenMod Project
- *               2017-2020 The LineageOS Project
+ *               2017-2021 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@
 
 package com.evervolv.toolbox.notificationlight;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.NotificationManager;
 import android.content.ContentResolver;
@@ -40,6 +39,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceGroup;
 import androidx.preference.PreferenceScreen;
@@ -47,6 +47,7 @@ import androidx.preference.PreferenceScreen;
 import com.evervolv.internal.notification.LightsCapabilities;
 import com.evervolv.toolbox.widget.PackageListAdapter;
 import com.evervolv.toolbox.widget.PackageListAdapter.PackageItem;
+import com.evervolv.toolbox.widget.SystemSettingMainSwitchPreference;
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.SettingsPreferenceFragment;
 
@@ -84,7 +85,7 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
     private PackageManager mPackageManager;
     private PreferenceGroup mApplicationPrefList;
     private NotificationBrightnessPreference mNotificationBrightnessPref;
-    private SystemSettingSwitchPreference mEnabledPref;
+    private SystemSettingMainSwitchPreference mEnabledPref;
     private EVSystemSettingSwitchPreference mCustomEnabledPref;
     private EVSystemSettingSwitchPreference mScreenOnLightsPref;
     private EVSystemSettingSwitchPreference mAutoGenerateColors;
@@ -134,8 +135,7 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
         mMultiColorLed = LightsCapabilities.supports(
                 context, LightsCapabilities.LIGHTS_RGB_NOTIFICATION_LED);
 
-        mEnabledPref = (SystemSettingSwitchPreference)
-                findPreference(Settings.System.NOTIFICATION_LIGHT_PULSE);
+        mEnabledPref = findPreference(Settings.System.NOTIFICATION_LIGHT_PULSE);
         mEnabledPref.setOnPreferenceChangeListener(this);
 
         mDefaultPref = (ApplicationLightPreference) findPreference(DEFAULT_PREF);

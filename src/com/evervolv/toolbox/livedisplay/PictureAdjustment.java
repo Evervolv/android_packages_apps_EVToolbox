@@ -16,7 +16,6 @@
 
 package com.evervolv.toolbox.livedisplay;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Parcel;
@@ -26,6 +25,8 @@ import android.util.Range;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AlertDialog;
 
 import com.evervolv.toolbox.widget.CustomDialogPreference;
 import com.evervolv.toolbox.widget.IntervalSeekBar;
@@ -79,6 +80,13 @@ public class PictureAdjustment extends CustomDialogPreference<AlertDialog> {
     @Override
     protected void onPrepareDialogBuilder(AlertDialog.Builder builder, DialogInterface.OnClickListener listener) {
         super.onPrepareDialogBuilder(builder, listener);
+
+        builder.setPositiveButton(R.string.dlg_ok,
+                new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
 
         builder.setNeutralButton(R.string.reset,
                 new DialogInterface.OnClickListener() {

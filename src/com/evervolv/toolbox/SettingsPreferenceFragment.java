@@ -19,8 +19,6 @@ package com.evervolv.toolbox;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.DialogFragment;
-import android.app.Fragment;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -39,7 +37,8 @@ import android.widget.Button;
 import android.view.animation.*;
 
 import androidx.annotation.VisibleForTesting;
-import androidx.preference.PreferenceFragment;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceGroup;
 import androidx.preference.PreferenceGroupAdapter;
@@ -48,6 +47,7 @@ import androidx.preference.PreferenceViewHolder;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.settingslib.core.lifecycle.ObservablePreferenceFragment;
 import com.android.settingslib.widget.LayoutPreference;
 
 import com.evervolv.toolbox.widget.CustomDialogPreference;
@@ -64,7 +64,7 @@ import evervolv.preference.SettingsHelper;
 /**
  * Base class for Settings fragments, with some helper functions and dialog management.
  */
-public abstract class SettingsPreferenceFragment extends PreferenceFragment
+public abstract class SettingsPreferenceFragment extends ObservablePreferenceFragment
         implements DialogCreatable, PartsUpdater.Refreshable {
 
 
@@ -578,7 +578,7 @@ public abstract class SettingsPreferenceFragment extends PreferenceFragment
             // Auto-key preferences that don't have a key, so the dialog can find them.
             preference.setKey(UUID.randomUUID().toString());
         }
-        DialogFragment f = null;
+        CustomDialogPreference.CustomPreferenceDialogFragment f = null;
         if (preference instanceof CustomDialogPreference) {
             f = CustomDialogPreference.CustomPreferenceDialogFragment
                     .newInstance(preference.getKey());

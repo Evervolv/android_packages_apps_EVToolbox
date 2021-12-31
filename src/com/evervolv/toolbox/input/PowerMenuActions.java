@@ -37,6 +37,7 @@ import com.evervolv.toolbox.SettingsPreferenceFragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.view.WindowManagerPolicyConstants.NAV_BAR_MODE_2BUTTON;
 import static com.evervolv.internal.util.PowerMenuConstants.*;
 
 public class PowerMenuActions extends SettingsPreferenceFragment {
@@ -64,9 +65,11 @@ public class PowerMenuActions extends SettingsPreferenceFragment {
         mLockPatternUtils = new LockPatternUtils(mContext);
         mUserManager = UserManager.get(mContext);
         mGlobalActionManager = GlobalActionManager.getInstance(mContext);
+        int navBarMode = mContext.getResources().getInteger(
+                com.android.internal.R.integer.config_navBarInteractionMode);
 
         for (String action : PowerMenuConstants.getAllActions()) {
-            if (action.equals(GLOBAL_ACTION_KEY_SCREENSHOT)) {
+            if (action.equals(GLOBAL_ACTION_KEY_SCREENSHOT) && navBarMode != NAV_BAR_MODE_2BUTTON) {
                 mScreenshotPref = (CheckBoxPreference) findPreference(GLOBAL_ACTION_KEY_SCREENSHOT);
             } else if (action.equals(GLOBAL_ACTION_KEY_AIRPLANE)) {
                 mAirplanePref = (CheckBoxPreference) findPreference(GLOBAL_ACTION_KEY_AIRPLANE);

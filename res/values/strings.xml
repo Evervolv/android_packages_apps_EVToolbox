@@ -38,7 +38,6 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="search">Search</string>
-    <string name="search_menu">Search settings</string>
     <string name="disabled">Disabled</string>
     <string name="enabled">Enabled</string>
 
@@ -239,6 +238,7 @@
 
     <!-- Battery light settings -->
     <string name="battery_light_title">Battery light</string>
+    <string name="battery_light_enable_title">Enable battery light</string>
     <string name="battery_low_pulse_title">Pulse if battery low</string>
     <string name="battery_light_list_title">Colors</string>
     <string name="battery_light_low_color_title">Battery low</string>
@@ -249,6 +249,7 @@
 
     <!-- Lights settings screen, notification light settings -->
     <string name="notification_light_title">Notification light</string>
+    <string name="notification_light_enable_title">Enable notification light</string>
     <string name="notification_light_general_title">General</string>
     <string name="notification_light_advanced_title">Advanced</string>
     <string name="notification_light_applist_title">Apps</string>

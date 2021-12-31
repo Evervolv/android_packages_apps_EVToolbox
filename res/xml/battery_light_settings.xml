@@ -18,14 +18,14 @@
         android:key="battery_lights"
         android:title="@string/battery_light_title">
 
+    <com.evervolv.toolbox.widget.EVSystemSettingSwitchPreference
+        android:key="battery_light_enabled"
+        android:title="@string/battery_light_enable_title"
+        android:defaultValue="@bool/def_battery_light_enabled" />
+
     <PreferenceCategory
         android:key="general_section"
         android:title="@string/notification_light_general_title">
-
-        <evervolv.preference.EVSystemSettingSwitchPreference
-            android:key="battery_light_enabled"
-            android:title="@string/battery_light_title"
-            android:defaultValue="@bool/def_battery_light_enabled" />
 
         <evervolv.preference.EVSystemSettingSwitchPreference
             android:key="battery_light_pulse"

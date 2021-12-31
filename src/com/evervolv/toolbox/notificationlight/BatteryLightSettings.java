@@ -29,6 +29,7 @@ import androidx.preference.PreferenceGroup;
 import androidx.preference.PreferenceScreen;
 
 import com.evervolv.internal.notification.LightsCapabilities;
+import com.evervolv.toolbox.widget.EVSystemSettingMainSwitchPreference;
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.SettingsPreferenceFragment;
 
@@ -55,7 +56,7 @@ public class BatteryLightSettings extends SettingsPreferenceFragment implements
     private ApplicationLightPreference mLowColorPref;
     private ApplicationLightPreference mMediumColorPref;
     private ApplicationLightPreference mFullColorPref;
-    private EVSystemSettingSwitchPreference mLightEnabledPref;
+    private EVSystemSettingMainSwitchPreference mLightEnabledPref;
     private EVSystemSettingSwitchPreference mPulseEnabledPref;
     private BatteryBrightnessPreference mBatteryBrightnessPref;
     private BatteryBrightnessZenPreference mBatteryBrightnessZenPref;
@@ -93,8 +94,7 @@ public class BatteryLightSettings extends SettingsPreferenceFragment implements
 
         PreferenceGroup generalPrefs = (PreferenceGroup) prefSet.findPreference(GENERAL_SECTION);
 
-        mLightEnabledPref =
-                (EVSystemSettingSwitchPreference) prefSet.findPreference(LIGHT_ENABLED_PREF);
+        mLightEnabledPref = prefSet.findPreference(LIGHT_ENABLED_PREF);
         mPulseEnabledPref =
                 (EVSystemSettingSwitchPreference) prefSet.findPreference(PULSE_ENABLED_PREF);
         mBatteryBrightnessPref =

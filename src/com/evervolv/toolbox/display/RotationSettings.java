@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2012 The CyanogenMod Project
+ * Copyright (C) 2016 The CyanogenMod Project
+ *               2021 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,17 +22,21 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.UserHandle;
 import android.provider.Settings;
+import android.widget.Switch;
+
 import androidx.preference.CheckBoxPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceScreen;
 
 import com.android.internal.view.RotationPolicy;
 import com.android.settingslib.widget.MainSwitchPreference;
+import com.android.settingslib.widget.OnMainSwitchChangeListener;
 
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.SettingsPreferenceFragment;
 
-public class RotationSettings extends SettingsPreferenceFragment {
+public class RotationSettings extends SettingsPreferenceFragment
+        implements OnMainSwitchChangeListener {
     private static final String TAG = "RotationSettings";
 
     public static final String KEY_ACCELEROMETER = "accelerometer";
@@ -60,7 +65,8 @@ public class RotationSettings extends SettingsPreferenceFragment {
 
         PreferenceScreen prefSet = getPreferenceScreen();
 
-        mAccelerometer = (MainSwitchPreference) findPreference(KEY_ACCELEROMETER);
+        mAccelerometer = findPreference(KEY_ACCELEROMETER);
+        mAccelerometer.addOnSwitchChangeListener(this);
         mAccelerometer.setPersistent(false);
 
         mRotation0Pref = (CheckBoxPreference) prefSet.findPreference(ROTATION_0_PREF);
@@ -89,10 +95,6 @@ public class RotationSettings extends SettingsPreferenceFragment {
     @Override
     public void onResume() {
         super.onResume();
-        updateState();
-    }
-
-    private void updateState() {
         updateAccelerometerRotationSwitch();
     }
 
@@ -119,10 +121,7 @@ public class RotationSettings extends SettingsPreferenceFragment {
 
     @Override
     public boolean onPreferenceTreeClick(Preference preference) {
-        if (preference == mAccelerometer) {
-            RotationPolicy.setRotationLockForAccessibility(getActivity(),
-                    !mAccelerometer.isChecked());
-        } else if (preference == mRotation0Pref ||
+        if (preference == mRotation0Pref ||
                 preference == mRotation90Pref ||
                 preference == mRotation180Pref ||
                 preference == mRotation270Pref) {
@@ -137,6 +136,11 @@ public class RotationSettings extends SettingsPreferenceFragment {
         }
 
         return super.onPreferenceTreeClick(preference);
+    }
+
+    @Override
+    public void onSwitchChanged(Switch switchView, boolean isChecked) {
+        RotationPolicy.setRotationLockForAccessibility(getActivity(), !mAccelerometer.isChecked());
     }
 
     public static final SummaryProvider SUMMARY_PROVIDER = new SummaryProvider() {

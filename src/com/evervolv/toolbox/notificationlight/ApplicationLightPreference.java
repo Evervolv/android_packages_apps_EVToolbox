@@ -16,7 +16,6 @@
 
 package com.evervolv.toolbox.notificationlight;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -29,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.preference.PreferenceViewHolder;
 
 import com.evervolv.internal.notification.LightsCapabilities;
