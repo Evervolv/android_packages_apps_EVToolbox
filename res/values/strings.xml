@@ -198,14 +198,6 @@
     <string name="touchscreen_gesture_action_volume_down">Lower media volume</string>
     <string name="touchscreen_gesture_action_volume_up">Raise media volume</string>
 
-    <!-- Power: Performance profiles -->
-    <string name="perf_profile_settings_title">Performance profiles</string>
-    <string name="perf_profile_settings_summary">Adjust profiles for latency or power savings</string>
-    <string name="perf_profile_overview_summary">Current profile: <xliff:g id="perf_profile_name">%1$s</xliff:g></string>
-    <string name="perf_profile_category_title">Device performance</string>
-    <string name="perf_profile_title">Performance profile</string>
-    <string name="perf_profile_fail_toast">The performance profile is currently unavailable</string>
-
     <!-- Notification channels -->
     <string name="channel_light_settings_id" translatable="false">light_settings</string>
     <string name="channel_light_settings_name">Light settings preview</string>
