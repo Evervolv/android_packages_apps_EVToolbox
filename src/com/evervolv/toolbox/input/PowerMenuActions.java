@@ -17,17 +17,20 @@
 
 package com.evervolv.toolbox.input;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.pm.UserInfo;
 import android.os.Bundle;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.provider.Settings;
+import android.service.controls.ControlsProviderService;
 import androidx.preference.CheckBoxPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceCategory;
 
 import com.android.internal.widget.LockPatternUtils;
+import com.android.settingslib.applications.ServiceListing;
 
 import evervolv.app.GlobalActionManager;
 import evervolv.provider.EVSettings;
@@ -54,6 +57,7 @@ public class PowerMenuActions extends SettingsPreferenceFragment {
     private CheckBoxPreference mUsersPref;
     private CheckBoxPreference mBugReportPref;
     private CheckBoxPreference mEmergencyPref;
+    private CheckBoxPreference mDeviceControlsPref;
 
     private GlobalActionManager mGlobalActionManager;
 
@@ -87,6 +91,8 @@ public class PowerMenuActions extends SettingsPreferenceFragment {
                 mBugReportPref = (CheckBoxPreference) findPreference(GLOBAL_ACTION_KEY_BUGREPORT);
             } else if (action.equals(GLOBAL_ACTION_KEY_EMERGENCY)) {
                 mEmergencyPref = (CheckBoxPreference) findPreference(GLOBAL_ACTION_KEY_EMERGENCY);
+            } else if (action.equals(GLOBAL_ACTION_KEY_DEVICECONTROLS)) {
+                mDeviceControlsPref = (CheckBoxPreference) findPreference(GLOBAL_ACTION_KEY_DEVICECONTROLS);
             }
         }
 
@@ -135,6 +141,23 @@ public class PowerMenuActions extends SettingsPreferenceFragment {
                     GLOBAL_ACTION_KEY_EMERGENCY));
         }
 
+        if (mDeviceControlsPref != null) {
+            mDeviceControlsPref.setChecked(mLineageGlobalActions.userConfigContains(
+                    GLOBAL_ACTION_KEY_DEVICECONTROLS));
+
+            // Enable preference if any device control app is installed
+            ServiceListing serviceListing = new ServiceListing.Builder(mContext)
+                    .setIntentAction(ControlsProviderService.SERVICE_CONTROLS)
+                    .setPermission(Manifest.permission.BIND_CONTROLS)
+                    .setNoun("Controls Provider")
+                    .setSetting("controls_providers")
+                    .setTag("controls_providers")
+                    .build();
+            serviceListing.addCallback(
+                    services -> mDeviceControlsPref.setEnabled(!services.isEmpty()));
+            serviceListing.reload();
+        }
+
         updatePreferences();
     }
 
@@ -169,6 +192,10 @@ public class PowerMenuActions extends SettingsPreferenceFragment {
         } else if (preference == mEmergencyPref) {
             value = mEmergencyPref.isChecked();
             mGlobalActionManager.updateUserConfig(value, GLOBAL_ACTION_KEY_EMERGENCY);
+
+        } else if (preference == mDeviceControlsPref) {
+            value = mDeviceControlsPref.isChecked();
+            mLineageGlobalActions.updateUserConfig(value, GLOBAL_ACTION_KEY_DEVICECONTROLS);
 
         } else {
             return super.onPreferenceTreeClick(preference);
