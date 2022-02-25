@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2014-2015 The CyanogenMod Project
- *               2017-2021 The LineageOS Project
+ *               2017-2022 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@ import android.os.UserManager;
 import android.provider.Settings;
 import androidx.preference.CheckBoxPreference;
 import androidx.preference.Preference;
+import androidx.preference.PreferenceCategory;
 
 import com.android.internal.widget.LockPatternUtils;
 
@@ -33,6 +34,7 @@ import evervolv.provider.EVSettings;
 import com.evervolv.internal.util.PowerMenuConstants;
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.SettingsPreferenceFragment;
+import com.evervolv.toolbox.utils.DeviceUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +44,10 @@ import static com.evervolv.internal.util.PowerMenuConstants.*;
 
 public class PowerMenuActions extends SettingsPreferenceFragment {
     final static String TAG = "PowerMenuActions";
+
+    private static final String CATEGORY_POWER_MENU_ITEMS = "power_menu_items";
+
+    private PreferenceCategory mPowerMenuItemsCategory;
 
     private CheckBoxPreference mScreenshotPref;
     private CheckBoxPreference mAirplanePref;
@@ -68,6 +74,8 @@ public class PowerMenuActions extends SettingsPreferenceFragment {
         int navBarMode = mContext.getResources().getInteger(
                 com.android.internal.R.integer.config_navBarInteractionMode);
 
+        mPowerMenuItemsCategory = findPreference(CATEGORY_POWER_MENU_ITEMS);
+
         for (String action : PowerMenuConstants.getAllActions()) {
             if (action.equals(GLOBAL_ACTION_KEY_SCREENSHOT) && navBarMode != NAV_BAR_MODE_2BUTTON) {
                 mScreenshotPref = (CheckBoxPreference) findPreference(GLOBAL_ACTION_KEY_SCREENSHOT);
@@ -80,6 +88,11 @@ public class PowerMenuActions extends SettingsPreferenceFragment {
             } else if (action.equals(GLOBAL_ACTION_KEY_EMERGENCY)) {
                 mEmergencyPref = (CheckBoxPreference) findPreference(GLOBAL_ACTION_KEY_EMERGENCY);
             }
+        }
+
+        if (!DeviceUtils.isVoiceCapable(getActivity())) {
+            mPowerMenuItemsCategory.removePreference(mEmergencyPref);
+            mEmergencyPref = null;
         }
 
         mLocalUserConfig = mGlobalActionManager.getLocalUserConfig();
@@ -101,7 +114,7 @@ public class PowerMenuActions extends SettingsPreferenceFragment {
 
         if (mUsersPref != null) {
             if (!UserHandle.MU_ENABLED || !UserManager.supportsMultipleUsers()) {
-                getPreferenceScreen().removePreference(findPreference(GLOBAL_ACTION_KEY_USERS));
+                mPowerMenuItemsCategory.removePreference(mUsersPref);
                 mUsersPref = null;
             } else {
                 List<UserInfo> users = mUserManager.getUsers();

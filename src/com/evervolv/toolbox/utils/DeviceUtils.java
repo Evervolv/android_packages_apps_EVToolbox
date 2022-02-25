@@ -17,6 +17,7 @@
 package com.evervolv.toolbox.utils;
 
 import android.content.Context;
+import android.telephony.TelephonyManager;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 
@@ -114,5 +115,13 @@ public class DeviceUtils {
         return buttonBrightnessControlSupported
                 && (hasHomeKey(context) || hasBackKey(context) || hasMenuKey(context)
                 || hasAssistKey(context) || hasAppSwitchKey(context));
+    }
+
+    /**
+     * Returns whether the device is voice-capable (meaning, it is also a phone).
+     */
+    public static boolean isVoiceCapable(Context context) {
+        TelephonyManager telephony = context.getSystemService(TelephonyManager.class);
+        return telephony != null && telephony.isVoiceCapable();
     }
 }
