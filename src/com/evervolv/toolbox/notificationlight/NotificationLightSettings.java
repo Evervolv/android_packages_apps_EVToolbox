@@ -31,9 +31,6 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -74,6 +71,7 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
     private static final String DEFAULT_PREF = "default";
     private static final String MISSED_CALL_PREF = "missed_call";
     private static final String VOICEMAIL_PREF = "voicemail";
+    private static final String ADD_APPS = "custom_apps_add";
 
     public static final int ACTION_TEST = 0;
     public static final int ACTION_DELETE = 1;
@@ -92,8 +90,6 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
     private ApplicationLightPreference mDefaultPref;
     private ApplicationLightPreference mCallPref;
     private ApplicationLightPreference mVoicemailPref;
-    private Menu mMenu;
-    private MenuItem mAddItem;
     private PackageListAdapter mPackageAdapter;
     private String mPackageList;
     private Map<String, Package> mPackages;
@@ -190,7 +186,6 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
         mPackageAdapter = new PackageListAdapter(getActivity());
 
         mPackages = new HashMap<String, Package>();
-        setHasOptionsMenu(true);
 
         if (!mMultiColorLed) {
             resetColors();
@@ -202,6 +197,12 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
         }
 
         watch(Settings.System.getUriFor(Settings.System.NOTIFICATION_LIGHT_PULSE));
+
+        Preference addPreference = prefSet.findPreference(ADD_APPS);
+        addPreference.setOnPreferenceClickListener(preference -> {
+            showDialog(DIALOG_APPS);
+            return true;
+        });
     }
 
     @Override
@@ -291,7 +292,15 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
 
         // Add the Application Preferences
         if (mApplicationPrefList != null) {
-            mApplicationPrefList.removeAll();
+            for (int i = 0; i < mApplicationPrefList.getPreferenceCount();) {
+                Preference pref = mApplicationPrefList.getPreference(i);
+                if (ADD_APPS.equals(pref.getKey())) {
+                    i++;
+                    continue;
+                }
+
+                mApplicationPrefList.removePreference(pref);
+            }
 
             for (Package pkg : mPackages.values()) {
                 try {
@@ -320,9 +329,9 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
     private void maybeDisplayApplicationHint(Context context)
     {
         /* Display a pref explaining how to add apps */
-        if (mApplicationPrefList != null && mApplicationPrefList.getPreferenceCount() == 0) {
+        if (mApplicationPrefList != null && mApplicationPrefList.getPreferenceCount() == 1) {
             String summary = getResources().getString(
-                    R.string.notification_light_no_apps_summary);
+                    R.string.notification_light_add_apps_empty_summary);
             String useCustom = getResources().getString(
                     R.string.notification_light_use_custom);
             Preference pref = new Preference(context);
@@ -501,29 +510,6 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
         }
 
         return true;
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        mMenu = menu;
-        mAddItem = mMenu.add(R.string.add)
-                .setIcon(R.drawable.ic_menu_add)
-                .setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
-    }
-
-    @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        boolean enableAddButton = mEnabledPref.isChecked() && mCustomEnabledPref.isChecked();
-        mAddItem.setVisible(enableAddButton);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item == mAddItem) {
-            showDialog(DIALOG_APPS);
-            return true;
-        }
-        return false;
     }
 
     /**
