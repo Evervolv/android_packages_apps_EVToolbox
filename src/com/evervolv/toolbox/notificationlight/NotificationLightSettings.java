@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2012 The CyanogenMod Project
- *               2017-2021 The LineageOS Project
+ *               2017-2022 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -50,6 +50,7 @@ import com.evervolv.toolbox.SettingsPreferenceFragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -323,6 +324,7 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
             }
 
             maybeDisplayApplicationHint(context);
+            mPackageAdapter.setExcludedPackages(new HashSet<String>(mPackages.keySet()));
         }
     }
 
@@ -398,6 +400,8 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
                 }
             }
         }
+
+        mPackageAdapter.setExcludedPackages(new HashSet<String>(mPackages.keySet()));
 
         return true;
     }
