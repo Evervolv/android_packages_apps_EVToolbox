@@ -105,6 +105,7 @@
     <string name="power_menu_bug_report_unavailable_for_user">Bug reporting is disabled for non-primary users.</string>
     <string name="power_menu_emergency_title">Emergency</string>
     <string name="power_menu_devicecontrols_title">Device controls</string>
+    <string name="power_menu_emergency_affordance_enabled">Emergency affordance is enabled</string>
 
     <!-- Applications: Long screen -->
     <string name="long_screen_settings_title">Full screen apps</string>
