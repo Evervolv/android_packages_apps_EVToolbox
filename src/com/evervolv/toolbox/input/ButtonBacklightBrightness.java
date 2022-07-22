@@ -217,7 +217,8 @@ public class ButtonBacklightBrightness extends CustomDialogPreferenceExt impleme
 
     private int getTimeout() {
         return EVSettings.System.getInt(mResolver,
-                EVSettings.System.BUTTON_BACKLIGHT_TIMEOUT, DEFAULT_BUTTON_TIMEOUT * 1000) / 1000;
+                EVSettings.System.BUTTON_BACKLIGHT_TIMEOUT, DEFAULT_BUTTON_TIMEOUT * 1000)
+                / 1000;
     }
 
     private void applyTimeout(int timeout) {

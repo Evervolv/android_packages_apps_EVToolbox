@@ -120,8 +120,8 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
         PreferenceGroup mGeneralPrefs = (PreferenceGroup) prefSet.findPreference(GENERAL_SECTION);
 
         // Get the system defined default notification color
-        mDefaultColor =
-                resources.getColor(com.android.internal.R.color.config_defaultNotificationColor, null);
+        mDefaultColor = resources.getColor(
+                com.android.internal.R.color.config_defaultNotificationColor, null);
 
         mDefaultLedOn = resources.getInteger(
                 com.android.internal.R.integer.config_defaultNotificationLedOn);
@@ -197,7 +197,8 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
             mGeneralPrefs.removePreference(mAutoGenerateColors);
         } else {
             mAutoGenerateColors.setOnPreferenceChangeListener(this);
-            watch(EVSettings.System.getUriFor(EVSettings.System.NOTIFICATION_LIGHT_COLOR_AUTO));
+            watch(EVSettings.System.getUriFor(
+                    EVSettings.System.NOTIFICATION_LIGHT_COLOR_AUTO));
         }
 
         watch(Settings.System.getUriFor(Settings.System.NOTIFICATION_LIGHT_PULSE));
@@ -365,7 +366,8 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
     }
 
     private boolean parsePackageList() {
-        final String baseString = EVSettings.System.getString(getActivity().getContentResolver(),
+        final String baseString = EVSettings.System.getString(
+                getActivity().getContentResolver(),
                 EVSettings.System.NOTIFICATION_LIGHT_PULSE_CUSTOM_VALUES);
 
         if (TextUtils.equals(mPackageList, baseString)) {
@@ -401,7 +403,7 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
             mPackageList = value;
         }
         EVSettings.System.putString(getActivity().getContentResolver(),
-                                  EVSettings.System.NOTIFICATION_LIGHT_PULSE_CUSTOM_VALUES, value);
+                EVSettings.System.NOTIFICATION_LIGHT_PULSE_CUSTOM_VALUES, value);
     }
 
     /**
@@ -412,25 +414,35 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
      * @param timeon
      * @param timeoff
      */
-    protected void updateValues(String packageName, Integer color, Integer timeon, Integer timeoff) {
+    protected void updateValues(String packageName, Integer color, Integer timeon,
+                                Integer timeoff) {
         ContentResolver resolver = getActivity().getContentResolver();
 
         if (packageName.equals(DEFAULT_PREF)) {
-            EVSettings.System.putInt(resolver, EVSettings.System.NOTIFICATION_LIGHT_PULSE_DEFAULT_COLOR, color);
-            EVSettings.System.putInt(resolver, EVSettings.System.NOTIFICATION_LIGHT_PULSE_DEFAULT_LED_ON, timeon);
-            EVSettings.System.putInt(resolver, EVSettings.System.NOTIFICATION_LIGHT_PULSE_DEFAULT_LED_OFF, timeoff);
+            EVSettings.System.putInt(resolver,
+                    EVSettings.System.NOTIFICATION_LIGHT_PULSE_DEFAULT_COLOR, color);
+            EVSettings.System.putInt(resolver,
+                    EVSettings.System.NOTIFICATION_LIGHT_PULSE_DEFAULT_LED_ON, timeon);
+            EVSettings.System.putInt(resolver,
+                    EVSettings.System.NOTIFICATION_LIGHT_PULSE_DEFAULT_LED_OFF, timeoff);
             refreshDefault();
             return;
         } else if (packageName.equals(MISSED_CALL_PREF)) {
-            EVSettings.System.putInt(resolver, EVSettings.System.NOTIFICATION_LIGHT_PULSE_CALL_COLOR, color);
-            EVSettings.System.putInt(resolver, EVSettings.System.NOTIFICATION_LIGHT_PULSE_CALL_LED_ON, timeon);
-            EVSettings.System.putInt(resolver, EVSettings.System.NOTIFICATION_LIGHT_PULSE_CALL_LED_OFF, timeoff);
+            EVSettings.System.putInt(resolver,
+                    EVSettings.System.NOTIFICATION_LIGHT_PULSE_CALL_COLOR, color);
+            EVSettings.System.putInt(resolver,
+                    EVSettings.System.NOTIFICATION_LIGHT_PULSE_CALL_LED_ON, timeon);
+            EVSettings.System.putInt(resolver,
+                    EVSettings.System.NOTIFICATION_LIGHT_PULSE_CALL_LED_OFF, timeoff);
             refreshDefault();
             return;
         } else if (packageName.equals(VOICEMAIL_PREF)) {
-            EVSettings.System.putInt(resolver, EVSettings.System.NOTIFICATION_LIGHT_PULSE_VMAIL_COLOR, color);
-            EVSettings.System.putInt(resolver, EVSettings.System.NOTIFICATION_LIGHT_PULSE_VMAIL_LED_ON, timeon);
-            EVSettings.System.putInt(resolver, EVSettings.System.NOTIFICATION_LIGHT_PULSE_VMAIL_LED_OFF, timeoff);
+            EVSettings.System.putInt(resolver,
+                    EVSettings.System.NOTIFICATION_LIGHT_PULSE_VMAIL_COLOR, color);
+            EVSettings.System.putInt(resolver,
+                    EVSettings.System.NOTIFICATION_LIGHT_PULSE_VMAIL_LED_ON, timeon);
+            EVSettings.System.putInt(resolver,
+                    EVSettings.System.NOTIFICATION_LIGHT_PULSE_VMAIL_LED_OFF, timeoff);
             refreshDefault();
             return;
         }
@@ -449,9 +461,12 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
         ContentResolver resolver = getActivity().getContentResolver();
 
         // Reset to the framework default colors
-        EVSettings.System.putInt(resolver, EVSettings.System.NOTIFICATION_LIGHT_PULSE_DEFAULT_COLOR, mDefaultColor);
-        EVSettings.System.putInt(resolver, EVSettings.System.NOTIFICATION_LIGHT_PULSE_CALL_COLOR, mDefaultColor);
-        EVSettings.System.putInt(resolver, EVSettings.System.NOTIFICATION_LIGHT_PULSE_VMAIL_COLOR, mDefaultColor);
+        EVSettings.System.putInt(resolver,
+                EVSettings.System.NOTIFICATION_LIGHT_PULSE_DEFAULT_COLOR, mDefaultColor);
+        EVSettings.System.putInt(resolver,
+                EVSettings.System.NOTIFICATION_LIGHT_PULSE_CALL_COLOR, mDefaultColor);
+        EVSettings.System.putInt(resolver,
+                EVSettings.System.NOTIFICATION_LIGHT_PULSE_VMAIL_COLOR, mDefaultColor);
 
         refreshDefault();
     }
