@@ -37,6 +37,7 @@ import android.media.AudioManager;
 import android.media.session.MediaSessionLegacyHelper;
 import android.net.Uri;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
@@ -108,7 +109,7 @@ public class KeyHandler implements DeviceKeyHandler {
         mGestureWakeLock = mPowerManager.newWakeLock(
                 PowerManager.PARTIAL_WAKE_LOCK, "SettingsGestureWakeLock");
 
-        mEventHandler = new EventHandler();
+        mEventHandler = new EventHandler(Looper.getMainLooper());
 
         mCameraManager = mContext.getSystemService(CameraManager.class);
         mCameraManager.registerTorchCallback(new TorchModeCallback(), mEventHandler);
@@ -212,6 +213,11 @@ public class KeyHandler implements DeviceKeyHandler {
     }
 
     private class EventHandler extends Handler {
+
+        public EventHandler(Looper looper) {
+            super(looper);
+        }
+
         @Override
         public void handleMessage(final Message msg) {
             switch (msg.arg1) {

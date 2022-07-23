@@ -27,6 +27,7 @@ import android.content.res.Resources;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.UserHandle;
@@ -172,7 +173,7 @@ public class ButtonSettings extends SettingsPreferenceFragment
         final PreferenceGroup cameraCategory =
                 (PreferenceCategory) prefScreen.findPreference(CATEGORY_CAMERA);
 
-        mHandler = new Handler();
+        mHandler = new Handler(Looper.getMainLooper());
 
         Action defaultHomeLongPressAction = Action.fromIntSafe(res.getInteger(
                 com.android.internal.R.integer.config_longPressOnHomeBehavior));
