@@ -24,11 +24,11 @@ import android.graphics.drawable.Drawable;
  */
 public class AlphaPatternDrawable extends Drawable {
 
-    private int mRectangleSize = 10;
+    private final int mRectangleSize;
 
-    private Paint mPaint = new Paint();
-    private Paint mPaintWhite = new Paint();
-    private Paint mPaintGray = new Paint();
+    private final Paint mPaint = new Paint();
+    private final Paint mPaintWhite = new Paint();
+    private final Paint mPaintGray = new Paint();
 
     private int numRectanglesHorizontal;
     private int numRectanglesVertical;
@@ -73,8 +73,8 @@ public class AlphaPatternDrawable extends Drawable {
         int height = bounds.height();
         int width = bounds.width();
 
-        numRectanglesHorizontal = (int) Math.ceil((width / mRectangleSize));
-        numRectanglesVertical = (int) Math.ceil(height / mRectangleSize);
+        numRectanglesHorizontal = (int) Math.ceil((float) width / mRectangleSize);
+        numRectanglesVertical = (int) Math.ceil((float) height / mRectangleSize);
 
         generatePatternBitmap();
     }

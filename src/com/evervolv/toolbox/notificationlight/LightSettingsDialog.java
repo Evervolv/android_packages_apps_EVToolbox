@@ -1,7 +1,7 @@
 /*
  * SPDX-FileCopyrightText: 2010 Daniel Nilsson
  * SPDX-FileCopyrightText: 2012 The CyanogenMod Project
- * SPDX-FileCopyrightText: 2017-2023 The LineageOS Project
+ * SPDX-FileCopyrightText: 2017-2024 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -52,8 +52,6 @@ public class LightSettingsDialog extends AlertDialog implements
     private final static long LED_UPDATE_DELAY_MS = 250;
 
     private ColorPickerView mColorPicker;
-    private LinearLayout mColorPanel;
-    private View mLightsDialogDivider;
 
     private EditText mHexColorInput;
     private ColorPanelView mNewColor;
@@ -120,14 +118,11 @@ public class LightSettingsDialog extends AlertDialog implements
         mInflater = mContext.getSystemService(LayoutInflater.class);
         View layout = mInflater.inflate(R.layout.dialog_light_settings, null);
 
-        mColorPicker = (ColorPickerView) layout.findViewById(R.id.color_picker_view);
-        mColorPanel = (LinearLayout) layout.findViewById(R.id.color_panel_view);
-        mHexColorInput = (EditText) layout.findViewById(R.id.hex_color_input);
-        mNewColor = (ColorPanelView) layout.findViewById(R.id.color_panel);
-        mLightsDialogDivider = (View) layout.findViewById(R.id.lights_dialog_divider);
-        mPulseSpeedOn = (Spinner) layout.findViewById(R.id.on_spinner);
-        mPulseSpeedOff = (Spinner) layout.findViewById(R.id.off_spinner);
-
+        mColorPicker = layout.findViewById(R.id.color_picker_view);
+        mHexColorInput = layout.findViewById(R.id.hex_color_input);
+        mNewColor = layout.findViewById(R.id.color_panel);
+        mPulseSpeedOn = layout.findViewById(R.id.on_spinner);
+        mPulseSpeedOff = layout.findViewById(R.id.off_spinner);
         mColorPicker.setOnColorChangedListener(this);
         mColorPicker.setColor(color, true);
 
@@ -180,8 +175,10 @@ public class LightSettingsDialog extends AlertDialog implements
         if (!LightsCapabilities.supports(
                 mContext, LightsCapabilities.LIGHTS_RGB_NOTIFICATION_LED)) {
             mColorPicker.setVisibility(View.GONE);
-            mColorPanel.setVisibility(View.GONE);
-            mLightsDialogDivider.setVisibility(View.GONE);
+            LinearLayout colorPanel = layout.findViewById(R.id.color_panel_view);
+            colorPanel.setVisibility(View.GONE);
+            View lightsDialogDivider = layout.findViewById(R.id.lights_dialog_divider);
+            lightsDialogDivider.setVisibility(View.GONE);
         }
 
         mLedBrightness = brightness;
@@ -191,7 +188,7 @@ public class LightSettingsDialog extends AlertDialog implements
         updateLed();
     }
 
-    private AdapterView.OnItemSelectedListener mPulseSelectionListener =
+    private final AdapterView.OnItemSelectedListener mPulseSelectionListener =
             new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -361,16 +358,16 @@ public class LightSettingsDialog extends AlertDialog implements
     }
 
     class PulseSpeedAdapter extends BaseAdapter implements SpinnerAdapter {
-        private ArrayList<Pair<String, Integer>> times;
+        private final ArrayList<Pair<String, Integer>> times;
 
         public PulseSpeedAdapter(int timeNamesResource, int timeValuesResource) {
-            times = new ArrayList<Pair<String, Integer>>();
+            times = new ArrayList<>();
 
             String[] time_names = mContext.getResources().getStringArray(timeNamesResource);
             String[] time_values = mContext.getResources().getStringArray(timeValuesResource);
 
             for(int i = 0; i < time_values.length; ++i) {
-                times.add(new Pair<String, Integer>(time_names[i], Integer.decode(time_values[i])));
+                times.add(new Pair<>(time_names[i], Integer.decode(time_values[i])));
             }
 
         }

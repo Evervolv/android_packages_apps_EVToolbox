@@ -9,7 +9,6 @@ package com.evervolv.toolbox.notificationlight;
 import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -20,10 +19,7 @@ import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.ArraySet;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.view.View;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.preference.Preference;
@@ -86,7 +82,6 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
     private int mDefaultLedOff;
     private PackageManager mPackageManager;
     private PreferenceGroup mApplicationPrefList;
-    private NotificationBrightnessPreference mNotificationBrightnessPref;
     private SystemSettingMainSwitchPreference mEnabledPref;
     private EVSystemSettingSwitchPreference mCustomEnabledPref;
     private EVSystemSettingSwitchPreference mScreenOnLightsPref;
@@ -97,8 +92,6 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
     private PackageListAdapter mPackageAdapter;
     private String mPackageList;
     private Map<String, Package> mPackages;
-    // liblights supports brightness control
-    private boolean mHALAdjustableBrightness;
     // Supports rgb color control
     private boolean mMultiColorLed;
     // Supports blinking
@@ -128,7 +121,8 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
         mDefaultLedOff = resources.getInteger(
                 com.android.internal.R.integer.config_defaultNotificationLedOff);
 
-        mHALAdjustableBrightness = LightsCapabilities.supports(
+        // liblights supports brightness control
+        final boolean halAdjustableBrightness = LightsCapabilities.supports(
                 context, LightsCapabilities.LIGHTS_ADJUSTABLE_NOTIFICATION_LED_BRIGHTNESS);
         mLedCanBlink = LightsCapabilities.blinks(context);
         mMultiColorLed = LightsCapabilities.supports(
@@ -142,11 +136,10 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
         mAutoGenerateColors = findPreference(NOTIFICATION_LIGHT_COLOR_AUTO);
 
         // Advanced light settings
-        mNotificationBrightnessPref = findPreference(NOTIFICATION_LIGHT_BRIGHTNESS_LEVEL);
         mScreenOnLightsPref = findPreference(NOTIFICATION_LIGHT_SCREEN_ON);
         mScreenOnLightsPref.setOnPreferenceChangeListener(this);
         mCustomEnabledPref = findPreference(NOTIFICATION_LIGHT_PULSE_CUSTOM_ENABLE);
-        if (!mMultiColorLed && !mHALAdjustableBrightness) {
+        if (!mMultiColorLed && !halAdjustableBrightness) {
             removePreference(BRIGHTNESS_SECTION);
         }
         if (!mLedCanBlink && !mMultiColorLed) {
@@ -183,7 +176,7 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
             mPackageManager = getActivity().getPackageManager();
             mPackageAdapter = new PackageListAdapter(getActivity());
 
-            mPackages = new HashMap<String, Package>();
+            mPackages = new HashMap<>();
 
             Preference addPreference = prefSet.findPreference(ADD_APPS);
             addPreference.setOnPreferenceClickListener(preference -> {
@@ -296,8 +289,7 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
         }
     }
 
-    private void maybeDisplayApplicationHint(Context context)
-    {
+    private void maybeDisplayApplicationHint(Context context) {
         /* Display a pref explaining how to add apps */
         if (mApplicationPrefList != null && mApplicationPrefList.getPreferenceCount() == 1) {
             String summary = getResources().getString(
@@ -369,13 +361,13 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
             }
         }
 
-        mPackageAdapter.setExcludedPackages(new HashSet<String>(mPackages.keySet()));
+        mPackageAdapter.setExcludedPackages(new HashSet<>(mPackages.keySet()));
 
         return true;
     }
 
     private void savePackageList(boolean preferencesUpdated) {
-        List<String> settings = new ArrayList<String>();
+        List<String> settings = new ArrayList<>();
         for (Package app : mPackages.values()) {
             settings.add(app.toString());
         }
@@ -459,12 +451,9 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
                 .setTitle(R.string.dialog_delete_title)
                 .setMessage(R.string.dialog_delete_message)
                 .setIconAttribute(android.R.attr.alertDialogIcon)
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        removeCustomApplicationPref(key);
-                    }
-                })
+                .setPositiveButton(android.R.string.ok, (dialog, which) ->
+                        removeCustomApplicationPref(key)
+                )
                 .setNegativeButton(android.R.string.cancel, null);
 
         builder.show();
@@ -506,14 +495,11 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
                 builder.setView(list);
                 dialog = builder.create();
 
-                list.setOnItemClickListener(new OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        // Add empty application definition, the user will be able to edit it later
-                        PackageItem info = (PackageItem) parent.getItemAtPosition(position);
-                        addCustomApplicationPref(info.packageName);
-                        dialog.cancel();
-                    }
+                list.setOnItemClickListener((parent, view, position, id1) -> {
+                    // Add empty application definition, the user will be able to edit it later
+                    PackageItem info = (PackageItem) parent.getItemAtPosition(position);
+                    addCustomApplicationPref(info.packageName);
+                    dialog.cancel();
                 });
                 break;
             default:
@@ -558,9 +544,8 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
                 return null;
 
             try {
-                Package item = new Package(app[0], Integer.parseInt(values[0]), Integer
+                return new Package(app[0], Integer.parseInt(values[0]), Integer
                         .parseInt(values[1]), Integer.parseInt(values[2]));
-                return item;
             } catch (NumberFormatException e) {
                 return null;
             }
@@ -568,19 +553,16 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
 
     }
 
-    public static final SummaryProvider SUMMARY_PROVIDER = new SummaryProvider() {
-        @Override
-        public String getSummary(Context context, String key) {
-            if (Settings.System.getInt(context.getContentResolver(),
-                    Settings.System.NOTIFICATION_LIGHT_PULSE, 1) == 1) {
-                if (EVSettings.System.getInt(context.getContentResolver(),
-                        EVSettings.System.NOTIFICATION_LIGHT_COLOR_AUTO, 1) == 1) {
-                    return context.getString(R.string.notification_light_automagic_summary);
-                }
-                return context.getString(R.string.enabled);
+    public static final SummaryProvider SUMMARY_PROVIDER = (context, key) -> {
+        if (Settings.System.getInt(context.getContentResolver(),
+                NOTIFICATION_LIGHT_PULSE, 1) == 1) {
+            if (EVSettings.System.getInt(context.getContentResolver(),
+                    NOTIFICATION_LIGHT_COLOR_AUTO, 1) == 1) {
+                return context.getString(R.string.notification_light_automagic_summary);
             }
-            return context.getString(R.string.disabled);
+            return context.getString(R.string.enabled);
         }
+        return context.getString(R.string.disabled);
     };
 
     public static final Searchable.SearchIndexProvider SEARCH_INDEX_DATA_PROVIDER =
