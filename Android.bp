@@ -41,6 +41,7 @@ android_app {
         "androidx.recyclerview_recyclerview",
         "jsr305",
         "com.evervolv.platform.internal",
+        "PartsPreference",
     ],
 
     required: [
