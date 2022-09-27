@@ -321,8 +321,7 @@ public class ButtonSettings extends SettingsPreferenceFragment
             prefScreen.removePreference(volumeCategory);
         }
 
-        final RemotePreference additionalButtons = extrasCategory.findPreference(KEY_ADDITIONAL_BUTTONS);
-        if (!additionalButtons.isAvailable()) {
+        if (extrasCategory.getPreferenceCount() == 0) {
             prefScreen.removePreference(extrasCategory);
         }
     }
