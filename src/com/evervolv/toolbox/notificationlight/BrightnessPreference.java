@@ -41,7 +41,7 @@ import evervolv.provider.EVSettings;
 
 import com.evervolv.internal.notification.LightsCapabilities;
 import com.evervolv.internal.notification.NotificationHelper;
-import com.evervolv.toolbox.widget.CustomDialogPreference;
+import com.evervolv.settingslib.widget.CustomDialogPreference;
 import com.evervolv.toolbox.R;
 
 public class BrightnessPreference extends CustomDialogPreference<AlertDialog>

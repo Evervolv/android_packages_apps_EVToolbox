@@ -29,8 +29,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 
-import com.evervolv.toolbox.widget.CustomDialogPreference;
-import com.evervolv.toolbox.widget.IntervalSeekBar;
+import com.evervolv.settingslib.widget.CustomDialogPreference;
+import com.evervolv.settingslib.widget.IntervalSeekBar;
 import com.evervolv.toolbox.R;
 
 import java.util.List;

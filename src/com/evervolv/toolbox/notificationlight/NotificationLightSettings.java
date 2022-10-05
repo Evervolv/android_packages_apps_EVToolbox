@@ -45,9 +45,9 @@ import androidx.preference.PreferenceGroup;
 import androidx.preference.PreferenceScreen;
 
 import com.evervolv.internal.notification.LightsCapabilities;
+import com.evervolv.settingslib.widget.SystemSettingMainSwitchPreference;
 import com.evervolv.toolbox.widget.PackageListAdapter;
 import com.evervolv.toolbox.widget.PackageListAdapter.PackageItem;
-import com.evervolv.toolbox.widget.SystemSettingMainSwitchPreference;
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.SettingsPreferenceFragment;
 

@@ -32,7 +32,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.preference.PreferenceViewHolder;
 
 import com.evervolv.internal.notification.LightsCapabilities;
-import com.evervolv.toolbox.widget.CustomDialogPreference;
+import com.evervolv.settingslib.widget.CustomDialogPreference;
 import com.evervolv.toolbox.R;
 
 public class ApplicationLightPreference extends CustomDialogPreference<LightSettingsDialog>

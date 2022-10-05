@@ -14,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.evervolv.toolbox.livedisplay;
 
 import android.content.Context;
@@ -21,15 +22,11 @@ import android.content.res.Resources;
 import android.hardware.display.ColorDisplayManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.ArraySet;
-import android.util.Log;
 
-import androidx.preference.ListPreference;
+import androidx.preference.DropDownPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceCategory;
-import androidx.preference.PreferenceScreen;
-import androidx.preference.SwitchPreference;
 
 import com.android.internal.util.ArrayUtils;
 
@@ -38,22 +35,16 @@ import com.evervolv.toolbox.SettingsPreferenceFragment;
 import com.evervolv.toolbox.search.BaseSearchIndexProvider;
 import com.evervolv.toolbox.search.SearchIndexableRaw;
 import com.evervolv.toolbox.search.Searchable;
-import com.evervolv.toolbox.utils.ResourceUtils;
 import com.evervolv.toolbox.widget.SettingsHelper;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 
-import evervolv.hardware.DisplayMode;
 import evervolv.hardware.LiveDisplayConfig;
-import evervolv.hardware.HardwareManager;
 import evervolv.hardware.LiveDisplayManager;
 import evervolv.provider.EVSettings;
 
-import static evervolv.hardware.LiveDisplayManager.FEATURE_CABC;
 import static evervolv.hardware.LiveDisplayManager.FEATURE_COLOR_ADJUSTMENT;
-import static evervolv.hardware.LiveDisplayManager.FEATURE_COLOR_ENHANCEMENT;
 import static evervolv.hardware.LiveDisplayManager.FEATURE_PICTURE_ADJUSTMENT;
 import static evervolv.hardware.LiveDisplayManager.MODE_AUTO;
 import static evervolv.hardware.LiveDisplayManager.MODE_OFF;
@@ -67,16 +58,10 @@ public class LiveDisplaySettings extends SettingsPreferenceFragment implements S
     private static final String TAG = "LiveDisplay";
 
     private static final String KEY_SCREEN_LIVE_DISPLAY = "livedisplay";
-
     private static final String KEY_CATEGORY_ADVANCED = "advanced";
 
     private static final String KEY_LIVE_DISPLAY = "live_display";
-    private static final String KEY_LIVE_DISPLAY_AUTO_OUTDOOR_MODE =
-            "display_auto_outdoor_mode";
-    private static final String KEY_LIVE_DISPLAY_LOW_POWER = "display_low_power";
-    private static final String KEY_LIVE_DISPLAY_COLOR_ENHANCE = "display_color_enhance";
     private static final String KEY_LIVE_DISPLAY_TEMPERATURE = "live_display_color_temperature";
-
     private static final String KEY_DISPLAY_COLOR = "color_calibration";
     private static final String KEY_PICTURE_ADJUSTMENT = "picture_adjustment";
 
@@ -87,24 +72,16 @@ public class LiveDisplaySettings extends SettingsPreferenceFragment implements S
     private final Uri DISPLAY_TEMPERATURE_MODE_URI =
             EVSettings.System.getUriFor(EVSettings.System.DISPLAY_TEMPERATURE_MODE);
 
-    private ListPreference mLiveDisplay;
-
-    private SwitchPreference mColorEnhancement;
-    private SwitchPreference mLowPower;
-    private SwitchPreference mOutdoorMode;
-
-    private PictureAdjustment mPictureAdjustment;
+    private DropDownPreference mLiveDisplay;
     private DisplayTemperature mDisplayTemperature;
-    private DisplayColor mDisplayColor;
 
+    private int mCurrentMode;
     private String[] mModeEntries;
     private String[] mModeValues;
     private String[] mModeSummaries;
 
     private LiveDisplayManager mLiveDisplayManager;
     private LiveDisplayConfig mConfig;
-
-    private HardwareManager mHardware;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -113,26 +90,21 @@ public class LiveDisplaySettings extends SettingsPreferenceFragment implements S
         final boolean isNightDisplayAvailable =
                 ColorDisplayManager.isNightDisplayAvailable(getContext());
 
-        mHardware = HardwareManager.getInstance(getActivity());
         mLiveDisplayManager = LiveDisplayManager.getInstance(getActivity());
         mConfig = mLiveDisplayManager.getConfig();
 
         addPreferencesFromResource(R.xml.livedisplay);
 
-        PreferenceCategory liveDisplayPrefs = findPreference(KEY_SCREEN_LIVE_DISPLAY);
-
-        PreferenceCategory advancedPrefs = findPreference(KEY_CATEGORY_ADVANCED);
-
-        int adaptiveMode = mLiveDisplayManager.getMode();
+        mCurrentMode = mLiveDisplayManager.getMode();
 
         mLiveDisplay = findPreference(KEY_LIVE_DISPLAY);
-        mLiveDisplay.setValue(String.valueOf(adaptiveMode));
+        mLiveDisplay.setValue(String.valueOf(mCurrentMode));
 
-        mModeEntries = res.getStringArray(
+        mModeEntries = getResources().getStringArray(
                 com.evervolv.platform.internal.R.array.live_display_entries);
-        mModeValues = res.getStringArray(
+        mModeValues = getResources().getStringArray(
                 com.evervolv.platform.internal.R.array.live_display_values);
-        mModeSummaries = res.getStringArray(
+        mModeSummaries = getResources().getStringArray(
                 com.evervolv.platform.internal.R.array.live_display_summaries);
 
         int[] removeIdx = null;
@@ -142,7 +114,7 @@ public class LiveDisplaySettings extends SettingsPreferenceFragment implements S
                     ArrayUtils.indexOf(mModeValues, String.valueOf(MODE_OUTDOOR)));
         } else if (isNightDisplayAvailable) {
             final int autoIdx = ArrayUtils.indexOf(mModeValues, String.valueOf(MODE_AUTO));
-            mModeSummaries[autoIdx] = res.getString(R.string.live_display_outdoor_mode_summary);
+            mModeSummaries[autoIdx] = getResources().getString(R.string.live_display_outdoor_mode_summary);
         }
 
         // Remove night display on HWC2
@@ -176,6 +148,8 @@ public class LiveDisplaySettings extends SettingsPreferenceFragment implements S
         mLiveDisplay.setEntryValues(mModeValues);
         mLiveDisplay.setOnPreferenceChangeListener(this);
 
+        final PreferenceCategory liveDisplayPrefs = findPreference(KEY_SCREEN_LIVE_DISPLAY);
+
         mDisplayTemperature = findPreference(KEY_LIVE_DISPLAY_TEMPERATURE);
         if (isNightDisplayAvailable) {
             if (!mConfig.hasFeature(MODE_OUTDOOR)) {
@@ -184,40 +158,24 @@ public class LiveDisplaySettings extends SettingsPreferenceFragment implements S
             liveDisplayPrefs.removePreference(mDisplayTemperature);
         }
 
-        mOutdoorMode = findPreference(KEY_LIVE_DISPLAY_AUTO_OUTDOOR_MODE);
-        if (liveDisplayPrefs != null && mOutdoorMode != null
-                // MODE_AUTO implies automatic outdoor mode on HWC2
-                && (isNightDisplayAvailable || !mConfig.hasFeature(MODE_OUTDOOR))) {
-            liveDisplayPrefs.removePreference(mOutdoorMode);
-            mOutdoorMode = null;
+        if (liveDisplayPrefs.getPreferenceCount() == 0) {
+            getPreferenceScreen().removePreference(liveDisplayPrefs);
         }
 
-        mLowPower = findPreference(KEY_LIVE_DISPLAY_LOW_POWER);
-        if (advancedPrefs != null && mLowPower != null
-                && !mConfig.hasFeature(FEATURE_CABC)) {
-            advancedPrefs.removePreference(mLowPower);
-            mLowPower = null;
+        final PreferenceCategory advancedPrefs = findPreference(KEY_CATEGORY_ADVANCED);
+
+        final PictureAdjustment pictureAdjustment = findPreference(KEY_PICTURE_ADJUSTMENT);
+        if (!mConfig.hasFeature(FEATURE_PICTURE_ADJUSTMENT)) {
+            advancedPrefs.removePreference(pictureAdjustment);
         }
 
-        mColorEnhancement = findPreference(KEY_LIVE_DISPLAY_COLOR_ENHANCE);
-        if (advancedPrefs != null && mColorEnhancement != null
-                && !mConfig.hasFeature(FEATURE_COLOR_ENHANCEMENT)) {
-            advancedPrefs.removePreference(mColorEnhancement);
-            mColorEnhancement = null;
+        final DisplayColor displayColor = findPreference(KEY_DISPLAY_COLOR);
+        if (!mConfig.hasFeature(FEATURE_COLOR_ADJUSTMENT)) {
+            advancedPrefs.removePreference(displayColor);
         }
 
-        mPictureAdjustment = findPreference(KEY_PICTURE_ADJUSTMENT);
-        if (advancedPrefs != null && mPictureAdjustment != null &&
-                    !mConfig.hasFeature(FEATURE_PICTURE_ADJUSTMENT)) {
-            advancedPrefs.removePreference(mPictureAdjustment);
-            mPictureAdjustment = null;
-        }
-
-        mDisplayColor = findPreference(KEY_DISPLAY_COLOR);
-        if (advancedPrefs != null && mDisplayColor != null &&
-                !mConfig.hasFeature(FEATURE_COLOR_ADJUSTMENT)) {
-            advancedPrefs.removePreference(mDisplayColor);
-            mDisplayColor = null;
+        if (advancedPrefs.getPreferenceCount() == 0) {
+            getPreferenceScreen().removePreference(advancedPrefs);
         }
     }
 
@@ -237,27 +195,24 @@ public class LiveDisplaySettings extends SettingsPreferenceFragment implements S
     }
 
     private void updateModeSummary() {
-        int mode = mLiveDisplayManager.getMode();
+        mCurrentMode = mLiveDisplayManager.getMode();
 
-        int index = ArrayUtils.indexOf(mModeValues, String.valueOf(mode));
+        int index = ArrayUtils.indexOf(mModeValues, String.valueOf(mCurrentMode));
         if (index < 0) {
             index = ArrayUtils.indexOf(mModeValues, String.valueOf(MODE_OFF));
         }
 
         mLiveDisplay.setSummary(mModeSummaries[index]);
-        mLiveDisplay.setValue(String.valueOf(mode));
+        mLiveDisplay.setValue(String.valueOf(mCurrentMode));
 
         if (mDisplayTemperature != null) {
-            mDisplayTemperature.setEnabled(mode != MODE_OFF);
-        }
-        if (mOutdoorMode != null) {
-            mOutdoorMode.setEnabled(mode != MODE_OFF);
+            mDisplayTemperature.setEnabled(mCurrentMode != MODE_OFF);
         }
     }
 
     private void updateTemperatureSummary() {
-        int day = mLiveDisplayManager.getDayColorTemperature();
-        int night = mLiveDisplayManager.getNightColorTemperature();
+        final int day = mLiveDisplayManager.getDayColorTemperature();
+        final int night = mLiveDisplayManager.getNightColorTemperature();
 
         mDisplayTemperature.setSummary(getResources().getString(
                 R.string.live_display_color_temperature_summary,
@@ -279,7 +234,6 @@ public class LiveDisplaySettings extends SettingsPreferenceFragment implements S
         updateTemperatureSummary();
     }
 
-
     public static final Searchable.SearchIndexProvider SEARCH_INDEX_DATA_PROVIDER =
             new BaseSearchIndexProvider() {
 
@@ -288,27 +242,21 @@ public class LiveDisplaySettings extends SettingsPreferenceFragment implements S
             final LiveDisplayConfig config = LiveDisplayManager.getInstance(context).getConfig();
             final Set<String> result = new ArraySet<String>();
 
-            if (!config.hasFeature(MODE_OUTDOOR)) {
-                result.add(KEY_LIVE_DISPLAY_AUTO_OUTDOOR_MODE);
-            }
-            if (!config.hasFeature(FEATURE_COLOR_ENHANCEMENT)) {
-                result.add(KEY_LIVE_DISPLAY_COLOR_ENHANCE);
-            }
-            if (!config.hasFeature(FEATURE_CABC)) {
-                result.add(KEY_LIVE_DISPLAY_LOW_POWER);
-            }
             if (!config.hasFeature(FEATURE_COLOR_ADJUSTMENT)) {
                 result.add(KEY_DISPLAY_COLOR);
             }
+
             if (!config.hasFeature(FEATURE_PICTURE_ADJUSTMENT)) {
                 result.add(KEY_PICTURE_ADJUSTMENT);
             }
+
             if (ColorDisplayManager.isNightDisplayAvailable(context)) {
                 if (!config.hasFeature(MODE_OUTDOOR)) {
                     result.add(KEY_LIVE_DISPLAY);
                 }
                 result.add(KEY_LIVE_DISPLAY_TEMPERATURE);
             }
+
             if (!context.getResources().getBoolean(
                     com.evervolv.platform.internal.R.bool.config_enableLiveDisplay)) {
                 result.add(KEY_LIVE_DISPLAY_TEMPERATURE);

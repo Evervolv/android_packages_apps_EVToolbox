@@ -36,8 +36,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.preference.PreferenceManager;
 
+import com.evervolv.settingslib.widget.CustomDialogPreference;
 import com.evervolv.toolbox.utils.DeviceUtils;
-import com.evervolv.toolbox.widget.CustomDialogPreference;
 import com.evervolv.toolbox.R;
 
 import evervolv.provider.EVSettings;

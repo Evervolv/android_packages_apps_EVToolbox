@@ -50,7 +50,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.settingslib.core.lifecycle.ObservablePreferenceFragment;
 import com.android.settingslib.widget.LayoutPreference;
 
-import com.evervolv.toolbox.widget.CustomDialogPreference;
+import com.evervolv.settingslib.widget.CustomDialogPreference;
 import com.evervolv.toolbox.widget.DialogCreatable;
 import com.evervolv.toolbox.widget.HighlightablePreferenceGroupAdapter;
 import com.evervolv.toolbox.widget.SettingsHelper;

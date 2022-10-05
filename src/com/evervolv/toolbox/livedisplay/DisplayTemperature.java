@@ -29,7 +29,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 
-import com.evervolv.toolbox.widget.CustomDialogPreference;
+import com.evervolv.settingslib.widget.CustomDialogPreference;
 import com.evervolv.toolbox.R;
 import com.evervolv.internal.util.MathUtils;
 

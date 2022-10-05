@@ -171,8 +171,6 @@ public class ButtonSettings extends SettingsPreferenceFragment
                 (PreferenceCategory) prefScreen.findPreference(CATEGORY_VOLUME);
         final PreferenceGroup cameraCategory =
                 (PreferenceCategory) prefScreen.findPreference(CATEGORY_CAMERA);
-        final PreferenceGroup extrasCategory =
-                (PreferenceCategory) prefScreen.findPreference(CATEGORY_EXTRAS);
 
         mHandler = new Handler();
 
@@ -319,10 +317,6 @@ public class ButtonSettings extends SettingsPreferenceFragment
             }
         } else {
             prefScreen.removePreference(volumeCategory);
-        }
-
-        if (extrasCategory.getPreferenceCount() == 0) {
-            prefScreen.removePreference(extrasCategory);
         }
     }
 

@@ -223,17 +223,4 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory
-        android:key="extras_category"
-        android:title="@string/extras_title" >
-
-         <evervolv.preference.RemotePreference
-            android:key="additional_buttons"
-            android:title="@string/additional_buttons_title" >
-            <intent
-                android:action="org.lineageos.settings.device.ADDITIONAL_BUTTONS_SETTINGS" />
-        </evervolv.preference.RemotePreference>
-
-     </PreferenceCategory>
-
 </PreferenceScreen>

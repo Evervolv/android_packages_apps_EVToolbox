@@ -18,7 +18,7 @@ android_app {
     name: "EVToolbox",
 
     // Include SettingsLib and it's dependencies
-    defaults: ["SettingsLibDefaults"],
+    defaults: ["EVSettingsLibDefaults"],
 
     srcs: ["src/**/*.java"],
     resource_dirs: ["res"],
@@ -41,7 +41,6 @@ android_app {
         "androidx.recyclerview_recyclerview",
         "jsr305",
         "com.evervolv.platform.internal",
-        "PartsPreference",
     ],
 
     required: [
