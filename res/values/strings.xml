@@ -89,10 +89,6 @@
     <string name="camera_launch_title">Launch camera</string>
     <string name="camera_launch_summary">A longpress and release will launch camera</string>
 
-    <!-- Volume key music controls -->
-    <string name="volbtn_music_controls_title">Control playback</string>
-    <string name="volbtn_music_controls_summary">Seek music tracks by long pressing the volume keys while the display is off</string>
-
     <!-- Device specific buttons -->
     <string name="extras_title">Extras</string>
     <string name="additional_buttons_title">Additional buttons</string>
