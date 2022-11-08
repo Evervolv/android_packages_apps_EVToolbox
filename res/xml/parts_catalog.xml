@@ -42,6 +42,7 @@
 
     <part android:key="rotation"
           android:title="@string/display_rotation_title"
+          android:summary="@string/display_rotation_summary"
           android:fragment="com.evervolv.toolbox.display.RotationSettings"
           evervolv:xmlRes="@xml/display_rotation" />
 

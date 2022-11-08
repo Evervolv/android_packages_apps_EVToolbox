@@ -17,36 +17,27 @@
 
 package com.evervolv.toolbox.display;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.UserHandle;
 import android.provider.Settings;
-import android.widget.Switch;
 
 import androidx.preference.CheckBoxPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceScreen;
 
 import com.android.internal.view.RotationPolicy;
-import com.android.settingslib.widget.MainSwitchPreference;
-import com.android.settingslib.widget.OnMainSwitchChangeListener;
 
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.SettingsPreferenceFragment;
 
-public class RotationSettings extends SettingsPreferenceFragment
-        implements OnMainSwitchChangeListener {
+public class RotationSettings extends SettingsPreferenceFragment {
     private static final String TAG = "RotationSettings";
 
-    public static final String KEY_ACCELEROMETER = "accelerometer";
-    private static final String KEY_LOCKSCREEN_ROTATION = "lockscreen_rotation";
     private static final String ROTATION_0_PREF = "display_rotation_0";
     private static final String ROTATION_90_PREF = "display_rotation_90";
     private static final String ROTATION_180_PREF = "display_rotation_180";
     private static final String ROTATION_270_PREF = "display_rotation_270";
 
-    private MainSwitchPreference mAccelerometer;
     private CheckBoxPreference mRotation0Pref;
     private CheckBoxPreference mRotation90Pref;
     private CheckBoxPreference mRotation180Pref;
@@ -65,10 +56,6 @@ public class RotationSettings extends SettingsPreferenceFragment
 
         PreferenceScreen prefSet = getPreferenceScreen();
 
-        mAccelerometer = findPreference(KEY_ACCELEROMETER);
-        mAccelerometer.addOnSwitchChangeListener(this);
-        mAccelerometer.setPersistent(false);
-
         mRotation0Pref = (CheckBoxPreference) prefSet.findPreference(ROTATION_0_PREF);
         mRotation90Pref = (CheckBoxPreference) prefSet.findPreference(ROTATION_90_PREF);
         mRotation180Pref = (CheckBoxPreference) prefSet.findPreference(ROTATION_180_PREF);
@@ -82,24 +69,6 @@ public class RotationSettings extends SettingsPreferenceFragment
         mRotation90Pref.setChecked((mode & ROTATION_90_MODE) != 0);
         mRotation180Pref.setChecked((mode & ROTATION_180_MODE) != 0);
         mRotation270Pref.setChecked((mode & ROTATION_270_MODE) != 0);
-
-        watch(Settings.System.getUriFor(Settings.System.ACCELEROMETER_ROTATION));
-    }
-
-    @Override
-    public void onSettingsChanged(Uri contentUri) {
-        super.onSettingsChanged(contentUri);
-        updateAccelerometerRotationSwitch();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        updateAccelerometerRotationSwitch();
-    }
-
-    private void updateAccelerometerRotationSwitch() {
-        mAccelerometer.setChecked(!RotationPolicy.isRotationLocked(getActivity()));
     }
 
     private int getRotationBitmask() {
@@ -137,19 +106,4 @@ public class RotationSettings extends SettingsPreferenceFragment
 
         return super.onPreferenceTreeClick(preference);
     }
-
-    @Override
-    public void onSwitchChanged(Switch switchView, boolean isChecked) {
-        RotationPolicy.setRotationLockForAccessibility(getActivity(), !mAccelerometer.isChecked());
-    }
-
-    public static final SummaryProvider SUMMARY_PROVIDER = new SummaryProvider() {
-        @Override
-        public String getSummary(Context context, String key) {
-            if (RotationPolicy.isRotationLocked(context)) {
-                return context.getString(R.string.display_rotation_disabled);
-            }
-            return context.getString(R.string.display_rotation_enabled);
-        }
-    };
 }

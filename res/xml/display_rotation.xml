@@ -19,31 +19,20 @@
     android:key="rotation"
     android:title="@string/display_rotation_title">
 
-    <com.android.settingslib.widget.MainSwitchPreference
-        android:key="accelerometer"
-        android:title="@string/accelerometer_title" />
+    <CheckBoxPreference
+        android:key="display_rotation_0"
+        android:title="@string/display_rotation_0_title" />
 
-    <PreferenceCategory
-        android:key="display_rotation_category"
-        android:title="@string/display_rotation_category_title"
-        android:dependency="accelerometer">
+    <CheckBoxPreference
+        android:key="display_rotation_90"
+        android:title="@string/display_rotation_90_title" />
 
-        <CheckBoxPreference
-            android:key="display_rotation_0"
-            android:title="@string/display_rotation_0_title" />
+    <CheckBoxPreference
+        android:key="display_rotation_180"
+        android:title="@string/display_rotation_180_title" />
 
-        <CheckBoxPreference
-            android:key="display_rotation_90"
-            android:title="@string/display_rotation_90_title" />
-
-        <CheckBoxPreference
-            android:key="display_rotation_180"
-            android:title="@string/display_rotation_180_title" />
-
-        <CheckBoxPreference
-            android:key="display_rotation_270"
-            android:title="@string/display_rotation_270_title" />
-
-    </PreferenceCategory>
+    <CheckBoxPreference
+        android:key="display_rotation_270"
+        android:title="@string/display_rotation_270_title" />
 
 </PreferenceScreen>
