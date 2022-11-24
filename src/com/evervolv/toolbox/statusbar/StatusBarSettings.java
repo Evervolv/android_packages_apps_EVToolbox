@@ -18,8 +18,8 @@ package com.evervolv.toolbox.statusbar;
 
 import android.os.Bundle;
 import android.provider.Settings;
+import androidx.preference.DropDownPreference;
 import androidx.preference.SwitchPreference;
-import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceCategory;
 import androidx.preference.PreferenceGroup;
@@ -47,8 +47,8 @@ public class StatusBarSettings extends SettingsPreferenceFragment
     private static final String CATEGORY_ICONS = "status_bar_icons";
     private static final String CATEGORY_QUICK_SETTINGS = "status_bar_quick_settings";
 
-    private ListPreference mQuickPulldown;
-    private ListPreference mBatteryStyleIcon;
+    private DropDownPreference mQuickPulldown;
+    private DropDownPreference mBatteryStyleIcon;
     private SystemSettingSwitchPreference mBatteryShowPercent;
 
     @Override
@@ -58,14 +58,14 @@ public class StatusBarSettings extends SettingsPreferenceFragment
 
         int qsPullDown = EVSettings.System.getInt(getContext().getContentResolver(),
                 EVSettings.System.STATUS_BAR_QUICK_QS_PULLDOWN, 0);
-        mQuickPulldown = (ListPreference) findPreference(STATUS_BAR_QUICK_QS_PULLDOWN);
+        mQuickPulldown = (DropDownPreference) findPreference(STATUS_BAR_QUICK_QS_PULLDOWN);
         mQuickPulldown.setValue(String.valueOf(qsPullDown));
         updateQuickPulldownSummary(qsPullDown);
         mQuickPulldown.setOnPreferenceChangeListener(this);
 
         int batteryStyle = EVSettings.System.getInt(getContext().getContentResolver(),
                 EVSettings.System.STATUS_BAR_BATTERY_STYLE, 0);
-        mBatteryStyleIcon = (ListPreference) findPreference(STATUS_BAR_BATTERY_STYLE);
+        mBatteryStyleIcon = (DropDownPreference) findPreference(STATUS_BAR_BATTERY_STYLE);
         mBatteryStyleIcon.setValue(String.valueOf(batteryStyle));
         mBatteryStyleIcon.setSummary(mBatteryStyleIcon.getEntry());
         mBatteryStyleIcon.setOnPreferenceChangeListener(this);
@@ -73,7 +73,7 @@ public class StatusBarSettings extends SettingsPreferenceFragment
         mBatteryShowPercent = (SystemSettingSwitchPreference) findPreference(SHOW_BATTERY_PERCENT);
         mBatteryShowPercent.setEnabled(batteryStyle != 5 /* BATTERY_STYLE_TEXT */);
 
-        updateCategories() ;
+        updateCategories();
     }
 
     private void updateCategories() {

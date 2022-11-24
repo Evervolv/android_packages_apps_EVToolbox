@@ -19,7 +19,7 @@ package com.evervolv.toolbox.statusbar;
 import android.content.ContentResolver;
 import android.os.Bundle;
 
-import androidx.preference.ListPreference;
+import androidx.preference.DropDownPreference;
 import androidx.preference.Preference;
 
 import evervolv.preference.EVSecureSettingSwitchPreference;
@@ -34,9 +34,9 @@ public class NetworkTrafficSettings extends SettingsPreferenceFragment
     private static final String TAG = "NetworkTrafficSettings";
     private static final String STATUS_BAR_CLOCK_STYLE = "status_bar_clock";
 
-    private ListPreference mNetTrafficMode;
+    private DropDownPreference mNetTrafficMode;
     private EVSecureSettingSwitchPreference mNetTrafficAutohide;
-    private ListPreference mNetTrafficUnits;
+    private DropDownPreference mNetTrafficUnits;
     private EVSecureSettingSwitchPreference mNetTrafficShowUnits;
 
     @Override
@@ -45,7 +45,7 @@ public class NetworkTrafficSettings extends SettingsPreferenceFragment
         addPreferencesFromResource(R.xml.network_traffic_settings);
         final ContentResolver resolver = getActivity().getContentResolver();
 
-        mNetTrafficMode = (ListPreference)
+        mNetTrafficMode = (DropDownPreference)
                 findPreference(EVSettings.Secure.NETWORK_TRAFFIC_MODE);
         mNetTrafficMode.setOnPreferenceChangeListener(this);
         int mode = EVSettings.Secure.getInt(resolver,
@@ -56,7 +56,7 @@ public class NetworkTrafficSettings extends SettingsPreferenceFragment
                 findPreference(EVSettings.Secure.NETWORK_TRAFFIC_AUTOHIDE);
         mNetTrafficAutohide.setOnPreferenceChangeListener(this);
 
-        mNetTrafficUnits = (ListPreference)
+        mNetTrafficUnits = (DropDownPreference)
                 findPreference(EVSettings.Secure.NETWORK_TRAFFIC_UNITS);
         mNetTrafficUnits.setOnPreferenceChangeListener(this);
         int units = EVSettings.Secure.getInt(resolver,
