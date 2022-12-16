@@ -64,6 +64,18 @@
 
         <activity android:name=".gestures.KeyHandler" />
 
+        <!-- DisplayModePicker -->
+        <activity-alias
+            android:name=".livedisplay.DisplayModePickerFragment"
+            android:label="@string/button_settings_title"
+            android:exported="true"
+            android:targetActivity="PartsActivity">
+            <intent-filter>
+                <action android:name="com.evervolv.toolbox.DISPLAY_MODE_PICKER" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity-alias>
+
         <receiver android:name=".BootReceiver"
             android:exported="true">
             <intent-filter android:priority="2147483647">
