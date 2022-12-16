@@ -36,9 +36,9 @@ import evervolv.hardware.HardwareManager;
 
 import com.android.settingslib.widget.LayoutPreference;
 import com.android.settingslib.widget.RadioButtonPreference;
+import com.evervolv.internal.util.ResourceUtils;
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.SettingsPreferenceFragment;
-import com.evervolv.toolbox.utils.ResourceUtils;
 
 import java.util.Arrays;
 import java.util.ArrayList;

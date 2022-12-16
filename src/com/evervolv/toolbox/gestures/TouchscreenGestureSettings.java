@@ -28,9 +28,9 @@ import androidx.preference.PreferenceManager;
 import evervolv.hardware.HardwareManager;
 import evervolv.hardware.TouchscreenGesture;
 
+import com.evervolv.internal.util.ResourceUtils;
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.SettingsPreferenceFragment;
-import com.evervolv.toolbox.utils.ResourceUtils;
 
 import java.lang.System;
 
