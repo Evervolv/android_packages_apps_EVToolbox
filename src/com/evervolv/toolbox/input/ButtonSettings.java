@@ -375,7 +375,7 @@ public class ButtonSettings extends SettingsPreferenceFragment
                     EVSettings.System.KEY_APP_SWITCH_LONG_PRESS_ACTION);
             return true;
         } else if (preference == mSwapCapacitiveKeys) {
-            mHardware.set(HardwareManager.FEATURE_KEY_SWAP, (Boolean) newValue);
+            mHardware.setFeature(HardwareManager.FEATURE_KEY_SWAP, (Boolean) newValue);
             return true;
         }
         return false;
@@ -474,7 +474,7 @@ public class ButtonSettings extends SettingsPreferenceFragment
         final SharedPreferences preferences =
                 PreferenceManager.getDefaultSharedPreferences(context);
         HardwareManager hardware = HardwareManager.getInstance(context);
-        hardware.set(HardwareManager.FEATURE_KEY_SWAP,
+        hardware.setFeature(HardwareManager.FEATURE_KEY_SWAP,
                 preferences.getBoolean(KEY_SWAP_CAPACITIVE_KEYS, false));
     }
 
