@@ -32,7 +32,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import evervolv.hardware.DisplayMode;
-import evervolv.hardware.HardwareManager;
+import evervolv.hardware.LiveDisplayManager;
 
 import com.android.settingslib.widget.LayoutPreference;
 import com.android.settingslib.widget.RadioButtonPreference;
@@ -56,7 +56,7 @@ public class DisplayModePickerFragment extends SettingsPreferenceFragment implem
     private static final int DOT_INDICATOR_LEFT_PADDING = 6;
     private static final int DOT_INDICATOR_RIGHT_PADDING = 6;
 
-    private HardwareManager mHardware;
+    private LiveDisplayManager mLiveDisplay;
 
     private View mViewArrowPrevious;
     private View mViewArrowNext;
@@ -83,9 +83,9 @@ public class DisplayModePickerFragment extends SettingsPreferenceFragment implem
         screen.addPreference(preview);
         addViewPager(preview);
 
-        mHardware = HardwareManager.getInstance(context);
+        mLiveDisplay = LiveDisplayManager.getInstance(context);
 
-        final DisplayMode[] modes = mHardware.getDisplayModes();
+        final DisplayMode[] modes = mLiveDisplay.getDisplayModes();
         if (modes != null && modes.length > 0) {
             for (int i = 0; i < modes.length; i++) {
                 RadioButtonPreference pref = new RadioButtonPreference(context);
@@ -177,9 +177,9 @@ public class DisplayModePickerFragment extends SettingsPreferenceFragment implem
         final String selectedKey = selected.getKey();
         if (selectedKey.startsWith(COLOR_PROFILE)) {
             String modeId = selectedKey.replaceFirst(COLOR_PROFILE, "");
-            for (DisplayMode mode : mHardware.getDisplayModes()) {
+            for (DisplayMode mode : mLiveDisplay.getDisplayModes()) {
                 if (mode.id == Integer.valueOf(modeId)) {
-                    mHardware.setDisplayMode(mode, true);
+                    mLiveDisplay.setDisplayMode(mode, true);
                     updateCheckedState(selectedKey);
                 }
             }
@@ -187,8 +187,8 @@ public class DisplayModePickerFragment extends SettingsPreferenceFragment implem
     }
 
     private RadioButtonPreference bindPreference(RadioButtonPreference pref, DisplayMode mode) {
-        final DisplayMode defaultMode = mHardware.getCurrentDisplayMode() != null
-                    ? mHardware.getCurrentDisplayMode() : mHardware.getDefaultDisplayMode();
+        final DisplayMode defaultMode = mLiveDisplay.getCurrentDisplayMode() != null
+                    ? mLiveDisplay.getCurrentDisplayMode() : mLiveDisplay.getDefaultDisplayMode();
         pref.setTitle(ResourceUtils.getLocalizedString(
                     getResources(), mode.name, COLOR_PROFILE_TITLE));
         pref.setKey(COLOR_PROFILE + mode.id);
