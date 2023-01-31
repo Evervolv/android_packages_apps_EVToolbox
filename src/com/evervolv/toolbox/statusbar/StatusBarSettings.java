@@ -101,7 +101,8 @@ public class StatusBarSettings extends SettingsPreferenceFragment
         // Adjust status bar preferences for RTL
         if (getResources().getConfiguration().getLayoutDirection() == View.LAYOUT_DIRECTION_RTL) {
             mQuickPulldown.setEntries(R.array.status_bar_quick_qs_pulldown_entries_rtl);
-            mQuickPulldown.setEntryValues(R.array.status_bar_quick_qs_pulldown_values_rtl);
+        } else {
+            mQuickPulldown.setEntries(R.array.status_bar_quick_qs_pulldown_entries);
         }
     }
 
@@ -136,7 +137,10 @@ public class StatusBarSettings extends SettingsPreferenceFragment
         } else {
                 summary = getResources().getString(
                     R.string.status_bar_quick_qs_pulldown_summary,
-                    getResources().getString(value == 2
+                    getResources().getString(
+                        (value == 2) ^
+                        (getResources().getConfiguration().getLayoutDirection()
+                            == View.LAYOUT_DIRECTION_RTL)
                         ? R.string.status_bar_quick_qs_pulldown_summary_left
                         : R.string.status_bar_quick_qs_pulldown_summary_right));
         }
