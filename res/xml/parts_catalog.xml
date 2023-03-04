@@ -66,12 +66,6 @@
           android:fragment="com.evervolv.toolbox.notificationlight.NotificationLightSettings"
           evervolv:xmlRes="@xml/notification_light_settings" />
 
-    <part android:key="livedisplay"
-          android:title="@*evervolv.platform:string/live_display_title"
-          android:summary="@string/live_display_summary"
-          android:fragment="com.evervolv.toolbox.livedisplay.LiveDisplaySettings"
-          evervolv:xmlRes="@xml/livedisplay" />
-
     <part android:key="display_mode"
           android:title="@string/live_display_color_profile_title"
           android:fragment="com.evervolv.toolbox.livedisplay.DisplayModePickerFragment"
