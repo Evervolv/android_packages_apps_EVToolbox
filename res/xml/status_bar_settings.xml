@@ -66,12 +66,10 @@
             android:entryValues="@array/status_bar_battery_style_values"
             android:defaultValue="0" />
 
-        <evervolv.preference.SystemSettingSwitchPreference
-            android:key="status_bar_show_battery_percent"
+        <SwitchPreference
+            android:key="status_bar_battery_percentage"
             android:title="@string/status_bar_battery_percentage_title"
-            android:summary="@string/status_bar_battery_percentage_summary"
-            android:defaultValue="false"
-            evervolv:requiresConfig="@*android:bool/config_battery_percentage_setting_available" />
+            android:summary="@string/status_bar_battery_percentage_summary" />
 
     </PreferenceCategory>
 

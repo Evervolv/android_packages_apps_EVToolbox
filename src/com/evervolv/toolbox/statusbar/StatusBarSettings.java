@@ -25,14 +25,10 @@ import androidx.preference.PreferenceCategory;
 import androidx.preference.PreferenceGroup;
 import androidx.preference.PreferenceScreen;
 import androidx.preference.Preference.OnPreferenceChangeListener;
-import android.text.format.DateFormat;
-import android.text.TextUtils;
 import android.view.View;
 
-import evervolv.preference.SystemSettingSwitchPreference;
 import evervolv.provider.EVSettings;
 
-import com.android.settingslib.graph.BatteryMeterDrawableBase;
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.SettingsPreferenceFragment;
 
@@ -41,7 +37,7 @@ public class StatusBarSettings extends SettingsPreferenceFragment
 
     private static final String STATUS_BAR_QUICK_QS_PULLDOWN = "qs_quick_pulldown";
     private static final String STATUS_BAR_BATTERY_STYLE = "status_bar_battery_style";
-    private static final String SHOW_BATTERY_PERCENT = "status_bar_show_battery_percent";
+    private static final String STATUS_BAR_BATTERY_PERCENT = "status_bar_battery_percentage";
 
     private static final String CATEGORY_BATTERY = "status_bar_battery";
     private static final String CATEGORY_ICONS = "status_bar_icons";
@@ -49,7 +45,8 @@ public class StatusBarSettings extends SettingsPreferenceFragment
 
     private DropDownPreference mQuickPulldown;
     private DropDownPreference mBatteryStyleIcon;
-    private SystemSettingSwitchPreference mBatteryShowPercent;
+    private SwitchPreference mBatteryShowPercent;
+    private boolean mShowPercentAvailable;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,8 +67,17 @@ public class StatusBarSettings extends SettingsPreferenceFragment
         mBatteryStyleIcon.setSummary(mBatteryStyleIcon.getEntry());
         mBatteryStyleIcon.setOnPreferenceChangeListener(this);
 
-        mBatteryShowPercent = (SystemSettingSwitchPreference) findPreference(SHOW_BATTERY_PERCENT);
+        boolean batteryShowPercent = Settings.System.getInt(getContext().getContentResolver(),
+                Settings.System.SHOW_BATTERY_PERCENT, 0) == 1;
+        mBatteryShowPercent = (SwitchPreference) findPreference(STATUS_BAR_BATTERY_PERCENT);
+        mBatteryShowPercent.setChecked(batteryShowPercent);
         mBatteryShowPercent.setEnabled(batteryStyle != 5 /* BATTERY_STYLE_TEXT */);
+
+        mShowPercentAvailable = getResources().getBoolean(
+                com.android.internal.R.bool.config_battery_percentage_setting_available);
+        if (!mShowPercentAvailable) {
+            getPreferenceScreen().removePreference(mBatteryShowPercent);
+        }
 
         updateCategories();
     }
@@ -124,7 +130,9 @@ public class StatusBarSettings extends SettingsPreferenceFragment
                     EVSettings.System.STATUS_BAR_BATTERY_STYLE, value);
             int index = mBatteryStyleIcon.findIndexOfValue((String) newValue);
             mBatteryStyleIcon.setSummary(mBatteryStyleIcon.getEntries()[index]);
-            mBatteryShowPercent.setEnabled(value != 5 /* BATTERY_STYLE_TEXT */);
+            if (mShowPercentAvailable) {
+                mBatteryShowPercent.setEnabled(value != 5 /* BATTERY_STYLE_TEXT */);
+            }
             return true;
         }
         return false;
@@ -143,5 +151,16 @@ public class StatusBarSettings extends SettingsPreferenceFragment
                         : R.string.status_bar_quick_qs_pulldown_summary_right));
         }
         mQuickPulldown.setSummary(summary);
+    }
+
+    @Override
+    public boolean onPreferenceTreeClick(Preference preference) {
+        if (preference == mBatteryShowPercent) {
+            Settings.System.putInt(getContext().getContentResolver(),
+                    Settings.System.SHOW_BATTERY_PERCENT,
+                    mBatteryShowPercent.isChecked() ? 1 : 0);
+            return true;
+        }
+        return super.onPreferenceTreeClick(preference);
     }
 }
