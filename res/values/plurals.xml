@@ -18,4 +18,9 @@
         <item quantity="one"><xliff:g id="seconds">%d</xliff:g> second</item>
         <item quantity="other"><xliff:g id="seconds">%d</xliff:g> seconds</item>
     </plurals>
+
+    <plurals name="long_screen_apps_summary">
+        <item quantity="one"><xliff:g id="count" example="1">%d</xliff:g> unused app</item>
+        <item quantity="other"><xliff:g id="count" example="10">%d</xliff:g> unused apps</item>
+    </plurals>
 </resources>

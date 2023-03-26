@@ -36,7 +36,6 @@
 
     <part android:key="long_screen_settings"
           android:title="@string/long_screen_settings_title"
-          android:summary="@string/long_screen_settings_summary"
           android:fragment="com.evervolv.toolbox.applications.LongScreenSettings"
           evervolv:xmlRes="@xml/long_screen_prefs" />
 

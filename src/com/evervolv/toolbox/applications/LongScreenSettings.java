@@ -350,4 +350,19 @@ public class LongScreenSettings extends SettingsPreferenceFragment
             return show;
         }
     }
+
+    public static final SummaryProvider SUMMARY_PROVIDER = new SummaryProvider() {
+        @Override
+        public String getSummary(Context context, String key) {
+            final LongScreen longScreen = new LongScreen(context);
+
+            int count = 0;
+            if (!longScreen.getApps().isEmpty()) {
+                count = longScreen.getApps().size();
+            }
+
+            return context.getResources().getQuantityString(
+                        R.plurals.long_screen_apps_summary, count, count);
+        }
+    };
 }
