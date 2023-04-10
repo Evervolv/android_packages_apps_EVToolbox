@@ -24,7 +24,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.ArraySet;
 
-import androidx.preference.DropDownPreference;
+import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceCategory;
 
@@ -72,7 +72,7 @@ public class LiveDisplaySettings extends SettingsPreferenceFragment implements S
     private final Uri DISPLAY_TEMPERATURE_MODE_URI =
             EVSettings.System.getUriFor(EVSettings.System.DISPLAY_TEMPERATURE_MODE);
 
-    private DropDownPreference mLiveDisplay;
+    private ListPreference mLiveDisplay;
     private DisplayTemperature mDisplayTemperature;
 
     private int mCurrentMode;

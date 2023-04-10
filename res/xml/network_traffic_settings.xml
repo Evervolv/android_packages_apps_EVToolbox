@@ -18,7 +18,7 @@
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <DropDownPreference
+    <ListPreference
         android:key="network_traffic_mode"
         android:title="@string/network_traffic_mode_title"
         android:entries="@array/network_traffic_mode_entries"
@@ -32,7 +32,7 @@
         android:summary="@string/network_traffic_autohide_summary"
         android:defaultValue="false" />
 
-    <DropDownPreference
+    <ListPreference
         android:key="network_traffic_units"
         android:title="@string/network_traffic_units_title"
         android:entries="@array/network_traffic_units_entries"

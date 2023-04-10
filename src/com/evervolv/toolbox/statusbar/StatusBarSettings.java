@@ -18,7 +18,7 @@ package com.evervolv.toolbox.statusbar;
 
 import android.os.Bundle;
 import android.provider.Settings;
-import androidx.preference.DropDownPreference;
+import androidx.preference.ListPreference;
 import androidx.preference.SwitchPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceCategory;
@@ -43,8 +43,8 @@ public class StatusBarSettings extends SettingsPreferenceFragment
     private static final String CATEGORY_ICONS = "status_bar_icons";
     private static final String CATEGORY_QUICK_SETTINGS = "status_bar_quick_settings";
 
-    private DropDownPreference mQuickPulldown;
-    private DropDownPreference mBatteryStyleIcon;
+    private ListPreference mQuickPulldown;
+    private ListPreference mBatteryStyleIcon;
     private SwitchPreference mBatteryShowPercent;
     private boolean mShowPercentAvailable;
 
@@ -55,14 +55,14 @@ public class StatusBarSettings extends SettingsPreferenceFragment
 
         int qsPullDown = EVSettings.System.getInt(getContext().getContentResolver(),
                 EVSettings.System.STATUS_BAR_QUICK_QS_PULLDOWN, 0);
-        mQuickPulldown = (DropDownPreference) findPreference(STATUS_BAR_QUICK_QS_PULLDOWN);
+        mQuickPulldown = (ListPreference) findPreference(STATUS_BAR_QUICK_QS_PULLDOWN);
         mQuickPulldown.setValue(String.valueOf(qsPullDown));
         updateQuickPulldownSummary(qsPullDown);
         mQuickPulldown.setOnPreferenceChangeListener(this);
 
         int batteryStyle = EVSettings.System.getInt(getContext().getContentResolver(),
                 EVSettings.System.STATUS_BAR_BATTERY_STYLE, 0);
-        mBatteryStyleIcon = (DropDownPreference) findPreference(STATUS_BAR_BATTERY_STYLE);
+        mBatteryStyleIcon = (ListPreference) findPreference(STATUS_BAR_BATTERY_STYLE);
         mBatteryStyleIcon.setValue(String.valueOf(batteryStyle));
         mBatteryStyleIcon.setSummary(mBatteryStyleIcon.getEntry());
         mBatteryStyleIcon.setOnPreferenceChangeListener(this);

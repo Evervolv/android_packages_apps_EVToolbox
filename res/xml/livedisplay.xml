@@ -21,7 +21,7 @@
             android:key="livedisplay"
             android:title="@string/live_display_color_category_title">
 
-        <DropDownPreference
+        <ListPreference
                 android:key="live_display"
                 android:title="@string/live_display_mode"
                 android:persistent="false" />
