@@ -32,10 +32,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.preference.PreferenceViewHolder;
 
 import com.evervolv.internal.notification.LightsCapabilities;
-import com.evervolv.settingslib.widget.CustomDialogPreference;
+import com.evervolv.settingslib.widget.CustomDialogPreferenceExt;
 import com.evervolv.toolbox.R;
 
-public class ApplicationLightPreference extends CustomDialogPreference<LightSettingsDialog>
+public class ApplicationLightPreference extends CustomDialogPreferenceExt
         implements View.OnLongClickListener {
 
     private static String TAG = "AppLightPreference";
@@ -143,14 +143,16 @@ public class ApplicationLightPreference extends CustomDialogPreference<LightSett
     }
 
     public void onStop() {
-        if (getDialog() != null) {
-            getDialog().onStop();
+        LightSettingsDialog dialog = (LightSettingsDialog) getDialog();
+        if (dialog != null) {
+            dialog.onStop();
         }
     }
 
     public void onStart() {
-        if (getDialog() != null) {
-            getDialog().onStart();
+        LightSettingsDialog dialog = (LightSettingsDialog) getDialog();
+        if (dialog != null) {
+            dialog.onStart();
         }
     }
 
@@ -179,7 +181,7 @@ public class ApplicationLightPreference extends CustomDialogPreference<LightSett
     }
 
     @Override
-    protected boolean onDismissDialog(LightSettingsDialog dialog, int which) {
+    protected boolean onDismissDialog(DialogInterface dialog, int which) {
         if (which == DialogInterface.BUTTON_NEUTRAL) {
             // Reset to previously supplied defaults
             mDialog.setColor(mDefaultColorValue);

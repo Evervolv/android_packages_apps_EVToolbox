@@ -50,7 +50,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.settingslib.core.lifecycle.ObservablePreferenceFragment;
 import com.android.settingslib.widget.LayoutPreference;
 
-import com.evervolv.settingslib.widget.CustomDialogPreference;
+import com.evervolv.settingslib.widget.CustomDialogPreferenceExt;
 import com.evervolv.toolbox.widget.DialogCreatable;
 import com.evervolv.toolbox.widget.HighlightablePreferenceGroupAdapter;
 import com.evervolv.toolbox.widget.SettingsHelper;
@@ -577,9 +577,9 @@ public abstract class SettingsPreferenceFragment extends ObservablePreferenceFra
             // Auto-key preferences that don't have a key, so the dialog can find them.
             preference.setKey(UUID.randomUUID().toString());
         }
-        CustomDialogPreference.CustomPreferenceDialogFragment f = null;
-        if (preference instanceof CustomDialogPreference) {
-            f = CustomDialogPreference.CustomPreferenceDialogFragment
+        CustomDialogPreferenceExt.CustomPreferenceDialogFragment f = null;
+        if (preference instanceof CustomDialogPreferenceExt) {
+            f = CustomDialogPreferenceExt.CustomPreferenceDialogFragment
                     .newInstance(preference.getKey());
         } else {
             super.onDisplayPreferenceDialog(preference);

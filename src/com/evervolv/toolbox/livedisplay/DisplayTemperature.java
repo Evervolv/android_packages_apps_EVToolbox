@@ -29,7 +29,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 
-import com.evervolv.settingslib.widget.CustomDialogPreference;
+import com.evervolv.settingslib.widget.CustomDialogPreferenceExt;
 import com.evervolv.toolbox.R;
 import com.evervolv.internal.util.MathUtils;
 
@@ -39,7 +39,7 @@ import evervolv.hardware.LiveDisplayManager;
 /**
  * Preference for selection of color temperature range for LiveDisplay
  */
-public class DisplayTemperature extends CustomDialogPreference<AlertDialog> {
+public class DisplayTemperature extends CustomDialogPreferenceExt {
     private static final String TAG = "DisplayTemperature";
 
     private final Context mContext;
@@ -95,7 +95,7 @@ public class DisplayTemperature extends CustomDialogPreference<AlertDialog> {
 
 
     @Override
-    protected boolean onDismissDialog(AlertDialog dialog, int which) {
+    protected boolean onDismissDialog(DialogInterface dialog, int which) {
         // Can't use onPrepareDialogBuilder for this as we want the dialog
         // to be kept open on click
         if (which == DialogInterface.BUTTON_NEUTRAL) {

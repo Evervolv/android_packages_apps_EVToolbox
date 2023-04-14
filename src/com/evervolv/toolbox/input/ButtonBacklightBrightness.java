@@ -36,13 +36,13 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.preference.PreferenceManager;
 
-import com.evervolv.settingslib.widget.CustomDialogPreference;
+import com.evervolv.settingslib.widget.CustomDialogPreferenceExt;
 import com.evervolv.toolbox.utils.DeviceUtils;
 import com.evervolv.toolbox.R;
 
 import evervolv.provider.EVSettings;
 
-public class ButtonBacklightBrightness extends CustomDialogPreference<AlertDialog> implements
+public class ButtonBacklightBrightness extends CustomDialogPreferenceExt implements
         SeekBar.OnSeekBarChangeListener {
     private static final int BUTTON_BRIGHTNESS_TOGGLE_MODE_ONLY = 1;
     private static final int DEFAULT_BUTTON_TIMEOUT = 5;
@@ -84,8 +84,8 @@ public class ButtonBacklightBrightness extends CustomDialogPreference<AlertDialo
     }
 
     @Override
-    protected void onClick(AlertDialog d, int which) {
-        super.onClick(d, which);
+    protected void onClick(DialogInterface dialog, int which) {
+        super.onClick(dialog, which);
 
         updateBrightnessPreview();
     }
@@ -100,7 +100,7 @@ public class ButtonBacklightBrightness extends CustomDialogPreference<AlertDialo
     }
 
     @Override
-    protected boolean onDismissDialog(AlertDialog dialog, int which) {
+    protected boolean onDismissDialog(DialogInterface dialog, int which) {
         if (which == DialogInterface.BUTTON_NEUTRAL) {
             mTimeoutBar.setProgress(DEFAULT_BUTTON_TIMEOUT);
             applyTimeout(DEFAULT_BUTTON_TIMEOUT);

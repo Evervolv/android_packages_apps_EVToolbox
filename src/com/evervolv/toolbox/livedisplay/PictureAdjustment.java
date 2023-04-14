@@ -29,7 +29,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 
-import com.evervolv.settingslib.widget.CustomDialogPreference;
+import com.evervolv.settingslib.widget.CustomDialogPreferenceExt;
 import com.evervolv.settingslib.widget.IntervalSeekBar;
 import com.evervolv.toolbox.R;
 
@@ -41,7 +41,7 @@ import evervolv.hardware.LiveDisplayManager;
 /**
  * Special preference type that allows configuration of Color settings
  */
-public class PictureAdjustment extends CustomDialogPreference<AlertDialog> {
+public class PictureAdjustment extends CustomDialogPreferenceExt {
     private static final String TAG = "PictureAdjustment";
 
     private final Context mContext;
@@ -111,7 +111,7 @@ public class PictureAdjustment extends CustomDialogPreference<AlertDialog> {
     }
 
     @Override
-    protected boolean onDismissDialog(AlertDialog dialog, int which) {
+    protected boolean onDismissDialog(DialogInterface dialog, int which) {
         // Can't use onPrepareDialogBuilder for this as we want the dialog
         // to be kept open on click
         if (which == DialogInterface.BUTTON_NEUTRAL) {

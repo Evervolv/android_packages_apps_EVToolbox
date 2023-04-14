@@ -41,10 +41,10 @@ import evervolv.provider.EVSettings;
 
 import com.evervolv.internal.notification.LightsCapabilities;
 import com.evervolv.internal.notification.NotificationHelper;
-import com.evervolv.settingslib.widget.CustomDialogPreference;
+import com.evervolv.settingslib.widget.CustomDialogPreferenceExt;
 import com.evervolv.toolbox.R;
 
-public class BrightnessPreference extends CustomDialogPreference<AlertDialog>
+public class BrightnessPreference extends CustomDialogPreferenceExt
         implements SeekBar.OnSeekBarChangeListener {
 
     private static String TAG = "BrightnessPreference";
@@ -132,7 +132,7 @@ public class BrightnessPreference extends CustomDialogPreference<AlertDialog>
     }
 
     @Override
-    protected boolean onDismissDialog(AlertDialog dialog, int which) {
+    protected boolean onDismissDialog(DialogInterface dialog, int which) {
         if (which == DialogInterface.BUTTON_NEUTRAL) {
             // Reset brightness to default (max).
             mBrightnessBar.setProgress(LIGHT_BRIGHTNESS_MAXIMUM);
