@@ -177,7 +177,6 @@ public class KeyHandler implements DeviceKeyHandler {
     }
 
     private void processEvent(final int action) {
-        mProximityWakeLock.acquire();
         mSensorManager.registerListener(new SensorEventListener() {
             @Override
             public void onSensorChanged(SensorEvent event) {
