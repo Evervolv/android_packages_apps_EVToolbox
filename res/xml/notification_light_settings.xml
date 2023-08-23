@@ -20,7 +20,7 @@
         android:key="notification_lights"
         android:title="@string/notification_light_title">
 
-    <com.evervolv.toolbox.widget.SystemSettingMainSwitchPreference
+    <com.evervolv.settingslib.widget.SystemSettingMainSwitchPreference
         android:key="notification_light_pulse"
         android:title="@string/notification_light_enable_title" />
 
