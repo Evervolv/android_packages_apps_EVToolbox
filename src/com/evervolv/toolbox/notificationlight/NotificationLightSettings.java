@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2012 The CyanogenMod Project
- *               2017-2022 The LineageOS Project
+ *               2017-2023 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,6 +31,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.util.ArraySet;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -43,6 +44,8 @@ import androidx.preference.PreferenceScreen;
 
 import com.evervolv.internal.notification.LightsCapabilities;
 import com.evervolv.settingslib.widget.SystemSettingMainSwitchPreference;
+import com.evervolv.toolbox.search.BaseSearchIndexProvider;
+import com.evervolv.toolbox.search.Searchable;
 import com.evervolv.toolbox.widget.PackageListAdapter;
 import com.evervolv.toolbox.widget.PackageListAdapter.PackageItem;
 import com.evervolv.toolbox.R;
@@ -53,6 +56,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import evervolv.preference.EVSystemSettingSwitchPreference;
 import evervolv.preference.SystemSettingSwitchPreference;
@@ -60,8 +64,23 @@ import evervolv.provider.EVSettings;
 import evervolv.util.ColorUtils;
 
 public class NotificationLightSettings extends SettingsPreferenceFragment implements
-        Preference.OnPreferenceChangeListener, ApplicationLightPreference.ItemLongClickListener {
+        ApplicationLightPreference.ItemLongClickListener, Preference.OnPreferenceChangeListener,
+        Searchable {
     private static final String TAG = "NotificationLightSettings";
+
+    private static final String KEY_NOTIFICATION_LIGHTS = "notification_lights";
+    private static final String NOTIFICATION_LIGHT_PULSE =
+            Settings.System.NOTIFICATION_LIGHT_PULSE;
+    private static final String NOTIFICATION_LIGHT_COLOR_AUTO =
+            EVSettings.System.NOTIFICATION_LIGHT_COLOR_AUTO;
+    private static final String NOTIFICATION_LIGHT_SCREEN_ON =
+            EVSettings.System.NOTIFICATION_LIGHT_SCREEN_ON;
+    private static final String NOTIFICATION_LIGHT_PULSE_CUSTOM_ENABLE =
+            EVSettings.System.NOTIFICATION_LIGHT_PULSE_CUSTOM_ENABLE;
+    private static final String NOTIFICATION_LIGHT_BRIGHTNESS_LEVEL =
+            EVSettings.System.NOTIFICATION_LIGHT_BRIGHTNESS_LEVEL;
+    private static final String NOTIFICATION_LIGHT_BRIGHTNESS_LEVEL_ZEN =
+            EVSettings.System.NOTIFICATION_LIGHT_BRIGHTNESS_LEVEL_ZEN;
 
     private static final String ADVANCED_SECTION = "advanced_section";
     private static final String APPLICATION_SECTION = "applications_list";
@@ -132,22 +151,18 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
         mMultiColorLed = LightsCapabilities.supports(
                 context, LightsCapabilities.LIGHTS_RGB_NOTIFICATION_LED);
 
-        mEnabledPref = findPreference(Settings.System.NOTIFICATION_LIGHT_PULSE);
+        mEnabledPref = findPreference(NOTIFICATION_LIGHT_PULSE);
         mEnabledPref.setOnPreferenceChangeListener(this);
 
         mDefaultPref = (ApplicationLightPreference) findPreference(DEFAULT_PREF);
 
-        mAutoGenerateColors = (EVSystemSettingSwitchPreference)
-                findPreference(EVSettings.System.NOTIFICATION_LIGHT_COLOR_AUTO);
+        mAutoGenerateColors = findPreference(NOTIFICATION_LIGHT_COLOR_AUTO);
 
         // Advanced light settings
-        mNotificationBrightnessPref = (NotificationBrightnessPreference)
-                findPreference(EVSettings.System.NOTIFICATION_LIGHT_BRIGHTNESS_LEVEL);
-        mScreenOnLightsPref = (EVSystemSettingSwitchPreference)
-                findPreference(EVSettings.System.NOTIFICATION_LIGHT_SCREEN_ON);
+        mNotificationBrightnessPref = findPreference(NOTIFICATION_LIGHT_BRIGHTNESS_LEVEL);
+        mScreenOnLightsPref = findPreference(NOTIFICATION_LIGHT_SCREEN_ON);
         mScreenOnLightsPref.setOnPreferenceChangeListener(this);
-        mCustomEnabledPref = (EVSystemSettingSwitchPreference)
-                findPreference(EVSettings.System.NOTIFICATION_LIGHT_PULSE_CUSTOM_ENABLE);
+        mCustomEnabledPref = findPreference(NOTIFICATION_LIGHT_PULSE_CUSTOM_ENABLE);
         if (!mMultiColorLed && !mHALAdjustableBrightness) {
             removePreference(BRIGHTNESS_SECTION);
         }
@@ -199,11 +214,10 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
             mGeneralPrefs.removePreference(mAutoGenerateColors);
         } else {
             mAutoGenerateColors.setOnPreferenceChangeListener(this);
-            watch(EVSettings.System.getUriFor(
-                    EVSettings.System.NOTIFICATION_LIGHT_COLOR_AUTO));
+            watch(EVSettings.System.getUriFor(NOTIFICATION_LIGHT_COLOR_AUTO));
         }
 
-        watch(Settings.System.getUriFor(Settings.System.NOTIFICATION_LIGHT_PULSE));
+        watch(Settings.System.getUriFor(NOTIFICATION_LIGHT_PULSE));
     }
 
     @Override
@@ -345,7 +359,7 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
 
     private int getInitialColorForPackage(String packageName) {
         boolean autoColor = EVSettings.System.getInt(getActivity().getContentResolver(),
-                EVSettings.System.NOTIFICATION_LIGHT_COLOR_AUTO, mMultiColorLed ? 1 : 0) == 1;
+                NOTIFICATION_LIGHT_COLOR_AUTO, mMultiColorLed ? 1 : 0) == 1;
         int color = mDefaultColor;
         if (autoColor) {
             try {
@@ -619,6 +633,49 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
                 return context.getString(R.string.enabled);
             }
             return context.getString(R.string.disabled);
+        }
+    };
+
+    public static final Searchable.SearchIndexProvider SEARCH_INDEX_DATA_PROVIDER =
+            new BaseSearchIndexProvider() {
+
+        @Override
+        public Set<String> getNonIndexableKeys(Context context) {
+            final Set<String> result = new ArraySet<>();
+
+            TelephonyManager tm = context.getSystemService(TelephonyManager.class);
+
+            if (!context.getResources().getBoolean(com.android.internal.R.bool
+                    .config_intrusiveNotificationLed)) {
+                result.add(KEY_NOTIFICATION_LIGHTS);
+                result.add(NOTIFICATION_LIGHT_PULSE);
+            }
+            if (!LightsCapabilities.supports(context, LightsCapabilities.LIGHTS_PULSATING_LED) &&
+                    !LightsCapabilities.supports(context,
+                            LightsCapabilities.LIGHTS_RGB_NOTIFICATION_LED)) {
+                result.add(GENERAL_SECTION);
+                result.add(NOTIFICATION_LIGHT_COLOR_AUTO);
+                result.add(DEFAULT_PREF);
+                result.add(ADVANCED_SECTION);
+                result.add(NOTIFICATION_LIGHT_SCREEN_ON);
+                result.add(NOTIFICATION_LIGHT_PULSE_CUSTOM_ENABLE);
+                result.add(PHONE_SECTION);
+                result.add(MISSED_CALL_PREF);
+                result.add(VOICEMAIL_PREF);
+                result.add(APPLICATION_SECTION);
+                result.add(ADD_APPS);
+            } else if (tm.getPhoneType() == TelephonyManager.PHONE_TYPE_NONE) {
+                result.add(PHONE_SECTION);
+                result.add(MISSED_CALL_PREF);
+                result.add(VOICEMAIL_PREF);
+            }
+            if (!LightsCapabilities.supports(context,
+                    LightsCapabilities.LIGHTS_ADJUSTABLE_BATTERY_LED_BRIGHTNESS)) {
+                result.add(BRIGHTNESS_SECTION);
+                result.add(NOTIFICATION_LIGHT_BRIGHTNESS_LEVEL);
+                result.add(NOTIFICATION_LIGHT_BRIGHTNESS_LEVEL_ZEN);
+            }
+            return result;
         }
     };
 }
