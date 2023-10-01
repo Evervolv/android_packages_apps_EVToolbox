@@ -96,7 +96,7 @@ public class KeyHandler implements DeviceKeyHandler {
 
         mPowerManager = context.getSystemService(PowerManager.class);
         mGestureWakeLock = mPowerManager.newWakeLock(
-                PowerManager.PARTIAL_WAKE_LOCK, "SettingsGestureWakeLock");
+                PowerManager.PARTIAL_WAKE_LOCK, "Settings:GestureWakeLock");
 
         mEventHandler = new EventHandler(Looper.getMainLooper());
 
@@ -119,10 +119,11 @@ public class KeyHandler implements DeviceKeyHandler {
             mSensorManager = context.getSystemService(SensorManager.class);
             mProximitySensor = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
             mProximityWakeLock = mPowerManager.newWakeLock(
-                    PowerManager.PARTIAL_WAKE_LOCK, "SettingsProximityWakeLock");
+                    PowerManager.PARTIAL_WAKE_LOCK, "Settings:ProximityWakeLock");
         }
         mContext.registerReceiver(mUpdateReceiver,
-                new IntentFilter(TouchscreenGestureConstants.UPDATE_PREFS_ACTION));
+                new IntentFilter(TouchscreenGestureConstants.UPDATE_PREFS_ACTION),
+                Context.RECEIVER_NOT_EXPORTED);
     }
 
     private class TorchModeCallback extends CameraManager.TorchCallback {

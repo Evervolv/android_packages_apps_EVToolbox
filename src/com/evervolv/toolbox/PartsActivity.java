@@ -17,8 +17,8 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.preference.PreferenceFragment;
 import androidx.preference.Preference;
+import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceScreen;
 
 import com.android.settingslib.collapsingtoolbar.CollapsingToolbarBaseActivity;
@@ -29,8 +29,8 @@ import com.evervolv.internal.parts.PartInfo;
 import com.evervolv.internal.parts.PartsList;
 
 public class PartsActivity extends CollapsingToolbarBaseActivity implements
-        PreferenceFragment.OnPreferenceStartFragmentCallback,
-        PreferenceFragment.OnPreferenceStartScreenCallback {
+        PreferenceFragmentCompat.OnPreferenceStartFragmentCallback,
+        PreferenceFragmentCompat.OnPreferenceStartScreenCallback {
 
     private static final String TAG = "PartsActivity";
 
@@ -112,14 +112,14 @@ public class PartsActivity extends CollapsingToolbarBaseActivity implements
     }
 
     @Override
-    public boolean onPreferenceStartFragment(PreferenceFragment caller, Preference pref) {
+    public boolean onPreferenceStartFragment(PreferenceFragmentCompat caller, Preference pref) {
         startPreferencePanel(pref.getFragment(), pref.getExtras(), -1, pref.getTitle(),
                 null, 0);
         return true;
     }
 
     @Override
-    public boolean onPreferenceStartScreen(PreferenceFragment caller, PreferenceScreen pref) {
+    public boolean onPreferenceStartScreen(PreferenceFragmentCompat caller, PreferenceScreen pref) {
         startPreferencePanel(pref.getFragment(), pref.getExtras(), -1, pref.getTitle(),
                 null, 0);
         return true;
@@ -146,16 +146,6 @@ public class PartsActivity extends CollapsingToolbarBaseActivity implements
     public void startPreferencePanel(String fragmentClass, Bundle args, int titleRes,
                                      CharSequence titleText, Fragment resultTo,
                                      int resultRequestCode) {
-        String title = null;
-        if (titleRes < 0) {
-            if (titleText != null) {
-                title = titleText.toString();
-            } else {
-                // There not much we can do in that case
-                title = "";
-            }
-        }
-
         Intent intent = new Intent();
         intent.setComponent(PartsList.PARTS_ACTIVITY);
         intent.putExtra(EXTRA_SHOW_FRAGMENT, fragmentClass);
