@@ -20,6 +20,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.ArraySet;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -32,14 +33,19 @@ import com.evervolv.internal.notification.LightsCapabilities;
 import com.evervolv.settingslib.widget.EVSystemSettingMainSwitchPreference;
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.SettingsPreferenceFragment;
+import com.evervolv.toolbox.search.BaseSearchIndexProvider;
+import com.evervolv.toolbox.search.Searchable;
 
 import evervolv.preference.EVSystemSettingSwitchPreference;
 import evervolv.provider.EVSettings;
 
+import java.util.Set;
+
 public class BatteryLightSettings extends SettingsPreferenceFragment implements
-        Preference.OnPreferenceChangeListener {
+        Preference.OnPreferenceChangeListener, Searchable {
     private static final String TAG = "BatteryLightSettings";
 
+    private static final String KEY_BATTERY_LIGHTS = "battery_lights";
     private static final String GENERAL_SECTION = "general_section";
     private static final String COLORS_SECTION = "colors_list";
     private static final String BRIGHTNESS_SECTION = "brightness_section";
@@ -278,6 +284,42 @@ public class BatteryLightSettings extends SettingsPreferenceFragment implements
                 return context.getString(R.string.enabled);
             }
             return context.getString(R.string.disabled);
+        }
+    };
+
+    public static final Searchable.SearchIndexProvider SEARCH_INDEX_DATA_PROVIDER =
+            new BaseSearchIndexProvider() {
+
+        @Override
+        public Set<String> getNonIndexableKeys(Context context) {
+            final Set<String> result = new ArraySet<>();
+
+            if (!LightsCapabilities.supports(context, LightsCapabilities.LIGHTS_BATTERY_LED)) {
+                result.add(KEY_BATTERY_LIGHTS);
+                result.add(LIGHT_ENABLED_PREF);
+                result.add(GENERAL_SECTION);
+                result.add(COLORS_SECTION);
+                result.add(LOW_COLOR_PREF);
+                result.add(MEDIUM_COLOR_PREF);
+                result.add(FULL_COLOR_PREF);
+            } else {
+                result.add(COLORS_SECTION);
+                result.add(LOW_COLOR_PREF);
+                result.add(MEDIUM_COLOR_PREF);
+                result.add(FULL_COLOR_PREF);
+            }
+            if (!LightsCapabilities.supports(context,
+                    LightsCapabilities.LIGHTS_ADJUSTABLE_BATTERY_LED_BRIGHTNESS)) {
+                result.add(BRIGHTNESS_SECTION);
+                result.add(BRIGHTNESS_PREFERENCE);
+                result.add(BRIGHTNESS_ZEN_PREFERENCE);
+            }
+            if (!LightsCapabilities.supports(context, LightsCapabilities.LIGHTS_PULSATING_LED) ||
+                    LightsCapabilities.supports(context,
+                            LightsCapabilities.LIGHTS_SEGMENTED_BATTERY_LED)) {
+                result.add(PULSE_ENABLED_PREF);
+            }
+            return result;
         }
     };
 }
