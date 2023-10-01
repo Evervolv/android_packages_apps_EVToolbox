@@ -22,5 +22,7 @@
     <bool name="def_battery_light_enabled">true</bool>
     <!-- Default value for battery light pulse -->
     <bool name="def_battery_light_pulse">true</bool>
+    <!-- Default value for edge light pulse -->
+    <bool name="def_edge_light_enabled">false</bool>
 
 </resources>
