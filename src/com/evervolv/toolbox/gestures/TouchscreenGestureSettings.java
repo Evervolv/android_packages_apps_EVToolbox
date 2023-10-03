@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2016 The CyanogenMod project
- * SPDX-FileCopyrightText: 2017,2019-2020 The LineageOS Project
+ * SPDX-FileCopyrightText: 2017-2023 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -53,7 +53,7 @@ public class TouchscreenGestureSettings extends SettingsPreferenceFragment
     private void initTouchscreenGestures() {
         final HardwareManager manager = HardwareManager.getInstance(getContext());
         mTouchscreenGestures = manager.getTouchscreenGestures();
-        final int[] actions = getDefaultGestureActions(getContext(), mTouchscreenGestures);
+        final int[] actions = getDefaultGestureActions(requireContext(), mTouchscreenGestures);
         for (final TouchscreenGesture gesture : mTouchscreenGestures) {
             getPreferenceScreen().addPreference(new TouchscreenGesturePreference(
                     getContext(), gesture, actions[gesture.id]));
@@ -204,7 +204,7 @@ public class TouchscreenGestureSettings extends SettingsPreferenceFragment
 
         @Override
         public Set<String> getNonIndexableKeys(Context context) {
-            final Set<String> result = new ArraySet<String>();
+            final Set<String> result = new ArraySet<>();
 
             if (!isTouchscreenGesturesSupported(context)) {
                 result.add(KEY_TOUCHSCREEN_GESTURE_SETTINGS);

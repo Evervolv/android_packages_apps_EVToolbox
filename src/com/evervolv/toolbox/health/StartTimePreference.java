@@ -10,16 +10,11 @@ import android.util.AttributeSet;
 
 import com.evervolv.toolbox.R;
 
-import evervolv.health.HealthInterface;
-
 public class StartTimePreference extends TimePreference {
     private static final String TAG = StartTimePreference.class.getSimpleName();
 
-    private HealthInterface mHealthInterface;
-
     public StartTimePreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mHealthInterface = HealthInterface.getInstance(context);
     }
 
     @Override

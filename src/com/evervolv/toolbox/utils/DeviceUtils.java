@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2016 The CyanogenMod project
- * SPDX-FileCopyrightText: 2017-2020 The LineageOS project
+ * SPDX-FileCopyrightText: 2017-2023 The LineageOS project
  * SPDX-License-Identifier: Apache-2.0
  */
 package com.evervolv.toolbox.utils;

@@ -3,15 +3,12 @@
      SPDX-FileCopyrightText: 2014 The CyanogenMod Project
      SPDX-License-Identifier: Apache-2.0
 -->
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/app_light_pref"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="?android:attr/listPreferredItemHeightSmall"
     android:gravity="center_vertical"
-    android:paddingStart="?android:attr/listPreferredItemPaddingStart"
-    android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
     android:background="?android:attr/selectableItemBackground">
 
     <ImageView
@@ -65,14 +62,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:textAppearance="@android:style/TextAppearance.Material.Notification.Line2" />
+            android:textAppearance="@android:style/TextAppearance.Material.Notification.Line2"
+            android:textColor="?android:attr/textColorSecondary" />
 
         <TextView
             android:id="@+id/textViewTimeOffValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:textAppearance="@android:style/TextAppearance.Material.Notification.Line2" />
+            android:textAppearance="@android:style/TextAppearance.Material.Notification.Line2"
+            android:textColor="?android:attr/textColorSecondary" />
     </LinearLayout>
 
     <ImageView

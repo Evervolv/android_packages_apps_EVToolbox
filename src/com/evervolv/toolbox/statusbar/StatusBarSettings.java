@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2014-2015 The CyanogenMod Project
- * SPDX-FileCopyrightText: 2017-2018 The LineageOS Project
+ * SPDX-FileCopyrightText: 2017-2024 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 package com.evervolv.toolbox.statusbar;
@@ -12,7 +12,6 @@ import android.view.View;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.Preference.OnPreferenceChangeListener;
-import androidx.preference.PreferenceCategory;
 import androidx.preference.PreferenceGroup;
 import androidx.preference.PreferenceScreen;
 import androidx.preference.SwitchPreferenceCompat;

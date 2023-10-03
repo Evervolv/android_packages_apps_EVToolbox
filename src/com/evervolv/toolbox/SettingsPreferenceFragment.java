@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2010 The Android Open Source Project
- * SPDX-FileCopyrightText: 2020 The LineageOS Project
+ * SPDX-FileCopyrightText: 2020-2023 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -16,15 +16,14 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.ArrayMap;
 import android.util.ArraySet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.*;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -54,7 +53,6 @@ import java.util.UUID;
 public abstract class SettingsPreferenceFragment extends ObservablePreferenceFragment
         implements DialogCreatable, PartsUpdater.Refreshable {
 
-
     private static final String TAG = "SettingsPreference";
 
     private static final String SAVE_HIGHLIGHTED_KEY = "android:preference_highlighted";
@@ -67,54 +65,25 @@ public abstract class SettingsPreferenceFragment extends ObservablePreferenceFra
 
     private RecyclerView.Adapter mCurrentRootAdapter;
     private boolean mIsDataSetObserverRegistered = false;
-    private RecyclerView.AdapterDataObserver mDataSetObserver =
+    private final RecyclerView.AdapterDataObserver mDataSetObserver =
             new RecyclerView.AdapterDataObserver() {
-                @Override
-                public void onChanged() {
-                    onDataSetChanged();
-                }
+        @Override
+        public void onChanged() {
+            onDataSetChanged();
+        }
+    };
 
-                @Override
-                public void onItemRangeChanged(int positionStart, int itemCount) {
-                    onDataSetChanged();
-                }
-
-                @Override
-                public void onItemRangeChanged(int positionStart, int itemCount, Object payload) {
-                    onDataSetChanged();
-                }
-
-                @Override
-                public void onItemRangeInserted(int positionStart, int itemCount) {
-                    onDataSetChanged();
-                }
-
-                @Override
-                public void onItemRangeRemoved(int positionStart, int itemCount) {
-                    onDataSetChanged();
-                }
-
-                @Override
-                public void onItemRangeMoved(int fromPosition, int toPosition, int itemCount) {
-                    onDataSetChanged();
-                }
-            };
-
-    @VisibleForTesting
-    private ViewGroup mPinnedHeaderFrameLayout;
     private AppBarLayout mAppBarLayout;
     private LayoutPreference mHeader;
     private View mEmptyView;
     private LinearLayoutManager mLayoutManager;
-    private ArrayMap<String, Preference> mPreferenceCache;
-    private boolean mAnimationAllowed;
 
     @VisibleForTesting
     public HighlightablePreferenceGroupAdapter mAdapter;
     @VisibleForTesting
     public boolean mPreferenceHighlighted = false;
 
-    private final ArraySet<Uri> mTriggerUris = new ArraySet<Uri>();
+    private final ArraySet<Uri> mTriggerUris = new ArraySet<>();
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -127,33 +96,14 @@ public abstract class SettingsPreferenceFragment extends ObservablePreferenceFra
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         final View root = super.onCreateView(inflater, container, savedInstanceState);
-        mPinnedHeaderFrameLayout = (ViewGroup) root.findViewById(R.id.pinned_header);
-        mAppBarLayout = getActivity().findViewById(R.id.app_bar);
         return root;
     }
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-    }
-
-    public View setPinnedHeaderView(int layoutResId) {
-        final LayoutInflater inflater = getActivity().getLayoutInflater();
-        final View pinnedHeader =
-                inflater.inflate(layoutResId, mPinnedHeaderFrameLayout, false);
-        setPinnedHeaderView(pinnedHeader);
-        return pinnedHeader;
-    }
-
-    public void setPinnedHeaderView(View pinnedHeader) {
-        mPinnedHeaderFrameLayout.addView(pinnedHeader);
-        mPinnedHeaderFrameLayout.setVisibility(View.VISIBLE);
-    }
-
-    public void showPinnedHeader(boolean show) {
-        mPinnedHeaderFrameLayout.setVisibility(show ? View.VISIBLE : View.INVISIBLE);
     }
 
     @Override
@@ -186,7 +136,11 @@ public abstract class SettingsPreferenceFragment extends ObservablePreferenceFra
     @Override
     public void onResume() {
         super.onResume();
-        highlightPreferenceIfNeeded();
+
+        final Bundle args = getArguments();
+        if (args != null) {
+            highlightPreferenceIfNeeded();
+        }
     }
 
     @Override
@@ -202,51 +156,6 @@ public abstract class SettingsPreferenceFragment extends ObservablePreferenceFra
     @Override
     public void onSettingsChanged(Uri contentUri) {
         PartsUpdater.notifyChanged(getActivity(), getPreferenceScreen().getKey());
-    }
-
-    public void showLoadingWhenEmpty() {
-        View loading = getView().findViewById(R.id.loading_container);
-        setEmptyView(loading);
-    }
-
-    public void handleLoadingContainer(View loading, View doneLoading, boolean done,
-                                              boolean animate) {
-        setViewShown(loading, !done, animate);
-        setViewShown(doneLoading, done, animate);
-    }
-
-    private void setViewShown(final View view, boolean shown, boolean animate) {
-        if (animate) {
-            Animation animation = AnimationUtils.loadAnimation(view.getContext(),
-                    shown ? android.R.anim.fade_in : android.R.anim.fade_out);
-            if (shown) {
-                view.setVisibility(View.VISIBLE);
-            } else {
-                animation.setAnimationListener(new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        view.setVisibility(View.INVISIBLE);
-                    }
-                });
-            }
-            view.startAnimation(animation);
-        } else {
-            view.clearAnimation();
-            view.setVisibility(shown ? View.VISIBLE : View.INVISIBLE);
-        }
-    }
-
-    public void setLoading(boolean loading, boolean animate) {
-        View loading_container = getView().findViewById(R.id.loading_container);
-        handleLoadingContainer(loading_container, getListView(), !loading, animate);
     }
 
     public void registerObserverIfNeeded() {
@@ -294,16 +203,6 @@ public abstract class SettingsPreferenceFragment extends ObservablePreferenceFra
         updateEmptyView();
     }
 
-    public LayoutPreference getHeaderView() {
-        return mHeader;
-    }
-
-    protected void setHeaderView(int resource) {
-        mHeader = new LayoutPreference(getPrefContext(), resource);
-        mHeader.setSelectable(false);
-        addPreferenceToTop(mHeader);
-    }
-
     protected void setHeaderView(View view) {
         mHeader = new LayoutPreference(getPrefContext(), view);
         mHeader.setSelectable(false);
@@ -321,7 +220,7 @@ public abstract class SettingsPreferenceFragment extends ObservablePreferenceFra
     public void setPreferenceScreen(PreferenceScreen preferenceScreen) {
         if (preferenceScreen != null && !preferenceScreen.isAttached()) {
             // Without ids generated, the RecyclerView won't animate changes to the preferences.
-            preferenceScreen.setShouldUseGeneratedIds(mAnimationAllowed);
+            preferenceScreen.setShouldUseGeneratedIds(false);
         }
         super.setPreferenceScreen(preferenceScreen);
         if (preferenceScreen != null) {
@@ -353,10 +252,6 @@ public abstract class SettingsPreferenceFragment extends ObservablePreferenceFra
         updateEmptyView();
     }
 
-    public View getEmptyView() {
-        return mEmptyView;
-    }
-
     @Override
     public RecyclerView.LayoutManager onCreateLayoutManager() {
         mLayoutManager = new LinearLayoutManager(getContext());
@@ -371,36 +266,6 @@ public abstract class SettingsPreferenceFragment extends ObservablePreferenceFra
                         ? null : arguments.getString(PartsActivity.EXTRA_FRAGMENT_ARG_KEY),
                 mPreferenceHighlighted);
         return mAdapter;
-    }
-
-    protected void setAnimationAllowed(boolean animationAllowed) {
-        mAnimationAllowed = animationAllowed;
-    }
-
-    protected void cacheRemoveAllPrefs(PreferenceGroup group) {
-        mPreferenceCache = new ArrayMap<String, Preference>();
-        final int N = group.getPreferenceCount();
-        for (int i = 0; i < N; i++) {
-            Preference p = group.getPreference(i);
-            if (TextUtils.isEmpty(p.getKey())) {
-                continue;
-            }
-            mPreferenceCache.put(p.getKey(), p);
-        }
-    }
-
-    protected Preference getCachedPreference(String key) {
-        return mPreferenceCache != null ? mPreferenceCache.remove(key) : null;
-    }
-
-    protected void removeCachedPrefs(PreferenceGroup group) {
-        for (Preference p : mPreferenceCache.values()) {
-            group.removePreference(p);
-        }
-    }
-
-    protected int getCachedCount() {
-        return mPreferenceCache.size();
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
@@ -433,11 +298,11 @@ public abstract class SettingsPreferenceFragment extends ObservablePreferenceFra
      * users won't misunderstand its meaning.
      */
     public final void finishFragment() {
-        getActivity().onBackPressed();
+        requireActivity().onBackPressed();
     }
 
     public final void finishPreferencePanel(Fragment caller, int resultCode, Intent data) {
-        ((PartsActivity)getActivity()).finishPreferencePanel(caller, resultCode, data);
+        ((PartsActivity) requireActivity()).finishPreferencePanel(caller, resultCode, data);
     }
 
     // Some helpers for functions used by the settings fragments when they were activities
@@ -454,32 +319,17 @@ public abstract class SettingsPreferenceFragment extends ObservablePreferenceFra
     }
 
     /**
-     * Returns the specified system service from the owning Activity.
-     */
-    protected Object getSystemService(final String name) {
-        return getActivity().getSystemService(name);
-    }
-
-    /**
-     * Returns the specified system service from the owning Activity.
-     */
-    protected <T> T getSystemService(final Class<T> serviceClass) {
-        return getActivity().getSystemService(serviceClass);
-    }
-
-    /**
      * Returns the PackageManager from the owning Activity.
      */
     protected PackageManager getPackageManager() {
-        return getActivity().getPackageManager();
+        return requireActivity().getPackageManager();
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        super.onAttach(context);
         synchronized (mTriggerUris) {
-            SettingsHelper.get(activity).startWatching(this,
-                    mTriggerUris.toArray(new Uri[mTriggerUris.size()]));
+            SettingsHelper.get(context).startWatching(this, mTriggerUris.toArray(new Uri[0]));
         }
     }
 
@@ -503,7 +353,7 @@ public abstract class SettingsPreferenceFragment extends ObservablePreferenceFra
             mTriggerUris.addAll(Arrays.asList(contentUris));
             if (!isDetached()) {
                 SettingsHelper.get(getActivity()).startWatching(this,
-                        mTriggerUris.toArray(new Uri[mTriggerUris.size()]));
+                        mTriggerUris.toArray(new Uri[0]));
             }
         }
     }
@@ -521,39 +371,6 @@ public abstract class SettingsPreferenceFragment extends ObservablePreferenceFra
     @Override
     public Dialog onCreateDialog(int dialogId) {
         return null;
-    }
-
-    protected void removeDialog(int dialogId) {
-        // mDialogFragment may not be visible yet in parent fragment's onResume().
-        // To be able to dismiss dialog at that time, don't check
-        // mDialogFragment.isVisible().
-        if (mDialogFragment != null && mDialogFragment.getDialogId() == dialogId) {
-            mDialogFragment.dismiss();
-        }
-        mDialogFragment = null;
-    }
-
-    protected void removeDialog(int dialogId, boolean stateLossAllowed) {
-        if (stateLossAllowed) {
-            if (mDialogFragment != null && mDialogFragment.getDialogId() == dialogId) {
-                getFragmentManager().beginTransaction().remove(mDialogFragment).
-                        commitAllowingStateLoss();
-            }
-            mDialogFragment = null;
-        } else {
-            removeDialog(dialogId);
-        }
-    }
-
-    /**
-     * Sets the OnCancelListener of the dialog shown. This method can only be
-     * called after showDialog(int) and before removeDialog(int). The method
-     * does nothing otherwise.
-     */
-    protected void setOnCancelListener(DialogInterface.OnCancelListener listener) {
-        if (mDialogFragment != null) {
-            mDialogFragment.mOnCancelListener = listener;
-        }
     }
 
     /**
@@ -586,7 +403,7 @@ public abstract class SettingsPreferenceFragment extends ObservablePreferenceFra
             return;
         }
         f.setTargetFragment(this, 0);
-        f.show(getFragmentManager(), "dialog_preference");
+        f.show(getParentFragmentManager(), "dialog_preference");
         onDialogShowing();
     }
 
@@ -598,7 +415,6 @@ public abstract class SettingsPreferenceFragment extends ObservablePreferenceFra
 
         private Fragment mParentFragment;
 
-        private DialogInterface.OnCancelListener mOnCancelListener;
         private DialogInterface.OnDismissListener mOnDismissListener;
 
         public static SettingsDialogFragment newInstance(DialogCreatable fragment, int dialogId) {
@@ -615,7 +431,7 @@ public abstract class SettingsPreferenceFragment extends ObservablePreferenceFra
         }
 
         @Override
-        public void onSaveInstanceState(Bundle outState) {
+        public void onSaveInstanceState(@NonNull Bundle outState) {
             super.onSaveInstanceState(outState);
             if (mParentFragment != null) {
                 outState.putInt(KEY_DIALOG_ID, mDialogId);
@@ -632,6 +448,7 @@ public abstract class SettingsPreferenceFragment extends ObservablePreferenceFra
             }
         }
 
+        @NonNull
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             if (savedInstanceState != null) {
@@ -639,7 +456,7 @@ public abstract class SettingsPreferenceFragment extends ObservablePreferenceFra
                 mParentFragment = getParentFragment();
                 int mParentFragmentId = savedInstanceState.getInt(KEY_PARENT_FRAGMENT_ID, -1);
                 if (mParentFragment == null) {
-                    mParentFragment = getFragmentManager().findFragmentById(mParentFragmentId);
+                    mParentFragment = getChildFragmentManager().findFragmentById(mParentFragmentId);
                 }
                 if (!(mParentFragment instanceof DialogCreatable)) {
                     throw new IllegalArgumentException(
@@ -659,23 +476,16 @@ public abstract class SettingsPreferenceFragment extends ObservablePreferenceFra
         }
 
         @Override
-        public void onCancel(DialogInterface dialog) {
+        public void onCancel(@NonNull DialogInterface dialog) {
             super.onCancel(dialog);
-            if (mOnCancelListener != null) {
-                mOnCancelListener.onCancel(dialog);
-            }
         }
 
         @Override
-        public void onDismiss(DialogInterface dialog) {
+        public void onDismiss(@NonNull DialogInterface dialog) {
             super.onDismiss(dialog);
             if (mOnDismissListener != null) {
                 mOnDismissListener.onDismiss(dialog);
             }
-        }
-
-        public int getDialogId() {
-            return mDialogId;
         }
 
         @Override
@@ -701,46 +511,25 @@ public abstract class SettingsPreferenceFragment extends ObservablePreferenceFra
     }
 
     protected Button getBackButton() {
-        return (Button) ((PartsActivity)getActivity()).getBackButton();
+        return ((PartsActivity) requireActivity()).getBackButton();
     }
 
     protected Button getNextButton() {
-        return (Button) ((PartsActivity)getActivity()).getNextButton();
+        return ((PartsActivity) requireActivity()).getNextButton();
     }
 
     protected void showButtonBar(boolean show) {
-        ((PartsActivity)getActivity()).showButtonBar(show);
+        ((PartsActivity) requireActivity()).showButtonBar(show);
     }
 
     public void finish() {
         Activity activity = getActivity();
         if (activity == null) return;
-        if (getFragmentManager().getBackStackEntryCount() > 0) {
-            getFragmentManager().popBackStack();
+        if (getParentFragmentManager().getBackStackEntryCount() > 0) {
+            getParentFragmentManager().popBackStack();
         } else {
             activity.finish();
         }
-    }
-
-    protected Intent getIntent() {
-        if (getActivity() == null) {
-            return null;
-        }
-        return getActivity().getIntent();
-    }
-
-    protected void setResult(int result, Intent intent) {
-        if (getActivity() == null) {
-            return;
-        }
-        getActivity().setResult(result, intent);
-    }
-
-    protected void setResult(int result) {
-        if (getActivity() == null) {
-            return;
-        }
-        getActivity().setResult(result);
     }
 
     public boolean isAvailable() {
@@ -749,10 +538,5 @@ public abstract class SettingsPreferenceFragment extends ObservablePreferenceFra
 
     protected final Context getPrefContext() {
         return getPreferenceManager().getContext();
-    }
-
-    protected boolean isFinishingOrDestroyed() {
-        final Activity activity = getActivity();
-        return activity == null || activity.isFinishing() || activity.isDestroyed();
     }
 }

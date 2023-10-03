@@ -1,5 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2010 The Android Open Source Project
+ * SPDX-FileCopyrightText: 2022 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -16,5 +17,5 @@ import com.evervolv.toolbox.SettingsPreferenceFragment;
  */
 public interface DialogCreatable {
 
-    public Dialog onCreateDialog(int dialogId);
+    Dialog onCreateDialog(int dialogId);
 }

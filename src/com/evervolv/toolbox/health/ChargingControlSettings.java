@@ -54,6 +54,8 @@ public class ChargingControlSettings extends SettingsPreferenceFragment implemen
 
     private HealthInterface mHealthInterface;
 
+    private static final int MENU_RESET = Menu.FIRST;
+
     @Override
     public void onActivityCreated(final Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -61,7 +63,7 @@ public class ChargingControlSettings extends SettingsPreferenceFragment implemen
         final Resources res = getResources();
 
         addPreferencesFromResource(R.xml.charging_control_settings);
-        getActivity().getActionBar().setTitle(R.string.charging_control_title);
+        requireActivity().getActionBar().setTitle(R.string.charging_control_title);
 
         mHealthInterface = HealthInterface.getInstance(getActivity());
 
@@ -76,20 +78,21 @@ public class ChargingControlSettings extends SettingsPreferenceFragment implemen
         mChargingControlLimitPref = prefSet.findPreference(CHARGING_CONTROL_LIMIT_PREF);
 
         if (mChargingControlLimitPref != null) {
-            boolean allowFineGrainedSettings = mHealthInterface.allowFineGrainedSettings();
-            if (allowFineGrainedSettings) {
+            if (mHealthInterface.allowFineGrainedSettings()) {
                 mChargingControlModePref.setEntries(concatStringArrays(
                         mChargingControlModePref.getEntries(),
                         res.getStringArray(
-                                R.array.charging_control_mode_entries_battery_bypass_supported)));
+                                R.array.charging_control_mode_entries_fine_grained_control)));
                 mChargingControlModePref.setEntryValues(concatStringArrays(
                         mChargingControlModePref.getEntryValues(),
                         res.getStringArray(
-                                R.array.charging_control_mode_values_battery_bypass_supported)));
+                                R.array.charging_control_mode_values_fine_grained_control)));
             }
         }
 
         setHasOptionsMenu(true);
+
+        refreshValues();
 
         watch(EVSettings.System.getUriFor(EVSettings.System.CHARGING_CONTROL_ENABLED));
     }
@@ -175,7 +178,7 @@ public class ChargingControlSettings extends SettingsPreferenceFragment implemen
 
     @Override
     public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
-        menu.add(0, Menu.FIRST, 0, R.string.reset)
+        menu.add(0, MENU_RESET, 0, R.string.reset)
                 .setIcon(R.drawable.ic_settings_backup_restore)
                 .setAlphabeticShortcut('r')
                 .setShowAsActionFlags(
@@ -184,7 +187,7 @@ public class ChargingControlSettings extends SettingsPreferenceFragment implemen
 
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
-        if (item.getItemId() == Menu.FIRST) {
+        if (item.getItemId() == MENU_RESET) {
             resetToDefaults();
             return true;
         }

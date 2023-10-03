@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2018 The Android Open Source Project
- * SPDX-FileCopyrightText: 2020 The LineageOS Project
+ * SPDX-FileCopyrightText: 2020-2023 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -19,6 +19,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 import androidx.preference.PreferenceGroup;
 import androidx.preference.PreferenceGroupAdapter;
@@ -98,7 +99,7 @@ public class HighlightablePreferenceGroupAdapter extends PreferenceGroupAdapter 
     }
 
     @Override
-    public void onBindViewHolder(PreferenceViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PreferenceViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
         updateBackground(holder, position);
     }

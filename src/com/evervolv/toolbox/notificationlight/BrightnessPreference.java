@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2017,2019-2022 The LineageOS Project
+ * SPDX-FileCopyrightText: 2017-2023 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -30,7 +30,7 @@ import com.evervolv.toolbox.R;
 public class BrightnessPreference extends CustomDialogPreferenceExt
         implements SeekBar.OnSeekBarChangeListener {
 
-    private static String TAG = "BrightnessPreference";
+    private static final String TAG = "BrightnessPreference";
 
     public static final int LIGHT_BRIGHTNESS_MINIMUM = 1;
     public static final int LIGHT_BRIGHTNESS_MAXIMUM = 255;
@@ -56,13 +56,12 @@ public class BrightnessPreference extends CustomDialogPreferenceExt
     private int mLedColor = DEFAULT_LED_COLOR;
 
     private final Context mContext;
-    private final Handler mHandler;
 
     private final Notification.Builder mNotificationBuilder;
-    private NotificationManager mNotificationManager;
+    private final NotificationManager mNotificationManager;
 
     public interface OnBrightnessChangedListener {
-        public void onBrightnessChanged(int brightness);
+        void onBrightnessChanged(int brightness);
     }
 
     private OnBrightnessChangedListener mListener;
@@ -74,9 +73,6 @@ public class BrightnessPreference extends CustomDialogPreferenceExt
         setDialogLayoutResource(R.layout.dialog_brightness);
 
         mContext = context;
-
-        // Message handler used for led notification update throttling.
-        mHandler = new Handler(Looper.getMainLooper());
 
         mNotificationManager = context.getSystemService(NotificationManager.class);
 
@@ -146,11 +142,11 @@ public class BrightnessPreference extends CustomDialogPreferenceExt
         super.onBindDialogView(view);
 
         // Locate text view for percentage value
-        mDialogPercent = (TextView) view.findViewById(R.id.brightness_percent);
+        mDialogPercent = view.findViewById(R.id.brightness_percent);
 
         mVisibleLedBrightness = 0; // LED notification is not showing.
 
-        mBrightnessBar = (SeekBar) view.findViewById(R.id.brightness_seekbar);
+        mBrightnessBar = view.findViewById(R.id.brightness_seekbar);
         mBrightnessBar.setMax(LIGHT_BRIGHTNESS_MAXIMUM);
         mBrightnessBar.setMin(LIGHT_BRIGHTNESS_MINIMUM);
         mBrightnessBar.setOnSeekBarChangeListener(this);

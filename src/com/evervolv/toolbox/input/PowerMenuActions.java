@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2014-2015 The CyanogenMod Project
- * SPDX-FileCopyrightText: 2017-2022 The LineageOS Project
+ * SPDX-FileCopyrightText: 2017-2023 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -60,7 +60,7 @@ public class PowerMenuActions extends SettingsPreferenceFragment {
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.power_menu_settings);
-        mContext = getActivity().getApplicationContext();
+        mContext = requireActivity().getApplicationContext();
         mUserManager = UserManager.get(mContext);
         mGlobalActionManager = GlobalActionManager.getInstance(mContext);
         mEmergencyAffordanceManager = new EmergencyAffordanceManager(mContext);
@@ -90,7 +90,7 @@ public class PowerMenuActions extends SettingsPreferenceFragment {
             }
         }
 
-        if (!DeviceUtils.isVoiceCapable(getActivity())) {
+        if (!DeviceUtils.isVoiceCapable(requireActivity())) {
             mPowerMenuItemsCategory.removePreference(mEmergencyPref);
             mEmergencyPref = null;
         }

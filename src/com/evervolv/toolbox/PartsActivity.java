@@ -1,12 +1,12 @@
 /*
  * SPDX-FileCopyrightText: 2016 The CyanogenMod Project
- * SPDX-FileCopyrightText: 2017-2019,2021-2022 The LineageOS Project
+ * SPDX-FileCopyrightText: 2017-2023 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
 package com.evervolv.toolbox;
 
-import android.app.ActionBar;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -50,13 +50,15 @@ public class PartsActivity extends CollapsingToolbarBaseActivity implements
         setContentView(R.layout.toolbox);
 
         String action = getIntent().getAction();
+        ComponentName cn = getIntent().getComponent();
+
         PartInfo info = null;
         String partExtra = null;
 
         // Parts are launched by setting the action to PARTS_ACTION_PREFIX.part_key
         // and using an explcit intent to get here
         if (action != null && action.startsWith(PartsList.PARTS_ACTION_PREFIX) &&
-                getClass().getName().equals(getIntent().getComponent().getClassName())) {
+                getClass().getName().equals(cn.getClassName())) {
             partExtra = action.substring(PartsList.PARTS_ACTION_PREFIX.length() + 1);
         }
 
@@ -99,9 +101,8 @@ public class PartsActivity extends CollapsingToolbarBaseActivity implements
 
         switchToFragment(fragmentClass, initialArgs, -1, mInitialTitle);
 
-        final ActionBar actionBar = getActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
+        if (getActionBar() != null) {
+            getActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
 
@@ -128,7 +129,7 @@ public class PartsActivity extends CollapsingToolbarBaseActivity implements
     public void onBackPressed() {
         setTitle(mInitialTitle);
 
-        if (!getFragmentManager().popBackStackImmediate()) {
+        if (!getSupportFragmentManager().popBackStackImmediate()) {
             super.onBackPressed();
         }
     }
@@ -166,11 +167,7 @@ public class PartsActivity extends CollapsingToolbarBaseActivity implements
 
     public boolean switchToFragment(String fragmentClass, Bundle args, int titleRes,
                                     CharSequence titleText) {
-        Fragment fragment = Fragment.instantiate(this, fragmentClass);
-        if (fragment == null) {
-            Log.e(TAG, "Invalid fragment! " + fragmentClass);
-            return false;
-        }
+        Fragment fragment = Fragment.instantiate(this, fragmentClass, null);
         return switchToFragment(fragment, args, titleRes, titleText);
     }
 
@@ -212,7 +209,7 @@ public class PartsActivity extends CollapsingToolbarBaseActivity implements
         findViewById(R.id.button_bar).setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
-    public MainSwitchBar getSwitchBar() {
+    public MainSwitchBar getMainSwitchBar() {
         return (MainSwitchBar) findViewById(R.id.main_switch_bar);
     }
 

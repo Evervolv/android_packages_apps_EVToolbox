@@ -1,5 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2016 The CyanogenMod project
+ * SPDX-FileCopyrightText: 2017-2023 The LineageOS project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -110,7 +111,7 @@ public class ButtonSettings extends SettingsPreferenceFragment
         addPreferencesFromResource(R.xml.button_settings);
 
         final Resources res = getResources();
-        final ContentResolver resolver = getActivity().getContentResolver();
+        final ContentResolver resolver = requireActivity().getContentResolver();
         final PreferenceScreen prefScreen = getPreferenceScreen();
 
         final int deviceKeys = res.getInteger(
@@ -462,15 +463,12 @@ public class ButtonSettings extends SettingsPreferenceFragment
                     throw e.rethrowFromSystemServer();
                 }
             }
-            writeDisableNavkeysOption(getActivity(), mDisableNavigationKeys.isChecked());
+            writeDisableNavkeysOption(requireActivity(), mDisableNavigationKeys.isChecked());
             updateDisableNavkeysOption();
             updateDisableNavkeysCategories(true);
-            mHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mDisableNavigationKeys.setEnabled(true);
-                    updateDisableNavkeysCategories(mDisableNavigationKeys.isChecked());
-                }
+            mHandler.postDelayed(() -> {
+                mDisableNavigationKeys.setEnabled(true);
+                updateDisableNavkeysCategories(mDisableNavigationKeys.isChecked());
             }, 1000);
         }
 
@@ -482,7 +480,7 @@ public class ButtonSettings extends SettingsPreferenceFragment
 
         @Override
         public Set<String> getNonIndexableKeys(Context context) {
-            final Set<String> result = new ArraySet<String>();
+            final Set<String> result = new ArraySet<>();
 
             if (!DeviceUtils.hasBackKey(context)
                     || !DeviceUtils.canWakeUsingBackKey(context)) {

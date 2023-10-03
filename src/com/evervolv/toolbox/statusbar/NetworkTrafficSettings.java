@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2017-2019 The LineageOS Project
+ * SPDX-FileCopyrightText: 2017-2023 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -59,12 +59,12 @@ public class NetworkTrafficSettings extends SettingsPreferenceFragment
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (preference == mNetTrafficMode) {
-            int mode = Integer.valueOf((String) newValue);
+            int mode = Integer.parseInt((String) newValue);
             EVSettings.Secure.putInt(getActivity().getContentResolver(),
                     EVSettings.Secure.NETWORK_TRAFFIC_MODE, mode);
             updateEnabledStates(mode);
         } else if (preference == mNetTrafficUnits) {
-            int units = Integer.valueOf((String) newValue);
+            int units = Integer.parseInt((String) newValue);
             EVSettings.Secure.putInt(getActivity().getContentResolver(),
                     EVSettings.Secure.NETWORK_TRAFFIC_UNITS, units);
         }

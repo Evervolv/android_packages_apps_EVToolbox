@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:textColor="?android:attr/textColorPrimary"
-            android:textAppearance="@*android:style/TextAppearance.Material.Medium"
+            android:textAppearance="@style/TextAppearance.Medium"
             android:singleLine="true"
             android:ellipsize="marquee" />
 

@@ -31,7 +31,7 @@
     <string name="enabled">Enabled</string>
 
     <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
-    <string name="summary_empty" translatable="false"></string>
+    <string name="summary_empty" translatable="false" />
 
     <!-- Hardware key -->
     <string name="button_settings_title">Buttons</string>

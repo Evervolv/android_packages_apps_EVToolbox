@@ -20,10 +20,10 @@ import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.ArraySet;
-import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.view.View;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.preference.Preference;
@@ -79,9 +79,6 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
     private static final String MISSED_CALL_PREF = "missed_call";
     private static final String VOICEMAIL_PREF = "voicemail";
     private static final String ADD_APPS = "custom_apps_add";
-
-    public static final int ACTION_TEST = 0;
-    public static final int ACTION_DELETE = 1;
     private static final int DIALOG_APPS = 0;
 
     private int mDefaultColor;
@@ -111,10 +108,10 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        final Context context = getContext();
+        final Context context = requireContext();
 
         addPreferencesFromResource(R.xml.notification_light_settings);
-        getActivity().getActionBar().setTitle(R.string.notification_light_title);
+        requireActivity().getActionBar().setTitle(R.string.notification_light_title);
 
         PreferenceScreen prefSet = getPreferenceScreen();
         Resources resources = getResources();
@@ -211,11 +208,11 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
         super.onResume();
         refreshDefault();
         refreshCustomApplicationPrefs();
-        getActivity().invalidateOptionsMenu();
+        requireActivity().invalidateOptionsMenu();
     }
 
     private void refreshDefault() {
-        ContentResolver resolver = getActivity().getContentResolver();
+        ContentResolver resolver = requireActivity().getContentResolver();
         int color = EVSettings.System.getInt(resolver,
                 EVSettings.System.NOTIFICATION_LIGHT_PULSE_DEFAULT_COLOR, mDefaultColor);
         int timeOn = EVSettings.System.getInt(resolver,
@@ -306,7 +303,7 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
             for (Package pkg : mPackages.values()) {
                 try {
                     PackageInfo info = mPackageManager.getPackageInfo(pkg.name,
-                            PackageManager.GET_META_DATA);
+                            PackageManager.PackageInfoFlags.of(PackageManager.GET_META_DATA));
                     ApplicationLightPreference pref =
                             new ApplicationLightPreference(context, null,
                                     pkg.color, pkg.timeon, pkg.timeoff);
@@ -324,7 +321,7 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
             }
 
             maybeDisplayApplicationHint(context);
-            mPackageAdapter.setExcludedPackages(new HashSet<String>(mPackages.keySet()));
+            mPackageAdapter.setExcludedPackages(new HashSet<>(mPackages.keySet()));
         }
     }
 
@@ -424,45 +421,46 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
      *
      * @param packageName Package name of application specific settings to update
      */
-    protected void updateValues(String packageName, Integer color, Integer timeon,
-                                Integer timeoff) {
-        ContentResolver resolver = getActivity().getContentResolver();
+    protected void updateValues(String packageName, Integer color, Integer timeOn,
+                                Integer timeOff) {
+        ContentResolver resolver = requireActivity().getContentResolver();
 
-        if (packageName.equals(DEFAULT_PREF)) {
-            EVSettings.System.putInt(resolver,
-                    EVSettings.System.NOTIFICATION_LIGHT_PULSE_DEFAULT_COLOR, color);
-            EVSettings.System.putInt(resolver,
-                    EVSettings.System.NOTIFICATION_LIGHT_PULSE_DEFAULT_LED_ON, timeon);
-            EVSettings.System.putInt(resolver,
-                    EVSettings.System.NOTIFICATION_LIGHT_PULSE_DEFAULT_LED_OFF, timeoff);
-            refreshDefault();
-            return;
-        } else if (packageName.equals(MISSED_CALL_PREF)) {
-            EVSettings.System.putInt(resolver,
-                    EVSettings.System.NOTIFICATION_LIGHT_PULSE_CALL_COLOR, color);
-            EVSettings.System.putInt(resolver,
-                    EVSettings.System.NOTIFICATION_LIGHT_PULSE_CALL_LED_ON, timeon);
-            EVSettings.System.putInt(resolver,
-                    EVSettings.System.NOTIFICATION_LIGHT_PULSE_CALL_LED_OFF, timeoff);
-            refreshDefault();
-            return;
-        } else if (packageName.equals(VOICEMAIL_PREF)) {
-            EVSettings.System.putInt(resolver,
-                    EVSettings.System.NOTIFICATION_LIGHT_PULSE_VMAIL_COLOR, color);
-            EVSettings.System.putInt(resolver,
-                    EVSettings.System.NOTIFICATION_LIGHT_PULSE_VMAIL_LED_ON, timeon);
-            EVSettings.System.putInt(resolver,
-                    EVSettings.System.NOTIFICATION_LIGHT_PULSE_VMAIL_LED_OFF, timeoff);
-            refreshDefault();
-            return;
+        switch (packageName) {
+            case DEFAULT_PREF:
+                EVSettings.System.putInt(resolver,
+                        EVSettings.System.NOTIFICATION_LIGHT_PULSE_DEFAULT_COLOR, color);
+                EVSettings.System.putInt(resolver,
+                        EVSettings.System.NOTIFICATION_LIGHT_PULSE_DEFAULT_LED_ON, timeOn);
+                EVSettings.System.putInt(resolver,
+                        EVSettings.System.NOTIFICATION_LIGHT_PULSE_DEFAULT_LED_OFF, timeOff);
+                refreshDefault();
+                return;
+            case MISSED_CALL_PREF:
+                EVSettings.System.putInt(resolver,
+                        EVSettings.System.NOTIFICATION_LIGHT_PULSE_CALL_COLOR, color);
+                EVSettings.System.putInt(resolver,
+                        EVSettings.System.NOTIFICATION_LIGHT_PULSE_CALL_LED_ON, timeOn);
+                EVSettings.System.putInt(resolver,
+                        EVSettings.System.NOTIFICATION_LIGHT_PULSE_CALL_LED_OFF, timeOff);
+                refreshDefault();
+                return;
+            case VOICEMAIL_PREF:
+                EVSettings.System.putInt(resolver,
+                        EVSettings.System.NOTIFICATION_LIGHT_PULSE_VMAIL_COLOR, color);
+                EVSettings.System.putInt(resolver,
+                        EVSettings.System.NOTIFICATION_LIGHT_PULSE_VMAIL_LED_ON, timeOn);
+                EVSettings.System.putInt(resolver,
+                        EVSettings.System.NOTIFICATION_LIGHT_PULSE_VMAIL_LED_OFF, timeOff);
+                refreshDefault();
+                return;
         }
 
         // Find the custom package and sets its new values
         Package app = mPackages.get(packageName);
         if (app != null) {
             app.color = color;
-            app.timeon = timeon;
-            app.timeoff = timeoff;
+            app.timeon = timeOn;
+            app.timeoff = timeOff;
             savePackageList(true);
         }
     }
@@ -486,7 +484,7 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
             return false;
         }
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity())
                 .setTitle(R.string.dialog_delete_title)
                 .setMessage(R.string.dialog_delete_message)
                 .setIconAttribute(android.R.attr.alertDialogIcon)
@@ -521,14 +519,14 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
      */
     @Override
     public Dialog onCreateDialog(int id) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
         final Dialog dialog;
         switch (id) {
             case DIALOG_APPS:
                 Resources res = getResources();
                 int paddingTop = res.getDimensionPixelOffset(R.dimen.package_list_padding_top);
 
-                final ListView list = new ListView(getActivity());
+                final ListView list = new ListView(requireActivity());
                 list.setAdapter(mPackageAdapter);
                 list.setDivider(null);
                 list.setPadding(0, paddingTop, 0, 0);
@@ -573,15 +571,7 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
         }
 
         public String toString() {
-            StringBuilder builder = new StringBuilder();
-            builder.append(name);
-            builder.append("=");
-            builder.append(color);
-            builder.append(";");
-            builder.append(timeon);
-            builder.append(";");
-            builder.append(timeoff);
-            return builder.toString();
+            return name + "=" + color + ";" + timeon + ";" + timeoff;
         }
 
         public static Package fromString(String value) {

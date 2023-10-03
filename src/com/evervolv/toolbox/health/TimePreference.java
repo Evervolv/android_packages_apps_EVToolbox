@@ -20,6 +20,8 @@ import androidx.preference.PreferenceViewHolder;
 import com.evervolv.settingslib.widget.CustomDialogPreferenceExt;
 import com.evervolv.toolbox.R;
 
+import evervolv.health.HealthInterface;
+
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
@@ -30,10 +32,13 @@ public abstract class TimePreference extends CustomDialogPreferenceExt {
     private TimePicker mTimePicker;
     private LocalTime mLocalTime;
 
+    protected final HealthInterface mHealthInterface;
+
     public TimePreference(final Context context, final AttributeSet attrs) {
         super(context, attrs);
 
         setDialogLayoutResource(R.layout.dialog_time);
+        mHealthInterface = HealthInterface.getInstance(context);
     }
 
     @Override
