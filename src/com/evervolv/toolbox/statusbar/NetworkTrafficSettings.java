@@ -17,6 +17,7 @@
 package com.evervolv.toolbox.statusbar;
 
 import android.content.ContentResolver;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.preference.ListPreference;
@@ -91,4 +92,26 @@ public class NetworkTrafficSettings extends SettingsPreferenceFragment
         mNetTrafficUnits.setEnabled(enabled);
         mNetTrafficShowUnits.setEnabled(enabled);
     }
+
+    public static final SummaryProvider SUMMARY_PROVIDER = new SummaryProvider() {
+        @Override
+        public String getSummary(Context context, String key) {
+            final int mode = EVSettings.Secure.getInt(context.getContentResolver(),
+                    EVSettings.Secure.NETWORK_TRAFFIC_MODE, 0);
+            switch (mode) {
+                case 1:
+                    return context.getResources()
+                        .getString(R.string.network_traffic_mode_up);
+                case 2:
+                    return context.getResources()
+                        .getString(R.string.network_traffic_mode_down);
+                case 3:
+                    return context.getResources()
+                        .getString(R.string.network_traffic_mode_all);
+                default:
+                    return context.getResources()
+                        .getString(R.string.network_traffic_mode_disable);
+            }
+        }
+    };
 }

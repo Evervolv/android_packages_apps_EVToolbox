@@ -76,4 +76,9 @@
           android:fragment="com.evervolv.toolbox.health.ChargingControlSettings"
           evervolv:xmlRes="@xml/charging_control_settings" />
 
+    <part android:key="network_traffic"
+          android:title="@string/network_traffic_settings_title"
+          android:fragment="com.evervolv.toolbox.statusbar.NetworkTrafficSettings"
+          evervolv:xmlRes="@xml/network_traffic_settings" />
+
 </parts-catalog>
