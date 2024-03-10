@@ -24,13 +24,13 @@
         android:key="capacitive_keys"
         android:title="@string/capacitive_keys_title" >
 
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:key="disable_nav_keys"
             android:title="@string/disable_navkeys_title"
             android:summary="@string/disable_navkeys_summary"
             android:defaultValue="false" />
 
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:key="swap_capacitive_keys"
             android:title="@string/swap_capacitive_keys_title"
             android:summary="@string/swap_capacitive_keys_summary"

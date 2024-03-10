@@ -19,12 +19,12 @@ package com.evervolv.toolbox.statusbar;
 import android.os.Bundle;
 import android.provider.Settings;
 import androidx.preference.ListPreference;
-import androidx.preference.SwitchPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceCategory;
 import androidx.preference.PreferenceGroup;
 import androidx.preference.PreferenceScreen;
 import androidx.preference.Preference.OnPreferenceChangeListener;
+import androidx.preference.SwitchPreferenceCompat;
 import android.view.View;
 
 import evervolv.provider.EVSettings;
@@ -45,7 +45,7 @@ public class StatusBarSettings extends SettingsPreferenceFragment
 
     private ListPreference mQuickPulldown;
     private ListPreference mBatteryStyleIcon;
-    private SwitchPreference mBatteryShowPercent;
+    private SwitchPreferenceCompat mBatteryShowPercent;
     private boolean mShowPercentAvailable;
 
     @Override
@@ -69,7 +69,7 @@ public class StatusBarSettings extends SettingsPreferenceFragment
 
         boolean batteryShowPercent = Settings.System.getInt(getContext().getContentResolver(),
                 Settings.System.SHOW_BATTERY_PERCENT, 0) == 1;
-        mBatteryShowPercent = (SwitchPreference) findPreference(STATUS_BAR_BATTERY_PERCENT);
+        mBatteryShowPercent = (SwitchPreferenceCompat) findPreference(STATUS_BAR_BATTERY_PERCENT);
         mBatteryShowPercent.setChecked(batteryShowPercent);
         mBatteryShowPercent.setEnabled(batteryStyle != 5 /* BATTERY_STYLE_TEXT */);
 

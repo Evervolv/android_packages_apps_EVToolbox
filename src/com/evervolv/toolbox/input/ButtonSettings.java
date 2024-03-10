@@ -33,13 +33,13 @@ import android.os.ServiceManager;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.ArraySet;
-import androidx.preference.SwitchPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceCategory;
 import androidx.preference.PreferenceManager;
 import androidx.preference.PreferenceGroup;
 import androidx.preference.PreferenceScreen;
+import androidx.preference.SwitchPreferenceCompat;
 import android.util.Log;
 import android.view.IWindowManager;
 import android.view.WindowManagerGlobal;
@@ -106,14 +106,14 @@ public class ButtonSettings extends SettingsPreferenceFragment
     private ListPreference mAppSwitchPressAction;
     private ListPreference mAppSwitchLongPressAction;
 
-    private SwitchPreference mDisableNavigationKeys;
+    private SwitchPreferenceCompat mDisableNavigationKeys;
     private Handler mHandler;
 
-    private SwitchPreference mCameraWakeScreen;
-    private SwitchPreference mCameraSleepOnRelease;
-    private SwitchPreference mCameraLaunch;
+    private SwitchPreferenceCompat mCameraWakeScreen;
+    private SwitchPreferenceCompat mCameraSleepOnRelease;
+    private SwitchPreferenceCompat mCameraLaunch;
 
-    private SwitchPreference mSwapCapacitiveKeys;
+    private SwitchPreferenceCompat mSwapCapacitiveKeys;
 
     private HardwareManager mHardware;
 
@@ -186,7 +186,7 @@ public class ButtonSettings extends SettingsPreferenceFragment
                 EVSettings.System.KEY_HOME_DOUBLE_TAP_ACTION,
                 defaultHomeDoubleTapAction);
 
-        mDisableNavigationKeys = (SwitchPreference) findPreference(KEY_DISABLE_NAV_KEYS);
+        mDisableNavigationKeys = (SwitchPreferenceCompat) findPreference(KEY_DISABLE_NAV_KEYS);
         if (mDisableNavigationKeys != null && !hasKeyDisabler) {
             capacitiveCategory.removePreference(mDisableNavigationKeys);
         } else {
@@ -280,10 +280,10 @@ public class ButtonSettings extends SettingsPreferenceFragment
         }
 
         if (hasCameraKey) {
-            mCameraWakeScreen = (SwitchPreference) findPreference(KEY_CAMERA_WAKE_SCREEN);
+            mCameraWakeScreen = (SwitchPreferenceCompat) findPreference(KEY_CAMERA_WAKE_SCREEN);
             mCameraSleepOnRelease =
-                    (SwitchPreference) findPreference(KEY_CAMERA_SLEEP_ON_RELEASE);
-            mCameraLaunch = (SwitchPreference) findPreference(KEY_CAMERA_LAUNCH);
+                    (SwitchPreferenceCompat) findPreference(KEY_CAMERA_SLEEP_ON_RELEASE);
+            mCameraLaunch = (SwitchPreferenceCompat) findPreference(KEY_CAMERA_LAUNCH);
 
             if (!showCameraWake) {
                 prefScreen.removePreference(mCameraWakeScreen);
@@ -305,9 +305,9 @@ public class ButtonSettings extends SettingsPreferenceFragment
 
         if (hasVolumeKeys) {
             if (showVolumeWake) {
-                SwitchPreference volumeWakeScreen = (SwitchPreference) findPreference(KEY_VOLUME_WAKE_SCREEN);
+                SwitchPreferenceCompat volumeWakeScreen = (SwitchPreferenceCompat) findPreference(KEY_VOLUME_WAKE_SCREEN);
                 if (volumeWakeScreen != null) {
-                    SwitchPreference volumeMusicControls = (SwitchPreference) findPreference(KEY_VOLUME_MUSIC_CONTROLS);
+                    SwitchPreferenceCompat volumeMusicControls = (SwitchPreferenceCompat) findPreference(KEY_VOLUME_MUSIC_CONTROLS);
                     if (volumeMusicControls != null) {
                         volumeMusicControls.setDependency(KEY_VOLUME_WAKE_SCREEN);
                         volumeWakeScreen.setDisableDependentsState(true);
