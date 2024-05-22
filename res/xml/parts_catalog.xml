@@ -70,4 +70,9 @@
           android:fragment="com.evervolv.toolbox.statusbar.NetworkTrafficSettings"
           evervolv:xmlRes="@xml/network_traffic_settings" />
 
+    <part android:key="notifications_edge_light"
+          android:title="@string/notifications_edge_light_title"
+          android:fragment="com.evervolv.toolbox.notificationlight.EdgeLightSettings"
+          evervolv:xmlRes="@xml/edge_light_settings" />
+
 </parts-catalog>

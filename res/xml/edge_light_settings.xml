@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2016 The CyanogenMod Project
+     SPDX-FileCopyrightText: 2017-2018,2021-2022 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+        android:key="notifications_edge_light"
+        android:title="@string/notifications_edge_light_title">
+
+    <com.evervolv.settingslib.widget.SystemSettingMainSwitchPreference
+        android:key="edge_light_enabled"
+        android:title="@string/notifications_edge_light_enable_title" />
+
+    <evervolv.preference.EVSystemSettingSwitchPreference
+        android:key="edge_light_always_trigger_on_pulse"
+        android:title="@string/notifications_edge_light_always_trigger_on_pulse_title"
+        android:summary="@string/notifications_edge_light_always_trigger_on_pulse_summary"
+        android:dependency="edge_light_enabled"
+        android:defaultValue="false" />
+
+    <evervolv.preference.EVSystemSettingSwitchPreference
+        android:key="edge_light_repeat_animation"
+        android:title="@string/notifications_edge_light_repeat_animation_title"
+        android:summaryOn="@string/notifications_edge_light_repeat_animation_summary_on"
+        android:summaryOff="@string/notifications_edge_light_repeat_animation_summary_off"
+        android:dependency="edge_light_enabled"
+        android:defaultValue="false" />
+
+    <evervolv.preference.EVSystemSettingListPreference
+        android:key="edge_light_color_mode"
+        android:title="@string/notifications_edge_light_color_mode_title"
+        android:summary="%s"
+        android:dialogTitle="@string/notifications_edge_light_color_mode_title"
+        android:entries="@array/notifications_edge_light_color_mode_entries"
+        android:entryValues="@array/notifications_edge_light_color_mode_values"
+        android:dependency="edge_light_enabled"
+        android:defaultValue="0" />
+
+</PreferenceScreen>
