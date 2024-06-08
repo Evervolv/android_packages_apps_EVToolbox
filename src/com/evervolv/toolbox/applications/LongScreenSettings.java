@@ -1,17 +1,6 @@
 /*
- * Copyright (C) 2018-2022 The LineageOS Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * SPDX-FileCopyrightText: 2018-2024 The LineageOS Project
+ * SPDX-License-Identifier: Apache-2.0
  */
 package com.evervolv.toolbox.applications;
 
@@ -32,10 +21,10 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SectionIndexer;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.android.settingslib.applications.ApplicationsState;
+import com.google.android.material.materialswitch.MaterialSwitch;
 
 import com.evervolv.internal.applications.LongScreen;
 import com.evervolv.toolbox.R;
@@ -298,13 +287,13 @@ public class LongScreenSettings extends SettingsPreferenceFragment
     private static class ViewHolder {
         private TextView title;
         private ImageView icon;
-        private Switch state;
+        private MaterialSwitch state;
         private View rootView;
 
         private ViewHolder(View view) {
             this.title = (TextView) view.findViewById(R.id.app_name);
             this.icon = (ImageView) view.findViewById(R.id.app_icon);
-            this.state = (Switch) view.findViewById(R.id.state);
+            this.state = (MaterialSwitch) view.findViewById(R.id.state);
             this.rootView = view;
 
             view.setTag(this);
