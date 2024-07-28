@@ -5,6 +5,7 @@
  */
 package com.evervolv.toolbox.statusbar;
 
+import android.os.BatteryManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
@@ -15,6 +16,8 @@ import androidx.preference.Preference.OnPreferenceChangeListener;
 import androidx.preference.PreferenceGroup;
 import androidx.preference.PreferenceScreen;
 import androidx.preference.SwitchPreferenceCompat;
+
+import com.android.settingslib.fuelgauge.BatteryUtils;
 
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.SettingsPreferenceFragment;
@@ -85,7 +88,8 @@ public class StatusBarSettings extends SettingsPreferenceFragment
         }
 
         final PreferenceGroup batteryCategory = prefScreen.findPreference(CATEGORY_BATTERY);
-        if (batteryCategory.getPreferenceCount() == 0) {
+        if (batteryCategory.getPreferenceCount() == 0
+            || !BatteryUtils.getBatteryIntent(getContext()).getBooleanExtra(BatteryManager.EXTRA_PRESENT, true)) {
             prefScreen.removePreference(batteryCategory);
         }
     }
