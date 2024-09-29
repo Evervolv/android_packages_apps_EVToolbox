@@ -21,7 +21,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import evervolv.hardware.DisplayMode;
-import evervolv.hardware.LiveDisplayManager;
+import evervolv.hardware.HardwareManager;
 
 import com.android.settingslib.widget.LayoutPreference;
 import com.android.settingslib.widget.SelectorWithWidgetPreference;
@@ -45,7 +45,7 @@ public class DisplayModePickerFragment extends SettingsPreferenceFragment implem
     private static final int DOT_INDICATOR_LEFT_PADDING = 6;
     private static final int DOT_INDICATOR_RIGHT_PADDING = 6;
 
-    private LiveDisplayManager mLiveDisplay;
+    private HardwareManager mHardware;
 
     private View mViewArrowPrevious;
     private View mViewArrowNext;
@@ -72,9 +72,9 @@ public class DisplayModePickerFragment extends SettingsPreferenceFragment implem
         screen.addPreference(preview);
         addViewPager(preview);
 
-        mLiveDisplay = LiveDisplayManager.getInstance(context);
+        mHardware = HardwareManager.getInstance(context);
 
-        final DisplayMode[] modes = mLiveDisplay.getDisplayModes();
+        final DisplayMode[] modes = mHardware.getDisplayModes();
         if (modes != null && modes.length > 0) {
             for (int i = 0; i < modes.length; i++) {
                 SelectorWithWidgetPreference pref = new SelectorWithWidgetPreference(context);
@@ -166,9 +166,9 @@ public class DisplayModePickerFragment extends SettingsPreferenceFragment implem
         final String selectedKey = selected.getKey();
         if (selectedKey.startsWith(COLOR_PROFILE)) {
             String modeId = selectedKey.replaceFirst(COLOR_PROFILE, "");
-            for (DisplayMode mode : mLiveDisplay.getDisplayModes()) {
+            for (DisplayMode mode : mHardware.getDisplayModes()) {
                 if (mode.id == Integer.valueOf(modeId)) {
-                    mLiveDisplay.setDisplayMode(mode, true);
+                    mHardware.setDisplayMode(mode, true);
                     updateCheckedState(selectedKey);
                 }
             }
@@ -176,8 +176,8 @@ public class DisplayModePickerFragment extends SettingsPreferenceFragment implem
     }
 
     private SelectorWithWidgetPreference bindPreference(SelectorWithWidgetPreference pref, DisplayMode mode) {
-        final DisplayMode defaultMode = mLiveDisplay.getCurrentDisplayMode() != null
-                    ? mLiveDisplay.getCurrentDisplayMode() : mLiveDisplay.getDefaultDisplayMode();
+        final DisplayMode defaultMode = mHardware.getCurrentDisplayMode() != null
+                    ? mHardware.getCurrentDisplayMode() : mHardware.getDefaultDisplayMode();
         pref.setTitle(ResourceUtils.getLocalizedString(
                     getResources(), mode.name, COLOR_PROFILE_TITLE));
         pref.setKey(COLOR_PROFILE + mode.id);
