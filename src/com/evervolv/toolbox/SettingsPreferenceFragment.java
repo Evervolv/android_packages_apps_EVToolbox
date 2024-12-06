@@ -38,8 +38,6 @@ import androidx.preference.PreferenceScreen;
 import androidx.preference.PreferenceViewHolder;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.android.settingslib.core.lifecycle.ObservablePreferenceFragment;
 import com.android.settingslib.widget.LayoutPreference;
 
 import com.evervolv.settingslib.widget.CustomDialogPreferenceExt;
