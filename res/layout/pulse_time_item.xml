@@ -14,6 +14,6 @@
     android:paddingTop="8dp"
     android:paddingBottom="8dp"
     android:textAppearance="@android:style/TextAppearance.Material.Subhead"
-    android:textColor="?androidprv:attr/textColorOnAccent" >
+    android:textColor="?androidprv:attr/textColorSecondary" >
 
 </TextView>
