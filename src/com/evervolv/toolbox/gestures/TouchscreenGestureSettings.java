@@ -12,13 +12,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.UserHandle;
 import android.util.ArraySet;
-import android.util.Log;
 
 import androidx.preference.ListPreference;
 import androidx.preference.PreferenceManager;
-
-import evervolv.hardware.HardwareManager;
-import evervolv.hardware.TouchscreenGesture;
 
 import com.evervolv.internal.util.ResourceUtils;
 import com.evervolv.toolbox.R;
@@ -26,7 +22,9 @@ import com.evervolv.toolbox.SettingsPreferenceFragment;
 import com.evervolv.toolbox.search.BaseSearchIndexProvider;
 import com.evervolv.toolbox.search.Searchable;
 
-import java.lang.System;
+import evervolv.hardware.HardwareManager;
+import evervolv.hardware.TouchscreenGesture;
+
 import java.util.Set;
 
 public class TouchscreenGestureSettings extends SettingsPreferenceFragment

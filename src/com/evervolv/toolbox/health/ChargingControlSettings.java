@@ -6,8 +6,8 @@
 package com.evervolv.toolbox.health;
 
 import static evervolv.health.HealthInterface.MODE_AUTO;
-import static evervolv.health.HealthInterface.MODE_MANUAL;
 import static evervolv.health.HealthInterface.MODE_LIMIT;
+import static evervolv.health.HealthInterface.MODE_MANUAL;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -27,8 +27,8 @@ import com.evervolv.toolbox.search.BaseSearchIndexProvider;
 import com.evervolv.toolbox.search.Searchable;
 
 import evervolv.health.HealthInterface;
-import evervolv.provider.EVSettings;
 import evervolv.preference.EVSystemSettingListPreference;
+import evervolv.provider.EVSettings;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;

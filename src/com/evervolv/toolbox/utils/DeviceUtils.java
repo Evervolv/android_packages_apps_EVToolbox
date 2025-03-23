@@ -5,12 +5,12 @@
  */
 package com.evervolv.toolbox.utils;
 
+import static com.evervolv.internal.util.DeviceKeysConstants.*;
+
 import android.content.Context;
 import android.telephony.TelephonyManager;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
-
-import static com.evervolv.internal.util.DeviceKeysConstants.*;
 
 public class DeviceUtils {
 

@@ -7,19 +7,20 @@ package com.evervolv.toolbox.statusbar;
 
 import android.os.Bundle;
 import android.provider.Settings;
+import android.view.View;
+
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
+import androidx.preference.Preference.OnPreferenceChangeListener;
 import androidx.preference.PreferenceCategory;
 import androidx.preference.PreferenceGroup;
 import androidx.preference.PreferenceScreen;
-import androidx.preference.Preference.OnPreferenceChangeListener;
 import androidx.preference.SwitchPreferenceCompat;
-import android.view.View;
-
-import evervolv.provider.EVSettings;
 
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.SettingsPreferenceFragment;
+
+import evervolv.provider.EVSettings;
 
 public class StatusBarSettings extends SettingsPreferenceFragment
         implements OnPreferenceChangeListener {

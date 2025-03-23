@@ -22,7 +22,6 @@ import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceScreen;
 
 import com.android.settingslib.collapsingtoolbar.CollapsingToolbarBaseActivity;
-
 import com.android.settingslib.widget.MainSwitchBar;
 
 import com.evervolv.internal.parts.PartInfo;

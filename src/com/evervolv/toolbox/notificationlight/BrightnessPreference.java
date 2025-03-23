@@ -5,10 +5,8 @@
 
 package com.evervolv.toolbox.notificationlight;
 
-import android.app.Dialog;
 import android.app.Notification;
 import android.app.NotificationManager;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -17,19 +15,14 @@ import android.os.Looper;
 import android.os.Message;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.os.UserHandle;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.preference.Preference;
 import androidx.preference.PreferenceViewHolder;
 
-import evervolv.provider.EVSettings;
-
-import com.evervolv.internal.notification.LightsCapabilities;
 import com.evervolv.internal.notification.NotificationHelper;
 import com.evervolv.settingslib.widget.CustomDialogPreferenceExt;
 import com.evervolv.toolbox.R;

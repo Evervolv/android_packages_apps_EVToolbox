@@ -5,37 +5,30 @@
 
 package com.evervolv.toolbox.input;
 
-import static android.view.Display.DEFAULT_DISPLAY;
 import static android.view.WindowManagerPolicyConstants.NAV_BAR_MODE_3BUTTON_OVERLAY;
+
 import static com.evervolv.internal.util.DeviceKeysConstants.*;
 
-import android.content.Context;
 import android.content.ContentResolver;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.om.IOverlayManager;
 import android.content.res.Resources;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.UserHandle;
-import android.provider.Settings;
 import android.util.ArraySet;
+
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceCategory;
-import androidx.preference.PreferenceManager;
 import androidx.preference.PreferenceGroup;
+import androidx.preference.PreferenceManager;
 import androidx.preference.PreferenceScreen;
 import androidx.preference.SwitchPreferenceCompat;
-import android.util.Log;
-import android.view.IWindowManager;
-import android.view.WindowManagerGlobal;
-
-import evervolv.hardware.HardwareManager;
-import evervolv.preference.RemotePreference;
-import evervolv.provider.EVSettings;
 
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.SettingsPreferenceFragment;
@@ -43,7 +36,9 @@ import com.evervolv.toolbox.search.BaseSearchIndexProvider;
 import com.evervolv.toolbox.search.Searchable;
 import com.evervolv.toolbox.utils.DeviceUtils;
 
-import java.util.List;
+import evervolv.hardware.HardwareManager;
+import evervolv.provider.EVSettings;
+
 import java.util.Set;
 
 public class ButtonSettings extends SettingsPreferenceFragment

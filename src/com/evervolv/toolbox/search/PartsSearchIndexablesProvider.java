@@ -4,22 +4,6 @@
  */
 package com.evervolv.toolbox.search;
 
-import android.database.Cursor;
-import android.database.MatrixCursor;
-import android.provider.SearchIndexablesProvider;
-import android.util.ArraySet;
-import android.util.Log;
-
-import com.evervolv.toolbox.search.Searchable.SearchIndexProvider;
-import com.evervolv.internal.parts.PartInfo;
-import com.evervolv.internal.parts.PartsList;
-import com.evervolv.platform.internal.R;
-
-import java.lang.reflect.Field;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-
 import static android.provider.SearchIndexablesContract.COLUMN_INDEX_NON_INDEXABLE_KEYS_KEY_VALUE;
 import static android.provider.SearchIndexablesContract.COLUMN_INDEX_RAW_CLASS_NAME;
 import static android.provider.SearchIndexablesContract.COLUMN_INDEX_RAW_ENTRIES;
@@ -47,7 +31,24 @@ import static android.provider.SearchIndexablesContract.COLUMN_INDEX_XML_RES_RES
 import static android.provider.SearchIndexablesContract.INDEXABLES_RAW_COLUMNS;
 import static android.provider.SearchIndexablesContract.INDEXABLES_XML_RES_COLUMNS;
 import static android.provider.SearchIndexablesContract.NON_INDEXABLES_KEYS_COLUMNS;
+
 import static com.evervolv.internal.parts.PartsList.PARTS_ACTIVITY;
+
+import android.database.Cursor;
+import android.database.MatrixCursor;
+import android.provider.SearchIndexablesProvider;
+import android.util.ArraySet;
+import android.util.Log;
+
+import com.evervolv.internal.parts.PartInfo;
+import com.evervolv.internal.parts.PartsList;
+import com.evervolv.platform.internal.R;
+import com.evervolv.toolbox.search.Searchable.SearchIndexProvider;
+
+import java.lang.reflect.Field;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Provides search metadata to the Settings app

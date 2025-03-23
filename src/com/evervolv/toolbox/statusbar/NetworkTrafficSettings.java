@@ -12,11 +12,11 @@ import android.os.Bundle;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 
-import evervolv.preference.EVSecureSettingSwitchPreference;
-import evervolv.provider.EVSettings;
-
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.SettingsPreferenceFragment;
+
+import evervolv.preference.EVSecureSettingSwitchPreference;
+import evervolv.provider.EVSettings;
 
 public class NetworkTrafficSettings extends SettingsPreferenceFragment
         implements Preference.OnPreferenceChangeListener  {

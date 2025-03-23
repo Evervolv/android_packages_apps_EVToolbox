@@ -4,6 +4,11 @@
  */
 package com.evervolv.toolbox;
 
+import static com.evervolv.internal.parts.PartsList.EXTRA_PART;
+
+import static evervolv.preference.RemotePreference.EXTRA_KEY;
+import static evervolv.preference.RemotePreference.EXTRA_SUMMARY;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,13 +17,9 @@ import com.evervolv.internal.parts.PartInfo;
 import com.evervolv.internal.parts.PartsList;
 import com.evervolv.toolbox.widget.SettingsHelper;
 
-import java.lang.reflect.Field;
-
 import evervolv.preference.RemotePreferenceUpdater;
 
-import static evervolv.preference.RemotePreference.EXTRA_KEY;
-import static evervolv.preference.RemotePreference.EXTRA_SUMMARY;
-import static com.evervolv.internal.parts.PartsList.EXTRA_PART;
+import java.lang.reflect.Field;
 
 /**
  * PartsRefresher keeps remote UI clients up to date with any changes in the

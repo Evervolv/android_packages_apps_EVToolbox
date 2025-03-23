@@ -9,7 +9,6 @@ package com.evervolv.toolbox.input;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.res.Resources;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
@@ -26,8 +25,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.preference.PreferenceManager;
 
 import com.evervolv.settingslib.widget.CustomDialogPreferenceExt;
-import com.evervolv.toolbox.utils.DeviceUtils;
 import com.evervolv.toolbox.R;
+import com.evervolv.toolbox.utils.DeviceUtils;
 
 import evervolv.provider.EVSettings;
 

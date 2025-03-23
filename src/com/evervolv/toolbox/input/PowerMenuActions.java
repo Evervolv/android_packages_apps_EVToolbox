@@ -6,6 +6,8 @@
 
 package com.evervolv.toolbox.input;
 
+import static com.evervolv.internal.util.PowerMenuConstants.*;
+
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.UserInfo;
@@ -14,6 +16,7 @@ import android.os.UserHandle;
 import android.os.UserManager;
 import android.provider.Settings;
 import android.service.controls.ControlsProviderService;
+
 import androidx.preference.CheckBoxPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceCategory;
@@ -21,16 +24,14 @@ import androidx.preference.PreferenceCategory;
 import com.android.internal.util.EmergencyAffordanceManager;
 import com.android.settingslib.applications.ServiceListing;
 
-import evervolv.app.GlobalActionManager;
-import evervolv.provider.EVSettings;
 import com.evervolv.internal.util.PowerMenuConstants;
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.SettingsPreferenceFragment;
 import com.evervolv.toolbox.utils.DeviceUtils;
 
-import java.util.List;
+import evervolv.app.GlobalActionManager;
 
-import static com.evervolv.internal.util.PowerMenuConstants.*;
+import java.util.List;
 
 public class PowerMenuActions extends SettingsPreferenceFragment {
     final static String TAG = "PowerMenuActions";

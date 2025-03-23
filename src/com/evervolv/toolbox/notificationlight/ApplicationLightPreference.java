@@ -22,8 +22,8 @@ import androidx.preference.PreferenceViewHolder;
 
 import com.evervolv.internal.notification.LightsCapabilities;
 import com.evervolv.settingslib.widget.CustomDialogPreferenceExt;
-import com.evervolv.toolbox.notificationlight.LightSettingsDialog.OnOffType;
 import com.evervolv.toolbox.R;
+import com.evervolv.toolbox.notificationlight.LightSettingsDialog.OnOffType;
 
 public class ApplicationLightPreference extends CustomDialogPreferenceExt
         implements View.OnLongClickListener {

@@ -7,7 +7,6 @@
 package com.evervolv.toolbox.notificationlight;
 
 import android.app.Dialog;
-import android.app.NotificationManager;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -33,12 +32,16 @@ import androidx.preference.PreferenceScreen;
 
 import com.evervolv.internal.notification.LightsCapabilities;
 import com.evervolv.settingslib.widget.SystemSettingMainSwitchPreference;
+import com.evervolv.toolbox.R;
+import com.evervolv.toolbox.SettingsPreferenceFragment;
 import com.evervolv.toolbox.search.BaseSearchIndexProvider;
 import com.evervolv.toolbox.search.Searchable;
 import com.evervolv.toolbox.widget.PackageListAdapter;
 import com.evervolv.toolbox.widget.PackageListAdapter.PackageItem;
-import com.evervolv.toolbox.R;
-import com.evervolv.toolbox.SettingsPreferenceFragment;
+
+import evervolv.preference.EVSystemSettingSwitchPreference;
+import evervolv.provider.EVSettings;
+import evervolv.util.ColorUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,11 +49,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import evervolv.preference.EVSystemSettingSwitchPreference;
-import evervolv.preference.SystemSettingSwitchPreference;
-import evervolv.provider.EVSettings;
-import evervolv.util.ColorUtils;
 
 public class NotificationLightSettings extends SettingsPreferenceFragment implements
         ApplicationLightPreference.ItemLongClickListener, Preference.OnPreferenceChangeListener,

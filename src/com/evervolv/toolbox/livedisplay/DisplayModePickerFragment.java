@@ -6,7 +6,6 @@
 package com.evervolv.toolbox.livedisplay;
 
 import android.content.Context;
-import android.hardware.display.ColorDisplayManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -20,18 +19,18 @@ import androidx.preference.PreferenceScreen;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import evervolv.hardware.DisplayMode;
-import evervolv.hardware.HardwareManager;
-
 import com.android.settingslib.widget.LayoutPreference;
 import com.android.settingslib.widget.SelectorWithWidgetPreference;
+
 import com.evervolv.internal.util.ResourceUtils;
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.SettingsPreferenceFragment;
 
-import java.util.Arrays;
+import evervolv.hardware.DisplayMode;
+import evervolv.hardware.HardwareManager;
+
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 
 public class DisplayModePickerFragment extends SettingsPreferenceFragment implements
         SelectorWithWidgetPreference.OnClickListener {

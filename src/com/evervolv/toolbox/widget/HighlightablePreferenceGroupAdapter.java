@@ -28,7 +28,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.SettingsPreferenceFragment;
-
 import com.google.android.material.appbar.AppBarLayout;
 
 public class HighlightablePreferenceGroupAdapter extends PreferenceGroupAdapter {
