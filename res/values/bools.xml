@@ -8,10 +8,6 @@
 
     <!-- Default value for charging_control_enabled preference -->
     <bool name="def_charging_control_enabled">false</bool>
-    <!-- Default value for battery_light_enabled preference -->
-    <bool name="def_battery_light_enabled">true</bool>
-    <!-- Default value for battery light pulse -->
-    <bool name="def_battery_light_pulse">true</bool>
     <!-- Default value for edge light pulse -->
     <bool name="def_edge_light_enabled">false</bool>
 

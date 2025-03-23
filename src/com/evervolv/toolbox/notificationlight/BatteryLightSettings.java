@@ -49,7 +49,9 @@ public class BatteryLightSettings extends SettingsPreferenceFragment implements
     private static final String BRIGHTNESS_PREFERENCE = "battery_light_brightness_level";
     private static final String BRIGHTNESS_ZEN_PREFERENCE = "battery_light_brightness_level_zen";
 
-    private PreferenceGroup mColorPrefs;
+    private static final boolean DEFAULT_LIGHT_ENABLED_PREF = true;
+    private static final boolean DEFAULT_PULSE_ENABLED_PREF = true;
+
     private ApplicationLightPreference mLowColorPref;
     private ApplicationLightPreference mMediumColorPref;
     private ApplicationLightPreference mFullColorPref;
@@ -103,6 +105,9 @@ public class BatteryLightSettings extends SettingsPreferenceFragment implements
                 com.android.internal.R.integer.config_notificationsBatteryFullARGB);
 
         mBatteryBrightness = mBatteryBrightnessPref.getBrightnessSetting();
+
+        mLightEnabledPref.setDefaultValue(DEFAULT_LIGHT_ENABLED_PREF);
+        mPulseEnabledPref.setDefaultValue(DEFAULT_PULSE_ENABLED_PREF);
 
         if (!blinkingLed || segmentedBatteryLed) {
             generalPrefs.removePreference(mPulseEnabledPref);
@@ -249,8 +254,8 @@ public class BatteryLightSettings extends SettingsPreferenceFragment implements
 
     protected void resetToDefaults() {
         final Resources res = getResources();
-        final boolean batteryLightEnabled = res.getBoolean(R.bool.def_battery_light_enabled);
-        final boolean batteryLightPulseEnabled = res.getBoolean(R.bool.def_battery_light_pulse);
+        final boolean batteryLightEnabled = DEFAULT_LIGHT_ENABLED_PREF;
+        final boolean batteryLightPulseEnabled = DEFAULT_PULSE_ENABLED_PREF;
 
         if (mLightEnabledPref != null) mLightEnabledPref.setChecked(batteryLightEnabled);
         if (mPulseEnabledPref != null) mPulseEnabledPref.setChecked(batteryLightPulseEnabled);
