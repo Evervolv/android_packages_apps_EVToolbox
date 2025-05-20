@@ -9,7 +9,7 @@
         android:key="notification_lights"
         android:title="@string/notification_light_title">
 
-    <com.evervolv.settingslib.widget.SystemSettingMainSwitchPreference
+    <com.evervolv.settingslib.widget.EVSystemSettingMainSwitchPreference
         android:key="notification_light_pulse"
         android:title="@string/notification_light_enable_title" />
 
