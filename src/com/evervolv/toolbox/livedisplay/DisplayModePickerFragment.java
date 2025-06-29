@@ -22,9 +22,9 @@ import androidx.viewpager.widget.ViewPager;
 import com.android.settingslib.widget.LayoutPreference;
 import com.android.settingslib.widget.SelectorWithWidgetPreference;
 
-import com.evervolv.internal.util.ResourceUtils;
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.SettingsPreferenceFragment;
+import com.evervolv.toolbox.utils.ResourceUtils;
 
 import evervolv.hardware.DisplayMode;
 import evervolv.hardware.HardwareManager;

@@ -16,11 +16,11 @@ import android.util.ArraySet;
 import androidx.preference.ListPreference;
 import androidx.preference.PreferenceManager;
 
-import com.evervolv.internal.util.ResourceUtils;
 import com.evervolv.toolbox.R;
 import com.evervolv.toolbox.SettingsPreferenceFragment;
 import com.evervolv.toolbox.search.BaseSearchIndexProvider;
 import com.evervolv.toolbox.search.Searchable;
+import com.evervolv.toolbox.utils.ResourceUtils;
 
 import evervolv.hardware.HardwareManager;
 import evervolv.hardware.TouchscreenGesture;
